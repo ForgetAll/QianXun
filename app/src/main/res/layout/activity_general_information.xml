@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorPrimary">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="@android:color/transparent">
+
+        <RelativeLayout
+            android:id="@+id/rl_message"
+            android:layout_width="match_parent"
+            android:layout_height="90dp">
+
+            <ImageView
+                android:id="@+id/iv_headUrl"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="10dp"
+                android:layout_centerVertical="true"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/touxiangtest" />
+   <TextView
+       android:id="@+id/tv_name"
+       android:layout_width="200dp"
+       android:layout_height="40dp"
+       android:layout_marginLeft="10dp"
+       android:layout_toRightOf="@id/iv_headUrl"
+       android:text="小明小明小明小明小明小明小明小明小明小明小明小明小明小明小明小明"
+       android:maxLines="1"
+       android:ellipsize="end"
+       android:textSize="20sp"
+       android:textColor="#ffffff"
+      android:gravity="bottom"/>
+            <TextView
+                android:layout_width="240dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/tv_myDescribe"
+                android:layout_toRightOf="@id/iv_headUrl"
+                android:layout_below="@id/tv_name"
+                android:text="世间万相皆由心生，一念起万水千山皆有情，一念灭沧海桑田已无心"
+                android:textSize="18sp"
+                android:textColor="#ffffff"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:gravity="center_vertical"/>
+        </RelativeLayout>
+        <ImageView
+            android:id="@+id/iv_close"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:src="@mipmap/guanbi" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_below="@+id/rl_message"
+            android:layout_marginLeft="10dp">
+            <TextView
+                android:id="@+id/tv_fan"
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:text="粉丝"
+                android:textSize="18sp"
+                android:textColor="#ffffff"
+                android:gravity="center_vertical"
+                />
+            <TextView
+                android:id="@+id/tv_fanCount"
+                android:layout_toRightOf="@+id/tv_fan"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text="30W"
+                android:textSize="18sp"
+                android:textColor="#ffffff"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:ellipsize="end"/>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+</LinearLayout>
