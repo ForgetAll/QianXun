@@ -10,7 +10,7 @@ import android.widget.FrameLayout;
 
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.fragment.ScienceFragment;
-//iearohyursogtre[ohkytrdo[jh0yktr
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private DrawerLayout mDrawerLayout;
     private Toolbar mToolBar;
