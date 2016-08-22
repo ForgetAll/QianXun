@@ -1,22 +1,20 @@
 package com.heapot.qianxun.activity;
 
+import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.FrameLayout;
 
 import com.heapot.qianxun.R;
-import com.heapot.qianxun.fragment.MenuFragment;
 import com.heapot.qianxun.fragment.ScienceFragment;
-
+//iearohyursogtre[ohkytrdo[jh0yktr
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private DrawerLayout mDrawerLayout;
     private Toolbar mToolBar;
     private FrameLayout frameLayout;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
