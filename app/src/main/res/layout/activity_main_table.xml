@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000fff">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="56dp"
+    android:background="@android:color/transparent">
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="56dp"
+    android:orientation="horizontal">
+    <LinearLayout
+        android:id="@+id/ll_xiaoShou"
+        android:layout_gravity="center_vertical"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:orientation="vertical"
+        android:layout_marginLeft="10dp">
+        <TextView
+            android:id="@+id/tv_xiaoShou"
+            android:layout_width="42dp"
+            android:layout_height="40dp"
+            android:text="销售"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textColor="#ffffff" />
+        <TextView
+            android:id="@+id/tv_xiaoShouXia"
+            android:layout_width="42dp"
+            android:layout_height="2dp"
+            android:background="#ffffff" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_caiWu"
+        android:layout_gravity="center_vertical"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:orientation="vertical"
+        android:layout_marginLeft="10dp">
+        <TextView
+            android:id="@+id/tv_caiWu"
+            android:layout_width="42dp"
+            android:layout_height="40dp"
+            android:text="财务"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textColor="#ffffff"
+            />
+        <TextView
+            android:id="@+id/tv_caiWuXia"
+            android:layout_width="42dp"
+            android:layout_height="2dp"
+            android:background="#ffffff"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_keJi"
+        android:layout_gravity="center_vertical"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:orientation="vertical"
+        android:layout_marginLeft="10dp">
+        <TextView
+            android:id="@+id/tv_keJi"
+            android:layout_width="42dp"
+            android:layout_height="40dp"
+            android:text="科技"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textColor="#ffffff" />
+        <TextView
+            android:id="@+id/tv_keJiXia"
+            android:layout_width="42dp"
+            android:layout_height="2dp"
+            android:background="#ffffff"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_shengWu"
+        android:layout_gravity="center_vertical"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:orientation="vertical"
+        android:layout_marginLeft="10dp">
+        <TextView
+            android:id="@+id/tv_shengWu"
+            android:layout_width="42dp"
+            android:layout_height="40dp"
+            android:text="生物"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textColor="#ffffff" />
+        <TextView
+            android:id="@+id/tv_shengWuXia"
+            android:layout_width="42dp"
+            android:layout_height="2dp"
+            android:background="#ffffff"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_ruanJian"
+        android:layout_gravity="center_vertical"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:orientation="vertical"
+        android:layout_marginLeft="10dp">
+        <TextView
+            android:id="@+id/tv_ruanJian"
+            android:layout_width="42dp"
+            android:layout_height="40dp"
+            android:text="软件"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textColor="#ffffff" />
+        <TextView
+            android:id="@+id/tv_ruanJianXia"
+            android:layout_width="42dp"
+            android:layout_height="2dp"
+            android:background="#ffffff"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+
+</LinearLayout>
+    <ImageView
+        android:id="@+id/iv_set"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+       android:layout_alignParentRight="true"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@mipmap/shezhi" />
+</RelativeLayout>
+</LinearLayout>
