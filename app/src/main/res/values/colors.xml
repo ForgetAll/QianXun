@@ -6,4 +6,7 @@
 
     <color name="menu_background_color">#363636</color>
     <color name="menu_text_color">#F7F7F7</color>
+
+    <color name="color_first">#fff</color>
+    <color name="color_second">#D3D3D3</color>
 </resources>

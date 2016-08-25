@@ -5,4 +5,20 @@
 
     <dimen name="menu_text">20sp</dimen>
     <dimen name="menu_text_02">16sp</dimen>
+
+    <dimen name="text_size_first">20sp</dimen>
+    <dimen name="text_size_second">18sp</dimen>
+    <dimen name="text_size_third">12sp</dimen>
+    <dimen name="text_size_forth">10sp</dimen>
+
+    <dimen name="margin_in_top">10dp</dimen>
+    <dimen name="margin_in_bottom">10dp</dimen>
+    <dimen name="margin_in_left">12dp</dimen>
+    <dimen name="margin_in_right">12dp</dimen>
+
+    <dimen name="margin_vertical">10dp</dimen>
+    <dimen name="margin_horizontal">12dp</dimen>
+
+    <dimen name="item_height_first">80dp</dimen>
+    <dimen name="item_height_second">36dp</dimen>
 </resources>

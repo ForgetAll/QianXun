@@ -3,21 +3,20 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.activity.MainActivity;
+import com.heapot.qianxun.bean.DataBean;
 
 /**
  * Created by Karl on 2016/8/20.
+ * 自定义侧滑菜单布局：
  */
 public class MenuFragment extends Fragment implements View.OnClickListener {
     private ImageView mIcon;
@@ -29,7 +28,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mMenuView = inflater.inflate(R.layout.menu_layout,container,false);
+        mMenuView = inflater.inflate(R.layout.layout_menu,container,false);
         initView();
         initEvent();
         return mMenuView;
@@ -71,16 +70,16 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
                 break;
             //science学术、recruit招聘、train培训三个menu的点击事件，点击切换fragment
             case R.id.menu_science:
-                openFragment(new ScienceFragment(),"Science");
                 ((MainActivity)mActivity).closeDrawer();
+                ((MainActivity)mActivity).setPageId(DataBean.PAGE_SCIENCE);
                 break;
             case R.id.menu_recruit:
-                openFragment(new RecruitFragment(),"Recruit");
                 ((MainActivity)mActivity).closeDrawer();
+                ((MainActivity)mActivity).setPageId(DataBean.PAGE_RECRUIT);
                 break;
             case R.id.menu_train:
-                openFragment(new TrainFragment(),"Train");
                 ((MainActivity)mActivity).closeDrawer();
+                ((MainActivity)mActivity).setPageId(DataBean.PAGE_TRAIN);
                 break;
             //设置、帮助的点击事件
             case R.id.menu_settings:
@@ -94,14 +93,6 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
                 break;
 
         }
-    }
-
-    /**
-     * 以下为打开Fragment的方法
-     */
-    private void openFragment(Fragment fragment,String id){
-        getFragmentManager().beginTransaction()
-                .replace(R.id.main_frame_layout,fragment,id).commit();
     }
 
     /**
