@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ViewPager mViewPager;
     private MyPageAdapter mPageAdapter;
 
-    private NestedScrollView nestedScrollView;
 
     private String currentId;
 
@@ -54,7 +53,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mTabLayout = (TabLayout) findViewById(R.id.main_tab_layout);
         mViewPager = (ViewPager) findViewById(R.id.main_view_pager);
         mList = new ArrayList<>();
-        nestedScrollView = (NestedScrollView) findViewById(R.id.main_nested_scroll_view);
     }
     private void initEvent(){
         //状态栏和抽屉效果
@@ -62,11 +60,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setSupportActionBar(mToolBar);
         ActionBarDrawerToggle drawerToggle =
                 new ActionBarDrawerToggle(this,mDrawerLayout,mToolBar,R.string.app_name,R.string.app_name);
-
         mDrawerLayout.setDrawerListener(drawerToggle);
         drawerToggle.syncState();
 
-        nestedScrollView.setFillViewport(true);
     }
     /**
      * 模拟数据

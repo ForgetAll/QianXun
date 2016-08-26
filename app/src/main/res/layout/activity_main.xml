@@ -7,48 +7,9 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:context=".activity.MainActivity">
-    <android.support.design.widget.CoordinatorLayout
-        android:id="@+id/content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <android.support.design.widget.AppBarLayout
-            android:id="@+id/app_bar_layout"
-            android:layout_width="match_parent"
-            android:layout_height="210dp">
-            <android.support.design.widget.CollapsingToolbarLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:contentScrim="#76e7c5"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
-                <ImageView
-                    android:id="@+id/main_iv_banner"
-                    android:layout_width="match_parent"
-                    android:layout_height="210dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/menu_background"/>
-                <include layout="@layout/layout_tool_bar"></include>
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_gravity="bottom">
-                    <include layout="@layout/layout_tab"></include>
-                </FrameLayout>
-            </android.support.design.widget.CollapsingToolbarLayout>
-        </android.support.design.widget.AppBarLayout>
-
-        <android.support.v4.widget.NestedScrollView
-            android:id="@+id/main_nested_scroll_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
-            <android.support.v4.view.ViewPager
-                android:id="@+id/main_view_pager"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1">
-            </android.support.v4.view.ViewPager>
-        </android.support.v4.widget.NestedScrollView>
-    </android.support.design.widget.CoordinatorLayout>
+    <!--content-->
+    <include layout="@layout/main_container"></include>
+    <!--Drawer Menu-->
     <fragment
         android:id="@+id/main_menu_fragment"
         android:name="com.heapot.qianxun.fragment.MenuFragment"

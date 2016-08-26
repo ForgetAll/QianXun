@@ -3,16 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_gravity="bottom"
+    android:paddingTop="15dp"
+    android:layout_height="?attr/actionBarSize">
     <android.support.design.widget.TabLayout
         android:id="@+id/main_tab_layout"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:layout_marginLeft="@dimen/margin_horizontal"
         app:tabIndicatorColor="@color/color_first"
         app:tabTextColor="@color/color_second"
-        app:tabSelectedTextColor="@color/color_first">
+        app:tabSelectedTextColor="@color/color_first"
+        style="@style/tabTextAppearance">
 
     </android.support.design.widget.TabLayout>
     <ImageView
@@ -21,6 +23,6 @@
         android:layout_height="match_parent"
         android:layout_marginLeft="@dimen/margin_horizontal"
         android:layout_marginRight="@dimen/margin_horizontal"
-        android:src="@drawable/ic_settings_white_24dp"/>
+        android:src="@drawable/ic_settings_white_24dp" />
 
 </LinearLayout>

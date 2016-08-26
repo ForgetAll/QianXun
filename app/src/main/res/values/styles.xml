@@ -1,11 +1,13 @@
 <resources>
-
+    <style name="AppTheme" parent="BaseAppTheme"></style>
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="BaseAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="drawerArrowStyle">@style/drawerArrowStyle</item>
     </style>
 
     <style name="menu_text_style">
@@ -14,6 +16,13 @@
         <item name="android:paddingBottom">10dp</item>
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/menu_text_color</item>
+    </style>
+    <style name="drawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="spinBars">true</item>
+        <item name="color">@android:color/white</item>
+    </style>
+    <style name="tabTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="android:textAllCaps">false</item>
     </style>
 
 </resources>
