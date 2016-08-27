@@ -23,13 +23,6 @@
                 android:src="@drawable/menu_background"/>
 
             <include layout="@layout/layout_tool_bar"></include>
-
-            <!--<FrameLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="60dp"-->
-                <!--android:layout_gravity="bottom">-->
-                <!--<include layout="@layout/layout_tab"></include>-->
-            <!--</FrameLayout>-->
             <include layout="@layout/layout_tab">
 
             </include>
