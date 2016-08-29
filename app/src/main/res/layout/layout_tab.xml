@@ -18,7 +18,7 @@
 
     </android.support.design.widget.TabLayout>
     <ImageView
-        android:id="@+id/iv_setting_tab"
+        android:id="@+id/iv_subscription_choose"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginLeft="@dimen/margin_horizontal"

@@ -1,19 +1,18 @@
 package com.heapot.qianxun.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.heapot.qianxun.R;
@@ -28,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Toolbar mToolBar;
     private ImageView mBanner;
     private TabLayout mTabLayout;
-    private ImageView mTabSettings;
+    private ImageView mSubscription,mSearch,mNotification,mStar;
     private ViewPager mViewPager;
     private MyPageAdapter mPageAdapter;
 
@@ -52,6 +51,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mToolBar = (Toolbar) findViewById(R.id.main_tool_bar);
         mTabLayout = (TabLayout) findViewById(R.id.main_tab_layout);
         mViewPager = (ViewPager) findViewById(R.id.main_view_pager);
+
+        mSearch = (ImageView) findViewById(R.id.iv_search);
+        mStar = (ImageView) findViewById(R.id.iv_star);
+        mNotification = (ImageView) findViewById(R.id.iv_notification);
+        mBanner = (ImageView) findViewById(R.id.iv_banner);
+        mSubscription = (ImageView) findViewById(R.id.iv_subscription_choose);
+
         mList = new ArrayList<>();
     }
     private void initEvent(){
@@ -63,6 +69,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mDrawerLayout.setDrawerListener(drawerToggle);
         drawerToggle.syncState();
 
+        //添加监听事件
+        mSearch.setOnClickListener(this);
+        mStar.setOnClickListener(this);
+        mNotification.setOnClickListener(this);
+        mBanner.setOnClickListener(this);
+        mSubscription.setOnClickListener(this);
     }
     /**
      * 模拟数据
@@ -93,6 +105,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()){
+            case R.id.iv_search:
+                break;
+            case R.id.iv_star:
+                break;
+            case R.id.iv_notification:
+                break;
+            case R.id.iv_banner:
+                break;
+            case R.id.iv_subscription_choose:
+                Intent intent = new Intent(this,Subscription.class);
+                startActivity(intent);
+                break;
+
 
         }
     }
@@ -107,6 +132,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void setPageId(String id){
         currentId = id;
     }
+
+
 
     /**
      * 配置状态栏
