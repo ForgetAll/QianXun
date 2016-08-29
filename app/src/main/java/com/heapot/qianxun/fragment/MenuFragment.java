@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.activity.MainActivity;
+import com.heapot.qianxun.activity.PersonalActivity;
 import com.heapot.qianxun.bean.DataBean;
 
 /**
