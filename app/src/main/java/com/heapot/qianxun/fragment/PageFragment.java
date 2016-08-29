@@ -81,6 +81,7 @@ public class PageFragment extends Fragment {
 
         @Override
         public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
             View view = LayoutInflater.from(getContext()).inflate(R.layout.layout_list_item,null);
             MyViewHolder viewHolder = new MyViewHolder(view);
             return viewHolder;

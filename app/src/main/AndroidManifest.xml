@@ -16,6 +16,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.Subscription"></activity>
+        <activity android:name=".activity.PersonalActivity"></activity>
+        <activity android:name=".activity.NotificationActivity"></activity>
     </application>
 
 </manifest>

@@ -12,4 +12,6 @@
 
     <color name="sub_item_clicked">#2B4062</color>
     <color name="sub_item">#E8EBEC</color>
+
+    <color name="myGreen">#2EBF93</color>
 </resources>
