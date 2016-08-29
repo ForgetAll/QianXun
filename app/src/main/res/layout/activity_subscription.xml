@@ -26,5 +26,4 @@
         android:divider="@null"
         android:listSelector="@android:color/transparent">
     </ListView>
-
 </LinearLayout>

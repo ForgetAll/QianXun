@@ -1,5 +1,6 @@
 package com.heapot.qianxun.fragment;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -28,27 +29,25 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mMenuView = inflater.inflate(R.layout.layout_menu,container,false);
+        mMenuView = inflater.inflate(R.layout.fragment_menu,container,false);
         initView();
         initEvent();
         return mMenuView;
     }
     private void initView(){
-        mIcon = (ImageView) mMenuView.findViewById(R.id.menu_image);
-        mName = (TextView) mMenuView.findViewById(R.id.menu_name);
-        mQuote = (TextView) mMenuView.findViewById(R.id.menu_quote);
-        mScience = (TextView) mMenuView.findViewById(R.id.menu_science);
-        mRecruit = (TextView) mMenuView.findViewById(R.id.menu_recruit);
-        mTrain = (TextView) mMenuView.findViewById(R.id.menu_train);
-        mSetting = (TextView) mMenuView.findViewById(R.id.menu_settings);
-        mHelp = (TextView) mMenuView.findViewById(R.id.menu_help);
-        mHeader = (LinearLayout) mMenuView.findViewById(R.id.menu_header);
+        mIcon = (ImageView) mMenuView.findViewById(R.id.iv_menu_image);
+        mName = (TextView) mMenuView.findViewById(R.id.txt_menu_name);
+        mQuote = (TextView) mMenuView.findViewById(R.id.txt_menu_quote);
+        mScience = (TextView) mMenuView.findViewById(R.id.txt_menu_science);
+        mRecruit = (TextView) mMenuView.findViewById(R.id.txt_menu_recruit);
+        mTrain = (TextView) mMenuView.findViewById(R.id.txt_menu_train);
+        mSetting = (TextView) mMenuView.findViewById(R.id.txt_menu_settings);
+        mHelp = (TextView) mMenuView.findViewById(R.id.txt_menu_help);
+        mHeader = (LinearLayout) mMenuView.findViewById(R.id.ll_menu_header);
         mActivity = getActivity();
     }
     private void initEvent(){
-        mIcon.setOnClickListener(this);
-        mName.setOnClickListener(this);
-        mQuote.setOnClickListener(this);
+        mHeader.setOnClickListener(this);
         mScience.setOnClickListener(this);
         mRecruit.setOnClickListener(this);
         mTrain.setOnClickListener(this);
@@ -61,33 +60,28 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            //image头像、name昵称、quote一句话签名
-            case R.id.menu_image:
-                break;
-            case R.id.menu_name:
-                break;
-            case R.id.menu_quote:
-                break;
             //science学术、recruit招聘、train培训三个menu的点击事件，点击切换fragment
-            case R.id.menu_science:
+            case R.id.txt_menu_science:
                 ((MainActivity)mActivity).closeDrawer();
                 ((MainActivity)mActivity).setPageId(DataBean.PAGE_SCIENCE);
                 break;
-            case R.id.menu_recruit:
+            case R.id.txt_menu_recruit:
                 ((MainActivity)mActivity).closeDrawer();
                 ((MainActivity)mActivity).setPageId(DataBean.PAGE_RECRUIT);
                 break;
-            case R.id.menu_train:
+            case R.id.txt_menu_train:
                 ((MainActivity)mActivity).closeDrawer();
                 ((MainActivity)mActivity).setPageId(DataBean.PAGE_TRAIN);
                 break;
             //设置、帮助的点击事件
-            case R.id.menu_settings:
+            case R.id.txt_menu_settings:
                 break;
-            case R.id.menu_help:
+            case R.id.txt_menu_help:
                 break;
             //点击切换侧滑菜单头布局的背景
-            case R.id.menu_header:
+            case R.id.ll_menu_header:
+                Intent intent = new Intent(getContext(),PersonalActivity.class);
+                startActivity(intent);
                 break;
             default:
                 break;

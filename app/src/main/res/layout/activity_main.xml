@@ -8,13 +8,13 @@
     android:fitsSystemWindows="true"
     tools:context=".activity.MainActivity">
     <!--content-->
-    <include layout="@layout/main_container"></include>
+    <include layout="@layout/layout_container"></include>
     <!--Drawer Menu-->
     <fragment
         android:id="@+id/main_menu_fragment"
         android:name="com.heapot.qianxun.fragment.MenuFragment"
         android:layout_width="240dp"
         android:layout_height="match_parent"
-        tools:layout="@layout/layout_menu"
+        tools:layout="@layout/fragment_menu"
         android:layout_gravity="left"/>
 </android.support.v4.widget.DrawerLayout>
