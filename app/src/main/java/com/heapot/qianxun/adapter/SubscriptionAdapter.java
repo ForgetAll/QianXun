@@ -1,10 +1,12 @@
 package com.heapot.qianxun.adapter;
 
 import android.content.Context;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.heapot.qianxun.R;
@@ -48,6 +50,7 @@ public class SubscriptionAdapter extends BaseAdapter {
             holder = new ViewHold();
             convertView = layoutInflater.inflate(R.layout.subscription_item,null);
             holder.textView = (TextView) convertView.findViewById(R.id.txt_subscription_item);
+            holder.linearLayout = (LinearLayout) convertView.findViewById(R.id.ll_subscription_item);
             convertView.setTag(holder);
         }else {
             holder = (ViewHold) convertView.getTag();
@@ -56,11 +59,21 @@ public class SubscriptionAdapter extends BaseAdapter {
         String currentName = mList.get(position).getName();
         holder.textView.setText(currentName+","+currentStatus);
         if (currentStatus.equals("1")){
+            //已订阅
             holder.textView.setBackgroundColor(mContext.getResources().getColor(R.color.sub_item_clicked));
             holder.textView.setTextColor(mContext.getResources().getColor(R.color.color_first));
+            holder.textView.setLayoutParams(
+                    new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+//            holder.linearLayout.setLayoutParams(
+//                    new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT));
         }else {
+            //未订阅
             holder.textView.setBackgroundColor(mContext.getResources().getColor(R.color.sub_item));
             holder.textView.setTextColor(mContext.getResources().getColor(R.color.sub_item_clicked));
+//            holder.linearLayout.setLayoutParams(
+//                    new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            holder.textView.setLayoutParams(
+                    new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
         }
 
@@ -69,5 +82,6 @@ public class SubscriptionAdapter extends BaseAdapter {
 
     private class ViewHold{
         TextView textView;
+        LinearLayout linearLayout;
     }
 }
