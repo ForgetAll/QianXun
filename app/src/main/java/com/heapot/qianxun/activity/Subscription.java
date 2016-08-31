@@ -2,14 +2,15 @@ package com.heapot.qianxun.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ImageView;
+import android.widget.GridView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.adapter.SubscriptionAdapter;
+import com.heapot.qianxun.adapter.SubscriptionHeaderAdapter;
 import com.heapot.qianxun.bean.SubscriptionBean;
 
 import java.util.ArrayList;
@@ -17,13 +18,18 @@ import java.util.List;
 
 /**
  * Created by Karl on 2016/8/29.
+ * 订阅列表
+ *
  */
-public class Subscription extends Activity implements AdapterView.OnItemClickListener, View.OnClickListener {
-    private TextView mCount;
+public class Subscription extends Activity {
     private ListView mListView;
-    private ImageView mClose;
+    private List<SubscriptionBean> mData = new ArrayList<>();
+    private List<SubscriptionBean> mHeaderData = new ArrayList<>();
+    private GridView gridView;
     private SubscriptionAdapter mAdapter;
-    private List<SubscriptionBean> mData;
+    private SubscriptionHeaderAdapter headerAdapter;
+//    private static final int
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,17 +42,52 @@ public class Subscription extends Activity implements AdapterView.OnItemClickLis
 
     }
     private void initView(){
-        mCount = (TextView) findViewById(R.id.txt_subscription);
         mListView = (ListView) findViewById(R.id.lv_subscription);
-        mClose = (ImageView) findViewById(R.id.iv_subscription_close);
-        mData = new ArrayList<>();
+        gridView = (GridView) findViewById(R.id.gv_subscription_header);
+        getData();
+        gridView.setAdapter(headerAdapter);
+        mListView.setAdapter(mAdapter);
     }
 
     private void initEvent(){
-        mListView.setOnItemClickListener(this);
-        mClose.setOnClickListener(this);
-        getData();
-        mListView.setAdapter(mAdapter);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                int clickItemStatus = mData.get(position).getStatus();
+                if (clickItemStatus == 0){
+                    mData.get(position).setStatus(1);
+                }else {
+                    mData.get(position).setStatus(0);
+                }
+                mHeaderData.clear();
+                for (int i = 0; i < mData.size(); i++) {
+                    if (mData.get(i).getStatus() == 1){
+                        mHeaderData.add(mData.get(i));
+                    }
+                }
+                headerAdapter.notifyDataSetChanged();
+                mAdapter.notifyDataSetChanged();
+            }
+        });
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                int clickItemStatus = mData.get(position-1).getStatus();
+                if (clickItemStatus == 0){
+                    mData.get(position-1).setStatus(1);
+                }else {
+                    mData.get(position-1).setStatus(0);
+                }
+                mHeaderData.clear();
+                for (int i = 0; i < mData.size(); i++) {
+                    if (mData.get(i).getStatus() == 1){
+                        mHeaderData.add(mData.get(i));
+                    }
+                }
+                headerAdapter.notifyDataSetChanged();
+                mAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
     private void getData(){
@@ -54,33 +95,19 @@ public class Subscription extends Activity implements AdapterView.OnItemClickLis
         for (int i = 0; i < 20; i++) {
             item = new SubscriptionBean();
             item.name = "Name is" +i;
-            item.status = "0";
+            item.status = 0;
             mData.add(item);
         }
+        for (int i = 0; i < mData.size(); i++) {
+            if (mData.get(i).getStatus() == 1){
+                mHeaderData.add(mData.get(i));
+            }
+        }
+        headerAdapter = new SubscriptionHeaderAdapter(this,mHeaderData);
+        headerAdapter.notifyDataSetChanged();
+
         mAdapter = new SubscriptionAdapter(this,mData);
         mAdapter.notifyDataSetChanged();
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-        String clickItemStatus = mData.get(position).getStatus();
-        if (clickItemStatus.equals("0")){
-            mData.get(position).setStatus("1");
-        }else {
-            mData.get(position).setStatus("0");
-        }
-
-        mAdapter.notifyDataSetChanged();
-
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.iv_subscription_close:
-                Subscription.this.finish();
-                break;
-        }
-    }
 }

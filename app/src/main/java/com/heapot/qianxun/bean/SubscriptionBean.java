@@ -5,7 +5,7 @@ package com.heapot.qianxun.bean;
  */
 public class SubscriptionBean {
     public String name;
-    public String status;
+    public int status;
 
     public String getName() {
         return name;
@@ -15,11 +15,11 @@ public class SubscriptionBean {
         this.name = name;
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 }

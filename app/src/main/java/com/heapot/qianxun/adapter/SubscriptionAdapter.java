@@ -55,10 +55,10 @@ public class SubscriptionAdapter extends BaseAdapter {
         }else {
             holder = (ViewHold) convertView.getTag();
         }
-        String currentStatus = mList.get(position).getStatus();
+        int currentStatus = mList.get(position).getStatus();
         String currentName = mList.get(position).getName();
         holder.textView.setText(currentName+","+currentStatus);
-        if (currentStatus.equals("1")){
+        if (currentStatus == 1){
             //已订阅
             holder.textView.setBackgroundColor(mContext.getResources().getColor(R.color.sub_item_clicked));
             holder.textView.setTextColor(mContext.getResources().getColor(R.color.color_first));
