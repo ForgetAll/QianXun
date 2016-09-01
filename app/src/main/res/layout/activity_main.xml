@@ -17,4 +17,5 @@
         android:layout_height="match_parent"
         tools:layout="@layout/fragment_menu"
         android:layout_gravity="left"/>
+
 </android.support.v4.widget.DrawerLayout>

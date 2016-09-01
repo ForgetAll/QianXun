@@ -6,22 +6,5 @@
     android:paddingLeft="25dp"
     android:paddingRight="25dp"
     android:background="#F7F7F7">
-    <GridView
-        android:id="@+id/gv_subscription_header"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginTop="25dp"
-        android:numColumns="4"
-        android:verticalSpacing="@dimen/margin_vertical"
-        android:horizontalSpacing="@dimen/margin_horizontal">
-    </GridView>
-    <ListView
-        android:id="@+id/lv_subscription"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/margin_vertical"
-        android:divider="@null"
-        android:listSelector="@android:color/transparent"
-        android:scrollbars="none">
-    </ListView>
+
 </LinearLayout>
