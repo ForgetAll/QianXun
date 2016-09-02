@@ -10,8 +10,8 @@
     <color name="color_first">#fff</color>
     <color name="color_second">#D3D3D3</color>
 
-    <color name="sub_item_clicked">#2B4062</color>
-    <color name="sub_item">#E8EBEC</color>
+    <color name="background_blue">#2B4062</color>
+    <color name="background_white">#E8ECED</color>
 
     <color name="myGreen">#2EBF93</color>
 </resources>

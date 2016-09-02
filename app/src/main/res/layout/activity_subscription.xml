@@ -1,10 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="25dp"
-    android:paddingRight="25dp"
-    android:background="#F7F7F7">
+    android:layout_marginTop="25dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:orientation="vertical">
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="close"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:layout_gravity="center"
+            android:text="拒绝拖鞋，只关注心仪的"
+            android:textSize="20sp"/>
+        <TextView
+            android:layout_width="210dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="我们会将您心仪的工作推荐给你 当然您也可以随时取消和更换"
+            android:textSize="14sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="10dp"
+            android:layout_gravity="center"
+            android:text="已关注"
+            android:textSize="20sp"/>
+        <com.heapot.qianxun.tools.MyGridView
+            android:id="@+id/gv_subscribed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:numColumns="4"
+            android:verticalSpacing="10dp"
+            android:horizontalSpacing="10dp"
+            android:layout_marginBottom="20dp">
+        </com.heapot.qianxun.tools.MyGridView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            android:text="尽情挑选"
+            android:textSize="20sp"/>
+        <ListView
+            android:id="@+id/lv_recommend"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:scrollbars="none"
+            android:divider="@null">
 
-</LinearLayout>
+        </ListView>
+        <!--<com.heapot.qianxun.tools.MyListView-->
+            <!--android:id="@+id/lv_recommend"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:scrollbars="none"-->
+            <!--android:divider="@null">-->
+        <!--</com.heapot.qianxun.tools.MyListView>-->
+
+    </LinearLayout>
+</ScrollView>
