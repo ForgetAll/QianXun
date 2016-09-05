@@ -56,8 +56,6 @@ public class Subscription extends Activity {
         RecommendBean recommendBean;
         for (int i = 0; i < 30; i++) {
             recommendBean = new RecommendBean();
-//            recommendBean.setName("推荐标签 #"+i);
-//            recommendBean.setStatus(0);
             recommendBean.name = "推荐标签 #"+i;
             recommendBean.status = 0;
             recommendBeanList.add(recommendBean);
