@@ -16,6 +16,7 @@ import com.heapot.qianxun.adapter.RecommendAdapter;
 import com.heapot.qianxun.adapter.SubscribedAdapter;
 import com.heapot.qianxun.bean.RecommendBean;
 import com.heapot.qianxun.bean.SubscribedBean;
+import com.heapot.qianxun.tools.MyGridView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,7 @@ import java.util.List;
  */
 public class Subscription extends Activity {
     private ListView recommend;
-    private GridView subscribed;
+    private MyGridView subscribed;
     private List<SubscribedBean> subscribedBeanList = new ArrayList<>();
     private List<RecommendBean> recommendBeanList = new ArrayList<>();
     private RecommendAdapter recommendAdapter;
@@ -40,12 +41,14 @@ public class Subscription extends Activity {
     }
     private void initView(){
         recommend = (ListView) findViewById(R.id.lv_recommend);
-        subscribed = (GridView) findViewById(R.id.gv_subscribed);
+        subscribed = (MyGridView) findViewById(R.id.gv_subscribed);
         recommend.setDividerHeight(10);
         getData();
         recommend.setAdapter(recommendAdapter);
         subscribed.setAdapter(subscribedAdapter);
         setListViewHeight(recommend);
+        subscribed.setExpanded(true);
+//        subscribed.setFocusable(false);
 
     }
 
@@ -93,7 +96,6 @@ public class Subscription extends Activity {
         ViewGroup.LayoutParams params =listView.getLayoutParams();
         params.height = totalHeight+(listView.getDividerHeight()*(adapter.getCount()-1));
         listView.setLayoutParams(params);
-
     }
 
 }

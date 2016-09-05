@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
@@ -20,6 +21,7 @@ public class SubscribedAdapter extends BaseAdapter {
     List<SubscribedBean> mList;
     Context context;
     LayoutInflater inflater;
+    private int hidePosition = AdapterView.INVALID_POSITION;
 
     public SubscribedAdapter(Context context,List<SubscribedBean> mList) {
         this.mList = mList;
@@ -54,7 +56,11 @@ public class SubscribedAdapter extends BaseAdapter {
             holder = (SubscribedViewHolder) convertView.getTag();
         }
         holder.textView.setText(mList.get(position).getName());
-
+        if (position != hidePosition){
+            holder.textView.setText(mList.get(position).getName());
+        }else {
+            holder.textView.setText("");
+        }
 
         return convertView;
     }
@@ -62,5 +68,30 @@ public class SubscribedAdapter extends BaseAdapter {
 
     private class SubscribedViewHolder{
         TextView textView;
+    }
+    public void hideView(int Position){
+        hidePosition = AdapterView.INVALID_POSITION;
+        notifyDataSetChanged();
+    }
+    public void removeView(int position){
+        mList.remove(position);
+        notifyDataSetChanged();
+    }
+    public void showHideView(){
+        hidePosition = AdapterView.INVALID_POSITION;
+        notifyDataSetChanged();
+    }
+    //更新拖动时的gridView
+    public void swapView(int draggedPosition,int destPos){
+        //从前往后移动，其他item依次前移
+        if (draggedPosition < destPos){
+            mList.add(destPos+1, (SubscribedBean) getItem(draggedPosition));
+            mList.remove(draggedPosition);
+        }else if(draggedPosition >destPos){
+            mList.add(destPos, (SubscribedBean) getItem(draggedPosition));
+            mList.remove(draggedPosition+1);
+        }
+        hidePosition = destPos;
+        notifyDataSetChanged();
     }
 }
