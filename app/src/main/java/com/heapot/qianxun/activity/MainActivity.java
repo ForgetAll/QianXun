@@ -105,10 +105,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.iv_search:
+
                 break;
             case R.id.iv_star:
                 break;
             case R.id.iv_notification:
+                Intent intentSearch = new Intent(this,NotificationActivity.class);
+                startActivity(intentSearch);
                 break;
             case R.id.iv_banner:
                 break;

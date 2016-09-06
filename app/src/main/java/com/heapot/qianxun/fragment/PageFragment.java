@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.heapot.qianxun.R;
@@ -81,6 +82,7 @@ public class PageFragment extends Fragment {
 
         @Override
         public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
             View view = LayoutInflater.from(getContext()).inflate(R.layout.layout_list_item,null);
             MyViewHolder viewHolder = new MyViewHolder(view);
             return viewHolder;
@@ -89,6 +91,7 @@ public class PageFragment extends Fragment {
         @Override
         public void onBindViewHolder(MyViewHolder holder, int position) {
             holder.textView.setText(mList.get(position).toString());
+            holder.textView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,200));
         }
 
         @Override
