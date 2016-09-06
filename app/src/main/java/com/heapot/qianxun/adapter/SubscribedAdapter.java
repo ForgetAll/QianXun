@@ -1,7 +1,6 @@
 package com.heapot.qianxun.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.heapot.qianxun.R;
-import com.heapot.qianxun.bean.SubscribedBean;
+import com.heapot.qianxun.bean.DataBean;
 
 import java.util.List;
 
@@ -18,12 +17,12 @@ import java.util.List;
  * Created by Karl on 2016/9/1.
  */
 public class SubscribedAdapter extends BaseAdapter {
-    List<SubscribedBean> mList;
+    List<DataBean.SubscribedBean> mList;
     Context context;
     LayoutInflater inflater;
     private int hidePosition = AdapterView.INVALID_POSITION;
 
-    public SubscribedAdapter(Context context,List<SubscribedBean> mList) {
+    public SubscribedAdapter(Context context,List<DataBean.SubscribedBean> mList) {
         this.mList = mList;
         this.context = context;
         inflater = LayoutInflater.from(context);
@@ -85,10 +84,10 @@ public class SubscribedAdapter extends BaseAdapter {
     public void swapView(int draggedPosition,int destPos){
         //从前往后移动，其他item依次前移
         if (draggedPosition < destPos){
-            mList.add(destPos+1, (SubscribedBean) getItem(draggedPosition));
+            mList.add(destPos+1, (DataBean.SubscribedBean) getItem(draggedPosition));
             mList.remove(draggedPosition);
         }else if(draggedPosition >destPos){
-            mList.add(destPos, (SubscribedBean) getItem(draggedPosition));
+            mList.add(destPos, (DataBean.SubscribedBean) getItem(draggedPosition));
             mList.remove(draggedPosition+1);
         }
         hidePosition = destPos;
