@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     private String currentId;
-
     private List<String> mList;
     //主页界面
     @Override
