@@ -1,25 +1,21 @@
 package com.heapot.qianxun.bean;
 
+import com.heaven7.android.dragflowlayout.IDraggable;
+
 /**
  * Created by Karl on 2016/9/1.
  */
-public class SubscribedBean {
-    String name;
-    int position;
+public class SubscribedBean implements IDraggable {
+    public String text;
+    boolean draggable = true;
 
-    public String getName() {
-        return name;
+    public SubscribedBean(String text) {
+        this.text = text;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    @Override
+    public boolean isDraggable() {
+        return draggable;
     }
 
-    public int getPosition() {
-        return position;
-    }
-
-    public void setPosition(int position) {
-        this.position = position;
-    }
 }
