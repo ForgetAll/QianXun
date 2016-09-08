@@ -1,6 +1,5 @@
 package com.heapot.qianxun.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -23,8 +22,8 @@ import android.widget.TextView;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.bean.UserBean;
-import com.heapot.qianxun.customview.popupwindow.PhotoCarmaWindow;
-import com.heapot.qianxun.task.FileUploadTask;
+import com.heapot.qianxun.popupwindow.PhotoCarmaWindow;
+import com.heapot.qianxun.util.FileUploadTask;
 import com.heapot.qianxun.util.CommonUtil;
 import com.heapot.qianxun.util.JsonUtil;
 import com.heapot.qianxun.util.PreferenceUtil;

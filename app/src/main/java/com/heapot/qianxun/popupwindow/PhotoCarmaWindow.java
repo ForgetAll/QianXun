@@ -1,4 +1,4 @@
-package com.heapot.qianxun.customview.popupwindow;
+package com.heapot.qianxun.popupwindow;
 
 import android.app.Activity;
 import android.content.Intent;

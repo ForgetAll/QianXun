@@ -1,4 +1,4 @@
-package com.heapot.qianxun.task;
+package com.heapot.qianxun.util;
 
 import android.app.ProgressDialog;
 import android.content.Context;
