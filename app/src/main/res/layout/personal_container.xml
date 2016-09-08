@@ -30,7 +30,7 @@
                 <!--android:layout_gravity="bottom">-->
                 <!--<include layout="@layout/layout_tab"></include>-->
             <!--</FrameLayout>-->
-            <include layout="@layout/layout_tab">
+            <include layout="@layout/personal_tab">
 
             </include>
         </android.support.design.widget.CollapsingToolbarLayout>

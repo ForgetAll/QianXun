@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_changeTab"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffff00"
+    android:layout_marginTop="230dp"
+    android:orientation="vertical"
+    android:layout_alignParentBottom="true">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="56dp">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="56dp"
+        android:gravity="center_vertical"
+        android:text="当前栏目"
+        android:textSize="20sp" />
+    <TextView
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="56dp"
+        android:gravity="center_vertical"
+        android:text="删除此栏目"
+        android:textSize="20sp" />
+</RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp">
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="修改标题："
+            android:gravity="center_vertical"
+            android:textSize="20sp"/>
+
+        <EditText
+           android:layout_toRightOf="@+id/tv_title"
+            android:id="@+id/tv_currentTab"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="新闻"
+            android:textSize="20sp"/>
+        <ImageView
+            android:id="@+id/iv_extend"
+            android:layout_width="56dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:padding="10dp"
+            android:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/tv_order"
+            android:layout_width="56dp"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@id/iv_extend"
+            android:gravity="center_vertical"
+            android:text="顺序" />
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/lv_orderList"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"></ListView>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <Button
+    android:id="@+id/btn_sure"
+    android:layout_width="wrap_content"
+    android:layout_height="56dp"
+    android:text="确定"
+        android:layout_marginLeft="40dp"/>
+    <Button
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="56dp"
+        android:text="取消"
+        android:layout_marginRight="40dp"/>
+</RelativeLayout>
+
+
+
+</LinearLayout>

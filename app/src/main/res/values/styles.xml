@@ -6,10 +6,16 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-
         <item name="drawerArrowStyle">@style/drawerArrowStyle</item>
     </style>
-
+    <style name="AppStuTool" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:textColorPrimary">#ffffff</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
     <style name="menu_text_style">
         <item name="android:paddingLeft">10dp</item>
         <item name="android:paddingTop">10dp</item>
@@ -24,5 +30,21 @@
     <style name="tabTextAppearance" parent="TextAppearance.Design.Tab">
         <item name="android:textAllCaps">false</item>
     </style>
+    <!--个人信息样式-->
+    <!--布局样式-->
+    <style name="PersonLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">56dp</item>
+        <item name="android:background">@android:color/white</item>
+    </style>
+    <!--左边TextView-->
+    <style name="TV_Left">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
 
 </resources>

@@ -8,5 +8,4 @@ public class DataBean {
     public static final String PAGE_RECRUIT = "PAGE_RECRUIT";
     public static final String PAGE_TRAIN = "PAGE_TRAIN";
 
-
 }

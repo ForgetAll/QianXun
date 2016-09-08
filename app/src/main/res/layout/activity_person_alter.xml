@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/backgroundtest">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="90px"
+        android:id="@+id/rl_title"
+        android:background="#0000FF">
+
+        <TextView
+            android:id="@+id/tv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:drawableLeft="@mipmap/arrow_back_white"
+            android:gravity="center_vertical"
+            android:text="返回"
+            android:textColor="#ffffff"
+            android:maxLines="1"
+            android:textSize="34px"
+            />
+
+        <TextView
+            android:id="@+id/tv_next"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:paddingLeft="30px"
+            android:paddingRight="30px"
+            android:text="完成"
+            android:textColor="#ffffff"
+            android:textSize="34px" />
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/et_info"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="20dp"
+        android:background="@android:color/white"
+        android:drawableLeft="@mipmap/person_alter"
+        android:drawablePadding="5dp"
+        android:paddingLeft="10dp"
+        android:hint="请输入修改内容"/>
+</LinearLayout>

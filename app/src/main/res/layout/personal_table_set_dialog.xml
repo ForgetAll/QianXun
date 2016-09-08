@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_changeTab"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#D3D3D3"
+    android:orientation="vertical"
+    android:layout_marginRight="60dp"
+    android:layout_marginLeft="60dp"
+    android:layout_gravity="center">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="56dp">
+    <TextView
+        android:id="@+id/tv_tabTitle"
+        android:layout_marginLeft="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="56dp"
+        android:gravity="center_vertical"
+        android:text="当前栏目"
+        android:textSize="18sp" />
+    <TextView
+        android:id="@+id/tv_deleteTab"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="56dp"
+        android:gravity="center_vertical"
+        android:text="删除此栏目"
+        android:textSize="18sp" />
+</RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp">
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:id="@+id/tv_changeTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="修改标题："
+            android:gravity="center_vertical"
+            android:textSize="16sp"/>
+
+        <EditText
+            android:layout_marginRight="10dp"
+           android:layout_toRightOf="@+id/tv_changeTitle"
+            android:id="@+id/et_currentTab"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="新闻"
+            android:textSize="16sp"/>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp">
+        <ImageView
+            android:id="@+id/iv_extend"
+            android:layout_width="56dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:padding="16dp"
+            android:src="@drawable/ic_extend"
+            />
+
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:id="@+id/tv_order"
+            android:layout_width="56dp"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="排序"
+            android:textSize="16sp"/>
+    </RelativeLayout>
+
+    <ListView
+        android:visibility="gone"
+        android:id="@+id/lv_orderList"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"></ListView>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <Button
+    android:id="@+id/btn_sure"
+    android:layout_width="wrap_content"
+    android:layout_height="56dp"
+    android:text="确定"
+        android:layout_marginLeft="40dp"/>
+    <Button
+        android:id="@+id/btn_cancel"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="56dp"
+        android:text="取消"
+        android:layout_marginRight="40dp"/>
+</RelativeLayout>
+
+
+
+</LinearLayout>
