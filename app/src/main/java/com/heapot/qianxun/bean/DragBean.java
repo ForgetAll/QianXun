@@ -1,9 +1,9 @@
 package com.heapot.qianxun.bean;
 
 /**
- * Created by Karl on 2016/9/1.
+ * Created by Karl on 2016/9/8.
  */
-public class RecommendBean {
+public class DragBean {
     public String name;
     public int status;
 
