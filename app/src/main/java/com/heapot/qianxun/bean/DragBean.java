@@ -6,6 +6,15 @@ package com.heapot.qianxun.bean;
 public class DragBean {
     public String name;
     public int status;
+    public int pos;//记录位置
+
+    public int getPos() {
+        return pos;
+    }
+
+    public void setPos(int pos) {
+        this.pos = pos;
+    }
 
     public String getName() {
         return name;
