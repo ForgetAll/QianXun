@@ -6,15 +6,13 @@ import com.heapot.qianxun.goodapp.CustomApplication;
 
 
 /**
- * @author JackHappiness
- * @version 1.0
- * @date 2016/6/13.
+
  * @summary 吐司工具类
  */
 public class ToastUtil {
     /**
      * 弹出吐司
-     *
+     *Created by 15859 on 2016/9/6.
      * @param tip 提示的字符串
      */
     public static void show(String tip) {

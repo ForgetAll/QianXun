@@ -16,9 +16,7 @@ import java.io.File;
 import razerdp.basepopup.BasePopupWindow;
 
 /**
- * @author JackHappiness
- * @date 2016/6/28.
- * @verion 1.0
+ * Created by 15859 on 2016/9/4.
  * @summary 说明：拍照和相册的Window
  */
 

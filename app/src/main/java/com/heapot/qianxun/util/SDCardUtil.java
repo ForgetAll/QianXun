@@ -18,6 +18,7 @@ import java.io.IOException;
 
 /**
  * Created by 15859 on 2016/9/5.
+ * SD卡
  */
 public class SDCardUtil {
 

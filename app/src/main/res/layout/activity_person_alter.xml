@@ -7,7 +7,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="90px"
+        android:layout_height="56dp"
         android:id="@+id/rl_title"
         android:background="#0000FF">
 
@@ -20,7 +20,7 @@
             android:text="返回"
             android:textColor="#ffffff"
             android:maxLines="1"
-            android:textSize="34px"
+            android:textSize="18sp"
             />
 
         <TextView
@@ -29,11 +29,11 @@
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:gravity="center"
-            android:paddingLeft="30px"
-            android:paddingRight="30px"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
             android:text="完成"
             android:textColor="#ffffff"
-            android:textSize="34px" />
+            android:textSize="18sp" />
     </RelativeLayout>
 
     <EditText
@@ -43,7 +43,7 @@
         android:layout_marginTop="20dp"
         android:background="@android:color/white"
         android:drawableLeft="@mipmap/person_alter"
-        android:drawablePadding="5dp"
+        android:drawablePadding="10dp"
         android:paddingLeft="10dp"
         android:hint="请输入修改内容"/>
 </LinearLayout>

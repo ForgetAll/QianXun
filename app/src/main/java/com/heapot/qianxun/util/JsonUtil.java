@@ -9,10 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Created by 15859 on 2016/9/7.
  * class summary:Json工具类
- * Created by JackHappiness
- * on 2015/12/23
- * version 1.0
  */
 public class JsonUtil {
     /**

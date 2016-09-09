@@ -3,7 +3,7 @@
     android:id="@+id/ll_changeTabAdd"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#D3D3D3"
+    android:background="@drawable/bg_dialog"
     android:orientation="vertical"
     android:layout_marginRight="60dp"
     android:layout_marginLeft="60dp"

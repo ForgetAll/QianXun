@@ -25,9 +25,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * @author JackHappiness
- * @date 2016/6/20.
- * @verion 1.0
+ *Created by 15859 on 2016/9/4.
  * @summary 说明：通用工具类
  */
 

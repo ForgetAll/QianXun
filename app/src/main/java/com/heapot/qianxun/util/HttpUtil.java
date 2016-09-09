@@ -13,9 +13,7 @@ import java.net.URL;
 import java.util.Random;
 
 /**
- * @author JackHappiness
- * @version 1.0
- * @date 2016/5/9.
+ *Created by 15859 on 2016/9/7.
  * @summary Http相关
  */
 public class HttpUtil {

@@ -12,9 +12,7 @@ import java.lang.ref.WeakReference;
 import java.util.Stack;
 
 /**
- * @author JackHappiness
- * @version 1.0
- * @date 2016/6/13.
+ *Created by 15859 on 2016/9/3.
  * @summary Activity工具类
  */
 public class ActivityUtil {

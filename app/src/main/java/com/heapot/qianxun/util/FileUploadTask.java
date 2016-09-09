@@ -6,13 +6,11 @@ import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import com.heapot.qianxun.util.HttpUtil;
+
 import java.io.File;
 
 /**
- * @author JackHappiness
- * @date 2016/6/28.
- * @verion 1.0
+ *Created by 15859 on 2016/9/5.
  * @summary 说明：文件上传异步类
  */
 

@@ -5,9 +5,7 @@ import android.app.Application;
 import android.content.Context;
 
 /**
- * @author JackHappiness
- * @version 1.0
- * @date 2016/6/13.
+ *Created by 15859 on 2016/9/4.
  * @summary 全局配置应用
  */
 public class CustomApplication extends Application {

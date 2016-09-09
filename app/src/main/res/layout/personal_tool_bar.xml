@@ -18,7 +18,7 @@
                 android:layout_height="112px"
                 android:src="@drawable/imagetest"
                 android:layout_marginRight="12dp"
-                />
+                android:background="@drawable/bg_head_image_shape"/>
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">

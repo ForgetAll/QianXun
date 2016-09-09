@@ -20,9 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author JackHappiness
- * @date 2016/7/18.
- * @verion 1.0
+ *Created by 15859 on 2016/9/3.
  * @summary 说明：全局异常捕获类
  */
 

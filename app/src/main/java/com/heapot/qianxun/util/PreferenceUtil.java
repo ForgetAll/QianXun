@@ -12,9 +12,7 @@ import com.heapot.qianxun.goodapp.CustomApplication;
 import static android.content.Context.MODE_PRIVATE;
 
 /**
- * @author JackHappiness
- * @version 1.0
- * @date 2016/6/13.
+ * Created by 15859 on 2016/9/.7
  * @summary 偏好设置工具类
  */
 public class PreferenceUtil {
