@@ -6,12 +6,14 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.view.View;
 
 import com.heapot.qianxun.R;
-import com.heapot.qianxun.adapter.ContentAdapter;
+import com.heapot.qianxun.adapter.SubscribedAdapter;
 import com.heapot.qianxun.adapter.DragAdapter;
 import com.heapot.qianxun.bean.DragBean;
 import com.heapot.qianxun.helper.ItemTouchHelperCallback;
+import com.heapot.qianxun.helper.OnRecyclerViewItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,11 +23,11 @@ import java.util.List;
  * 订阅列表
  */
 public class Subscription extends Activity  {
-    private RecyclerView drag,content;
-    private List<DragBean> mSubList = new ArrayList<>();
-    private List<DragBean> mContentList = new ArrayList<>();
+    private RecyclerView drag, content;
+    private List<DragBean> dragList = new ArrayList<>();
+    private List<DragBean> contentList = new ArrayList<>();
     private DragAdapter dragAdapter;
-    private ContentAdapter contentAdapter;
+    private SubscribedAdapter contentAdapter;
     private LinearLayoutManager linearLayoutManager;
     private GridLayoutManager gridLayoutManager;
 
@@ -42,7 +44,6 @@ public class Subscription extends Activity  {
     private void initView(){
         drag = (RecyclerView) findViewById(R.id.rv_drag);
         content = (RecyclerView) findViewById(R.id.rv_content);
-
     }
     private void initEvent(){
         initData();
@@ -72,6 +73,25 @@ public class Subscription extends Activity  {
         };
         content.setLayoutManager(linearLayoutManager);
         content.setAdapter(contentAdapter);
+        /**
+         * 添加点击事件
+         */
+        contentAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                int status = contentList.get(position).getStatus();
+                if (status ==0){
+                    contentList.get(position).setStatus(1);//订阅标签
+                    dragList.add(contentList.get(position));
+                    dragAdapter.notifyDataSetChanged();
+                }else {
+                    contentList.get(position).setStatus(0);//取消订阅
+                    dragList.remove(contentList.get(position));
+                    dragAdapter.notifyDataSetChanged();
+                }
+                contentAdapter.notifyDataSetChanged();
+            }
+        });
     }
     private void initData(){
         DragBean dragBean;
@@ -79,12 +99,18 @@ public class Subscription extends Activity  {
             dragBean = new DragBean();
             dragBean.name = "标签 #"+i;
             dragBean.status = 0;
-            mContentList.add(dragBean);
-            mSubList.add(dragBean);
-        }
-        dragAdapter = new DragAdapter(this,mSubList);
-        contentAdapter = new ContentAdapter(this, mContentList);
-    }
+            dragBean.pos = i;
+            contentList.add(dragBean);
 
+        }
+        for (int i = 0; i < contentList.size(); i++) {
+            int status = contentList.get(i).getStatus();
+            if (status == 1){
+             dragList.add(contentList.get(i));
+            }
+        }
+        dragAdapter = new DragAdapter(this, dragList);
+        contentAdapter = new SubscribedAdapter(this, contentList);
+    }
 
 }
