@@ -18,11 +18,11 @@ import java.util.List;
 /**
  * Created by Karl on 2016/9/8.
  */
-public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentViewHolder> {
+public class SubscribedAdapter extends RecyclerView.Adapter<SubscribedAdapter.ContentViewHolder> {
     private Context context;
     private List<DragBean> mList = new ArrayList<>();
 
-    public ContentAdapter(Context context, List<DragBean> mList) {
+    public SubscribedAdapter(Context context, List<DragBean> mList) {
         this.context = context;
         this.mList = mList;
     }
