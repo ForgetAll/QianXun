@@ -21,7 +21,9 @@ public class CustomApplication extends Application {
         //初始化全局异常捕获
         CrashHandler.getInstance(context).init(context);
     }
-
+public static Context getContext(){
+    return context;
+}
 
     /**
      * 获得当前进程的名字
