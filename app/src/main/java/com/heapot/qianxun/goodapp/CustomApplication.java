@@ -15,6 +15,10 @@ public class CustomApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        //初始化日志工具类
+        com.orhanobut.logger.Logger
+                .init("QianXun")
+                .methodCount(3);
         //初始化上下文
         context = getApplicationContext();
 
@@ -24,6 +28,7 @@ public class CustomApplication extends Application {
 public static Context getContext(){
     return context;
 }
+
 
     /**
      * 获得当前进程的名字

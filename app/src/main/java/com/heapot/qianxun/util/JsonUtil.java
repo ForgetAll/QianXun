@@ -28,8 +28,8 @@ public class JsonUtil {
     /**
      * 描述：将列表转化为json.
      *
-     * @param list
-     * @return
+     * @param
+     * @returnlist
      */
     public static String toJson(List<?> list) {
         GsonBuilder gsonBuilder = new GsonBuilder();
