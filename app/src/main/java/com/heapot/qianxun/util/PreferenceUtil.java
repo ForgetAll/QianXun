@@ -47,7 +47,7 @@ public class PreferenceUtil {
      * @param value
      */
     public static void putString(String key, String value) {
-        SharedPreferences sp = CustomApplication.context.getSharedPreferences(ConstantsBean.CONFIG_NAME, MODE_PRIVATE);
+        SharedPreferences sp = CustomApplication.getContext().getSharedPreferences(ConstantsBean.CONFIG_NAME, MODE_PRIVATE);
         SharedPreferences.Editor edit = sp.edit();
         edit.putString(key, value);
         edit.commit();

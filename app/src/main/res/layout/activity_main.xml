@@ -10,6 +10,7 @@
     <!--content-->
     <include layout="@layout/layout_container"></include>
     <!--Drawer Menu-->
+
     <fragment
         android:id="@+id/main_menu_fragment"
         android:name="com.heapot.qianxun.fragment.MenuFragment"
