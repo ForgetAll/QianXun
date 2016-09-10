@@ -4,6 +4,8 @@ import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
 
+import java.util.logging.Logger;
+
 /**
  * @author JackHappiness
  * @version 1.0
@@ -17,13 +19,16 @@ public class CustomApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        //初始化日志工具类
+        com.orhanobut.logger.Logger
+                .init("QianXun")
+                .methodCount(3);
         //初始化上下文
         context = getApplicationContext();
 
         //初始化全局异常捕获
         CrashHandler.getInstance(context).init(context);
     }
-
 
     /**
      * 获得当前进程的名字
