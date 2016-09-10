@@ -12,6 +12,8 @@ import com.blankj.utilcode.utils.SPUtils;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.bean.DragBean;
 import com.heapot.qianxun.helper.ItemTouchHelperAdapter;
+import com.heapot.qianxun.util.JsonUtil;
+import com.orhanobut.logger.Logger;
 
 import java.util.Collections;
 import java.util.List;
@@ -50,7 +52,7 @@ public class DragAdapter extends RecyclerView.Adapter<DragAdapter.DragViewHolder
     public boolean onItemMove(int fromPosition, int toPosition) {
         Collections.swap(mList,fromPosition,toPosition);
         notifyItemMoved(fromPosition,toPosition);
-        Log.d("TAG",fromPosition+"---->"+toPosition);
+        Logger.json(JsonUtil.toJson(mList));
         return true;
     }
 
