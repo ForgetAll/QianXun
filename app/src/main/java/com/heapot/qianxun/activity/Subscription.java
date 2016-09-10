@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 
+import com.blankj.utilcode.utils.SPUtils;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.adapter.SubscribedAdapter;
 import com.heapot.qianxun.adapter.DragAdapter;
