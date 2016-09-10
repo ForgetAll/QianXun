@@ -13,6 +13,7 @@ import com.heapot.qianxun.R;
 import com.heapot.qianxun.bean.DragBean;
 import com.heapot.qianxun.helper.ItemTouchHelperAdapter;
 import com.heapot.qianxun.util.JsonUtil;
+import com.heapot.qianxun.util.PreferenceUtil;
 import com.orhanobut.logger.Logger;
 
 import java.util.Collections;
@@ -52,7 +53,8 @@ public class DragAdapter extends RecyclerView.Adapter<DragAdapter.DragViewHolder
     public boolean onItemMove(int fromPosition, int toPosition) {
         Collections.swap(mList,fromPosition,toPosition);
         notifyItemMoved(fromPosition,toPosition);
-        Logger.json(JsonUtil.toJson(mList));
+//        Logger.json(JsonUtil.toJson(mList));
+        PreferenceUtil.putString("Subscribed",JsonUtil.toJson(mList));
         return true;
     }
 

@@ -15,6 +15,9 @@ import com.heapot.qianxun.adapter.DragAdapter;
 import com.heapot.qianxun.bean.DragBean;
 import com.heapot.qianxun.helper.ItemTouchHelperCallback;
 import com.heapot.qianxun.helper.OnRecyclerViewItemClickListener;
+import com.heapot.qianxun.util.JsonUtil;
+import com.heapot.qianxun.util.PreferenceUtil;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +41,8 @@ public class Subscription extends Activity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subscription);
+
+
         initView();
         initEvent();
 
@@ -107,7 +112,7 @@ public class Subscription extends Activity  {
         for (int i = 0; i < contentList.size(); i++) {
             int status = contentList.get(i).getStatus();
             if (status == 1){
-             dragList.add(contentList.get(i));
+                dragList.add(contentList.get(i));
             }
         }
         dragAdapter = new DragAdapter(this, dragList);
