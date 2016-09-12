@@ -89,7 +89,6 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
 
         }
     }
-
     /**
      * 回收Activity
      */
