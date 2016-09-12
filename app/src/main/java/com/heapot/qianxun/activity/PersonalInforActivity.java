@@ -24,7 +24,7 @@ import android.widget.TextView;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.bean.UserBean;
-import com.heapot.qianxun.popupwindow.PhotoCarmaWindow;
+import com.heapot.qianxun.widget.PhotoCarmaWindow;
 import com.heapot.qianxun.util.CommonUtil;
 import com.heapot.qianxun.util.FileUploadTask;
 import com.heapot.qianxun.util.JsonUtil;

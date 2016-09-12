@@ -7,7 +7,7 @@ package com.heapot.qianxun.util;
 import android.content.SharedPreferences;
 
 import com.heapot.qianxun.bean.ConstantsBean;
-import com.heapot.qianxun.goodapp.CustomApplication;
+import com.heapot.qianxun.application.CustomApplication;
 
 import static android.content.Context.MODE_PRIVATE;
 

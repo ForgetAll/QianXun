@@ -1,4 +1,4 @@
-package com.heapot.qianxun.goodapp;
+package com.heapot.qianxun.application;
 
 import android.content.Context;
 import android.content.Intent;
