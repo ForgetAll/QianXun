@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -29,13 +28,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Toolbar mToolBar;
     private ImageView mBanner;
     private TabLayout mTabLayout;
-    private ImageView mSubscription,mSearch,mNotification,mStar;
+    private ImageView mSubscription, mSearch, mNotification, mStar;
     private ViewPager mViewPager;
     private MyPageAdapter mPageAdapter;
 
 
     private String currentId;
     private List<String> mList;
+
     //主页界面
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +46,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initEvent();
         initData();
     }
+
     //初始化控件
-    private void initView(){
+    private void initView() {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.main_drawer_layout);
         mToolBar = (Toolbar) findViewById(R.id.main_tool_bar);
         mTabLayout = (TabLayout) findViewById(R.id.main_tab_layout);
@@ -61,12 +62,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mList = new ArrayList<>();
     }
-    private void initEvent(){
+
+    private void initEvent() {
         //状态栏和抽屉效果
         mToolBar.setTitle("");
         setSupportActionBar(mToolBar);
         ActionBarDrawerToggle drawerToggle =
-                new ActionBarDrawerToggle(this,mDrawerLayout,mToolBar,R.string.app_name,R.string.app_name);
+                new ActionBarDrawerToggle(this, mDrawerLayout, mToolBar, R.string.app_name, R.string.app_name);
         mDrawerLayout.setDrawerListener(drawerToggle);
         drawerToggle.syncState();
 
@@ -77,12 +79,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mBanner.setOnClickListener(this);
         mSubscription.setOnClickListener(this);
     }
+
     /**
      * 模拟数据
      */
-    private void initData(){
+    private void initData() {
         for (int i = 0; i < 15; i++) {
-            mList.add("Tab-"+i);
+            mList.add("Tab-" + i);
         }
         currentId = DataBean.PAGE_SCIENCE;
         initTab();
@@ -91,8 +94,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     /**
      * 实现动态添加Tab
      */
-    private void initTab(){
-        mPageAdapter = new MyPageAdapter(getSupportFragmentManager(),this,mList);
+    private void initTab() {
+        mPageAdapter = new MyPageAdapter(getSupportFragmentManager(), this, mList);
         mViewPager.setAdapter(mPageAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
@@ -101,24 +104,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     /**
      * 点击事件
+     *
      * @param v
      */
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.iv_search:
-
+                Intent search = new Intent(this, SearchActivity.class);
+                startActivity(search);
                 break;
             case R.id.iv_star:
                 break;
             case R.id.iv_notification:
-                Intent intentSearch = new Intent(this,NotificationActivity.class);
+                Intent intentSearch = new Intent(this, NotificationActivity.class);
                 startActivity(intentSearch);
                 break;
             case R.id.iv_banner:
                 break;
             case R.id.iv_subscription_choose:
-                Intent intent = new Intent(this,Subscription.class);
+                Intent intent = new Intent(this, Subscription.class);
                 startActivity(intent);
                 break;
 
@@ -135,7 +140,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void closeDrawer(){
         mDrawerLayout.closeDrawers();
     }
-    public void setPageId(String id){
+
+    public void setPageId(String id) {
         currentId = id;
     }
     public void setBanner(Bitmap bitmap){
@@ -143,20 +149,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-
     /**
      * 配置状态栏
      */
-    private void setTransparentBar(){
-        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.KITKAT){
+    private void setTransparentBar() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         }
-        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             window.getDecorView().setSystemUiVisibility(
-                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
             window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(Color.TRANSPARENT);
