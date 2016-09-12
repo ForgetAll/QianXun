@@ -32,6 +32,8 @@
         <activity android:name=".activity.PersonalInforActivity"></activity>
         <!--修改名字签名界面-->
         <activity android:name=".activity.PersonInfoAlterActivity"></activity>
+        <!--搜索界面-->
+        <activity android:name=".activity.SearchActivity"></activity>
     </application>
 
 </manifest>
