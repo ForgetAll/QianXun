@@ -1,18 +1,23 @@
 package com.heapot.qianxun.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.heapot.qianxun.R;
+import com.heapot.qianxun.bean.ConstantsBean;
 
 /**
  * Created by 15859 on 2016/9/3.
  * 修改名字签名界面
  *
  */
-public class PersonInfoAlterActivity extends AppCompatActivity {
-    private EditText etInfo;
+public class PersonInfoAlterActivity extends AppCompatActivity implements View.OnClickListener {
+    private EditText mInfo;
+    private TextView mComplete,mBack;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -29,7 +34,12 @@ public class PersonInfoAlterActivity extends AppCompatActivity {
 
 
     protected void initView() {
-        etInfo = (EditText) findViewById(R.id.et_info);
+        mInfo = (EditText) findViewById(R.id.et_info);
+      mComplete=(TextView)  findViewById(R.id.tv_complete);
+        mBack=(TextView)  findViewById(R.id.tv_back);
+        mComplete.setOnClickListener(this);
+        mBack.setOnClickListener(this);
+
     }
 
 
@@ -50,5 +60,22 @@ public class PersonInfoAlterActivity extends AppCompatActivity {
                 finish();
             }
         });*/
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.tv_back:
+                finish();
+                break;
+            case R.id.tv_complete:
+                String info = mInfo.getText().toString();
+                Intent intent = new Intent();
+                intent.putExtra(ConstantsBean.INFO, info);
+                setResult(RESULT_OK, intent);
+                finish();
+                break;
+        }
+
     }
 }

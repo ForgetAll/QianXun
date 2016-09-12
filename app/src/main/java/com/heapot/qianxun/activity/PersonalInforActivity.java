@@ -2,6 +2,7 @@ package com.heapot.qianxun.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
@@ -12,6 +13,7 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -23,8 +25,8 @@ import com.heapot.qianxun.R;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.bean.UserBean;
 import com.heapot.qianxun.popupwindow.PhotoCarmaWindow;
-import com.heapot.qianxun.util.FileUploadTask;
 import com.heapot.qianxun.util.CommonUtil;
+import com.heapot.qianxun.util.FileUploadTask;
 import com.heapot.qianxun.util.JsonUtil;
 import com.heapot.qianxun.util.PreferenceUtil;
 import com.heapot.qianxun.util.ToastUtil;
@@ -44,8 +46,6 @@ public class PersonalInforActivity extends AppCompatActivity implements View.OnC
     public String userId;
     private TextView mBack;
     private ImageView mHead;
-    private TextView mBirth;
-    private TextView mSex;
     private TextView mNick;
     private TextView mAutograph;
     private RelativeLayout rl_sex;
@@ -90,11 +90,8 @@ public class PersonalInforActivity extends AppCompatActivity implements View.OnC
     private void initView() {
        mBack=(TextView) findViewById(R.id.tv_back);
         mHead = (ImageView) findViewById(R.id.iv_head);
-        mBirth = (TextView) findViewById(R.id.tv_birth);
-        mSex = (TextView) findViewById(R.id.tv_sex);
         mNick = (TextView) findViewById(R.id.tv_nick);
         mAutograph = (TextView) findViewById(R.id.tv_autograph);
-        findViewById(R.id.rl_birth).setOnClickListener(this);
         findViewById(R.id.rl_autograph).setOnClickListener(this);
         findViewById(R.id.rl_nick).setOnClickListener(this);
         mPhotoView = (TextView) findViewById(R.id.tv_girl);
@@ -103,14 +100,17 @@ public class PersonalInforActivity extends AppCompatActivity implements View.OnC
         mCarmaView.setOnClickListener(this);
        mBottomSet=(RelativeLayout) findViewById(R.id.rl_bottomSet);
         mBottomSet.setOnClickListener(this);
-        rl_sex = (RelativeLayout) findViewById(R.id.rl_sex);
-        rl_sex.setOnClickListener(this);
         mHead.setOnClickListener(this);
         mBack.setOnClickListener(this);
     }
 
     private void initEvent() {
-
+        /*nick = PreferenceUtil.getString(ConstantsBean.userNick);
+        autograph = PreferenceUtil.getString(ConstantsBean.userAutograph);
+        mNick.setText(nick);
+        mAutograph.setText(autograph);
+        String imagePath = PreferenceUtil.getString(ConstantsBean.userImage);
+        CommonUtil.loadImage(mHead, imagePath, R.mipmap.imagetest);*/
     }
 //toolbar
     private void setTransparentBar() {
@@ -148,14 +148,6 @@ public class PersonalInforActivity extends AppCompatActivity implements View.OnC
                 requestCode = 202;
                 jumpAlterActivity(autograph);
                 break;
-            //性别
-            case R.id.rl_sex:
-                requestCode = 204;
-                break;
-            //生日
-            case R.id.rl_birth:
-                requestCode = 205;
-                break;
 
         }
     }
@@ -187,10 +179,7 @@ public class PersonalInforActivity extends AppCompatActivity implements View.OnC
             case 203:
                 userBean.setUserImage(info);
                 break;
-            //性别
-            case 204:
-                userBean.setUserSex(info);
-                break;
+
         }
         String data = JsonUtil.toJson(userBean);
         //发送数据
@@ -205,7 +194,10 @@ public class PersonalInforActivity extends AppCompatActivity implements View.OnC
                                 PreferenceUtil.putString(key, info);
                                 mNick.setText(info);
                                 break;
-
+                            //签名
+                            case 202:
+                                PreferenceUtil.putString(key, info);
+                                mAutograph.setText(info);
                             //头像
                             case 203:
                                 PreferenceUtil.putString(key, info);
@@ -247,7 +239,50 @@ public class PersonalInforActivity extends AppCompatActivity implements View.OnC
         intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
         startActivityForResult(intent, 102);
     }
-    private void jumpAlterActivity(String info) {
+
+    /**
+
+     *压缩图片
+
+     */
+
+     private Bitmap yasuo(Uri uri) {
+     Bitmap bitmap = null;
+     try {
+
+     BitmapFactory.Options options = new BitmapFactory.Options();
+     options.inJustDecodeBounds = true;
+     bitmap = BitmapFactory.decodeStream(this.getContentResolver()
+     .openInputStream(uri), null, options);
+     int picWidth = options.outWidth;
+     int picHeight = options.outHeight;
+     WindowManager windowManager = getWindowManager();
+     Display display = windowManager.getDefaultDisplay();
+     int screenWidth = display.getWidth();
+     int screenHeight = display.getHeight();
+     options.inSampleSize = 1;
+     if (picWidth > picHeight) {
+     if (picWidth > screenWidth)
+     options.inSampleSize = picWidth / screenWidth;
+     } else {
+     if (picHeight > screenHeight)
+     options.inSampleSize = picHeight / screenHeight;
+     }
+     options.inJustDecodeBounds = false;
+     bitmap = BitmapFactory.decodeStream(this.getContentResolver()
+     .openInputStream(uri), null, options);
+     mHead.setImageBitmap(bitmap);
+     /*
+     * if (bitmap.isRecycled() == false) { bitmap.recycle(); }
+     */
+    System.gc();
+} catch (Exception e1) {
+        }
+        return bitmap;
+
+        }
+
+     private void jumpAlterActivity(String info) {
         Intent intent = new Intent(PersonalInforActivity.this, PersonInfoAlterActivity.class);
         intent.putExtra(ConstantsBean.INFO, info);
         startActivityForResult(intent, requestCode);
@@ -262,6 +297,7 @@ public class PersonalInforActivity extends AppCompatActivity implements View.OnC
                 case ConstantsBean.CARMA_RESULT_CODE:
                     Uri uri = Uri.fromFile(new File(ConstantsBean.HEAD_IMAGE_PATH));
                     cropImage(uri);
+                    //yasuo(uri);
                     break;
                 //裁剪完成
                 case 102:
@@ -273,6 +309,7 @@ public class PersonalInforActivity extends AppCompatActivity implements View.OnC
                 case 103:
                     Uri uri1 = intent.getData();
                     cropImage(uri1);
+                   // yasuo(uri1);
                     break;
                 //修改昵称
                 case 201:
@@ -287,14 +324,6 @@ public class PersonalInforActivity extends AppCompatActivity implements View.OnC
             }
         }
     }
-
-
-
-
-
-
-
-
 
 }
 

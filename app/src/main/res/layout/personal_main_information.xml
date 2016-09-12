@@ -125,63 +125,7 @@
                 android:layout_marginRight="10dp"
                 android:src="@drawable/arrow_right_ee" />
         </RelativeLayout>
-        <RelativeLayout
-            android:id="@+id/rl_birth"
-            style="@style/PersonLayout"
-            android:layout_marginTop="1dp">
 
-            <TextView
-                style="@style/TV_Left"
-                android:text="生日" />
-
-            <TextView
-                android:id="@+id/tv_birth"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
-                android:layout_toLeftOf="@id/iv_arrow"
-                android:text="1990-05-08"
-                android:textSize="16sp" />
-
-            <ImageView
-                android:id="@id/iv_arrow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
-                android:src="@drawable/arrow_right_ee" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/rl_sex"
-            style="@style/PersonLayout"
-            android:layout_marginTop="1dp">
-
-            <TextView
-                style="@style/TV_Left"
-                android:text="性别" />
-
-            <TextView
-                android:id="@+id/tv_sex"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
-                android:layout_toLeftOf="@id/iv_arrow"
-                android:text="男"
-                android:textSize="16sp" />
-
-            <ImageView
-                android:id="@id/iv_arrow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
-                android:src="@drawable/arrow_right_ee" />
-        </RelativeLayout>
 
 
     </LinearLayout>
