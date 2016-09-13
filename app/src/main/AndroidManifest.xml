@@ -34,6 +34,8 @@
         <activity android:name=".activity.PersonInfoAlterActivity"></activity>
         <!--搜索界面-->
         <activity android:name=".activity.SearchActivity"></activity>
+        <!--创建文章、简历页面-->
+        <activity android:name=".activity.CreateActivity"></activity>
     </application>
 
 </manifest>
