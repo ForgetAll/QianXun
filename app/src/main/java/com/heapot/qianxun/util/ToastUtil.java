@@ -2,7 +2,7 @@ package com.heapot.qianxun.util;
 
 import android.widget.Toast;
 
-import com.heapot.qianxun.goodapp.CustomApplication;
+import com.heapot.qianxun.application.CustomApplication;
 
 
 /**

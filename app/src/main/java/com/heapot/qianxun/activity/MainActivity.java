@@ -1,9 +1,11 @@
 package com.heapot.qianxun.activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -31,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ViewPager mViewPager;
     private MyPageAdapter mPageAdapter;
 
-
+    private FloatingActionButton createButton;
     private String currentId;
     private List<String> mList;
 
@@ -58,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mNotification = (ImageView) findViewById(R.id.iv_notification);
         mBanner = (ImageView) findViewById(R.id.iv_banner);
         mSubscription = (ImageView) findViewById(R.id.iv_subscription_choose);
+        createButton = (FloatingActionButton) findViewById(R.id.fab_create);
 
         mList = new ArrayList<>();
     }
@@ -77,6 +80,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mNotification.setOnClickListener(this);
         mBanner.setOnClickListener(this);
         mSubscription.setOnClickListener(this);
+
+        //添加悬浮按钮点击事件
+        createButton.setOnClickListener(this);
     }
 
     /**
@@ -125,6 +131,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Intent intent = new Intent(this, Subscription.class);
                 startActivity(intent);
                 break;
+            case R.id.fab_create:
+                Intent intentCreate = new Intent(this,CreateActivity.class);
+                startActivity(intentCreate);
+                break;
 
 
         }
@@ -132,14 +142,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     /**
      * 提供一些对外接口方法
+     * 1、关闭抽屉
+     * 2、设置页面id
+     * 3、设置导航图片banner
      */
-    //关闭抽屉
-    public void closeDrawer() {
+    public void closeDrawer(){
         mDrawerLayout.closeDrawers();
     }
 
     public void setPageId(String id) {
         currentId = id;
+    }
+    public void setBanner(Bitmap bitmap){
+        mBanner.setImageBitmap(bitmap);
     }
 
 

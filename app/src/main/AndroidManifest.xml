@@ -9,7 +9,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
-        android:name=".goodapp.CustomApplication"
+        android:name=".application.CustomApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -34,6 +34,8 @@
         <activity android:name=".activity.PersonInfoAlterActivity"></activity>
         <!--搜索界面-->
         <activity android:name=".activity.SearchActivity"></activity>
+        <!--创建文章、简历页面-->
+        <activity android:name=".activity.CreateActivity"></activity>
     </application>
 
 </manifest>
