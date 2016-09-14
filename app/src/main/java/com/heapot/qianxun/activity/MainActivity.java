@@ -36,6 +36,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private String currentId;
     private List<String> mList;
 
+    private FloatingActionButton mCreate;
+
     //主页界面
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mNotification = (ImageView) findViewById(R.id.iv_notification);
         mBanner = (ImageView) findViewById(R.id.iv_banner);
         mSubscription = (ImageView) findViewById(R.id.iv_subscription_choose);
+        mCreate = (FloatingActionButton) findViewById(R.id.fab_create);
 
         mList = new ArrayList<>();
     }
@@ -78,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mNotification.setOnClickListener(this);
         mBanner.setOnClickListener(this);
         mSubscription.setOnClickListener(this);
+//        mCreate.setOnClickListener();
 
     }
 
