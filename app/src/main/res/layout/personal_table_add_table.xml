@@ -40,6 +40,7 @@
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:text="新闻"
+            android:singleLine="true"
             android:textSize="16sp"/>
 
     </RelativeLayout>

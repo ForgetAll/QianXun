@@ -36,7 +36,7 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
     </android.support.v4.view.ViewPager>
-    <android.support.design.widget.FloatingActionButton
+   <!-- <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_create"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -46,5 +46,5 @@
         android:src="@drawable/ic_add_24"
         android:elevation="5dp"
         android:backgroundTint="#2EC093"
-        app:pressedTranslationZ="10dp"/>
+        app:pressedTranslationZ="10dp"/>-->
 </android.support.design.widget.CoordinatorLayout>

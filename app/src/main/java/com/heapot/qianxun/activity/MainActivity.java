@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -33,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ViewPager mViewPager;
     private MyPageAdapter mPageAdapter;
 
-    private FloatingActionButton createButton;
+    //private FloatingActionButton createButton;
     private String currentId;
     private List<String> mList;
 
@@ -60,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mNotification = (ImageView) findViewById(R.id.iv_notification);
         mBanner = (ImageView) findViewById(R.id.iv_banner);
         mSubscription = (ImageView) findViewById(R.id.iv_subscription_choose);
-        createButton = (FloatingActionButton) findViewById(R.id.fab_create);
+       // createButton = (FloatingActionButton) findViewById(R.id.fab_create);
 
         mList = new ArrayList<>();
     }
@@ -82,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mSubscription.setOnClickListener(this);
 
         //添加悬浮按钮点击事件
-        createButton.setOnClickListener(this);
+      //  createButton.setOnClickListener(this);
     }
 
     /**
@@ -131,10 +130,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Intent intent = new Intent(this, Subscription.class);
                 startActivity(intent);
                 break;
-            case R.id.fab_create:
+           /* case R.id.fab_create:
                 Intent intentCreate = new Intent(this,CreateActivity.class);
                 startActivity(intentCreate);
-                break;
+                break;*/
 
 
         }
