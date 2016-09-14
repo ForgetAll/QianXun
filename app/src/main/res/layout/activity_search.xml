@@ -67,7 +67,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:hint="检一片叶，索一片天"
-                android:imeOptions="actionNone"
+                android:imeOptions="actionSearch"
                 android:singleLine="true"
                 android:textSize="18sp"
                 android:background="@null"
