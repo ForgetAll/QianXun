@@ -147,16 +147,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     /**
      * 提供一些对外接口方法
      * 1、关闭抽屉
-     * 2、设置页面id
      * 3、设置导航图片banner
      */
     public void closeDrawer(){
         mDrawerLayout.closeDrawers();
     }
-
-//    public void setPageId(String id) {
-//        currentId = id;
-//    }
     public void setBanner(Bitmap bitmap){
         mBanner.setImageBitmap(bitmap);
     }
