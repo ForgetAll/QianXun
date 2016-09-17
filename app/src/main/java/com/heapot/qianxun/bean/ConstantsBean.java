@@ -6,8 +6,8 @@ import android.os.Environment;
  * Created by 15859 on 2016/9/3.
  */
 public class ConstantsBean {
-    //基本路径
-    public static final String BASE_PATH = "http://122.114.85.104:8080/classes";
+    //基本路径-已改
+    public static final String BASE_PATH = "https://qinxi1992.xicp.net/";
     //文件上传
     public static final String UPLOAD = "/file/upload";
     //图片基本路径
@@ -19,9 +19,17 @@ public class ConstantsBean {
     public static final int CARMA_RESULT_CODE = 101;
     public static final String HEAD_IMAGE_PATH = Environment.getExternalStorageDirectory() + "/headImage.jpg";
 
+    /**
+     * url地址
+     */
+    //https://qinxi1992.xicp.net/login?loginName=coderfan&password=123456
+    public static final String LOGIN = "login";
+    public static final String REGISTER = "register";
+
+
     /*
-       常量类key用于跳转传值
-        */
+     * 常量类key用于跳转传值
+     */
     public static final String KEY_LOOK_BEAN = "lookBean";
     public static final String USER_ID = "userId";
     public static final String USER_PHONE = "userPhone";
@@ -47,5 +55,9 @@ public class ConstantsBean {
     public static final String token = "token";
     public static final String userLatitude = "userLatitude";
     public static final String userLongitude = "userLongitude";
+
+    public static final String PAGE_SCIENCE = "PAGE_SCIENCE";
+    public static final String PAGE_RECRUIT = "PAGE_RECRUIT";
+    public static final String PAGE_TRAIN = "PAGE_TRAIN";
 
 }

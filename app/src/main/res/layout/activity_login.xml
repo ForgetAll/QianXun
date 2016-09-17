@@ -50,8 +50,9 @@
                 android:background="#E8EDEC"
                 android:hint="请输入账号"
                 android:textColorHint="#2B6151"
-                android:inputType="phone"/>
+                android:inputType="text"/>
             <TextView
+                android:id="@+id/txt_remove_data"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -78,6 +79,7 @@
                 android:textColorHint="#2B6151"
                 android:inputType="textPassword"/>
             <TextView
+                android:id="@+id/txt_show_pass"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -108,7 +110,7 @@
             android:layout_marginLeft="60dp"
             android:layout_marginRight="60dp">
             <TextView
-                android:id="@+id/tv_login"
+                android:id="@+id/txt_login_to_register"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -118,7 +120,7 @@
                 android:textSize="16sp"
                 android:textColor="#2B6151"/>
             <TextView
-                android:id="@+id/tv_reset_password"
+                android:id="@+id/txt_reset_password"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"

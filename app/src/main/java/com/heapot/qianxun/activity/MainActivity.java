@@ -19,7 +19,9 @@ import android.widget.ImageView;
 
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.adapter.MyPageAdapter;
-import com.heapot.qianxun.bean.DataBean;
+import com.heapot.qianxun.application.CustomApplication;
+import com.heapot.qianxun.util.PreferenceUtil;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +35,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ViewPager mViewPager;
     private MyPageAdapter mPageAdapter;
 
-    private String currentId;
     private List<String> mList;
 
     private FloatingActionButton mCreate;
@@ -64,6 +65,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mCreate = (FloatingActionButton) findViewById(R.id.fab_create);
 
         mList = new ArrayList<>();
+
+        //测试token
+        Logger.d("打印本地token-->"+PreferenceUtil.getString("token"));
+        Logger.d("打印application中的token---》"+ CustomApplication.TOKEN);
     }
 
     private void initEvent() {
@@ -92,7 +97,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         for (int i = 0; i < 15; i++) {
             mList.add("Tab-" + i);
         }
-        currentId = DataBean.PAGE_SCIENCE;
         initTab();
     }
 
@@ -150,9 +154,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mDrawerLayout.closeDrawers();
     }
 
-    public void setPageId(String id) {
-        currentId = id;
-    }
+//    public void setPageId(String id) {
+//        currentId = id;
+//    }
     public void setBanner(Bitmap bitmap){
         mBanner.setImageBitmap(bitmap);
     }
