@@ -1,5 +1,4 @@
 package com.heapot.qianxun.fragment;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -76,12 +75,8 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
                 break;
             //设置、帮助的点击事件
             case R.id.txt_menu_settings:
-                Intent setting=new Intent(getContext(),SystemSettingActivity.class);
-                startActivity(setting);
                 break;
             case R.id.txt_menu_help:
-                Intent help=new Intent(getContext(),SystemHelpActivity.class);
-                startActivity(help);
                 break;
             //点击切换侧滑菜单头布局的背景
             case R.id.ll_menu_header:

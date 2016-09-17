@@ -88,6 +88,8 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                                 CustomApplication.TOKEN = token;
                                 //存储到本地
                                 PreferenceUtil.putString("token",token);
+                                //设置跳转到主页-->学术页面
+                                CustomApplication.CURRENT_PAGE = ConstantsBean.PAGE_SCIENCE;
                                 //跳转页面,同时关闭当前页面
                                 Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                                 startActivity(intent);
