@@ -14,6 +14,8 @@ import android.widget.TextView;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.activity.MainActivity;
 import com.heapot.qianxun.activity.PersonalActivity;
+import com.heapot.qianxun.application.CustomApplication;
+import com.heapot.qianxun.bean.ConstantsBean;
 
 /**
  * Created by Karl on 2016/8/20.
@@ -61,14 +63,18 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()){
             //science学术、recruit招聘、train培训三个menu的点击事件，点击切换fragment
+            //每次都要设置当前页面ID
             case R.id.txt_menu_science:
                 ((MainActivity)mActivity).closeDrawer();
+                CustomApplication.CURRENT_PAGE = ConstantsBean.PAGE_SCIENCE;
                 break;
             case R.id.txt_menu_recruit:
                 ((MainActivity)mActivity).closeDrawer();
+                CustomApplication.CURRENT_PAGE = ConstantsBean.PAGE_RECRUIT;
                 break;
             case R.id.txt_menu_train:
                 ((MainActivity)mActivity).closeDrawer();
+                CustomApplication.CURRENT_PAGE = ConstantsBean.PAGE_TRAIN;
                 break;
             //设置、帮助的点击事件
             case R.id.txt_menu_settings:
