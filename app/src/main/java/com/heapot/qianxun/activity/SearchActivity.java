@@ -32,7 +32,7 @@ public class SearchActivity extends Activity implements View.OnClickListener{
     private EditText et_search;
     private TextView tv_tip, tv_clear;
     private SearchListView listView;
-    private ImageView mBack;
+    private ImageView mBack,mClearSearch;
     private RecordSQLiteOpenHelper helper = new RecordSQLiteOpenHelper(this);
     private SQLiteDatabase db;
     private BaseAdapter adapter;
@@ -55,6 +55,8 @@ public class SearchActivity extends Activity implements View.OnClickListener{
         listView = (com.heapot.qianxun.popupwindow.SearchListView) findViewById(R.id.listView);
         tv_clear = (TextView) findViewById(R.id.tv_clear);
         mBack = (ImageView) findViewById(R.id.iv_back);
+        mClearSearch=(ImageView)findViewById(R.id.iv_clearSearch);
+        mClearSearch.setOnClickListener(this);
         mBack.setOnClickListener(this);
         tv_clear.setOnClickListener(this);
         // 搜索框的键盘搜索键点击回调
@@ -94,10 +96,10 @@ public class SearchActivity extends Activity implements View.OnClickListener{
             public void afterTextChanged(Editable s) {
 if (s.toString().trim().length()==0){
     tv_tip.setText("搜索历史");
-    tv_tip.setVisibility(View.VISIBLE);
+    mClearSearch.setVisibility(View.GONE);
 }else{
     tv_tip.setText("搜索结果");
-    tv_clear.setVisibility(View.GONE);
+    mClearSearch.setVisibility(View.VISIBLE);
 }
                 String temName=et_search.getText().toString();
                 // 根据tempName去模糊查询数据库中有没有数据
@@ -168,28 +170,14 @@ if (s.toString().trim().length()==0){
             case R.id.iv_back:
                 finish();
                 break;
+            case R.id.iv_clearSearch:
+                et_search.setText("");
+                break;
 
         }
 
     }
 
-  /*  @Override
-    public boolean onKey(View v, int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {// 修改回车键功能
-// 先隐藏键盘
-            ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(
-                    getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-// 按完搜索键后将当前查询的关键字保存起来,如果该关键字已经存在就不执行保存
-            boolean hasData = hasData(et_search.getText().toString().trim());
-if (!hasData){
-    insertData(et_search.getText().toString().trim());
-    queryData("");
-}
-            //根据输入的内容模糊查询商品，并跳转到另一个界面，由你自己去实现
-            Toast.makeText(SearchActivity.this, "clicked!", Toast.LENGTH_SHORT).show();
-        }
-        return false;
-    }*/
 
 
     //检查数据库中是否有该条数据

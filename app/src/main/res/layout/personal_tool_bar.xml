@@ -42,11 +42,11 @@
                 <ImageView
                     android:id="@+id/iv_close"
                     android:layout_alignParentRight="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/margin_horizontal"
-                    android:src="@drawable/ic_delete_32"/>
+                    android:src="@drawable/ic_delete_64_white"/>
             </RelativeLayout>
         </LinearLayout>
 </android.support.v7.widget.Toolbar>
