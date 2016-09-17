@@ -34,7 +34,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     private TextView removeData,showPass,reset,register;
     private Button login;
 
-    private boolean isDisplayPass = false;
+    private static boolean isDisplayPass = false;
 
 
     @Override
@@ -116,6 +116,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.txt_remove_data:
+                edt_name.setText("");
                 break;
             case R.id.txt_show_pass:
                 if (isDisplayPass){
