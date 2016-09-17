@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mNotification.setOnClickListener(this);
         mBanner.setOnClickListener(this);
         mSubscription.setOnClickListener(this);
-//        mCreate.setOnClickListener();
+        mCreate.setOnClickListener(this);
 
     }
 
