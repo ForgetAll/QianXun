@@ -3,6 +3,8 @@ package com.heapot.qianxun.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,6 +33,8 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     private EditText edt_name,edt_pass;
     private TextView removeData,showPass,reset,register;
     private Button login;
+
+    private boolean isDisplayPass = false;
 
 
     @Override
@@ -114,6 +118,17 @@ public class LoginActivity extends Activity implements View.OnClickListener {
             case R.id.txt_remove_data:
                 break;
             case R.id.txt_show_pass:
+                if (isDisplayPass){
+                    //明文显示密码
+                    edt_pass.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    showPass.setText("隐藏密码");
+                }else {
+                    //密文显示密码
+                    edt_pass.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    showPass.setText("显示密码");
+                }
+                isDisplayPass = !isDisplayPass;
+                edt_pass.postInvalidate();
                 break;
             case R.id.btn_login:
                 toLogin();
