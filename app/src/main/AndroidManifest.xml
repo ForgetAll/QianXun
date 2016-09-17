@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:name=".application.CustomApplication"
@@ -16,11 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activity.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <!--订阅提交页面-->
         <activity android:name=".activity.Subscription"></activity>
@@ -36,6 +33,14 @@
         <activity android:name=".activity.SearchActivity"></activity>
         <!--创建文章、简历页面-->
         <activity android:name=".activity.CreateActivity"></activity>
+        <!--Login-->
+        <activity android:name=".activity.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <!--设置界面-->
         <activity android:name=".activity.SystemSettingActivity"></activity>
         <!--帮助界面-->

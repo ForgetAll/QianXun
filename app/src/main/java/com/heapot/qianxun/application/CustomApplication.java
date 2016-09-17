@@ -4,6 +4,8 @@ import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
 
+import com.heapot.qianxun.bean.ConstantsBean;
+
 /**
  *Created by 15859 on 2016/9/4.
  * @summary 全局配置应用
@@ -11,6 +13,11 @@ import android.content.Context;
 public class CustomApplication extends Application {
     //获取全局上下文
     public static Context context;
+
+    public static String TOKEN = "";
+
+    public static String CURRENT_PAGE = ConstantsBean.PAGE_SCIENCE;
+
 
     @Override
     public void onCreate() {

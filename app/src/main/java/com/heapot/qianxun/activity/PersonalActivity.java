@@ -25,7 +25,6 @@ import android.widget.Toast;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.adapter.OrderListAdapter;
 import com.heapot.qianxun.adapter.PersonalPageAdapter;
-import com.heapot.qianxun.bean.DataBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -99,7 +98,6 @@ public class PersonalActivity extends AppCompatActivity implements View.OnClickL
             mList.add("Tab-" + i);
 
         }
-        currentId = DataBean.PAGE_SCIENCE;
         initTab();
     }
 
