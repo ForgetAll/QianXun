@@ -131,7 +131,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Intent intent = new Intent(this, Subscription.class);
                 startActivity(intent);
                 break;
-
+            case R.id.fab_create:
+                Intent createIntent = new Intent(this,CreateActivity.class);
+                startActivity(createIntent);
+                break;
         }
     }
 
