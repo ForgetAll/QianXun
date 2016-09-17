@@ -36,6 +36,10 @@
         <activity android:name=".activity.SearchActivity"></activity>
         <!--创建文章、简历页面-->
         <activity android:name=".activity.CreateActivity"></activity>
+        <!--设置界面-->
+        <activity android:name=".activity.SystemSettingActivity"></activity>
+        <!--帮助界面-->
+        <activity android:name=".activity.SystemHelpActivity"></activity>
     </application>
 
 </manifest>
