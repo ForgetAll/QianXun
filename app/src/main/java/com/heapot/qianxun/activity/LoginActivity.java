@@ -29,7 +29,7 @@ import org.json.JSONObject;
 /**
  * Created by Karl on 2016/9/17.
  */
-public class LoginActivity extends Activity implements View.OnClickListener {
+public class LoginActivity extends BaseActivity implements View.OnClickListener {
     private EditText edt_name,edt_pass;
     private TextView removeData,showPass,reset,register;
     private Button login;

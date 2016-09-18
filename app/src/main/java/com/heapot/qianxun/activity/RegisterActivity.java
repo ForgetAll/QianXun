@@ -18,6 +18,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.blankj.utilcode.utils.NetworkUtils;
 import com.heapot.qianxun.R;
+import com.heapot.qianxun.application.ActivityCollector;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.util.CommonUtil;
 import com.orhanobut.logger.Logger;
@@ -28,7 +29,7 @@ import org.json.JSONObject;
 /**
  * Created by Karl on 2016/9/18.
  */
-public class RegisterActivity extends Activity implements View.OnClickListener {
+public class RegisterActivity extends BaseActivity implements View.OnClickListener {
     private EditText edt_phone,edt_name,edt_password,edt_mess;
     private TextView sendMessage,resetName,resetPass,resetPhone;
     private Button mRegister;
@@ -187,10 +188,12 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
                             String status = registerJson.getString("status");
                             String content = registerJson.getString("content");
                             if (status.equals("success")){
-                                //注册成功
+                                //注册成功，跳转页面
                                 Intent intent = new Intent(RegisterActivity.this,Subscription.class);
                                 startActivity(intent);
-                                RegisterActivity.this.finish();
+                                //关闭登录和注册页面
+                                ActivityCollector.removeActivity(RegisterActivity.this);
+                                ActivityCollector.removeActivity(LoginActivity);
                             }else {
                                 Toast.makeText(RegisterActivity.this, "验证失败："+content, Toast.LENGTH_SHORT).show();
                             }
