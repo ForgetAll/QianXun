@@ -26,6 +26,7 @@ public class ConstantsBean {
     public static final String LOGIN = "login";
     public static final String REGISTER = "register";
     public static final String CHECK_LOGIN_NAME = "checkLoginName?loginName=";
+    public static final String SEND_MESSAGE = "registerSMS?phone=";
 
 
     /*

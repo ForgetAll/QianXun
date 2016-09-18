@@ -1,6 +1,7 @@
 package com.heapot.qianxun.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,6 +16,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.blankj.utilcode.utils.NetworkUtils;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.util.CommonUtil;
@@ -30,6 +32,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
     private EditText edt_phone,edt_name,edt_password,edt_mess;
     private TextView sendMessage,resetName,resetPass,resetPhone;
     private Button mRegister;
+    RequestQueue queue;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +57,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
         sendMessage = (TextView) findViewById(R.id.txt_register_send_message);
 
         mRegister = (Button) findViewById(R.id.btn_register);
+
     }
 
     /**
@@ -65,24 +69,30 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
         resetName.setOnClickListener(this);
         sendMessage.setOnClickListener(this);
         mRegister.setOnClickListener(this);
+        queue = Volley.newRequestQueue(this);
 
     }
     private void initData(){
-        String name = edt_phone.getText().toString();
-        if (CommonUtil.isMobileNO(name)){
-            checkInfo(name);
+        boolean networkConnected = NetworkUtils.isConnected(this);
+        boolean wifiConnected=NetworkUtils.isWifiConnected(this);
+        if (networkConnected == true || wifiConnected ==true) {
+            String name = edt_phone.getText().toString();
+            if (CommonUtil.isMobileNO(name)) {
+                checkInfo(name);
+            } else {
+                Toast.makeText(RegisterActivity.this, "请检查手机号", Toast.LENGTH_SHORT).show();
+                Logger.d("请检查手机号");
+            }
         }else {
-            Toast.makeText(RegisterActivity.this, "请检查手机号", Toast.LENGTH_SHORT).show();
-            Logger.d("请检查手机号");
+            Toast.makeText(RegisterActivity.this, "请检查网络连接", Toast.LENGTH_SHORT).show();
         }
     }
 
     /**
      * 验证信息
      */
-    private void checkInfo(String name){
+    private void checkInfo(final String name){
 
-        RequestQueue queue = Volley.newRequestQueue(this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.GET,
                 ConstantsBean.BASE_PATH + ConstantsBean.CHECK_LOGIN_NAME + name,
@@ -94,8 +104,10 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
                         try {
                             JSONObject json = new JSONObject(String.valueOf(response));
                             String content = json.getString("content");
+                            Logger.d(content);
                             if (content.equals("true")){
-                                sendMessage();
+                                //通过验证发送验证码
+                                sendMessage(name);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -107,6 +119,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Logger.d(error);
+                        Toast.makeText(RegisterActivity.this, "发送失败，请重新尝试", Toast.LENGTH_SHORT).show();
                     }
                 }
         );
@@ -115,14 +128,85 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
     /**
      * 发送验证码
      */
-    private void sendMessage(){
-        
+    private void sendMessage(String name){
+//        RequestQueue queue = Volley.newRequestQueue(this);
+        JsonObjectRequest sendMessageJson = new JsonObjectRequest(
+                Request.Method.POST,
+                ConstantsBean.BASE_PATH + ConstantsBean.SEND_MESSAGE + name,
+                null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Logger.json(response.toString());
+                        try {
+                            JSONObject json = new JSONObject(String.valueOf(response));
+                            String status = json.getString("status");
+                            if (status.equals("success")){
+                                sendMessage.setText("请稍等");
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Logger.d(error);
+                    }
+                }
+
+        );
+        queue.add(sendMessageJson);
     }
     /**
      * 提交注册
      */
     private void toRegister(){
+        String phone = edt_phone.getText().toString();
+        String name = edt_name.getText().toString();
+        String pass = edt_password.getText().toString();
+        String token = edt_mess.getText().toString();
+        if (phone == null || name ==null || pass == null || token == null){
+            Toast.makeText(RegisterActivity.this, "所有项不能为空", Toast.LENGTH_SHORT).show();
+        }else {
 
+        }
+    }
+    private void postRegister(String phone,String pass,String token){
+        JsonObjectRequest registerJsonRequest = new JsonObjectRequest(
+                Request.Method.POST,
+                ConstantsBean.BASE_PATH + ConstantsBean.REGISTER + "?phone=" + phone + "&password" + pass + "&token" + token,
+                null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Logger.json(String.valueOf(response));
+                        try {
+                            JSONObject registerJson = new JSONObject(String.valueOf(response));
+                            String status = registerJson.getString("status");
+                            String content = registerJson.getString("content");
+                            if (status.equals("success")){
+                                //注册成功
+                                Intent intent = new Intent(RegisterActivity.this,Subscription.class);
+                                startActivity(intent);
+                                RegisterActivity.this.finish();
+                            }else {
+                                Toast.makeText(RegisterActivity.this, "验证失败："+content, Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Logger.d(error);
+                    }
+                }
+        );
+        queue.add(registerJsonRequest);
     }
 
     /**
