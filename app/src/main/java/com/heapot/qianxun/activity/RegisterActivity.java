@@ -214,9 +214,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                                 //注册成功，跳转页面
                                 Intent intent = new Intent(RegisterActivity.this,Subscription.class);
                                 startActivity(intent);
-                                //关闭登录和注册页面
-                                ActivityCollector.removeActivity(RegisterActivity.this);
-//                                ActivityCollector.removeActivity(LoginActivity);
+                                //关闭登录和注册页面，因为开始只有这两个活动，完全可以使用finishAll()
+                                ActivityCollector.finishAll();
                             }else {
                                 Toast.makeText(RegisterActivity.this, "验证失败："+content, Toast.LENGTH_SHORT).show();
                             }
