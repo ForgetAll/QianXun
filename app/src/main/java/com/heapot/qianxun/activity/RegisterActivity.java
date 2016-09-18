@@ -73,6 +73,30 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         queue = Volley.newRequestQueue(this);
 
     }
+    /**
+     * 点击事件
+     * @param v
+     */
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.txt_register_reset:
+                edt_phone.setText("");
+                break;
+            case R.id.txt_register_reset_2:
+                edt_name.setText("");
+                break;
+            case R.id.txt_register_reset3:
+                edt_password.setText("");
+                break;
+            case R.id.txt_register_send_message:
+                initData();
+                break;
+            case R.id.btn_register:
+                toRegister();
+                break;
+        }
+    }
     private void initData(){
         boolean networkConnected = NetworkUtils.isConnected(this);
         boolean wifiConnected=NetworkUtils.isWifiConnected(this);
@@ -93,7 +117,6 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
      * 验证信息
      */
     private void checkInfo(final String name){
-
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.GET,
                 ConstantsBean.BASE_PATH + ConstantsBean.CHECK_LOGIN_NAME + name,
@@ -171,7 +194,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         if (phone == null || name ==null || pass == null || token == null){
             Toast.makeText(RegisterActivity.this, "所有项不能为空", Toast.LENGTH_SHORT).show();
         }else {
-
+            postRegister(phone,pass,token);
         }
     }
     private void postRegister(String phone,String pass,String token){
@@ -193,7 +216,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                                 startActivity(intent);
                                 //关闭登录和注册页面
                                 ActivityCollector.removeActivity(RegisterActivity.this);
-                                ActivityCollector.removeActivity(LoginActivity);
+//                                ActivityCollector.removeActivity(LoginActivity);
                             }else {
                                 Toast.makeText(RegisterActivity.this, "验证失败："+content, Toast.LENGTH_SHORT).show();
                             }
@@ -212,24 +235,5 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         queue.add(registerJsonRequest);
     }
 
-    /**
-     * 点击事件
-     * @param v
-     */
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.txt_register_reset:
-                break;
-            case R.id.txt_register_reset_2:
-                break;
-            case R.id.txt_register_reset3:
-                break;
-            case R.id.txt_register_send_message:
-                initData();
-                break;
-            case R.id.btn_register:
-                break;
-        }
-    }
+
 }
