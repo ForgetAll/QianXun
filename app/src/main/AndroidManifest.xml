@@ -45,6 +45,8 @@
         <activity android:name=".activity.SystemSettingActivity"></activity>
         <!--帮助界面-->
         <activity android:name=".activity.SystemHelpActivity"></activity>
+        <!--注册界面-->
+        <activity android:name=".activity.RegisterActivity"></activity>
     </application>
 
 </manifest>

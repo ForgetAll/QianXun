@@ -46,8 +46,8 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
     }
     private void initView(){
-        edt_name = (EditText) findViewById(R.id.edt_phone);
-        edt_pass = (EditText) findViewById(R.id.edt_password);
+        edt_name = (EditText) findViewById(R.id.edt_login_phone);
+        edt_pass = (EditText) findViewById(R.id.edt_login_password);
 
         removeData = (TextView) findViewById(R.id.txt_remove_data);
         showPass = (TextView) findViewById(R.id.txt_show_pass);
@@ -137,6 +137,8 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 toLogin();
                 break;
             case R.id.txt_login_to_register:
+                Intent intentToRegister = new Intent(LoginActivity.this,RegisterActivity.class);
+                startActivity(intentToRegister);
                 break;
             case R.id.txt_reset_password:
                 break;

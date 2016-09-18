@@ -25,6 +25,7 @@ public class ConstantsBean {
     //https://qinxi1992.xicp.net/login?loginName=coderfan&password=123456
     public static final String LOGIN = "login";
     public static final String REGISTER = "register";
+    public static final String CHECK_LOGIN_NAME = "checkLoginName?loginName=";
 
 
     /*
