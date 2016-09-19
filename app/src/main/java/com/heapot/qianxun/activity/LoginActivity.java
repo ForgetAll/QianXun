@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -26,6 +27,9 @@ import com.orhanobut.logger.Logger;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Karl on 2016/9/17.
@@ -90,22 +94,22 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private void toLoginAdmin(){
         final String name = edt_name.getText().toString();
         final String pass = edt_pass.getText().toString();
+        Logger.d("password-->"+pass);
         RequestQueue queue = Volley.newRequestQueue(this);
-        JsonObjectRequest jsonObject = new JsonObjectRequest(
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.POST,
-                ConstantsBean.BASE_PATH+"/admin/"+ConstantsBean.LOGIN+"?loginName="+name+"&password="+pass,
+                ConstantsBean.BASE_PATH+"admin/"+ConstantsBean.LOGIN+"?username="+name+"&password="+pass,
                 null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
                             JSONObject json = new JSONObject(String.valueOf(response));
-                            //首选判断登陆请求返回状态，成功则进行下一步
+                            //首先判断登陆请求返回状态，成功则进行下一步
                             if (json.getString("status").equals("success")) {
                                 Toast.makeText(LoginActivity.this, "登陆成功请稍等", Toast.LENGTH_SHORT).show();
                                 if (json.has("content")) {
-                                    JSONObject content = json.getJSONObject("content");
-                                    String token = content.getString("auth-token");
+                                    String token = json.getString("content");
                                     //设置全局变量
                                     CustomApplication.TOKEN = token;
                                     //存储到本地
@@ -124,7 +128,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                             }else {
                                 //请求失败，切换成普通用户登陆再次尝试
                                 toLoginClient(name,pass);
-
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -139,8 +142,23 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
                     }
                 }
-        );
-        queue.add(jsonObject);
+        ){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> headers = new HashMap<>();
+                headers.put("X-Requested-With","XMLHttpRequest");
+                return headers;
+            }
+
+//            @Override
+//            public String getBodyContentType() {
+//
+//                return String.format("application/x-www-form-urlencoded; charset=%s", "utf-8");
+//            }
+
+        };
+
+        queue.add(jsonObjectRequest);
     }
 
     /**
