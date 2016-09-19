@@ -191,12 +191,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                                     PreferenceUtil.putString("name", name);
                                     PreferenceUtil.putString("password", pass);
                                     PreferenceUtil.putString("isAdmin","false");
-                                    //设置全局变量
+                                    //设置全局变量,手机端注册用户均为普通用户，全局变量统一设置为false
                                     CustomApplication.isAdmin = false;
                                     //设置跳转到主页-->学术页面
                                     CustomApplication.CURRENT_PAGE = ConstantsBean.PAGE_SCIENCE;
                                     //跳转页面,同时关闭当前页面
-                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                    Intent intent = new Intent(LoginActivity.this, Subscription.class);
                                     startActivity(intent);
                                     LoginActivity.this.finish();
                                     Logger.d("parse json ---> token:  " + token);

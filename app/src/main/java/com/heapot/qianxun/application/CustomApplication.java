@@ -20,6 +20,8 @@ public class CustomApplication extends Application {
 
     public static boolean isAdmin = false;
 
+    public static String token = "";
+
 
     @Override
     public void onCreate() {

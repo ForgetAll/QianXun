@@ -1,9 +1,11 @@
 package com.heapot.qianxun.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by Karl on 2016/9/8.
  */
-public class DragBean {
+public class SubBean implements Serializable{
     public String name;
     public int status;
     public int pos;//记录位置

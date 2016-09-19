@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.heapot.qianxun.R;
-import com.heapot.qianxun.bean.DragBean;
+import com.heapot.qianxun.bean.SubBean;
 import com.heapot.qianxun.helper.OnRecyclerViewItemClickListener;
 
 import java.util.ArrayList;
@@ -21,11 +21,11 @@ import java.util.List;
  */
 public class SubscribedAdapter extends RecyclerView.Adapter<SubscribedAdapter.SubscribedViewHolder> implements View.OnClickListener {
     private Context context;
-    private List<DragBean> mList = new ArrayList<>();
+    private List<SubBean> mList = new ArrayList<>();
     private OnRecyclerViewItemClickListener mOnItemClickListener = null;
 
 
-    public SubscribedAdapter(Context context, List<DragBean> mList) {
+    public SubscribedAdapter(Context context, List<SubBean> mList) {
         this.context = context;
         this.mList = mList;
     }
