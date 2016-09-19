@@ -135,8 +135,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Logger.d(error);
-                        Toast.makeText(LoginActivity.this, "登陆失败，请检查输入信息或者网络状态", Toast.LENGTH_SHORT).show();
+                        toLoginClient(name,pass);
 
                     }
                 }
