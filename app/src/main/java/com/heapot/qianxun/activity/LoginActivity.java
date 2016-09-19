@@ -17,6 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.blankj.utilcode.utils.NetworkUtils;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
@@ -66,35 +67,64 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         reset.setOnClickListener(this);
 
     }
-    private void toLogin(){
-        //https://qinxi1992.xicp.net/login?loginName=fankarl&password=123456
-        String name = edt_name.getText().toString();
-        String pass = edt_pass.getText().toString();
+
+    /**
+     * 登陆事件，需要判断管理员账号和普通账号
+     * 由于界面没有加用户自主选择管理员还是普通用户，所以这里先进行验证
+     * 先以管理员登陆，失败后以普通用户登陆
+     */
+    //登陆前需要检查网络状态
+    private void postLogin(){
+        boolean networkConnected = NetworkUtils.isConnected(this);
+        boolean wifiConnected = NetworkUtils.isWifiConnected(this);
+//        boolean networkAvailable = NetworkUtils.isAvailable(this);
+        if (networkConnected == true || wifiConnected == true ){
+            toLoginAdmin();
+        }else {
+            Toast.makeText(LoginActivity.this, "请检查网络连接", Toast.LENGTH_SHORT).show();
+        }
+    }
+    /**
+     * 管理员登陆
+     */
+    private void toLoginAdmin(){
+        final String name = edt_name.getText().toString();
+        final String pass = edt_pass.getText().toString();
         RequestQueue queue = Volley.newRequestQueue(this);
         JsonObjectRequest jsonObject = new JsonObjectRequest(
                 Request.Method.POST,
-                ConstantsBean.BASE_PATH+ConstantsBean.LOGIN+"?loginName="+name+"&password="+pass,
+                ConstantsBean.BASE_PATH+"/admin/"+ConstantsBean.LOGIN+"?loginName="+name+"&password="+pass,
                 null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Toast.makeText(LoginActivity.this, "登陆成功请稍等", Toast.LENGTH_SHORT).show();
                         try {
                             JSONObject json = new JSONObject(String.valueOf(response));
-                            if (json.has("content")){
-                                JSONObject content = json.getJSONObject("content");
-                                String token = content.getString("auth-token");
-                                //设置全局变量
-                                CustomApplication.TOKEN = token;
-                                //存储到本地
-                                PreferenceUtil.putString("token",token);
-                                //设置跳转到主页-->学术页面
-                                CustomApplication.CURRENT_PAGE = ConstantsBean.PAGE_SCIENCE;
-                                //跳转页面,同时关闭当前页面
-                                Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-                                startActivity(intent);
-                                LoginActivity.this.finish();
-                                Logger.d("parse json ---> token:  "+token);
+                            //首选判断登陆请求返回状态，成功则进行下一步
+                            if (json.getString("status").equals("success")) {
+                                Toast.makeText(LoginActivity.this, "登陆成功请稍等", Toast.LENGTH_SHORT).show();
+                                if (json.has("content")) {
+                                    JSONObject content = json.getJSONObject("content");
+                                    String token = content.getString("auth-token");
+                                    //设置全局变量
+                                    CustomApplication.TOKEN = token;
+                                    //存储到本地
+                                    PreferenceUtil.putString("token", token);
+                                    PreferenceUtil.putString("name", name);
+                                    PreferenceUtil.putString("password", pass);
+                                    PreferenceUtil.putString("isAdmin","true");
+                                    //设置跳转到主页-->学术页面
+                                    CustomApplication.CURRENT_PAGE = ConstantsBean.PAGE_SCIENCE;
+                                    //跳转页面,同时关闭当前页面
+                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                    startActivity(intent);
+                                    LoginActivity.this.finish();
+                                    Logger.d("parse json ---> token:  " + token);
+                                }
+                            }else {
+                                //请求失败，切换成普通用户登陆再次尝试
+                                toLoginClient(name,pass);
+
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -107,6 +137,64 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     public void onErrorResponse(VolleyError error) {
                         Logger.d(error);
                         Toast.makeText(LoginActivity.this, "登陆失败，请检查输入信息或者网络状态", Toast.LENGTH_SHORT).show();
+
+                    }
+                }
+        );
+        queue.add(jsonObject);
+    }
+
+    /**
+     * 普通用户登陆
+     * @param name
+     * @param pass
+     */
+    private void toLoginClient(final String name, final String pass){
+        RequestQueue queue = Volley.newRequestQueue(this);
+        JsonObjectRequest jsonObject = new JsonObjectRequest(
+                Request.Method.POST,
+                ConstantsBean.BASE_PATH+ConstantsBean.LOGIN+"?loginName="+name+"&password="+pass,
+                null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Toast.makeText(LoginActivity.this, "登陆成功请稍等", Toast.LENGTH_SHORT).show();
+                        try {
+                            JSONObject json = new JSONObject(String.valueOf(response));
+                            if (json.getString("status").equals("success")) {
+                                if (json.has("content")) {
+                                    JSONObject content = json.getJSONObject("content");
+                                    String token = content.getString("auth-token");
+                                    //设置全局变量
+                                    CustomApplication.TOKEN = token;
+                                    //存储到本地
+                                    PreferenceUtil.putString("token", token);
+                                    PreferenceUtil.putString("name", name);
+                                    PreferenceUtil.putString("password", pass);
+                                    PreferenceUtil.putString("isAdmin","false");
+                                    //设置跳转到主页-->学术页面
+                                    CustomApplication.CURRENT_PAGE = ConstantsBean.PAGE_SCIENCE;
+                                    //跳转页面,同时关闭当前页面
+                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                    startActivity(intent);
+                                    LoginActivity.this.finish();
+                                    Logger.d("parse json ---> token:  " + token);
+                                }
+                            }else {
+                                Toast.makeText(LoginActivity.this, "登陆失败"+json.get("message"), Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Logger.d(error);
+                        Toast.makeText(LoginActivity.this, "登陆失败", Toast.LENGTH_SHORT).show();
+
                     }
                 }
         );
@@ -134,9 +222,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 edt_pass.postInvalidate();
                 break;
             case R.id.btn_login:
-                toLogin();
+                postLogin();//提交登陆请求
                 break;
             case R.id.txt_login_to_register:
+                //跳转注册页面
                 Intent intentToRegister = new Intent(LoginActivity.this,RegisterActivity.class);
                 startActivity(intentToRegister);
                 break;

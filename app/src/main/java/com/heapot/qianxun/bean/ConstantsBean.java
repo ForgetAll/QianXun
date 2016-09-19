@@ -23,10 +23,12 @@ public class ConstantsBean {
      * url地址
      */
     //https://qinxi1992.xicp.net/login?loginName=coderfan&password=123456
+    public static final String ORG_CODE = "qianxun";
     public static final String LOGIN = "login";
     public static final String REGISTER = "register";
     public static final String CHECK_LOGIN_NAME = "checkLoginName?loginName=";
     public static final String SEND_MESSAGE = "registerSMS?phone=";
+
 
 
     /*
