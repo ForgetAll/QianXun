@@ -15,6 +15,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.blankj.utilcode.utils.NetworkUtils;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
@@ -58,6 +59,7 @@ public class SplashActivity extends Activity {
             }
         });
     }
+    //跳转页面，这个过程中需要进行自动登陆，如果失败自动进入Login页面重新登陆
     private void startActivity(){
 
         String name = PreferenceUtil.getString("name");
@@ -65,6 +67,10 @@ public class SplashActivity extends Activity {
         String token = PreferenceUtil.getString("token");
         String isAdmin = PreferenceUtil.getString("isAdmin");
 
+        boolean isAvailable = NetworkUtils.isAvailable(this);
+        if (!isAvailable){
+            Toast.makeText(SplashActivity.this, "网络连接不可用", Toast.LENGTH_SHORT).show();
+        }
         if (name == null|| pass == null || token == null){
             Intent intent = new Intent(SplashActivity.this,LoginActivity.class);
             startActivity(intent);
@@ -78,7 +84,6 @@ public class SplashActivity extends Activity {
                 postLogin(url);
             }
         }
-
     }
     private void postLogin(String url){
         RequestQueue queue = Volley.newRequestQueue(this);
