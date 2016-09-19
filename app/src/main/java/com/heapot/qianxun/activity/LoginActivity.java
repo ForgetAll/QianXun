@@ -117,6 +117,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                                     PreferenceUtil.putString("name", name);
                                     PreferenceUtil.putString("password", pass);
                                     PreferenceUtil.putString("isAdmin","true");
+                                    //设置全局变量
+                                    CustomApplication.isAdmin = true;
                                     //设置跳转到主页-->学术页面
                                     CustomApplication.CURRENT_PAGE = ConstantsBean.PAGE_SCIENCE;
                                     //跳转页面,同时关闭当前页面
@@ -189,6 +191,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                                     PreferenceUtil.putString("name", name);
                                     PreferenceUtil.putString("password", pass);
                                     PreferenceUtil.putString("isAdmin","false");
+                                    //设置全局变量
+                                    CustomApplication.isAdmin = false;
                                     //设置跳转到主页-->学术页面
                                     CustomApplication.CURRENT_PAGE = ConstantsBean.PAGE_SCIENCE;
                                     //跳转页面,同时关闭当前页面

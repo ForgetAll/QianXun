@@ -110,6 +110,8 @@ public class SplashActivity extends Activity {
                                     PreferenceUtil.putString("token", token);
                                     //设置跳转到主页-->学术页面
                                     CustomApplication.CURRENT_PAGE = ConstantsBean.PAGE_SCIENCE;
+                                    //设置全局变量isAdmin
+                                    CustomApplication.isAdmin = false;
                                     //跳转页面,同时关闭当前页面
                                     Intent intent = new Intent(SplashActivity.this, MainActivity.class);
                                     startActivity(intent);
@@ -162,6 +164,8 @@ public class SplashActivity extends Activity {
                                     PreferenceUtil.putString("token", token);
                                     //设置跳转到主页-->学术页面
                                     CustomApplication.CURRENT_PAGE = ConstantsBean.PAGE_SCIENCE;
+                                    //设置全局变量
+                                    CustomApplication.isAdmin = true;
                                     //跳转页面,同时关闭当前页面
                                     Intent intent = new Intent(SplashActivity.this, MainActivity.class);
                                     startActivity(intent);

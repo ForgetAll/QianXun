@@ -18,6 +18,8 @@ public class CustomApplication extends Application {
 
     public static String CURRENT_PAGE = ConstantsBean.PAGE_SCIENCE;
 
+    public static boolean isAdmin = false;
+
 
     @Override
     public void onCreate() {

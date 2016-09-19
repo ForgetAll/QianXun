@@ -19,8 +19,10 @@ import com.android.volley.toolbox.Volley;
 import com.blankj.utilcode.utils.NetworkUtils;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.application.ActivityCollector;
+import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.util.CommonUtil;
+import com.heapot.qianxun.util.PreferenceUtil;
 import com.orhanobut.logger.Logger;
 
 import org.json.JSONException;
@@ -190,14 +192,14 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         String phone = edt_phone.getText().toString();
         String name = edt_name.getText().toString();
         String pass = edt_password.getText().toString();
-        String token = edt_mess.getText().toString();
+        String token = edt_mess.getText().toString();//这里的token是验证码
         if (phone == null || name ==null || pass == null || token == null){
             Toast.makeText(RegisterActivity.this, "所有项不能为空", Toast.LENGTH_SHORT).show();
         }else {
             postRegister(phone,pass,token);
         }
     }
-    private void postRegister(String phone,String pass,String token){
+    private void postRegister(final String phone, final String pass, String token){
         JsonObjectRequest registerJsonRequest = new JsonObjectRequest(
                 Request.Method.POST,
                 ConstantsBean.BASE_PATH + ConstantsBean.REGISTER + "?phone=" + phone + "&password" + pass + "&token" + token,
@@ -211,6 +213,11 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                             String status = registerJson.getString("status");
                             String content = registerJson.getString("content");
                             if (status.equals("success")){
+                                //保存账户信息到本地,因为这里以手机号为主，所以将手机号作为登陆名存储
+                                PreferenceUtil.putString("name",phone);
+                                PreferenceUtil.putString("password",pass);
+                                //设置全局变量
+                                CustomApplication.isAdmin = false;
                                 //注册成功，跳转页面
                                 Intent intent = new Intent(RegisterActivity.this,Subscription.class);
                                 startActivity(intent);
