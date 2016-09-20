@@ -4,6 +4,8 @@ import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
 import com.heapot.qianxun.bean.ConstantsBean;
 
 /**
@@ -20,7 +22,8 @@ public class CustomApplication extends Application {
 
     public static boolean isAdmin = false;
 
-    public static String token = "";
+    public static RequestQueue requestQueue;
+
 
 
     @Override
@@ -39,6 +42,16 @@ public class CustomApplication extends Application {
 
     public static Context getContext() {
         return context;
+    }
+
+    /**
+     * 添加Volley请求
+     */
+    public static RequestQueue getRequestQueue(){
+        if (requestQueue != null){
+            return requestQueue;
+        }
+        return  requestQueue = Volley.newRequestQueue(context);
     }
 
 

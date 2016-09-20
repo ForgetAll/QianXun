@@ -17,20 +17,20 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.blankj.utilcode.utils.NetworkUtils;
+import com.google.gson.Gson;
 import com.heapot.qianxun.R;
-import com.heapot.qianxun.adapter.SubscribedAdapter;
+import com.heapot.qianxun.adapter.SubAdapter;
 import com.heapot.qianxun.adapter.DragAdapter;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
-import com.heapot.qianxun.bean.SubBean;
+import com.heapot.qianxun.bean.SubscriptionBean;
 import com.heapot.qianxun.helper.ItemTouchHelperCallback;
 import com.heapot.qianxun.helper.OnRecyclerViewItemClickListener;
 import com.heapot.qianxun.helper.SerializableUtils;
+import com.heapot.qianxun.util.JsonUtil;
 import com.heapot.qianxun.util.PreferenceUtil;
 import com.orhanobut.logger.Logger;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -42,54 +42,53 @@ import java.util.Map;
  * Created by Karl on 2016/8/29.
  * 订阅列表
  */
-public class Subscription extends Activity  {
-    private RecyclerView drag, content;
-    private List<SubBean> dragList = new ArrayList<>();
-    private List<SubBean> contentList = new ArrayList<>();
-    private DragAdapter dragAdapter;
-    private SubscribedAdapter contentAdapter;
+public class Subscription extends BaseActivity  {
+//    private RecyclerView drag, content;
+    private RecyclerView content;
+    private List<SubscriptionBean.ContentBean> allList = new ArrayList<>();//全部数据
+//    private DragAdapter dragAdapter;
+    private SubAdapter allSubAdapter;
+
     private LinearLayoutManager linearLayoutManager;
-    private GridLayoutManager gridLayoutManager;
+//    private GridLayoutManager gridLayoutManager;
 
     ItemTouchHelper helper;
-
-    RequestQueue queue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subscription);
-
-
         initView();
         initEvent();
 
     }
     private void initView(){
-        drag = (RecyclerView) findViewById(R.id.rv_drag);
+//        drag = (RecyclerView) findViewById(R.id.rv_drag);
         content = (RecyclerView) findViewById(R.id.rv_content);
-        queue = Volley.newRequestQueue(this);
     }
     private void initEvent(){
-        initData();
+        getCatalogs();
+//        initList();
+        Logger.d("分类方法外："+allList.size());
         /**
          * 拖拽效果
          */
-        gridLayoutManager = new GridLayoutManager(this,5){
-            @Override
-            public boolean canScrollVertically() {
-                return false;
-            }
-        };
-        drag.setLayoutManager(gridLayoutManager);
-        drag.setAdapter(dragAdapter);
-        ItemTouchHelper.Callback callback = new ItemTouchHelperCallback(dragAdapter);
-        helper = new ItemTouchHelper(callback);
-        helper.attachToRecyclerView(drag);
+//        gridLayoutManager = new GridLayoutManager(this,5){
+//            @Override
+//            public boolean canScrollVertically() {
+//                return false;
+//            }
+//        };
+//        drag.setLayoutManager(gridLayoutManager);
+//        drag.setAdapter(dragAdapter);
+//        ItemTouchHelper.Callback callback = new ItemTouchHelperCallback(dragAdapter);
+//        helper = new ItemTouchHelper(callback);
+//        helper.attachToRecyclerView(drag);
 
         /**
          * 普通列表展示
          */
+
         linearLayoutManager = new LinearLayoutManager(this){
             @Override
             public boolean canScrollVertically() {
@@ -97,45 +96,27 @@ public class Subscription extends Activity  {
             }
         };
         content.setLayoutManager(linearLayoutManager);
-        content.setAdapter(contentAdapter);
+
+
+
+    }
+
+    /**
+     * 需要用到Volley的逻辑必须写到Volley成功响应方法里面，否则会血崩！
+     */
+    private void initList(){
+        Logger.d("initList");
+        allSubAdapter = new SubAdapter(Subscription.this,allList);
+        content.setAdapter(allSubAdapter);
         /**
-         * 添加点击事件
+         * 添加所有标签列表的点击事件
          */
-        contentAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
+        allSubAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                int status = contentList.get(position).getStatus();
-                if (status ==0){
-                    contentList.get(position).setStatus(1);//订阅标签
-                    dragList.add(contentList.get(position));
-                    dragAdapter.notifyDataSetChanged();
-                }else {
-                    contentList.get(position).setStatus(0);//取消订阅
-                    dragList.remove(contentList.get(position));
-                    dragAdapter.notifyDataSetChanged();
-                }
-                contentAdapter.notifyDataSetChanged();
+
             }
         });
-    }
-    private void initData(){
-        SubBean subBean;
-        for (int i = 0; i < 30; i++) {
-            subBean = new SubBean();
-            subBean.name = "标签 #"+i;
-            subBean.status = 0;
-            subBean.pos = i;
-            contentList.add(subBean);
-
-        }
-        for (int i = 0; i < contentList.size(); i++) {
-            int status = contentList.get(i).getStatus();
-            if (status == 1){
-                dragList.add(contentList.get(i));
-            }
-        }
-        dragAdapter = new DragAdapter(this, dragList);
-        contentAdapter = new SubscribedAdapter(this, contentList);
     }
     /**
      * 获取分类
@@ -178,34 +159,15 @@ public class Subscription extends Activity  {
      */
     private void postAdminCatalogs(String url, final String token){
         JsonObjectRequest jsonObjectRequest_admin = new JsonObjectRequest(
-                Request.Method.GET,
-                url,
-                null,
+                Request.Method.GET,url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         Logger.json(String.valueOf(response));
-                        try {
-                            JSONObject jsonObject = new JSONObject(String.valueOf(response));
-                            String status = jsonObject.getString("status");
-                            if (status.equals("success")){
-                                //请求成功
-                                JSONArray jsonArray = jsonObject.getJSONArray("content");
-                                for (int i = 0; i < jsonArray.length(); i++) {
-                                    JSONObject jsonContent = jsonArray.getJSONObject(1);
-                                    SubBean subBean = new SubBean();
-                                    subBean.name = jsonContent.getString("name");
-
-                                }
-                            }else {
-                                //提示失败信息
-                                Toast.makeText(Subscription.this, "数据请求失败"+jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
-
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
+                        SubscriptionBean jsonBean = (SubscriptionBean) JsonUtil.fromJson(String.valueOf(response),SubscriptionBean.class);
+                        allList.addAll(jsonBean.getContent());
+                        Logger.d(allList.size());
+                        initList();
                     }
                 },
                 new Response.ErrorListener() {
@@ -224,7 +186,7 @@ public class Subscription extends Activity  {
                 return headers;
             }
         };
-        queue.add(jsonObjectRequest_admin);
+        CustomApplication.getRequestQueue().add(jsonObjectRequest_admin);
     }
 
     /**
@@ -240,6 +202,11 @@ public class Subscription extends Activity  {
                     @Override
                     public void onResponse(JSONObject response) {
                         Logger.json(String.valueOf(response));
+//                        parseResponse(String.valueOf(response));
+                        SubscriptionBean jsonBean = (SubscriptionBean) JsonUtil.fromJson(String.valueOf(response),SubscriptionBean.class);
+                        allList.addAll(jsonBean.getContent());
+                        initList();
+                        Logger.d("client2 = "+allList.size());
                     }
                 },
                 new Response.ErrorListener() {
@@ -249,8 +216,7 @@ public class Subscription extends Activity  {
                     }
                 }
         );
-        queue.add(jsonObjectRequest_client);
+        CustomApplication.getRequestQueue().add(jsonObjectRequest_client);
 
     }
-
 }

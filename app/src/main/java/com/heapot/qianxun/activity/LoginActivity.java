@@ -95,7 +95,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         final String name = edt_name.getText().toString();
         final String pass = edt_pass.getText().toString();
         Logger.d("password-->"+pass);
-        RequestQueue queue = Volley.newRequestQueue(this);
+//        RequestQueue queue = Volley.newRequestQueue(this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.POST,
                 ConstantsBean.BASE_PATH+"admin/"+ConstantsBean.LOGIN+"?username="+name+"&password="+pass,
@@ -160,8 +160,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
         };
 
-        queue.add(jsonObjectRequest);
+//        queue.add(jsonObjectRequest);
+        CustomApplication.requestQueue.add(jsonObjectRequest);
     }
+
 
     /**
      * 普通用户登陆
@@ -219,7 +221,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     }
                 }
         );
-        queue.add(jsonObject);
+//        queue.add(jsonObject);
+        CustomApplication.getRequestQueue().add(jsonObject);
     }
 
 

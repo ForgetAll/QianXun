@@ -35,7 +35,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     private EditText edt_phone,edt_name,edt_password,edt_mess;
     private TextView sendMessage,resetName,resetPass,resetPhone;
     private Button mRegister;
-    RequestQueue queue;
+//    RequestQueue queue;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +72,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         resetName.setOnClickListener(this);
         sendMessage.setOnClickListener(this);
         mRegister.setOnClickListener(this);
-        queue = Volley.newRequestQueue(this);
+//        queue = Volley.newRequestQueue(this);
 
     }
     /**
@@ -149,13 +149,13 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     }
                 }
         );
-        queue.add(jsonObjectRequest);
+        CustomApplication.requestQueue.add(jsonObjectRequest);
+
     }
     /**
      * 发送验证码
      */
     private void sendMessage(String name){
-//        RequestQueue queue = Volley.newRequestQueue(this);
         JsonObjectRequest sendMessageJson = new JsonObjectRequest(
                 Request.Method.POST,
                 ConstantsBean.BASE_PATH + ConstantsBean.SEND_MESSAGE + name,
@@ -183,8 +183,10 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 }
 
         );
-        queue.add(sendMessageJson);
+//        queue.add(sendMessageJson);
+        CustomApplication.getRequestQueue().add(sendMessageJson);
     }
+
     /**
      * 提交注册
      */
@@ -238,7 +240,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     }
                 }
         );
-        queue.add(registerJsonRequest);
+//        queue.add(registerJsonRequest);
+        CustomApplication.getRequestQueue().add(registerJsonRequest);
     }
 
 

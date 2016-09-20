@@ -92,7 +92,6 @@ public class SplashActivity extends Activity {
         }
     }
     private void postLoginClient(String url){
-        RequestQueue queue = Volley.newRequestQueue(this);
         JsonObjectRequest jsonObject = new JsonObjectRequest(
                 Request.Method.POST,url,null,
                 new Response.Listener<JSONObject>() {
@@ -139,7 +138,8 @@ public class SplashActivity extends Activity {
                     }
                 }
         );
-        queue.add(jsonObject);
+        CustomApplication.getRequestQueue().add(jsonObject);
+
     }
     private void postLoginAdmin(String url){
 
@@ -202,7 +202,6 @@ public class SplashActivity extends Activity {
 //            }
 
         };
-
-        queue.add(jsonObjectRequest);
+        CustomApplication.getRequestQueue().add(jsonObjectRequest);
     }
 }
