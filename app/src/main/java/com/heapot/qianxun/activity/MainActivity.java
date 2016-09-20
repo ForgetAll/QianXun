@@ -27,7 +27,7 @@ import com.orhanobut.logger.Logger;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends BaseActivity implements View.OnClickListener {
     private DrawerLayout mDrawerLayout;
     private Toolbar mToolBar;
     private ImageView mBanner;
