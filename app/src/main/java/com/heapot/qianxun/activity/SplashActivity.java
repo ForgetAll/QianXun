@@ -74,21 +74,24 @@ public class SplashActivity extends Activity {
         Logger.d(name+","+pass+","+isAdmin);
 
         boolean isAvailable = NetworkUtils.isAvailable(this);
-        if (!isAvailable){
-            Toast.makeText(SplashActivity.this, "网络连接不可用", Toast.LENGTH_SHORT).show();
-        }
-        if (name == null|| pass == null || token == null){
-            Intent intent = new Intent(SplashActivity.this,LoginActivity.class);
-            startActivity(intent);
-        }else {
-            //判断，如果本地存储是管理员账户则直接以管理员账户登陆，否则以普通用户登陆
-            if (isAdmin.equals("true")){
-                String url = ConstantsBean.BASE_PATH+"admin/"+ConstantsBean.LOGIN+"?username="+name+"&password="+pass;
-                postLoginAdmin(url);
-            }else {
-                String url = ConstantsBean.BASE_PATH+ConstantsBean.LOGIN+"?loginName="+name+"&password="+pass;
-                postLoginClient(url);
+        if (isAvailable) {
+            if (name == null || pass == null || token == null) {
+                Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+                startActivity(intent);
+            } else {
+                //判断，如果本地存储是管理员账户则直接以管理员账户登陆，否则以普通用户登陆
+                if (isAdmin.equals("true")) {
+                    String url = ConstantsBean.BASE_PATH + "admin/" + ConstantsBean.LOGIN + "?username=" + name + "&password=" + pass;
+                    postLoginAdmin(url);
+                } else {
+                    String url = ConstantsBean.BASE_PATH + ConstantsBean.LOGIN + "?loginName=" + name + "&password=" + pass;
+                    postLoginClient(url);
+                }
             }
+        }else {
+            Toast.makeText(SplashActivity.this, "网络连接不可用", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(SplashActivity.this,MainActivity.class);
+            startActivity(intent);
         }
     }
     private void postLoginClient(String url){

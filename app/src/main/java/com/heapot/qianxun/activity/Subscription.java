@@ -1,8 +1,6 @@
 package com.heapot.qianxun.activity;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -11,20 +9,15 @@ import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.blankj.utilcode.utils.NetworkUtils;
-import com.google.gson.Gson;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.adapter.SubAdapter;
-import com.heapot.qianxun.adapter.DragAdapter;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.bean.SubscriptionBean;
-import com.heapot.qianxun.helper.ItemTouchHelperCallback;
 import com.heapot.qianxun.helper.OnRecyclerViewItemClickListener;
 import com.heapot.qianxun.helper.SerializableUtils;
 import com.heapot.qianxun.util.JsonUtil;
@@ -69,8 +62,6 @@ public class Subscription extends BaseActivity  {
     }
     private void initEvent(){
         getCatalogs();
-//        initList();
-        Logger.d("分类方法外："+allList.size());
         /**
          * 拖拽效果
          */
@@ -147,7 +138,8 @@ public class Subscription extends BaseActivity  {
             //网络有问题的时候从本地缓存获取
             Toast.makeText(Subscription.this, "网络有问题", Toast.LENGTH_SHORT).show();
             //取出本地缓存数据，如果缓存无数据再提示用户检查网络
-            SerializableUtils.getSerializable(this,ConstantsBean.SUBSCRIPTION);
+            Logger.d(SerializableUtils.getSerializable(this,ConstantsBean.SUBSCRIPTION_FILE_NAME));
+
         }
     }
 
@@ -164,6 +156,7 @@ public class Subscription extends BaseActivity  {
                         Logger.json(String.valueOf(response));
                         SubscriptionBean jsonBean = (SubscriptionBean) JsonUtil.fromJson(String.valueOf(response),SubscriptionBean.class);
                         allList.addAll(jsonBean.getContent());
+                        SerializableUtils.setSerializable(Subscription.this,ConstantsBean.SUBSCRIPTION_FILE_NAME,allList);
                         initList();
                     }
                 },
@@ -192,15 +185,14 @@ public class Subscription extends BaseActivity  {
      */
     private void postClientCatalogs(String url){
         JsonObjectRequest jsonObjectRequest_client = new JsonObjectRequest(
-                Request.Method.GET,
-                url,
-                null,
+                Request.Method.GET,url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         Logger.json(String.valueOf(response));
                         SubscriptionBean jsonBean = (SubscriptionBean) JsonUtil.fromJson(String.valueOf(response),SubscriptionBean.class);
                         allList.addAll(jsonBean.getContent());
+                        SerializableUtils.setSerializable(Subscription.this,ConstantsBean.SUBSCRIPTION_FILE_NAME,allList);
                         initList();
                     }
                 },

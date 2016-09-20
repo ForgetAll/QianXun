@@ -68,7 +68,7 @@ public class ConstantsBean {
     public static final String PAGE_TRAIN = "PAGE_TRAIN";
 
     //标签订阅本地文件名
-    public static final String SUBSCRIPTION = "Subscription";
+    public static final String SUBSCRIPTION_FILE_NAME = "Subscription";
 
 
 }

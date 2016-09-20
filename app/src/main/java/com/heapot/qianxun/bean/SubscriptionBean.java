@@ -1,12 +1,13 @@
 package com.heapot.qianxun.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Karl on 2016/9/19.
  * 标签订阅列表
  */
-public class SubscriptionBean {
+public class SubscriptionBean implements Serializable {
 
     /**
      * status : success
@@ -51,7 +52,7 @@ public class SubscriptionBean {
         this.content = content;
     }
 
-    public static class ContentBean {
+    public static class ContentBean implements Serializable {
         private String id;
         private Object pid;
         private String name;
