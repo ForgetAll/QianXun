@@ -28,6 +28,9 @@ public class ConstantsBean {
     public static final String REGISTER = "register";
     public static final String CHECK_LOGIN_NAME = "checkLoginName?loginName=";
     public static final String SEND_MESSAGE = "registerSMS?phone=";
+    public static final String RESET_PASSWORD = "resetPassword";
+    public static final String SEND_RESET_MESSAGE = "findPasswordByPhone?phone=";
+
 
 
 

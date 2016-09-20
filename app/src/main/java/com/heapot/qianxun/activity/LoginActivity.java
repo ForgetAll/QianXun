@@ -1,6 +1,5 @@
 package com.heapot.qianxun.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
@@ -13,11 +12,9 @@ import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.blankj.utilcode.utils.NetworkUtils;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.application.CustomApplication;
@@ -33,6 +30,7 @@ import java.util.Map;
 
 /**
  * Created by Karl on 2016/9/17.
+ * 
  */
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
     private EditText edt_name,edt_pass;
@@ -81,8 +79,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private void postLogin(){
         boolean networkConnected = NetworkUtils.isConnected(this);
         boolean wifiConnected = NetworkUtils.isWifiConnected(this);
-//        boolean networkAvailable = NetworkUtils.isAvailable(this);
-        if (networkConnected == true || wifiConnected == true ){
+        if (networkConnected  || wifiConnected  ){
             toLoginAdmin();
         }else {
             Toast.makeText(LoginActivity.this, "请检查网络连接", Toast.LENGTH_SHORT).show();
@@ -167,11 +164,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     /**
      * 普通用户登陆
-     * @param name
-     * @param pass
+     * @param name 用户名
+     * @param pass 用户密码
      */
     private void toLoginClient(final String name, final String pass){
-        RequestQueue queue = Volley.newRequestQueue(this);
         JsonObjectRequest jsonObject = new JsonObjectRequest(
                 Request.Method.POST,
                 ConstantsBean.BASE_PATH+ConstantsBean.LOGIN+"?loginName="+name+"&password="+pass,
@@ -221,7 +217,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     }
                 }
         );
-//        queue.add(jsonObject);
         CustomApplication.getRequestQueue().add(jsonObject);
     }
 
@@ -254,6 +249,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 startActivity(intentToRegister);
                 break;
             case R.id.txt_reset_password:
+                Intent intentForgetPass = new Intent(LoginActivity.this,FindPassActivity.class);
+                startActivity(intentForgetPass);
                 break;
         }
     }
