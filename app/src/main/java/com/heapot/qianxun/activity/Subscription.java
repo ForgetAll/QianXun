@@ -27,6 +27,7 @@ import com.orhanobut.logger.Logger;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -139,6 +140,8 @@ public class Subscription extends BaseActivity  {
             Toast.makeText(Subscription.this, "网络有问题", Toast.LENGTH_SHORT).show();
             //取出本地缓存数据，如果缓存无数据再提示用户检查网络
             Logger.d(SerializableUtils.getSerializable(this,ConstantsBean.SUBSCRIPTION_FILE_NAME));
+            allList.addAll((Collection<SubscriptionBean.ContentBean>) SerializableUtils.getSerializable(this,ConstantsBean.SUBSCRIPTION_FILE_NAME));
+            initList();
 
         }
     }
