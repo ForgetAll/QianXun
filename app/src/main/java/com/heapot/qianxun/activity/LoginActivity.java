@@ -30,7 +30,7 @@ import java.util.Map;
 
 /**
  * Created by Karl on 2016/9/17.
- * 
+ *
  */
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
     private EditText edt_name,edt_pass;

@@ -41,6 +41,7 @@ import java.util.Map;
 /**
  * Created by Karl on 2016/8/29.
  * 订阅列表
+ *
  */
 public class Subscription extends BaseActivity  {
 //    private RecyclerView drag, content;

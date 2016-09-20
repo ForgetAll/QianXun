@@ -1,9 +1,7 @@
 package com.heapot.qianxun.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,11 +9,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.blankj.utilcode.utils.NetworkUtils;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.application.ActivityCollector;
@@ -30,6 +26,8 @@ import org.json.JSONObject;
 
 /**
  * Created by Karl on 2016/9/18.
+ * 注册页面
+ *
  */
 public class RegisterActivity extends BaseActivity implements View.OnClickListener {
     private EditText edt_phone,edt_name,edt_password,edt_mess;
@@ -77,7 +75,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     }
     /**
      * 点击事件
-     * @param v
+     * @param v 获取id
      */
     @Override
     public void onClick(View v) {
@@ -102,7 +100,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     private void initData(){
         boolean networkConnected = NetworkUtils.isConnected(this);
         boolean wifiConnected=NetworkUtils.isWifiConnected(this);
-        if (networkConnected == true || wifiConnected ==true) {
+        if (networkConnected  || wifiConnected ) {
             String name = edt_phone.getText().toString();
             if (CommonUtil.isMobileNO(name)) {
                 checkInfo(name);
@@ -195,7 +193,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         String name = edt_name.getText().toString();
         String pass = edt_password.getText().toString();
         String token = edt_mess.getText().toString();//这里的token是验证码
-        if (phone == null || name ==null || pass == null || token == null){
+        if (phone.equals("") || name.equals("") || pass.equals("") || token.equals("")){
             Toast.makeText(RegisterActivity.this, "所有项不能为空", Toast.LENGTH_SHORT).show();
         }else {
             postRegister(phone,pass,token);

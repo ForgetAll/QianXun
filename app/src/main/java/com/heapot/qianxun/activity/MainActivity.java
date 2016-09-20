@@ -114,8 +114,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     /**
      * 点击事件
-     *
-     * @param v
+     * @param v 获取id
      */
     @Override
     public void onClick(View v) {
