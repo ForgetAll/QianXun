@@ -108,9 +108,7 @@ public class Subscription extends BaseActivity  {
         Logger.d("initList");
         allSubAdapter = new SubAdapter(Subscription.this,allList);
         content.setAdapter(allSubAdapter);
-        /**
-         * 添加所有标签列表的点击事件
-         */
+        // 添加所有标签列表的点击事件
         allSubAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
@@ -127,7 +125,6 @@ public class Subscription extends BaseActivity  {
     private void getCatalogs(){
         boolean isAdmin = CustomApplication.isAdmin;
         String token = CustomApplication.TOKEN;
-
         boolean isAvailable = NetworkUtils.isAvailable(this);
         if (isAvailable) {//网络可以用的时候请求数据
             //获取token
@@ -166,7 +163,6 @@ public class Subscription extends BaseActivity  {
                         Logger.json(String.valueOf(response));
                         SubscriptionBean jsonBean = (SubscriptionBean) JsonUtil.fromJson(String.valueOf(response),SubscriptionBean.class);
                         allList.addAll(jsonBean.getContent());
-                        Logger.d(allList.size());
                         initList();
                     }
                 },
@@ -202,11 +198,9 @@ public class Subscription extends BaseActivity  {
                     @Override
                     public void onResponse(JSONObject response) {
                         Logger.json(String.valueOf(response));
-//                        parseResponse(String.valueOf(response));
                         SubscriptionBean jsonBean = (SubscriptionBean) JsonUtil.fromJson(String.valueOf(response),SubscriptionBean.class);
                         allList.addAll(jsonBean.getContent());
                         initList();
-                        Logger.d("client2 = "+allList.size());
                     }
                 },
                 new Response.ErrorListener() {
