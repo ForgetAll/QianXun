@@ -10,7 +10,7 @@ import com.heapot.qianxun.bean.ConstantsBean;
 
 /**
  *Created by 15859 on 2016/9/4.
- * @summary 全局配置应用
+ * 全局配置应用
  */
 public class CustomApplication extends Application {
     //获取全局上下文
@@ -19,8 +19,6 @@ public class CustomApplication extends Application {
     public static String TOKEN = "";
 
     public static String CURRENT_PAGE = ConstantsBean.PAGE_SCIENCE;
-
-    public static boolean isAdmin = false;
 
     public static RequestQueue requestQueue;
 
@@ -54,11 +52,10 @@ public class CustomApplication extends Application {
         return  requestQueue = Volley.newRequestQueue(context);
     }
 
-
     /**
      * 获得当前进程的名字
      *
-     * @param context
+     * @param context 上下文
      * @return 进程号
      */
     public static String getCurProcessName(Context context) {

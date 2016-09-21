@@ -26,14 +26,13 @@ import org.json.JSONObject;
 
 /**
  * Created by Karl on 2016/9/18.
- * 注册页面
+ * 注册页面,只能注册普通用户
  *
  */
 public class RegisterActivity extends BaseActivity implements View.OnClickListener {
     private EditText edt_phone,edt_name,edt_password,edt_mess;
     private TextView sendMessage,resetName,resetPass,resetPhone;
     private Button mRegister;
-//    RequestQueue queue;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +69,6 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         resetName.setOnClickListener(this);
         sendMessage.setOnClickListener(this);
         mRegister.setOnClickListener(this);
-//        queue = Volley.newRequestQueue(this);
 
     }
     /**
@@ -81,29 +79,28 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.txt_register_reset:
-                edt_phone.setText("");
+                edt_phone.setText("");//清空手机号
                 break;
             case R.id.txt_register_reset_2:
-                edt_name.setText("");
+                edt_name.setText("");//清空名称
                 break;
             case R.id.txt_register_reset3:
-                edt_password.setText("");
+                edt_password.setText("");//清空密码
                 break;
             case R.id.txt_register_send_message:
-                initData();
+                sendMessage();//发送验证码
                 break;
             case R.id.btn_register:
-                toRegister();
+                postRegister();//注册请求
                 break;
         }
     }
-    private void initData(){
-        boolean networkConnected = NetworkUtils.isConnected(this);
-        boolean wifiConnected=NetworkUtils.isWifiConnected(this);
-        if (networkConnected  || wifiConnected ) {
-            String name = edt_phone.getText().toString();
-            if (CommonUtil.isMobileNO(name)) {
-                checkInfo(name);
+    private void sendMessage(){
+        boolean isAvailable = NetworkUtils.isAvailable(this);
+        if (isAvailable) {
+            String phone = edt_phone.getText().toString();
+            if (CommonUtil.isMobileNO(phone)) {
+                checkInfo(phone);
             } else {
                 Toast.makeText(RegisterActivity.this, "请检查手机号", Toast.LENGTH_SHORT).show();
                 Logger.d("请检查手机号");
@@ -116,22 +113,20 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     /**
      * 验证信息
      */
-    private void checkInfo(final String name){
+    private void checkInfo(final String phone){
+        String url = ConstantsBean.BASE_PATH + ConstantsBean.CHECK_LOGIN_NAME + phone;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                Request.Method.GET,
-                ConstantsBean.BASE_PATH + ConstantsBean.CHECK_LOGIN_NAME + name,
-                null,
+                Request.Method.GET,url,null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         Logger.json(response.toString());
                         try {
-                            JSONObject json = new JSONObject(String.valueOf(response));
-                            String content = json.getString("content");
+                            String content = response.getString("content");
                             Logger.d(content);
                             if (content.equals("true")){
                                 //通过验证发送验证码
-                                sendMessage(name);
+                                sendMessage(phone);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -150,21 +145,21 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         CustomApplication.requestQueue.add(jsonObjectRequest);
 
     }
+
     /**
-     * 发送验证码
+     * 通过验证后发送验证码
+     * @param phone 发送验证码提供所需手机号
      */
-    private void sendMessage(String name){
-        JsonObjectRequest sendMessageJson = new JsonObjectRequest(
-                Request.Method.POST,
-                ConstantsBean.BASE_PATH + ConstantsBean.SEND_MESSAGE + name,
-                null,
+    private void sendMessage(String phone){
+        String url = ConstantsBean.BASE_PATH + ConstantsBean.SEND_MESSAGE + phone;
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.POST,url,null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         Logger.json(response.toString());
                         try {
-                            JSONObject json = new JSONObject(String.valueOf(response));
-                            String status = json.getString("status");
+                            String status = response.getString("status");
                             if (status.equals("success")){
                                 sendMessage.setText("请稍等");
                             }
@@ -181,50 +176,55 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 }
 
         );
-//        queue.add(sendMessageJson);
-        CustomApplication.getRequestQueue().add(sendMessageJson);
+        CustomApplication.getRequestQueue().add(jsonObjectRequest);
     }
 
     /**
      * 提交注册
+     * phone作为登陆名因此本地存储为name，用户名存储为nickname
+     *
      */
-    private void toRegister(){
+    private void postRegister(){
         String phone = edt_phone.getText().toString();
-        String name = edt_name.getText().toString();
+        String nickname = edt_name.getText().toString();
         String pass = edt_password.getText().toString();
         String token = edt_mess.getText().toString();//这里的token是验证码
-        if (phone.equals("") || name.equals("") || pass.equals("") || token.equals("")){
+        if (phone.equals("") || nickname.equals("") || pass.equals("") || token.equals("")){
             Toast.makeText(RegisterActivity.this, "所有项不能为空", Toast.LENGTH_SHORT).show();
         }else {
-            postRegister(phone,pass,token);
+            postRegister(phone,pass,token,nickname);
         }
     }
-    private void postRegister(final String phone, final String pass, String token){
-        JsonObjectRequest registerJsonRequest = new JsonObjectRequest(
-                Request.Method.POST,
-                ConstantsBean.BASE_PATH + ConstantsBean.REGISTER + "?phone=" + phone + "&password" + pass + "&token" + token,
-                null,
+
+    /**
+     * 提交登陆请求
+     * @param phone 手机号
+     * @param pass 密码
+     * @param message 验证码
+     * @param nickname 昵称
+     */
+    private void postRegister(final String phone, final String pass, String message, final String nickname){
+        String url = ConstantsBean.BASE_PATH + ConstantsBean.REGISTER + "?phone=" + phone + "&password" + pass + "&token" + message;
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.POST,url,null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         Logger.json(String.valueOf(response));
                         try {
-                            JSONObject registerJson = new JSONObject(String.valueOf(response));
-                            String status = registerJson.getString("status");
-                            String content = registerJson.getString("content");
+                            String status = response.getString("status");
                             if (status.equals("success")){
                                 //保存账户信息到本地,因为这里以手机号为主，所以将手机号作为登陆名存储
                                 PreferenceUtil.putString("name",phone);
                                 PreferenceUtil.putString("password",pass);
-                                //设置全局变量
-                                CustomApplication.isAdmin = false;
+                                PreferenceUtil.putString("nickname",nickname);
                                 //注册成功，跳转页面
                                 Intent intent = new Intent(RegisterActivity.this,Subscription.class);
                                 startActivity(intent);
                                 //关闭登录和注册页面，因为开始只有这两个活动，完全可以使用finishAll()
                                 ActivityCollector.finishAll();
                             }else {
-                                Toast.makeText(RegisterActivity.this, "验证失败："+content, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegisterActivity.this, "注册失败："+response.getString("message"), Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -238,8 +238,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     }
                 }
         );
-//        queue.add(registerJsonRequest);
-        CustomApplication.getRequestQueue().add(registerJsonRequest);
+        CustomApplication.getRequestQueue().add(jsonObjectRequest);
     }
 
 
