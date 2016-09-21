@@ -89,21 +89,7 @@ public class Subscription extends BaseActivity  {
 
     }
 
-    /**
-     * 需要用到Volley的逻辑必须写到Volley成功响应方法里面，否则会血崩！
-     */
-    private void initList(){
-        Logger.d("initList");
-        allSubAdapter = new SubAdapter(Subscription.this,allList);
-        content.setAdapter(allSubAdapter);
-        // 添加所有标签列表的点击事件
-        allSubAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
 
-            }
-        });
-    }
     /**
      * 获取分类
      * 1、获取用户权限、获取token
@@ -117,18 +103,22 @@ public class Subscription extends BaseActivity  {
             String url = ConstantsBean.BASE_PATH + ConstantsBean.ORG_CODE+ConstantsBean.CATALOGS;
             getCatalogs(url);
         }else {
-            //网络有问题的时候从本地缓存获取
-            Toast.makeText(Subscription.this, "网络有问题", Toast.LENGTH_SHORT).show();
             //取出本地缓存数据，如果缓存无数据再提示用户检查网络
             Logger.d(SerializableUtils.getSerializable(this,ConstantsBean.SUBSCRIPTION_FILE_NAME));
-            allList.addAll((Collection<SubscriptionBean.ContentBean>) SerializableUtils.getSerializable(this,ConstantsBean.SUBSCRIPTION_FILE_NAME));
+            Object object = SerializableUtils.getSerializable(this,ConstantsBean.SUBSCRIPTION_FILE_NAME);
+            if (object == null){
+                Toast.makeText(Subscription.this, "暂无数据，请检查网络", Toast.LENGTH_SHORT).show();
+            }else {
+                allList.addAll((Collection<? extends SubscriptionBean.ContentBean>) object);
+            }
+            //将加载到的数据添加到适配器
             initList();
 
         }
     }
     /**
      * 普通用户获取分类
-     * @param url
+     * @param url 分类API
      */
     private void getCatalogs(String url){
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
@@ -152,5 +142,20 @@ public class Subscription extends BaseActivity  {
         );
         CustomApplication.getRequestQueue().add(jsonObjectRequest);
 
+    }
+    /**
+     * 需要用到Volley的逻辑必须写到Volley成功响应方法里面，否则会血崩！
+     */
+    private void initList(){
+        Logger.d("initList");
+        allSubAdapter = new SubAdapter(Subscription.this,allList);
+        content.setAdapter(allSubAdapter);
+        // 添加所有标签列表的点击事件
+        allSubAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+
+            }
+        });
     }
 }

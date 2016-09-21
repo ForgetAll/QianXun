@@ -33,7 +33,7 @@ public class CreateActivity extends BaseActivity implements OnRecyclerViewItemCl
     private void initView(){
         createGridView = (RecyclerView) findViewById(R.id.rv_create);
         //禁用RecyclerView的滑动事件，配合ScrollView
-        gridLayoutManager = new GridLayoutManager(this,2){
+        gridLayoutManager = new GridLayoutManager(this,3){
             @Override
             public boolean canScrollVertically() {
                 return false;
@@ -48,14 +48,9 @@ public class CreateActivity extends BaseActivity implements OnRecyclerViewItemCl
         adapter.setOnItemClickListener(this);
     }
     private void initData(){
-        Boolean isAdmin = CustomApplication.isAdmin;
-        if (isAdmin){
-            list.add("创建文章");
-            list.add("创建招聘");
-            list.add("创建课程");
-        }else {
-            list.add("创建文章");
-        }
+        list.add("创建文章");
+        list.add("创建招聘");
+        list.add("创建课程");
         adapter = new CreateAdapter(this,list);
     }
 

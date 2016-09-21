@@ -81,6 +81,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         String password = edt_pass.getText().toString();
         boolean isAvailable = NetworkUtils.isAvailable(this);
         if (isAvailable){
+            Toast.makeText(LoginActivity.this, "请稍等", Toast.LENGTH_SHORT).show();
             postLogin(username,password);
         }else {
             Toast.makeText(LoginActivity.this, "请检查网络连接", Toast.LENGTH_SHORT).show();
@@ -101,7 +102,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Toast.makeText(LoginActivity.this, "登陆成功请稍等", Toast.LENGTH_SHORT).show();
+
                         try {
                             if (response.getString("status").equals("success")) {
                                 if (response.has("content")) {
@@ -117,7 +118,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                                     PreferenceUtil.putString("password", password);
                                     PreferenceUtil.putString("isAdmin","false");
                                     //跳转页面,同时关闭当前页面
-                                    Intent intent = new Intent(LoginActivity.this, Subscription.class);
+                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                     startActivity(intent);
                                     LoginActivity.this.finish();
                                     Logger.d("parse json ---> token:  " + token);

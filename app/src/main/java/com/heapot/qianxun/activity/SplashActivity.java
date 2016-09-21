@@ -111,6 +111,7 @@ public class SplashActivity extends Activity {
                                 Toast.makeText(SplashActivity.this, "登陆失败，请重新登陆", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(SplashActivity.this,LoginActivity.class);
                                 startActivity(intent);
+                                SplashActivity.this.finish();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
