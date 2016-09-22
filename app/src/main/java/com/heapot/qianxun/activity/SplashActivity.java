@@ -68,10 +68,9 @@ public class SplashActivity extends Activity {
     private void startActivity(){
         String name = PreferenceUtil.getString("name");
         String pass = PreferenceUtil.getString("password");
-        String token = PreferenceUtil.getString("token");
         boolean isAvailable = NetworkUtils.isAvailable(this);
         if (isAvailable) {
-            if (name == null || pass == null || token == null) {
+            if (name == null || pass == null) {
                 Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
                 startActivity(intent);
             } else {
@@ -98,6 +97,7 @@ public class SplashActivity extends Activity {
                                     //设置全局变量
                                     CustomApplication.TOKEN = token;
                                     //存储到本地
+                                    // 因为token只有三十分钟有效期，也就是说用户退出以后下次失效的可能性比较高，所以这里实际上没有存本地的意义
                                     PreferenceUtil.putString("token", token);
                                     //设置跳转到主页-->学术页面
                                     CustomApplication.CURRENT_PAGE = ConstantsBean.PAGE_SCIENCE;
