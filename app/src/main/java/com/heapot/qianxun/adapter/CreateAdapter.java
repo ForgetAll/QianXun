@@ -33,6 +33,7 @@ public class CreateAdapter extends RecyclerView.Adapter<CreateAdapter.CreateView
     public CreateViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.create_item,parent,false);
         CreateViewHolder holder = new CreateViewHolder(view);
+        //创建点击事件
         view.setOnClickListener(this);
         return holder;
     }
@@ -62,7 +63,7 @@ public class CreateAdapter extends RecyclerView.Adapter<CreateAdapter.CreateView
 
     @Override
     public void onClick(View v) {
-        if (listener == null){
+        if (listener != null){
             listener.onItemClick(v, (int) v.getTag());
         }
     }
