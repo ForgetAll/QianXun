@@ -6,8 +6,22 @@ import android.os.Environment;
  * Created by 15859 on 2016/9/3.
  */
 public class ConstantsBean {
+    //是否进入引导界面
+    public static final String KEY_SPLASH = "isEnter";
     //基本路径-已改
     public static final String BASE_PATH = "https://qinxi1992.xicp.net/";
+    //退出登录接口-仟询
+    public  static  final  String  LOGOUT="/admin/logout";
+    //个人信息接口-仟徇
+    public  static  final  String  PERSONAL_INFO="/admin/i";
+    //获取当前用户权限接口-仟询
+     public  static  final  String  ADMIN_PERMISSSIONS="/admin/permissions";
+    //检测旧密码接口-仟询
+     public  static  final  String  ADMIN_CHECKPWD="/admin/checkPwd";
+    //修改密码接口-仟询
+      static  final  String  ADMIN_UPDATEPWD="/admin/updatePwdpublic";
+    //更新
+    public static final String UPDATE = "/user/update";
     //文件上传
     public static final String UPLOAD = "/file/upload";
     //图片基本路径
