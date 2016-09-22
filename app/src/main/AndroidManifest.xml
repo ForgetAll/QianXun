@@ -52,6 +52,8 @@
         <activity android:name=".activity.RegisterActivity"></activity>
         <!--注册基类-->
         <activity android:name=".activity.BaseActivity"></activity>
+        <!--创建文章，软键盘设置-->
+        <activity android:name=".activity.CreateArticleActivity" android:windowSoftInputMode="adjustResize|stateAlwaysHidden"></activity>
 
     </application>
 

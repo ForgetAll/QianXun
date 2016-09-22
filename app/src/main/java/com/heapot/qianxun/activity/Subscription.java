@@ -154,7 +154,7 @@ public class Subscription extends BaseActivity  {
         allSubAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-
+                Logger.d("点击了！");
             }
         });
     }
