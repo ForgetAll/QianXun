@@ -1,5 +1,6 @@
 package com.heapot.qianxun.activity;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -8,13 +9,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.heapot.qianxun.R;
+import com.heapot.qianxun.util.ClearCacheTask;
 
 /**
  * Created by 15859 on 2016/9/17.
  */
 public class SystemSettingActivity extends AppCompatActivity implements View.OnClickListener {
-    private TextView mBack,mCache,mVersion,mSuggest,mExit;
-    private RelativeLayout mClear,mUpdate;
+    private TextView mBack, mCache, mVersion, mSuggest, mExit;
+    private RelativeLayout mClear, mUpdate;
+    private Activity activity;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -24,13 +27,13 @@ public class SystemSettingActivity extends AppCompatActivity implements View.OnC
     }
 
     private void findVew() {
-      mBack=(TextView)  findViewById(R.id.tv_back);
-     mClear=(RelativeLayout)   findViewById(R.id.rl_clear);
-       mCache=(TextView) findViewById(R.id.tv_cache);
-        mUpdate=(RelativeLayout)   findViewById(R.id.rl_update);
-        mVersion=(TextView)  findViewById(R.id.tv_version);
-        mSuggest=(TextView)  findViewById(R.id.tv_suggest);
-        mExit=(TextView)  findViewById(R.id.tv_exit);
+        mBack = (TextView) findViewById(R.id.tv_back);
+        mClear = (RelativeLayout) findViewById(R.id.rl_clear);
+        mCache = (TextView) findViewById(R.id.tv_cache);
+        mUpdate = (RelativeLayout) findViewById(R.id.rl_update);
+        mVersion = (TextView) findViewById(R.id.tv_version);
+        mSuggest = (TextView) findViewById(R.id.tv_suggest);
+        mExit = (TextView) findViewById(R.id.tv_exit);
         mBack.setOnClickListener(this);
         mClear.setOnClickListener(this);
         mUpdate.setOnClickListener(this);
@@ -40,11 +43,13 @@ public class SystemSettingActivity extends AppCompatActivity implements View.OnC
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.tv_back:
                 finish();
                 break;
             case R.id.rl_clear:
+                ClearCacheTask clearCacheTask = new ClearCacheTask(activity, mCache);
+                clearCacheTask.execute();
                 break;
             case R.id.rl_update:
                 break;

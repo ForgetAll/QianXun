@@ -1,4 +1,5 @@
 package com.heapot.qianxun.fragment;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +15,10 @@ import android.widget.TextView;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.activity.MainActivity;
 import com.heapot.qianxun.activity.PersonalActivity;
+import com.heapot.qianxun.activity.SystemHelpActivity;
+import com.heapot.qianxun.activity.SystemSettingActivity;
+import com.heapot.qianxun.application.CustomApplication;
+import com.heapot.qianxun.bean.ConstantsBean;
 
 /**
  * Created by Karl on 2016/8/20.
@@ -75,8 +80,12 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
                 break;
             //设置、帮助的点击事件
             case R.id.txt_menu_settings:
+                Intent set=new Intent(getContext(), SystemSettingActivity.class);
+                startActivity(set);
                 break;
             case R.id.txt_menu_help:
+                Intent help=new Intent(getContext(), SystemHelpActivity.class);
+                startActivity(help);
                 break;
             //点击切换侧滑菜单头布局的背景
             case R.id.ll_menu_header:
