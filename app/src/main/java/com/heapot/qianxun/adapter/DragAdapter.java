@@ -2,19 +2,16 @@ package com.heapot.qianxun.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.blankj.utilcode.utils.SPUtils;
 import com.heapot.qianxun.R;
-import com.heapot.qianxun.bean.DragBean;
+import com.heapot.qianxun.bean.SubBean;
 import com.heapot.qianxun.helper.ItemTouchHelperAdapter;
 import com.heapot.qianxun.util.JsonUtil;
 import com.heapot.qianxun.util.PreferenceUtil;
-import com.orhanobut.logger.Logger;
 
 import java.util.Collections;
 import java.util.List;
@@ -24,9 +21,9 @@ import java.util.List;
  */
 public class DragAdapter extends RecyclerView.Adapter<DragAdapter.DragViewHolder> implements ItemTouchHelperAdapter {
     private Context context;
-    private List<DragBean> mList;
+    private List<SubBean> mList;
 
-    public DragAdapter(Context context, List<DragBean> mList) {
+    public DragAdapter(Context context, List<SubBean> mList) {
         this.context = context;
         this.mList = mList;
     }

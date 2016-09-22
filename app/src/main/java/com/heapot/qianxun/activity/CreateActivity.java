@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.adapter.CreateAdapter;
+import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.helper.OnRecyclerViewItemClickListener;
 
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ import java.util.List;
 /**
  * Created by Karl on 2016/9/13.
  */
-public class CreateActivity extends Activity implements OnRecyclerViewItemClickListener {
+public class CreateActivity extends BaseActivity implements OnRecyclerViewItemClickListener {
     private RecyclerView createGridView;
     private GridLayoutManager gridLayoutManager;
     private CreateAdapter adapter;
@@ -32,7 +33,7 @@ public class CreateActivity extends Activity implements OnRecyclerViewItemClickL
     private void initView(){
         createGridView = (RecyclerView) findViewById(R.id.rv_create);
         //禁用RecyclerView的滑动事件，配合ScrollView
-        gridLayoutManager = new GridLayoutManager(this,2){
+        gridLayoutManager = new GridLayoutManager(this,3){
             @Override
             public boolean canScrollVertically() {
                 return false;
@@ -47,14 +48,21 @@ public class CreateActivity extends Activity implements OnRecyclerViewItemClickL
         adapter.setOnItemClickListener(this);
     }
     private void initData(){
-        for (int i = 0; i < 3; i++) {
-            list.add("创建项目 #"+ i);
-        }
+        list.add("创建文章");
+        list.add("创建招聘");
+        list.add("创建课程");
         adapter = new CreateAdapter(this,list);
     }
 
     @Override
     public void onItemClick(View view, int position) {
-        Toast.makeText(CreateActivity.this, "点击了", Toast.LENGTH_SHORT).show();
+        switch (position){
+            case 0:
+                break;
+            case 1:
+                break;
+            case 2:
+                break;
+        }
     }
 }

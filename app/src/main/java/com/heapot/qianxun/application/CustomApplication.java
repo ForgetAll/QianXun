@@ -4,11 +4,13 @@ import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
 import com.heapot.qianxun.bean.ConstantsBean;
 
 /**
  *Created by 15859 on 2016/9/4.
- * @summary 全局配置应用
+ * 全局配置应用
  */
 public class CustomApplication extends Application {
     //获取全局上下文
@@ -17,6 +19,9 @@ public class CustomApplication extends Application {
     public static String TOKEN = "";
 
     public static String CURRENT_PAGE = ConstantsBean.PAGE_SCIENCE;
+
+    public static RequestQueue requestQueue;
+
 
 
     @Override
@@ -37,11 +42,20 @@ public class CustomApplication extends Application {
         return context;
     }
 
+    /**
+     * 添加Volley请求
+     */
+    public static RequestQueue getRequestQueue(){
+        if (requestQueue != null){
+            return requestQueue;
+        }
+        return  requestQueue = Volley.newRequestQueue(context);
+    }
 
     /**
      * 获得当前进程的名字
      *
-     * @param context
+     * @param context 上下文
      * @return 进程号
      */
     public static String getCurProcessName(Context context) {

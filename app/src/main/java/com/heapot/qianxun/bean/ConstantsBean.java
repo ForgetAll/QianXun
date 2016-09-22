@@ -23,8 +23,16 @@ public class ConstantsBean {
      * url地址
      */
     //https://qinxi1992.xicp.net/login?loginName=coderfan&password=123456
+    public static final String ORG_CODE = "qianxun/";
     public static final String LOGIN = "login";
     public static final String REGISTER = "register";
+    public static final String CATALOGS = "catalogs";
+    public static final String CHECK_LOGIN_NAME = "checkLoginName?loginName=";
+    public static final String SEND_MESSAGE = "registerSMS?phone=";
+    public static final String RESET_PASSWORD = "resetPassword";
+    public static final String SEND_RESET_MESSAGE = "findPasswordByPhone?phone=";
+
+
 
 
     /*
@@ -59,5 +67,9 @@ public class ConstantsBean {
     public static final String PAGE_SCIENCE = "PAGE_SCIENCE";
     public static final String PAGE_RECRUIT = "PAGE_RECRUIT";
     public static final String PAGE_TRAIN = "PAGE_TRAIN";
+
+    //标签订阅本地文件名
+    public static final String SUBSCRIPTION_FILE_NAME = "Subscription";
+
 
 }

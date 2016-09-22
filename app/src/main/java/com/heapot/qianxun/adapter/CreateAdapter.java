@@ -41,6 +41,13 @@ public class CreateAdapter extends RecyclerView.Adapter<CreateAdapter.CreateView
     public void onBindViewHolder(CreateViewHolder holder, int position) {
         holder.textView.setText(mList.get(position));
 
+        if (position == 0){
+            holder.txt_des.setText("畅所欲言");
+        }else {
+            holder.txt_des.setText("(需要公司账号才能使用)");
+            holder.txt_des.setTextColor(context.getResources().getColor(R.color.create_des));
+        }
+
         holder.itemView.setTag(position);
 
     }
@@ -61,10 +68,11 @@ public class CreateAdapter extends RecyclerView.Adapter<CreateAdapter.CreateView
     }
 
     public class CreateViewHolder extends RecyclerView.ViewHolder{
-        TextView textView;
+        TextView textView,txt_des;
         public CreateViewHolder(View itemView) {
             super(itemView);
             textView = (TextView) itemView.findViewById(R.id.txt_create_name);
+            txt_des = (TextView) itemView.findViewById(R.id.txt_create_des);
         }
     }
 

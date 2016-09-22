@@ -10,22 +10,25 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.heapot.qianxun.R;
-import com.heapot.qianxun.bean.DragBean;
+import com.heapot.qianxun.bean.SubBean;
+import com.heapot.qianxun.bean.SubscriptionBean;
 import com.heapot.qianxun.helper.OnRecyclerViewItemClickListener;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Karl on 2016/9/8.
+ * 标签订阅不可拖拽页面
  */
-public class SubscribedAdapter extends RecyclerView.Adapter<SubscribedAdapter.SubscribedViewHolder> implements View.OnClickListener {
+public class SubAdapter extends RecyclerView.Adapter<SubAdapter.SubscribedViewHolder> implements View.OnClickListener {
     private Context context;
-    private List<DragBean> mList = new ArrayList<>();
+    private List<SubscriptionBean.ContentBean> mList = new ArrayList<>();
     private OnRecyclerViewItemClickListener mOnItemClickListener = null;
 
 
-    public SubscribedAdapter(Context context, List<DragBean> mList) {
+    public SubAdapter(Context context, List<SubscriptionBean.ContentBean> mList) {
         this.context = context;
         this.mList = mList;
     }
@@ -47,20 +50,21 @@ public class SubscribedAdapter extends RecyclerView.Adapter<SubscribedAdapter.Su
 
     @Override
     public void onBindViewHolder(SubscribedViewHolder holder, int position) {
-        int status = mList.get(position).getStatus();
+//        int status = mList.get(position).getStatus();
         String name = mList.get(position).getName();
         holder.textView.setText(name);
-        if (status == 0){
+        Logger.d(name);
+//        if (status == 0){
             holder.textView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             holder.textView.setBackgroundColor(context.getResources().getColor(R.color.background_white));
             holder.textView.setTextColor(context.getResources().getColor(R.color.background_blue));
             holder.textView.setGravity(Gravity.CENTER);
-        }else if (status ==1){
-            holder.textView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-            holder.textView.setBackgroundColor(context.getResources().getColor(R.color.background_blue));
-            holder.textView.setTextColor(context.getResources().getColor(R.color.background_white));
-            holder.textView.setGravity(Gravity.CENTER);
-        }
+//        }else if (status ==1){
+//            holder.textView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+//            holder.textView.setBackgroundColor(context.getResources().getColor(R.color.background_blue));
+//            holder.textView.setTextColor(context.getResources().getColor(R.color.background_white));
+//            holder.textView.setGravity(Gravity.CENTER);
+//        }
 
         //将数据保存在itemView的tag中，以便点击时获取
         holder.itemView.setTag(position);
