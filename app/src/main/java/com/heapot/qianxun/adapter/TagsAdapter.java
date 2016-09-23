@@ -10,8 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.heapot.qianxun.R;
-import com.heapot.qianxun.bean.SubBean;
-import com.heapot.qianxun.bean.SubscriptionBean;
+import com.heapot.qianxun.bean.TagsBean;
 import com.heapot.qianxun.helper.OnRecyclerViewItemClickListener;
 import com.orhanobut.logger.Logger;
 
@@ -22,13 +21,13 @@ import java.util.List;
  * Created by Karl on 2016/9/8.
  * 标签订阅不可拖拽页面
  */
-public class SubAdapter extends RecyclerView.Adapter<SubAdapter.SubscribedViewHolder> implements View.OnClickListener {
+public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.SubscribedViewHolder> implements View.OnClickListener {
     private Context context;
-    private List<SubscriptionBean.ContentBean> mList = new ArrayList<>();
+    private List<TagsBean.ContentBean> mList = new ArrayList<>();
     private OnRecyclerViewItemClickListener mOnItemClickListener = null;
 
 
-    public SubAdapter(Context context, List<SubscriptionBean.ContentBean> mList) {
+    public TagsAdapter(Context context, List<TagsBean.ContentBean> mList) {
         this.context = context;
         this.mList = mList;
     }

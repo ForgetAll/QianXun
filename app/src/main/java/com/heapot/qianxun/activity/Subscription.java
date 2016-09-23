@@ -13,10 +13,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.blankj.utilcode.utils.NetworkUtils;
 import com.heapot.qianxun.R;
-import com.heapot.qianxun.adapter.SubAdapter;
+import com.heapot.qianxun.adapter.TagsAdapter;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
-import com.heapot.qianxun.bean.SubscriptionBean;
+import com.heapot.qianxun.bean.TagsBean;
 import com.heapot.qianxun.helper.OnRecyclerViewItemClickListener;
 import com.heapot.qianxun.helper.SerializableUtils;
 import com.heapot.qianxun.util.JsonUtil;
@@ -35,9 +35,9 @@ import java.util.List;
 public class Subscription extends BaseActivity  {
 //    private RecyclerView drag, content;
     private RecyclerView content;
-    private List<SubscriptionBean.ContentBean> allList = new ArrayList<>();//全部数据
+    private List<TagsBean.ContentBean> allList = new ArrayList<>();//全部数据
 //    private DragAdapter dragAdapter;
-    private SubAdapter allSubAdapter;
+    private TagsAdapter tagsAdapter;
 
     private LinearLayoutManager linearLayoutManager;
 //    private GridLayoutManager gridLayoutManager;
@@ -109,7 +109,7 @@ public class Subscription extends BaseActivity  {
             if (object == null){
                 Toast.makeText(Subscription.this, "暂无数据，请检查网络", Toast.LENGTH_SHORT).show();
             }else {
-                allList.addAll((Collection<? extends SubscriptionBean.ContentBean>) object);
+                allList.addAll((Collection<? extends TagsBean.ContentBean>) object);
             }
             //将加载到的数据添加到适配器
             initList();
@@ -127,7 +127,7 @@ public class Subscription extends BaseActivity  {
                     @Override
                     public void onResponse(JSONObject response) {
                         Logger.json(String.valueOf(response));
-                        SubscriptionBean jsonBean = (SubscriptionBean) JsonUtil.fromJson(String.valueOf(response),SubscriptionBean.class);
+                        TagsBean jsonBean = (TagsBean) JsonUtil.fromJson(String.valueOf(response),TagsBean.class);
                         allList.addAll(jsonBean.getContent());
                         SerializableUtils.setSerializable(Subscription.this,ConstantsBean.SUBSCRIPTION_FILE_NAME,allList);
                         initList();
@@ -148,14 +148,35 @@ public class Subscription extends BaseActivity  {
      */
     private void initList(){
         Logger.d("initList");
-        allSubAdapter = new SubAdapter(Subscription.this,allList);
-        content.setAdapter(allSubAdapter);
+        tagsAdapter = new TagsAdapter(Subscription.this,allList);
+        content.setAdapter(tagsAdapter);
         // 添加所有标签列表的点击事件
-        allSubAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
+        tagsAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Logger.d("点击了！");
+                Logger.d("点击了！"+allList.get(position).getId());
+
             }
         });
+    }
+    private void postSubscribeTags(String catalogId){
+        String url = ConstantsBean.BASE_PATH+ConstantsBean.SUBSCRIBE_CATALOGS+"?catalogId="+catalogId;
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.POST, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }
+        );
+        CustomApplication.getRequestQueue().add(jsonObjectRequest);
+
     }
 }

@@ -7,7 +7,7 @@ import java.util.List;
  * Created by Karl on 2016/9/19.
  * 标签订阅列表
  */
-public class SubscriptionBean implements Serializable {
+public class TagsBean implements Serializable {
 
     /**
      * status : success
