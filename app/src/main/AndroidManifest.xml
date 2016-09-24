@@ -60,6 +60,10 @@
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden"></activity>
         <!--自动更新服务-->
         <service android:name=".service.UpdateService"></service>
+        <!--文章详情-->
+        <activity android:name=".activity.ArticleActivity"></activity>
+        <!--管理员登陆页面-->
+        <activity android:name=".activity.AdminLoginActivity"></activity>
     </application>
 
 </manifest>

@@ -77,6 +77,7 @@ public class PageFragment extends Fragment {
             public void onItemClick(View view, int position) {
                 Toast.makeText(getContext(), "点击了", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getActivity(), ArticleActivity.class);
+                startActivity(intent);
             }
         });
     }
