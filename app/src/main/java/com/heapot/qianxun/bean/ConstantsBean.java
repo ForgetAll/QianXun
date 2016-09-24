@@ -24,6 +24,8 @@ public class ConstantsBean {
     public static final String UPDATE = "/user/update";
     //文件上传
     public static final String UPLOAD = "/file/upload";
+    //查询软件(版本更新)
+    public static final String APP_SELECT = "/app/select";
     //图片基本路径
     public static final String BASE_IMAGE_PATH = "http://122.114.85.104:8080/images/classes/res/images/";
 
@@ -33,6 +35,11 @@ public class ConstantsBean {
     public static final int CARMA_RESULT_CODE = 101;
     public static final String HEAD_IMAGE_PATH = Environment.getExternalStorageDirectory() + "/headImage.jpg";
 
+    //关于我们
+    public static final String ABOUT_US = "http://122.114.85.104:8080/images/classes/res/html/about.html";
+    public static final String APP_UEL = "appUrl";
+    public static final String TITLE = "title";
+    public static final String POSITION = "position";
     /**
      * url地址
      */

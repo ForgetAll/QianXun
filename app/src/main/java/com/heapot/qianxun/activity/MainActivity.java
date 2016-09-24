@@ -1,5 +1,6 @@
 package com.heapot.qianxun.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -10,7 +11,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.View;
@@ -39,6 +39,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private List<String> mList;
 
     private FloatingActionButton mCreate;
+    private Activity activity;
 
     //主页界面
     @Override
@@ -95,6 +96,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
      * 模拟数据
      */
     private void initData() {
+        //版本更新，软件更新接口上线之后可用
+      //  UpdateUtil.getInstance().checkUpdate(activity,null,false);
+        //模拟数据
         for (int i = 0; i < 15; i++) {
             mList.add("Tab-" + i);
         }

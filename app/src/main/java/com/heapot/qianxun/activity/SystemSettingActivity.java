@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.util.ClearCacheTask;
+import com.heapot.qianxun.util.UpdateUtil;
+import com.heapot.qianxun.widget.ExitPopup;
 
 /**
  * Created by 15859 on 2016/9/17.
@@ -44,18 +46,26 @@ public class SystemSettingActivity extends AppCompatActivity implements View.OnC
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            //返回
             case R.id.tv_back:
                 finish();
                 break;
+            //清理缓存
             case R.id.rl_clear:
                 ClearCacheTask clearCacheTask = new ClearCacheTask(activity, mCache);
                 clearCacheTask.execute();
                 break;
+            //版本更新
             case R.id.rl_update:
+                UpdateUtil.getInstance().checkUpdate(activity,mVersion,true);
                 break;
+            //提交意见
             case R.id.tv_suggest:
                 break;
+            //退出登录
             case R.id.tv_exit:
+                ExitPopup exitPopup=new ExitPopup(activity);
+                exitPopup.showPopupWindow();
                 break;
         }
     }
