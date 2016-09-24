@@ -204,7 +204,11 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
      * @param nickname 昵称
      */
     private void postRegister(final String phone, final String pass, String message, final String nickname){
-        String url = ConstantsBean.BASE_PATH + ConstantsBean.REGISTER + "?phone=" + phone + "&password" + pass + "&token" + message;
+        String url = ConstantsBean.BASE_PATH + ConstantsBean.REGISTER
+                + "?phone=" + phone
+                + "&password" + pass
+                + "&nickname="+nickname
+                + "&token" + message;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.POST,url,null,
                 new Response.Listener<JSONObject>() {
