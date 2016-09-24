@@ -34,7 +34,28 @@
         android:layout_alignParentBottom="true"
         android:orientation="horizontal">
         <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:id="@+id/btn_text_size"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="字号"/>
+        <Button
+            android:id="@+id/btn_text_left"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="居左"/>
+        <Button
+            android:id="@+id/btn_text_list"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="列表"/>
+        <Button
+            android:id="@+id/btn_text_image"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="添加图片"/>
     </LinearLayout>
 </RelativeLayout>

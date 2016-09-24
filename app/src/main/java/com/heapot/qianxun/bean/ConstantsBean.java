@@ -1,6 +1,7 @@
 package com.heapot.qianxun.bean;
 
 import android.os.Environment;
+import android.os.StatFs;
 
 /**
  * Created by 15859 on 2016/9/3.
@@ -43,15 +44,29 @@ public class ConstantsBean {
     /**
      * url地址
      */
-    //https://qinxi1992.xicp.net/login?loginName=coderfan&password=123456
+    //验证Token的请求头的key
+    public static final String X_TOKEN = "x-auth-token";
+    //验证管理员权限的
+    public static final String KEY_REQUEST = "X-Requested-With";
+    public static final String VALUE_REQUEST = "XMLHttpRequest";
+    //OrgCode
     public static final String ORG_CODE = "qianxun/";
+    //登陆
     public static final String LOGIN = "login";
+    //注册
     public static final String REGISTER = "register";
+    //获取分类
     public static final String CATALOGS = "catalogs";
+    //验证账户名的唯一性
     public static final String CHECK_LOGIN_NAME = "checkLoginName?loginName=";
+    //发送验证码
     public static final String SEND_MESSAGE = "registerSMS?phone=";
+    //重置密码
     public static final String RESET_PASSWORD = "resetPassword";
+    //找回密码手机号
     public static final String SEND_RESET_MESSAGE = "findPasswordByPhone?phone=";
+    //订阅分类
+    public static final String SUBSCRIBE_CATALOGS = "user/subscribe/catalog";
 
 
 
