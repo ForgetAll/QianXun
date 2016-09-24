@@ -12,6 +12,8 @@ import java.util.List;
 
 /**
  * Created by Karl on 2016/8/29.
+ * 通知栏适配器
+ *
  */
 public class NotificationPageAdapter extends FragmentPagerAdapter {
     private List<String> mList;

@@ -35,7 +35,7 @@ import java.util.List;
 public class Subscription extends BaseActivity  {
 //    private RecyclerView drag, content;
     private RecyclerView content;
-    private List<TagsBean.ContentBean> allList = new ArrayList<>();//全部数据
+    private List<TagsBean.ContentBean> tagsList = new ArrayList<>();//全部数据
 //    private DragAdapter dragAdapter;
     private TagsAdapter tagsAdapter;
 
@@ -109,7 +109,7 @@ public class Subscription extends BaseActivity  {
             if (object == null){
                 Toast.makeText(Subscription.this, "暂无数据，请检查网络", Toast.LENGTH_SHORT).show();
             }else {
-                allList.addAll((Collection<? extends TagsBean.ContentBean>) object);
+                tagsList.addAll((Collection<? extends TagsBean.ContentBean>) object);
             }
             //将加载到的数据添加到适配器
             initList();
@@ -128,8 +128,8 @@ public class Subscription extends BaseActivity  {
                     public void onResponse(JSONObject response) {
                         Logger.json(String.valueOf(response));
                         TagsBean jsonBean = (TagsBean) JsonUtil.fromJson(String.valueOf(response),TagsBean.class);
-                        allList.addAll(jsonBean.getContent());
-                        SerializableUtils.setSerializable(Subscription.this,ConstantsBean.SUBSCRIPTION_FILE_NAME,allList);
+                        tagsList.addAll(jsonBean.getContent());
+                        SerializableUtils.setSerializable(Subscription.this,ConstantsBean.SUBSCRIPTION_FILE_NAME, tagsList);
                         initList();
                     }
                 },
@@ -148,13 +148,13 @@ public class Subscription extends BaseActivity  {
      */
     private void initList(){
         Logger.d("initList");
-        tagsAdapter = new TagsAdapter(Subscription.this,allList);
+        tagsAdapter = new TagsAdapter(Subscription.this, tagsList);
         content.setAdapter(tagsAdapter);
         // 添加所有标签列表的点击事件
         tagsAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Logger.d("点击了！"+allList.get(position).getId());
+                Logger.d("点击了！"+ tagsList.get(position).getId());
 
             }
         });

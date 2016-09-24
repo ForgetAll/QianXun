@@ -15,6 +15,8 @@ import java.util.List;
 
 /**
  * Created by Karl on 2016/9/13.
+ * 创建项目适配器
+ *
  */
 public class CreateAdapter extends RecyclerView.Adapter<CreateAdapter.CreateViewHolder> implements View.OnClickListener {
     private Context context;

@@ -1,6 +1,5 @@
 package com.heapot.qianxun.activity;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -9,7 +8,6 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.heapot.qianxun.R;
-import com.heapot.qianxun.adapter.MyPageAdapter;
 import com.heapot.qianxun.adapter.NotificationPageAdapter;
 
 import java.util.ArrayList;

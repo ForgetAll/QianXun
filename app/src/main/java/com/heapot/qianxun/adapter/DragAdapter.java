@@ -18,6 +18,7 @@ import java.util.List;
 
 /**
  * Created by Karl on 2016/9/8.
+ * 拖拽页面适配器
  */
 public class DragAdapter extends RecyclerView.Adapter<DragAdapter.DragViewHolder> implements ItemTouchHelperAdapter {
     private Context context;

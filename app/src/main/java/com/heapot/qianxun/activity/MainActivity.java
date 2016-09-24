@@ -10,7 +10,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.View;
@@ -19,7 +18,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.heapot.qianxun.R;
-import com.heapot.qianxun.adapter.MyPageAdapter;
+import com.heapot.qianxun.adapter.MainTabFragmentAdapter;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.util.PreferenceUtil;
 import com.orhanobut.logger.Logger;
@@ -34,7 +33,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private TabLayout mTabLayout;
     private ImageView mSubscription, mSearch, mNotification, mStar;
     private ViewPager mViewPager;
-    private MyPageAdapter mPageAdapter;
+    private MainTabFragmentAdapter mPageAdapter;
 
     private List<String> mList;
 
@@ -105,7 +104,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
      * 实现动态添加Tab
      */
     private void initTab() {
-        mPageAdapter = new MyPageAdapter(getSupportFragmentManager(), this, mList);
+        mPageAdapter = new MainTabFragmentAdapter(getSupportFragmentManager(), this, mList);
         mViewPager.setAdapter(mPageAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);

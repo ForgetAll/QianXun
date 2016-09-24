@@ -9,10 +9,11 @@ import java.util.List;
  */
 public class TagsBean implements Serializable {
 
+
     /**
      * status : success
      * message :
-     * content : [{"id":"704d54f44d7845f8a30322c9923a0d19","pid":null,"name":"新闻","code":"news","ascription":"专属分类","description":null},{"id":"e504595ef4be4d4c821649978172b647","pid":"704d54f44d7845f8a30322c9923a0d19","name":"游戏","code":"games","ascription":"专属分类","description":null}]
+     * content : [{"id":"704d54f44d7845f8a30322c9923a0d19","pid":null,"name":"新闻","code":"news","ascription":"公共分类","description":null,"subscribeStatus":0},{"id":"e504595ef4be4d4c821649978172b647","pid":"704d54f44d7845f8a30322c9923a0d19","name":"游戏","code":"games","ascription":"公共分类","description":null,"subscribeStatus":0}]
      */
 
     private String status;
@@ -22,8 +23,9 @@ public class TagsBean implements Serializable {
      * pid : null
      * name : 新闻
      * code : news
-     * ascription : 专属分类
+     * ascription : 公共分类
      * description : null
+     * subscribeStatus : 0
      */
 
     private List<ContentBean> content;
@@ -52,13 +54,14 @@ public class TagsBean implements Serializable {
         this.content = content;
     }
 
-    public static class ContentBean implements Serializable {
+    public static class ContentBean implements Serializable{
         private String id;
         private Object pid;
         private String name;
         private String code;
         private String ascription;
         private Object description;
+        private int subscribeStatus;
 
         public String getId() {
             return id;
@@ -106,6 +109,14 @@ public class TagsBean implements Serializable {
 
         public void setDescription(Object description) {
             this.description = description;
+        }
+
+        public int getSubscribeStatus() {
+            return subscribeStatus;
+        }
+
+        public void setSubscribeStatus(int subscribeStatus) {
+            this.subscribeStatus = subscribeStatus;
         }
     }
 }

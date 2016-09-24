@@ -11,12 +11,14 @@ import java.util.List;
 
 /**
  * Created by Karl on 2016/8/25.
+ * 主页tab创建Fragment适配器
+ *
  */
-public class MyPageAdapter extends FragmentPagerAdapter {
+public class MainTabFragmentAdapter extends FragmentPagerAdapter {
     private List<String> mList;
     private Context mContext;
 
-    public MyPageAdapter(FragmentManager fm, Context context, List<String> list) {
+    public MainTabFragmentAdapter(FragmentManager fm, Context context, List<String> list) {
         super(fm);
         this.mContext = context;
         this.mList = list;

@@ -20,6 +20,7 @@ import java.util.List;
 /**
  * Created by Karl on 2016/9/8.
  * 标签订阅不可拖拽页面
+ *
  */
 public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.SubscribedViewHolder> implements View.OnClickListener {
     private Context context;
