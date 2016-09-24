@@ -50,21 +50,22 @@ public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.SubscribedView
 
     @Override
     public void onBindViewHolder(SubscribedViewHolder holder, int position) {
-//        int status = mList.get(position).getStatus();
+        int status = mList.get(position).getSubscribeStatus();
         String name = mList.get(position).getName();
         holder.textView.setText(name);
         Logger.d(name);
-//        if (status == 0){
+        //状态为0是未订阅
+        if (status == 0){
             holder.textView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             holder.textView.setBackgroundColor(context.getResources().getColor(R.color.background_white));
             holder.textView.setTextColor(context.getResources().getColor(R.color.background_blue));
             holder.textView.setGravity(Gravity.CENTER);
-//        }else if (status ==1){
-//            holder.textView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-//            holder.textView.setBackgroundColor(context.getResources().getColor(R.color.background_blue));
-//            holder.textView.setTextColor(context.getResources().getColor(R.color.background_white));
-//            holder.textView.setGravity(Gravity.CENTER);
-//        }
+        }else if (status ==1){//状态为1，是已订阅
+            holder.textView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            holder.textView.setBackgroundColor(context.getResources().getColor(R.color.background_blue));
+            holder.textView.setTextColor(context.getResources().getColor(R.color.background_white));
+            holder.textView.setGravity(Gravity.CENTER);
+        }
 
         //将数据保存在itemView的tag中，以便点击时获取
         holder.itemView.setTag(position);

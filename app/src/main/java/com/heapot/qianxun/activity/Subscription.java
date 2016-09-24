@@ -107,8 +107,10 @@ public class Subscription extends BaseActivity  {
             Logger.d(SerializableUtils.getSerializable(this,ConstantsBean.SUBSCRIPTION_FILE_NAME));
             Object object = SerializableUtils.getSerializable(this,ConstantsBean.SUBSCRIPTION_FILE_NAME);
             if (object == null){
+                //本地无数据，提示用户检查网络后重新加载
                 Toast.makeText(Subscription.this, "暂无数据，请检查网络", Toast.LENGTH_SHORT).show();
             }else {
+                //本地有数据，直接加载
                 tagsList.addAll((Collection<? extends TagsBean.ContentBean>) object);
             }
             //将加载到的数据添加到适配器
@@ -159,6 +161,11 @@ public class Subscription extends BaseActivity  {
             }
         });
     }
+
+    /**
+     * 提交订阅
+     * @param catalogId 订阅Id
+     */
     private void postSubscribeTags(String catalogId){
         String url = ConstantsBean.BASE_PATH+ConstantsBean.SUBSCRIBE_CATALOGS+"?catalogId="+catalogId;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
