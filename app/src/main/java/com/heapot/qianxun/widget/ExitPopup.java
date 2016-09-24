@@ -15,6 +15,7 @@ import razerdp.basepopup.BasePopupWindow;
 
 /**
  * Created by 15859 on 2016/9/22.
+ * 退出窗口
  */
 public class ExitPopup extends BasePopupWindow implements View.OnClickListener {
     private TextView mCancel,mOk;

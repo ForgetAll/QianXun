@@ -94,6 +94,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
      * 模拟数据
      */
     private void initData() {
+        //版本更新，软件更新接口上线之后可用
+      //  UpdateUtil.getInstance().checkUpdate(activity,null,false);
+        //模拟数据
         for (int i = 0; i < 15; i++) {
             mList.add("Tab-" + i);
         }
