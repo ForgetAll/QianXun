@@ -1,6 +1,5 @@
 package com.heapot.qianxun.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -39,7 +38,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private List<String> mList;
 
     private FloatingActionButton mCreate;
-    private Activity activity;
 
     //主页界面
     @Override
