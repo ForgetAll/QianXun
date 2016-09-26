@@ -15,6 +15,7 @@ import com.orhanobut.logger.Logger;
  *
  */
 public class BaseActivity extends AppCompatActivity {
+    public Activity activity;
     private IntentFilter intentFilter;
     private NetworkChangeReceiver networkChangeReceiver;
     @Override

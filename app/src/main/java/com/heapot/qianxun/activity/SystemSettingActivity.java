@@ -1,25 +1,24 @@
 package com.heapot.qianxun.activity;
 
-import android.app.Activity;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.util.ClearCacheTask;
+import com.heapot.qianxun.util.PreferenceUtil;
 import com.heapot.qianxun.util.UpdateUtil;
-import com.heapot.qianxun.widget.ExitPopup;
 
 /**
  * Created by 15859 on 2016/9/17.
  */
-public class SystemSettingActivity extends AppCompatActivity implements View.OnClickListener {
+public class SystemSettingActivity extends BaseActivity implements View.OnClickListener {
     private TextView mBack, mCache, mVersion, mSuggest, mExit;
     private RelativeLayout mClear, mUpdate;
-    private Activity activity;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,15 +56,19 @@ public class SystemSettingActivity extends AppCompatActivity implements View.OnC
                 break;
             //版本更新
             case R.id.rl_update:
-                UpdateUtil.getInstance().checkUpdate(activity,mVersion,true);
+                UpdateUtil.getInstance().checkUpdate(activity, mVersion, true);
                 break;
             //提交意见
             case R.id.tv_suggest:
                 break;
             //退出登录
             case R.id.tv_exit:
-                ExitPopup exitPopup=new ExitPopup(activity);
-                exitPopup.showPopupWindow();
+                // ExitPopup exitPopup=new ExitPopup(SystemSettingActivity.this);
+                // exitPopup.showPopupWindow();
+                PreferenceUtil.clearPreference();
+                Intent intent = new Intent(SystemSettingActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
                 break;
         }
     }

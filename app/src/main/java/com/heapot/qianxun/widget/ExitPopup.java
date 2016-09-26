@@ -7,8 +7,8 @@ import android.view.animation.Animation;
 import android.widget.TextView;
 
 import com.heapot.qianxun.R;
-import com.heapot.qianxun.bean.ConstantsBean;
-import com.heapot.qianxun.util.BroadcastUtil;
+import com.heapot.qianxun.activity.LoginActivity;
+import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.util.PreferenceUtil;
 
 import razerdp.basepopup.BasePopupWindow;
@@ -52,7 +52,9 @@ public class ExitPopup extends BasePopupWindow implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         PreferenceUtil.clearPreference();
-        BroadcastUtil.sendDataChangeBroadcase(mContext,new Intent(ConstantsBean.UPDATE));
+        Intent intent=new Intent(CustomApplication.getContext(), LoginActivity.class);
+        CustomApplication.getContext().startActivity(intent);
+        //BroadcastUtil.sendDataChangeBroadcase(mContext,new Intent(ConstantsBean.UPDATE));
         mContext.finish();
 
     }

@@ -26,17 +26,6 @@
                 android:textColor="@android:color/white"
                 android:textSize="20sp" />
 
-            <TextView
-                android:id="@+id/tv_next"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
-                android:gravity="center"
-                android:paddingLeft="30px"
-                android:paddingRight="30px"
-                android:text="切换账号"
-                android:textColor="@android:color/white"
-                android:textSize="20sp" />
         </RelativeLayout>
 
 
