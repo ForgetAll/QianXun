@@ -111,8 +111,6 @@ public class Subscription extends BaseActivity  {
             //网络可以用的时候请求数据,因为请求分类不需要任何权限，因此可以直接请求
             String url = ConstantsBean.BASE_PATH + ConstantsBean.ORG_CODE+ConstantsBean.CATALOGS;
             getCatalogs(url);
-            //从网络请求已经订阅数据
-            String url2 = ConstantsBean.BASE_PATH+ConstantsBean.SUBSCRIBE_CATALOGS;
         }else {
             //取出本地缓存数据，如果缓存无数据再提示用户检查网络
             Logger.d(SerializableUtils.getSerializable(this,ConstantsBean.TAG_FILE_NAME));
@@ -125,16 +123,17 @@ public class Subscription extends BaseActivity  {
                 tagsList.addAll((Collection<? extends TagsBean.ContentBean>) object);
                 //从所有数据中取出来合适的数据，添加到subBean
                 //由于后台数据的问题，这里只是临时的解决办法
-                for (int i = 0; i < tagsList.size(); i++) {
-                    SubBean subBean = new SubBean();
-                    if (tagsList.get(i).getSubscribeStatus() == 1){
-                        subBean.setId(tagsList.get(i).getId());
-                        subBean.setSubscribeStatus(1);
-                        subBean.setName(tagsList.get(i).getName());
-                        subBean.setPosition(i);
-                        subList.add(subBean);
-                    }
-                }
+//                for (int i = 0; i < tagsList.size(); i++) {
+//                    SubBean subBean = new SubBean();
+//                    if (tagsList.get(i).getSubscribeStatus() == 1){
+//                        subBean.setId(tagsList.get(i).getId());
+//                        subBean.setSubscribeStatus(1);
+//                        subBean.setName(tagsList.get(i).getName());
+//                        subBean.setPosition(i);
+//                        subList.add(subBean);
+//                    }
+//                }
+                refreshSubList(tagsList);
             }
             //将加载到的数据添加到适配器
             initList();
@@ -152,21 +151,35 @@ public class Subscription extends BaseActivity  {
                     @Override
                     public void onResponse(JSONObject response) {
                         Logger.json(String.valueOf(response));
-                        TagsBean jsonBean = (TagsBean) JsonUtil.fromJson(String.valueOf(response),TagsBean.class);
-                        tagsList.addAll(jsonBean.getContent());
-                        SerializableUtils.setSerializable(Subscription.this,ConstantsBean.TAG_FILE_NAME, tagsList);
-                        //由于后台数据的问题，这里只是临时的解决办法,抽取出干净的数据
-                        for (int i = 0; i < tagsList.size(); i++) {
-                            SubBean subBean = new SubBean();
-                            if (tagsList.get(i).getSubscribeStatus() == 1){
-                                subBean.setId(tagsList.get(i).getId());
-                                subBean.setSubscribeStatus(1);
-                                subBean.setName(tagsList.get(i).getName());
-                                subBean.setPosition(i);
-                                subList.add(subBean);
+                        try {
+                            String status = response.getString("status");
+                            if (status.equals("succcess")){
+                                TagsBean jsonBean = (TagsBean) JsonUtil.fromJson(String.valueOf(response),TagsBean.class);
+                                tagsList.addAll(jsonBean.getContent());
+                                SerializableUtils.setSerializable(Subscription.this,ConstantsBean.TAG_FILE_NAME, tagsList);
+                                //由于后台数据的问题，这里只是临时的解决办法,抽取出干净的数据
+//                                for (int i = 0; i < tagsList.size(); i++) {
+//                                    SubBean subBean = new SubBean();
+//                                    if (tagsList.get(i).getSubscribeStatus() == 1){
+//                                        subBean.setId(tagsList.get(i).getId());
+//                                        subBean.setSubscribeStatus(1);
+//                                        subBean.setName(tagsList.get(i).getName());
+//                                        subBean.setPosition(i);
+//                                        subList.add(subBean);
+//                                    }
+//                                }
+                                refreshSubList(tagsList);
+                                initList();
+                            }else {
+                                Object object = SerializableUtils.getSerializable(Subscription.this,ConstantsBean.TAG_FILE_NAME);
+                                if (object == null){
+                                    Toast.makeText(Subscription.this, "数据请求失败，暂无数据", Toast.LENGTH_SHORT).show();
+                                }
                             }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-                        initList();
+
                     }
                 },
                 new Response.ErrorListener() {
@@ -202,13 +215,9 @@ public class Subscription extends BaseActivity  {
                 int status = tagsList.get(position).getSubscribeStatus();
                 //这里需要进行判断，如果是已订阅那点击就是取消，未订阅点击就是订阅
                 if (status == 0){
-                    tagsList.get(position).setSubscribeStatus(1);
-                    postSubscribeTags(id);
-
+                    postSubscribeTags(id,position);//提交订阅
                 }else if (status == 1){
-                    tagsList.get(position).setSubscribeStatus(0);
-                    cancelTags(id);
-
+                    cancelTags(id,position,0);//取消订阅
                 }
                 tagsAdapter.notifyDataSetChanged();
 
@@ -224,25 +233,21 @@ public class Subscription extends BaseActivity  {
                 Logger.d(subList.get(position).getId());
                 //因为这里全都是已订阅的，所以点击就是取消订阅
                 String id = subList.get(position).getId();
-                int pos = subList.get(position).getPosition();
                 //从网络请求取消订阅
-                cancelTags(id);
-                //从List删除取消订阅数据
-                subList.remove(position);
-                //从tag列表改变数据状态
-                tagsList.get(pos).setSubscribeStatus(0);
-                //刷新数据源
-                subAdapter.notifyDataSetChanged();
-                tagsAdapter.notifyDataSetChanged();
+                cancelTags(id,position,0);
             }
         });
+        //刷新数据
+        subAdapter.notifyDataSetChanged();
+        tagsAdapter.notifyDataSetChanged();
     }
 
     /**
-     * 提交订阅
+     *  提交订阅
      * @param catalogId 订阅Id
+     * @param position 数据下标
      */
-    private void postSubscribeTags(String catalogId){
+    private void postSubscribeTags(String catalogId, final int position){
         String url = ConstantsBean.BASE_PATH+ConstantsBean.SUBSCRIBE_CATALOGS+"?catalogId="+catalogId;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.POST, url, null,
@@ -254,10 +259,12 @@ public class Subscription extends BaseActivity  {
                             String status = response.getString("status");
                             if (status.equals("success")){
                                 //提交成功,刷新本地存储的数据
+                                tagsList.get(position).setSubscribeStatus(1);
+                                refreshSubList(tagsList);
                                 SerializableUtils.setSerializable(Subscription.this,ConstantsBean.TAG_FILE_NAME, tagsList);
                             }else {
-                                //提交订阅失败，存到本地，在MainActivity中再次提交
-                                PreferenceUtil.putBoolean("isSub",false);
+                                //提交订阅失败
+                                Toast.makeText(Subscription.this, ""+response.getString("message"), Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -281,15 +288,50 @@ public class Subscription extends BaseActivity  {
         CustomApplication.getRequestQueue().add(jsonObjectRequest);
 
     }
-    //取消订阅标签
-    private void cancelTags(String id){
+
+    /**
+     * 取消订阅
+     * @param id 所需要取消订阅标签的id
+     * @param position 该标签对应的position
+     * @param i 通过i确定position是全部标签的还是已订阅标签的坐标
+     */
+    private void cancelTags(String id, final int position, final int i){
         String url = "";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.DELETE, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        try {
+                            String status = response.getString("status");
+                            if (status.equals("success")){
+                                switch (i){
+                                    case 0:
+                                        tagsList.get(position).setSubscribeStatus(0);
+                                        refreshSubList(tagsList);
+                                        tagsAdapter.notifyDataSetChanged();
+                                        //同时更新本地存储数据
+                                        SerializableUtils.setSerializable(Subscription.this,ConstantsBean.TAG_FILE_NAME, tagsList);
+                                        break;
+                                    case 1:
+                                        int pos = subList.get(position).getPosition();//定位TagList下标
+                                        //从List删除取消订阅数据
+                                        subList.remove(position);
+                                        //从tag列表改变数据状态
+                                        tagsList.get(pos).setSubscribeStatus(0);
+                                        //刷新数据源
+                                        subAdapter.notifyDataSetChanged();
+                                        tagsAdapter.notifyDataSetChanged();
+                                        break;
+                                }
 
+                            }else {
+                                //取消订阅失败
+                                Toast.makeText(Subscription.this, ""+response.getString("message"), Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 },
                 new Response.ErrorListener() {
@@ -307,5 +349,22 @@ public class Subscription extends BaseActivity  {
             }
         };
         CustomApplication.getRequestQueue().add(jsonObjectRequest);
+    }
+
+    /**
+     * 每当总数据发生变化，这里都会变化
+     * @param list 将TagList传进来
+     */
+    private void refreshSubList(List<TagsBean.ContentBean> list){
+        subList.clear();//清空一下数据
+        SubBean subBean = new SubBean();
+        for (int i = 0; i < list.size(); i++) {
+            subBean.setId(list.get(i).getId());
+            subBean.setSubscribeStatus(1);
+            subBean.setName(list.get(i).getName());
+            subBean.setPosition(i);
+            subList.add(subBean);
+        }
+        subAdapter.notifyDataSetChanged();
     }
 }
