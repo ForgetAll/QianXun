@@ -68,6 +68,6 @@ public class PreferenceUtil {
      */
     public static void clearPreference() {
         SharedPreferences sp = CustomApplication.context.getSharedPreferences(ConstantsBean.CONFIG_NAME, MODE_PRIVATE);
-        sp.edit().clear().apply();
+        sp.edit().clear().commit();
     }
 }

@@ -9,12 +9,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.heapot.qianxun.R;
+import com.heapot.qianxun.application.ActivityCollector;
 import com.heapot.qianxun.util.ClearCacheTask;
 import com.heapot.qianxun.util.PreferenceUtil;
 import com.heapot.qianxun.util.UpdateUtil;
 
 /**
  * Created by 15859 on 2016/9/17.
+ * 系统设置页面
+ *
  */
 public class SystemSettingActivity extends BaseActivity implements View.OnClickListener {
     private TextView mBack, mCache, mVersion, mSuggest, mExit;
@@ -63,8 +66,7 @@ public class SystemSettingActivity extends BaseActivity implements View.OnClickL
                 break;
             //退出登录
             case R.id.tv_exit:
-                // ExitPopup exitPopup=new ExitPopup(SystemSettingActivity.this);
-                // exitPopup.showPopupWindow();
+                ActivityCollector.finishAll();
                 PreferenceUtil.clearPreference();
                 Intent intent = new Intent(SystemSettingActivity.this, LoginActivity.class);
                 startActivity(intent);
