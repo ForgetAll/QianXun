@@ -63,12 +63,13 @@ public class SystemSettingActivity extends BaseActivity implements View.OnClickL
                 break;
             //退出登录
             case R.id.tv_exit:
-                // ExitPopup exitPopup=new ExitPopup(SystemSettingActivity.this);
-                // exitPopup.showPopupWindow();
+               /* ExitPopup exitPopup=new ExitPopup(SystemSettingActivity.this);
+                exitPopup.showPopupWindow();*/
                 PreferenceUtil.clearPreference();
                 Intent intent = new Intent(SystemSettingActivity.this, LoginActivity.class);
                 startActivity(intent);
                 finish();
+
                 break;
         }
     }

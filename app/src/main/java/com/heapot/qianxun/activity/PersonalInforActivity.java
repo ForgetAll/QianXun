@@ -240,47 +240,7 @@ public class PersonalInforActivity extends AppCompatActivity implements View.OnC
         startActivityForResult(intent, 102);
     }
 
-    /**
 
-     *压缩图片
-
-     */
-
-     private Bitmap yasuo(Uri uri) {
-     Bitmap bitmap = null;
-     try {
-
-     BitmapFactory.Options options = new BitmapFactory.Options();
-     options.inJustDecodeBounds = true;
-     bitmap = BitmapFactory.decodeStream(this.getContentResolver()
-     .openInputStream(uri), null, options);
-     int picWidth = options.outWidth;
-     int picHeight = options.outHeight;
-     WindowManager windowManager = getWindowManager();
-     Display display = windowManager.getDefaultDisplay();
-     int screenWidth = display.getWidth();
-     int screenHeight = display.getHeight();
-     options.inSampleSize = 1;
-     if (picWidth > picHeight) {
-     if (picWidth > screenWidth)
-     options.inSampleSize = picWidth / screenWidth;
-     } else {
-     if (picHeight > screenHeight)
-     options.inSampleSize = picHeight / screenHeight;
-     }
-     options.inJustDecodeBounds = false;
-     bitmap = BitmapFactory.decodeStream(this.getContentResolver()
-     .openInputStream(uri), null, options);
-     mHead.setImageBitmap(bitmap);
-     /*
-     * if (bitmap.isRecycled() == false) { bitmap.recycle(); }
-     */
-    System.gc();
-} catch (Exception e1) {
-        }
-        return bitmap;
-
-        }
 
      private void jumpAlterActivity(String info) {
         Intent intent = new Intent(PersonalInforActivity.this, PersonInfoAlterActivity.class);

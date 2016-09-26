@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="160dp"
             android:scaleType="fitXY"
-            android:src="@drawable/bye" />
+            android:src="@drawable/exitimage" />
 
         <View
             android:layout_width="match_parent"
