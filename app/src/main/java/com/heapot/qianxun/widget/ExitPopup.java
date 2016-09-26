@@ -1,11 +1,16 @@
 package com.heapot.qianxun.widget;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.widget.TextView;
 
 import com.heapot.qianxun.R;
+import com.heapot.qianxun.activity.LoginActivity;
+import com.heapot.qianxun.bean.ConstantsBean;
+import com.heapot.qianxun.util.BroadcastUtil;
+import com.heapot.qianxun.util.PreferenceUtil;
 
 import razerdp.basepopup.BasePopupWindow;
 
@@ -32,9 +37,9 @@ public class ExitPopup extends BasePopupWindow implements View.OnClickListener {
 
     @Override
     public View getPopupView() {
-        View view=   View.inflate(mContext, R.layout.exit_app_dialog,null);
-        mCancel=(TextView) findViewById(R.id.tv_cancel);
-        mOk=(TextView) findViewById(R.id.tv_ok);
+        View view=  View.inflate(mContext, R.layout.exit_app_dialog,null);
+        mCancel= (TextView) view.findViewById(R.id.tv_cancel);
+        mOk=(TextView) view.findViewById(R.id.tv_ok);
         mOk.setOnClickListener(this);
         return view;
 
@@ -47,11 +52,10 @@ public class ExitPopup extends BasePopupWindow implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-       /* PreferenceUtil.clearPreference();
-        Intent intent=new Intent(CustomApplication.getContext(), LoginActivity.class);
-        CustomApplication.getContext().startActivity(intent);
+        PreferenceUtil.clearPreference();
+        Intent intent=new Intent(mContext, LoginActivity.class);
+        mContext.startActivity(intent);
         BroadcastUtil.sendDataChangeBroadcase(mContext,new Intent(ConstantsBean.UPDATE));
-        mContext.finish();*/
-
+        mContext.finish();
     }
 }
