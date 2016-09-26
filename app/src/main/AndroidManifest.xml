@@ -45,14 +45,16 @@
         <!--创建文章、简历页面-->
         <activity android:name=".activity.CreateActivity"></activity>
         <!--Login-->
-        <activity android:name=".activity.LoginActivity"></activity>
+        <activity android:name=".activity.LoginActivity"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"></activity>
         <!--设置界面-->
         <activity android:name=".activity.SystemSettingActivity"></activity>
         <!--帮助界面-->
         <activity android:name=".activity.SystemHelpActivity"></activity>
         <!--注册界面-->
-        <activity android:name=".activity.RegisterActivity"></activity>
-        <!--注册基类-->
+        <activity android:name=".activity.RegisterActivity"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"></activity>
+        <!--基类-->
         <activity android:name=".activity.BaseActivity"></activity>
         <!--创建文章，软键盘设置-->
         <activity
@@ -61,7 +63,8 @@
         <!--自动更新服务-->
         <service android:name=".service.UpdateService"></service>
         <!--文章详情-->
-        <activity android:name=".activity.ArticleActivity"></activity>
+        <activity android:name=".activity.ArticleActivity"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"></activity>
         <!--管理员登陆页面-->
         <activity android:name=".activity.AdminLoginActivity"></activity>
     </application>

@@ -1,8 +1,10 @@
 package com.heapot.qianxun.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -89,6 +91,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 break;
             case R.id.txt_register_send_message:
                 sendMessage();//发送验证码
+                lostFocus();
                 break;
             case R.id.btn_register:
                 postRegister();//注册请求
@@ -99,11 +102,12 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         boolean isAvailable = NetworkUtils.isAvailable(this);
         if (isAvailable) {
             String phone = edt_phone.getText().toString();
-            if (CommonUtil.isMobileNO(phone)) {
-                checkInfo(phone);
+            Boolean isPhone = CommonUtil.isMobileNO(phone);
+            if (isPhone) {
+                String url = ConstantsBean.BASE_PATH + ConstantsBean.CHECK_LOGIN_NAME + phone;
+                checkInfo(url,phone);
             } else {
                 Toast.makeText(RegisterActivity.this, "请检查手机号", Toast.LENGTH_SHORT).show();
-                Logger.d("请检查手机号");
             }
         }else {
             Toast.makeText(RegisterActivity.this, "请检查网络连接", Toast.LENGTH_SHORT).show();
@@ -113,20 +117,22 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     /**
      * 验证信息
      */
-    private void checkInfo(final String phone){
-        String url = ConstantsBean.BASE_PATH + ConstantsBean.CHECK_LOGIN_NAME + phone;
+    private void checkInfo(final String url, final String phone){
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                Request.Method.GET,url,null,
+                Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Logger.json(response.toString());
+                        Logger.json(String.valueOf(response));
                         try {
-                            String content = response.getString("content");
-                            Logger.d(content);
-                            if (content.equals("true")){
-                                //通过验证发送验证码
+                            String status = response.getString("status");
+                            if (status.equals("success")){
+                                Toast.makeText(RegisterActivity.this, "验证成功,正在发送验证码", Toast.LENGTH_SHORT).show();
                                 sendMessage(phone);
+                                sendMessage.setClickable(false);
+
+                            }else {
+                                Toast.makeText(RegisterActivity.this, "该手机号不可用", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -137,12 +143,11 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Logger.d(error);
-                        Toast.makeText(RegisterActivity.this, "发送失败，请重新尝试", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegisterActivity.this, "未知错误", Toast.LENGTH_SHORT).show();
                     }
                 }
         );
-        CustomApplication.requestQueue.add(jsonObjectRequest);
+        CustomApplication.getRequestQueue().add(jsonObjectRequest);
 
     }
 
@@ -161,7 +166,10 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                         try {
                             String status = response.getString("status");
                             if (status.equals("success")){
-                                sendMessage.setText("请稍等");
+                                Toast.makeText(RegisterActivity.this, "请注意查收短信", Toast.LENGTH_SHORT).show();
+                                sendMessage.setText("重新发送");
+                            }else {
+                                Toast.makeText(RegisterActivity.this, "发送失败，请重新尝试", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -244,6 +252,12 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         );
         CustomApplication.getRequestQueue().add(jsonObjectRequest);
     }
-
+    /**
+     * 在用户点击时候收起软键盘
+     */
+    private void lostFocus(){
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+    }
 
 }

@@ -6,6 +6,7 @@ import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.blankj.utilcode.utils.NetworkUtils;
@@ -22,6 +23,7 @@ public class ArticleActivity extends BaseActivity {
     private WebSettings webSettings;
     private Button test;
     private boolean isConnected;//判断网络状态
+    private EditText input_comment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +34,8 @@ public class ArticleActivity extends BaseActivity {
     }
     private void initView(){
         webView = (WebView) findViewById(R.id.wv_articles);
+        input_comment = (EditText) findViewById(R.id.edt_article_input);
+        input_comment.setVisibility(View.GONE);
 
 
         //测试Java调用Js方法
@@ -44,7 +48,8 @@ public class ArticleActivity extends BaseActivity {
         });
     }
     private void initEvent(){
-        String url = "http://192.168.31.236/userPage/article/?57d683ae5c95dc4d92c18522";
+        String url =
+                "http://192.168.31.236/userPage/article/?articleId=57d683ae5c95dc4d92c18522&token=qqqqq&device=android";
         //配置webView设置
         webSettings = webView.getSettings();
         //缓存模式：根据网络状况进行判断
@@ -68,5 +73,18 @@ public class ArticleActivity extends BaseActivity {
         Toast.makeText(ArticleActivity.this, s, Toast.LENGTH_SHORT).show();
         Logger.d(s);
     }
+    /**
+     * 输入框显示与隐藏
+     */
+    @JavascriptInterface
+    public void showInput(String str){
+        input_comment.setVisibility(View.VISIBLE);
+        Toast.makeText(ArticleActivity.this, "参数是："+str, Toast.LENGTH_SHORT).show();
+    }
+    @JavascriptInterface
+    public void hideInput(){
+        input_comment.setVisibility(View.GONE);
+    }
+
 
 }
