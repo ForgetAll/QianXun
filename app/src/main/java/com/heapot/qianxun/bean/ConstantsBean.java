@@ -45,7 +45,7 @@ public class ConstantsBean {
      * url地址
      */
     //验证Token的请求头的key
-    public static final String X_TOKEN = "x-auth-token";
+    public static final String KEY_TOKEN = "x-auth-token";
     //验证管理员权限的
     public static final String KEY_REQUEST = "X-Requested-With";
     public static final String VALUE_REQUEST = "XMLHttpRequest";
@@ -67,6 +67,7 @@ public class ConstantsBean {
     public static final String SEND_RESET_MESSAGE = "findPasswordByPhone?phone=";
     //订阅分类
     public static final String SUBSCRIBE_CATALOGS = "user/subscribe/catalog";
+
 
 
 
@@ -105,7 +106,7 @@ public class ConstantsBean {
     public static final String PAGE_TRAIN = "PAGE_TRAIN";
 
     //标签订阅本地文件名
-    public static final String SUBSCRIPTION_FILE_NAME = "Subscription";
+    public static final String TAG_FILE_NAME = "Subscription";//存储所有标签的文件名
 
 
 }

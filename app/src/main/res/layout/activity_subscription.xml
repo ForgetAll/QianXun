@@ -36,12 +36,12 @@
             android:layout_gravity="center"
             android:text="已关注"
             android:textSize="20sp"/>
-        <!--<android.support.v7.widget.RecyclerView-->
-            <!--android:id="@+id/rv_drag"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content">-->
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_drag"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <!--</android.support.v7.widget.RecyclerView>-->
+        </android.support.v7.widget.RecyclerView>
 
         <TextView
             android:layout_width="wrap_content"

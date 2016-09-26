@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.bean.SubBean;
 import com.heapot.qianxun.helper.ItemTouchHelperAdapter;
+import com.heapot.qianxun.helper.OnRecyclerViewItemClickListener;
 import com.heapot.qianxun.util.JsonUtil;
 import com.heapot.qianxun.util.PreferenceUtil;
 
@@ -19,12 +20,14 @@ import java.util.List;
 /**
  * Created by Karl on 2016/9/8.
  * 拖拽页面适配器
+ *
  */
-public class DragAdapter extends RecyclerView.Adapter<DragAdapter.DragViewHolder> implements ItemTouchHelperAdapter {
+public class SubAdapter extends RecyclerView.Adapter<SubAdapter.DragViewHolder> implements ItemTouchHelperAdapter, View.OnClickListener {
     private Context context;
     private List<SubBean> mList;
+    private OnRecyclerViewItemClickListener listener = null;
 
-    public DragAdapter(Context context, List<SubBean> mList) {
+    public SubAdapter(Context context, List<SubBean> mList) {
         this.context = context;
         this.mList = mList;
     }
@@ -33,13 +36,14 @@ public class DragAdapter extends RecyclerView.Adapter<DragAdapter.DragViewHolder
     public DragViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.subscription_item,parent,false);
         DragViewHolder holder = new DragViewHolder(view);
+        view.setOnClickListener(this);
         return holder;
     }
 
     @Override
     public void onBindViewHolder(DragViewHolder holder, int position) {
         holder.textView.setText(mList.get(position).getName());
-
+        holder.itemView.setTag(position);
     }
 
     @Override
@@ -60,6 +64,16 @@ public class DragAdapter extends RecyclerView.Adapter<DragAdapter.DragViewHolder
     public void onItemDismiss(int position) {
         mList.remove(position);
         notifyItemRemoved(position);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (listener == null){
+            listener.onItemClick(v, (Integer) v.getTag());
+        }
+    }
+    public void setOnItemClickListener(OnRecyclerViewItemClickListener listener){
+        this.listener = listener;
     }
 
     public static class DragViewHolder extends RecyclerView.ViewHolder{
