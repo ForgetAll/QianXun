@@ -25,7 +25,6 @@ import com.heapot.qianxun.helper.ItemTouchHelperCallback;
 import com.heapot.qianxun.helper.OnRecyclerViewItemClickListener;
 import com.heapot.qianxun.helper.SerializableUtils;
 import com.heapot.qianxun.util.JsonUtil;
-import com.heapot.qianxun.util.PreferenceUtil;
 import com.orhanobut.logger.Logger;
 
 import org.json.JSONException;
@@ -42,15 +41,16 @@ import java.util.Map;
  * 订阅列表
  */
 public class Subscription extends BaseActivity  {
-    private RecyclerView sub, content;
+    //全部数据相关
+    private RecyclerView tags;
     private List<TagsBean.ContentBean> tagsList = new ArrayList<>();//全部数据
-    private List<SubBean> subList = new ArrayList<>();//已订阅数据
-    private SubAdapter subAdapter;
     private TagsAdapter tagsAdapter;
-
     private LinearLayoutManager linearLayoutManager;
+    //已订阅相关
+    private RecyclerView sub;
+    private List<SubBean> subList = new ArrayList<>();
+    private SubAdapter subAdapter;
     private GridLayoutManager gridLayoutManager;
-
     ItemTouchHelper helper;
 
     @Override
@@ -63,12 +63,12 @@ public class Subscription extends BaseActivity  {
     }
     private void initView(){
         sub = (RecyclerView) findViewById(R.id.rv_drag);
-        content = (RecyclerView) findViewById(R.id.rv_content);
+        tags = (RecyclerView) findViewById(R.id.rv_content);
     }
     private void initEvent(){
         getCatalogs();
         /**
-         * 拖拽效果
+         * 已订阅列表，含拖拽功能
          */
         gridLayoutManager = new GridLayoutManager(this,5){
             @Override
@@ -83,7 +83,7 @@ public class Subscription extends BaseActivity  {
         helper.attachToRecyclerView(sub);
 
         /**
-         * 普通列表展示
+         * 全部标签列表，不可拖拽
          */
 
         linearLayoutManager = new LinearLayoutManager(this){
@@ -92,9 +92,7 @@ public class Subscription extends BaseActivity  {
                 return false;
             }
         };
-        content.setLayoutManager(linearLayoutManager);
-
-
+        tags.setLayoutManager(linearLayoutManager);
 
     }
 
@@ -182,7 +180,7 @@ public class Subscription extends BaseActivity  {
      */
     private void initList(){
         tagsAdapter = new TagsAdapter(Subscription.this, tagsList);
-        content.setAdapter(tagsAdapter);
+        tags.setAdapter(tagsAdapter);
         // 添加所有标签列表的点击事件
         tagsAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
             @Override
@@ -342,5 +340,51 @@ public class Subscription extends BaseActivity  {
             subList.add(subBean);
         }
         subAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * 初始化数据
+     * 1、网络正常情况下，从网络请求
+     * 2、网络不正常的情况下从本地取
+     */
+    private void initData(){
+        boolean isConnected = NetworkUtils.isAvailable(this);
+        if (isConnected){
+            getTags();
+            getSub();
+        }else {
+            tagsList = (List<TagsBean.ContentBean>) getLocalData(ConstantsBean.TAG_FILE_NAME);
+            subList = (List<SubBean>) getLocalData(ConstantsBean.SUB_FILE_NAME);
+
+        }
+    }
+    //1、获取全部分类
+    private void getTags(){
+
+    }
+    //2、查看已订阅
+    private void getSub(){
+
+    }
+    //3、提交订阅
+    private void postSub(){
+
+    }
+    //4、提交排序
+    private void postSort(){
+
+    }
+    //5、取消订阅
+    private void deleteSub(){
+
+    }
+    //6、初始化列表
+    private void initRecycler(){
+
+    }
+    //7、取数据
+    private Object getLocalData(String fileName){
+        Object object = SerializableUtils.getSerializable(this,fileName);
+        return object;
     }
 }
