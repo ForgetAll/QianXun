@@ -106,7 +106,8 @@
                 android:background="#E8EDEC"
                 android:hint="请输入姓名"
                 android:textColorHint="#2B6151"
-                android:inputType="text"/>
+                android:inputType="text"
+                android:maxLength="20"/>
             <TextView
                 android:id="@+id/txt_register_reset_2"
                 android:layout_width="wrap_content"
@@ -134,7 +135,8 @@
                 android:hint="请输入密码"
                 android:background="#E8EDEC"
                 android:textColorHint="#2B6151"
-                android:inputType="textPassword"/>
+                android:inputType="textPassword"
+                android:maxLength="20"/>
             <TextView
                 android:id="@+id/txt_register_reset3"
                 android:layout_width="wrap_content"

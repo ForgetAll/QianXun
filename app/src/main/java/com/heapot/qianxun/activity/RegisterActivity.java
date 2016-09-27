@@ -132,7 +132,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                                 sendMessage.setClickable(false);
 
                             }else {
-                                Toast.makeText(RegisterActivity.this, "该手机号不可用", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegisterActivity.this, "该手机号已注册", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -214,9 +214,9 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     private void postRegister(final String phone, final String pass, String message, final String nickname){
         String url = ConstantsBean.BASE_PATH + ConstantsBean.REGISTER
                 + "?phone=" + phone
-                + "&password" + pass
+                + "&password=" + pass
                 + "&nickname="+nickname
-                + "&token" + message;
+                + "&token=" + message;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.POST,url,null,
                 new Response.Listener<JSONObject>() {
