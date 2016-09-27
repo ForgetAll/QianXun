@@ -30,7 +30,7 @@ import org.json.JSONObject;
  */
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
     private EditText edt_name,edt_pass;
-    private TextView removeData,showPass,reset,register;
+    private TextView removeData,showPass,reset,register,mLook;
     private Button login;
 
     private static boolean isShowPass = false;
@@ -50,11 +50,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
         removeData = (TextView) findViewById(R.id.txt_remove_data);
         showPass = (TextView) findViewById(R.id.txt_show_pass);
-
         login = (Button) findViewById(R.id.btn_login);
-
         register = (TextView) findViewById(R.id.txt_login_to_register);
         reset = (TextView) findViewById(R.id.txt_reset_password);
+       mLook=(TextView) findViewById(R.id.tv_look);
 
     }
     private void initEvent(){
@@ -63,7 +62,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         login.setOnClickListener(this);
         register.setOnClickListener(this);
         reset.setOnClickListener(this);
-
+        mLook.setOnClickListener(this);
     }
 
     /**
@@ -174,6 +173,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 Intent intentForgetPass = new Intent(LoginActivity.this,FindPassActivity.class);
                 startActivity(intentForgetPass);
                 break;
+           /* case R.id.tv_look:
+                Intent look=new Intent(LoginActivity.this,MainActivity.class);
+                startActivity(look);
+                break;*/
         }
     }
 }

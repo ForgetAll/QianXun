@@ -2,7 +2,6 @@ package com.heapot.qianxun.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
@@ -10,10 +9,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.Display;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -24,12 +21,12 @@ import android.widget.TextView;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.bean.UserBean;
-import com.heapot.qianxun.widget.PhotoCarmaWindow;
 import com.heapot.qianxun.util.CommonUtil;
 import com.heapot.qianxun.util.FileUploadTask;
 import com.heapot.qianxun.util.JsonUtil;
 import com.heapot.qianxun.util.PreferenceUtil;
 import com.heapot.qianxun.util.ToastUtil;
+import com.heapot.qianxun.widget.PhotoCarmaWindow;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 
@@ -42,7 +39,7 @@ import java.io.File;
  * Created by 15859 on 2016/8/29.
  * 用户个人信息界面
  */
-public class PersonalInforActivity extends AppCompatActivity implements View.OnClickListener {
+public class PersonalInforActivity extends BaseActivity implements View.OnClickListener {
     public String userId;
     private TextView mBack;
     private ImageView mHead;

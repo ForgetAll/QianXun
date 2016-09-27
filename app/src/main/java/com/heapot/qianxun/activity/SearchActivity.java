@@ -1,6 +1,5 @@
 package com.heapot.qianxun.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -28,7 +27,7 @@ import java.util.Date;
 /**
  * Created by 15859 on 2016/9/12.
  */
-public class SearchActivity extends Activity implements View.OnClickListener{
+public class SearchActivity extends BaseActivity implements View.OnClickListener{
     private EditText et_search;
     private TextView tv_tip, tv_clear;
     private SearchListView listView;

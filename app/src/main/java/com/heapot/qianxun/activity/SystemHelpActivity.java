@@ -2,7 +2,6 @@ package com.heapot.qianxun.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
 import com.heapot.qianxun.R;
@@ -10,7 +9,7 @@ import com.heapot.qianxun.R;
 /**
  * Created by 15859 on 2016/9/17.
  */
-public class SystemHelpActivity extends AppCompatActivity{
+public class SystemHelpActivity extends BaseActivity{
     private TextView mAbout,mHelp;
 
     @Override

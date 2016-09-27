@@ -3,7 +3,6 @@ package com.heapot.qianxun.activity;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -16,7 +15,7 @@ import java.util.List;
 /**
  * Created by Karl on 2016/8/29.
  */
-public class NotificationActivity extends AppCompatActivity implements View.OnClickListener {
+public class NotificationActivity extends BaseActivity implements View.OnClickListener {
     private ImageView mBack;
     private TabLayout tabLayout;
     private NotificationPageAdapter adapter;

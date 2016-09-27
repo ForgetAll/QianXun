@@ -1,6 +1,5 @@
 package com.heapot.qianxun.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.WindowManager;
@@ -9,35 +8,25 @@ import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.blankj.utilcode.utils.NetworkUtils;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
-import com.heapot.qianxun.bean.TagsBean;
-import com.heapot.qianxun.helper.SerializableUtils;
 import com.heapot.qianxun.util.PreferenceUtil;
 import com.orhanobut.logger.Logger;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 /**
  * Created by Karl on 2016/9/19.
  * 应用启动引导页
  */
-public class SplashActivity extends Activity {
+public class SplashActivity extends BaseActivity {
     private ImageView imageView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

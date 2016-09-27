@@ -2,7 +2,6 @@ package com.heapot.qianxun.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -15,7 +14,7 @@ import com.heapot.qianxun.bean.ConstantsBean;
  * 修改名字签名界面
  *
  */
-public class PersonInfoAlterActivity extends AppCompatActivity implements View.OnClickListener {
+public class PersonInfoAlterActivity extends BaseActivity implements View.OnClickListener {
     private EditText mInfo;
     private TextView mComplete,mBack;
 

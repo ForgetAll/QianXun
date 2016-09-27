@@ -1,6 +1,7 @@
 package com.heapot.qianxun.activity;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -8,9 +9,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.heapot.qianxun.R;
+import com.heapot.qianxun.application.ActivityCollector;
 import com.heapot.qianxun.util.ClearCacheTask;
+import com.heapot.qianxun.util.PreferenceUtil;
 import com.heapot.qianxun.util.UpdateUtil;
-import com.heapot.qianxun.widget.ExitPopup;
 
 /**
  * Created by 15859 on 2016/9/17.
@@ -62,12 +64,13 @@ public class SystemSettingActivity extends BaseActivity implements View.OnClickL
                 break;
             //退出登录
             case R.id.tv_exit:
-                ExitPopup exitPopup=new ExitPopup(SystemSettingActivity.this);
-                exitPopup.showPopupWindow();
-               /* PreferenceUtil.clearPreference();
+               /* ExitPopup exitPopup=new ExitPopup(SystemSettingActivity.this);
+                exitPopup.showPopupWindow();*/
+                PreferenceUtil.clearPreference();
                 Intent intent = new Intent(SystemSettingActivity.this, LoginActivity.class);
                 startActivity(intent);
-                finish();*/
+                ActivityCollector.finishAll();
+                finish();
 
                 break;
         }
