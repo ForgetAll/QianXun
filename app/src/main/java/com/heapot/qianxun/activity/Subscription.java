@@ -121,18 +121,6 @@ public class Subscription extends BaseActivity  {
             }else {
                 //本地有数据，直接加载
                 tagsList.addAll((Collection<? extends TagsBean.ContentBean>) object);
-                //从所有数据中取出来合适的数据，添加到subBean
-                //由于后台数据的问题，这里只是临时的解决办法
-//                for (int i = 0; i < tagsList.size(); i++) {
-//                    SubBean subBean = new SubBean();
-//                    if (tagsList.get(i).getSubscribeStatus() == 1){
-//                        subBean.setId(tagsList.get(i).getId());
-//                        subBean.setSubscribeStatus(1);
-//                        subBean.setName(tagsList.get(i).getName());
-//                        subBean.setPosition(i);
-//                        subList.add(subBean);
-//                    }
-//                }
                 refreshSubList(tagsList);
             }
             //将加载到的数据添加到适配器
@@ -158,16 +146,6 @@ public class Subscription extends BaseActivity  {
                                 tagsList.addAll(jsonBean.getContent());
                                 SerializableUtils.setSerializable(Subscription.this,ConstantsBean.TAG_FILE_NAME, tagsList);
                                 //由于后台数据的问题，这里只是临时的解决办法,抽取出干净的数据
-//                                for (int i = 0; i < tagsList.size(); i++) {
-//                                    SubBean subBean = new SubBean();
-//                                    if (tagsList.get(i).getSubscribeStatus() == 1){
-//                                        subBean.setId(tagsList.get(i).getId());
-//                                        subBean.setSubscribeStatus(1);
-//                                        subBean.setName(tagsList.get(i).getName());
-//                                        subBean.setPosition(i);
-//                                        subList.add(subBean);
-//                                    }
-//                                }
                                 refreshSubList(tagsList);
                                 initList();
                             }else {
