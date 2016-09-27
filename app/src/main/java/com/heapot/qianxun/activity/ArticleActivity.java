@@ -1,6 +1,8 @@
 package com.heapot.qianxun.activity;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
@@ -15,7 +17,7 @@ import com.orhanobut.logger.Logger;
 
 /**
  * Created by Karl on 2016/9/24.
- * 文章详情页面
+ * 文章详情页面，
  *
  */
 public class ArticleActivity extends BaseActivity {
@@ -24,11 +26,15 @@ public class ArticleActivity extends BaseActivity {
     private Button test;
     private boolean isConnected;//判断网络状态
     private EditText input_comment;
+    private Handler handler;
+    private static final int MSG_SHOW_INPUT = 0;
+    private static final int MSG_HIDE_INPUT = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article);
         initView();
+        initWebView();
         initEvent();
 
     }
@@ -38,6 +44,9 @@ public class ArticleActivity extends BaseActivity {
         input_comment.setVisibility(View.GONE);
 
 
+
+    }
+    private void initEvent(){
         //测试Java调用Js方法
         test = (Button) findViewById(R.id.btn_test);
         test.setOnClickListener(new View.OnClickListener() {
@@ -46,24 +55,33 @@ public class ArticleActivity extends BaseActivity {
                 webView.loadUrl("JavaScript:dataTest('trhrthrhr')");
             }
         });
+        //测试输入法的显示与隐藏
+        handler = new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                switch (msg.what){
+                    case MSG_SHOW_INPUT:
+                        input_comment.setVisibility(View.VISIBLE);
+                        break;
+                    case MSG_HIDE_INPUT:
+                        input_comment.setVisibility(View.GONE);
+                        break;
+                }
+            }
+        };
     }
-    private void initEvent(){
+    private void initWebView(){
         String url =
                 "http://192.168.31.236/userPage/article/?articleId=57d683ae5c95dc4d92c18522&token=qqqqq&device=android";
         //配置webView设置
         webSettings = webView.getSettings();
-        //缓存模式：根据网络状况进行判断
         isConnected = NetworkUtils.isAvailable(this);
         if (isConnected) {
-            //网络正常状况下只从网络获取
             webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         }else {
-            //网络不正常状况下从本地获取
             webSettings.setCacheMode(webSettings.LOAD_CACHE_ONLY);
         }
-        //开启JS权限
         webSettings.setJavaScriptEnabled(true);
-        //JS调用Java方法设置
         webView.addJavascriptInterface(this,"android");
         webView.loadUrl(url);//必须在最后一行
     }
@@ -72,18 +90,26 @@ public class ArticleActivity extends BaseActivity {
     public  void show(String s){
         Toast.makeText(ArticleActivity.this, s, Toast.LENGTH_SHORT).show();
         Logger.d(s);
+
     }
     /**
      * 输入框显示与隐藏
      */
     @JavascriptInterface
     public void showInput(String str){
-        input_comment.setVisibility(View.VISIBLE);
         Toast.makeText(ArticleActivity.this, "参数是："+str, Toast.LENGTH_SHORT).show();
+        handler.sendEmptyMessage(MSG_SHOW_INPUT);
     }
     @JavascriptInterface
     public void hideInput(){
-        input_comment.setVisibility(View.GONE);
+        handler.sendEmptyMessage(MSG_HIDE_INPUT);
+    }
+    /**
+     * 清空缓存
+     */
+    @JavascriptInterface
+    public void clearCache(boolean isClear){
+        webView.clearCache(isClear);
     }
 
 
