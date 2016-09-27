@@ -181,14 +181,12 @@ public class Subscription extends BaseActivity  {
      * 需要用到Volley的逻辑必须写到Volley成功响应方法里面，否则会血崩！
      */
     private void initList(){
-        Logger.d("initList");
         tagsAdapter = new TagsAdapter(Subscription.this, tagsList);
         content.setAdapter(tagsAdapter);
         // 添加所有标签列表的点击事件
         tagsAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Logger.d("点击了！"+ tagsList.get(position).getId());
                 String id = tagsList.get(position).getId();
                 int status = tagsList.get(position).getSubscribeStatus();
                 //这里需要进行判断，如果是已订阅那点击就是取消，未订阅点击就是订阅
