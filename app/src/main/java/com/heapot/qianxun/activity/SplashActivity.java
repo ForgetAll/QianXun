@@ -37,7 +37,7 @@ import java.util.Map;
  * Created by Karl on 2016/9/19.
  * 应用启动引导页
  */
-public class SplashActivity extends Activity {
+public class SplashActivity extends BaseActivity {
     private ImageView imageView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
