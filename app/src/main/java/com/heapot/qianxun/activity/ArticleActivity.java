@@ -124,6 +124,7 @@ public class ArticleActivity extends BaseActivity {
      * 更新引用
      * @param id 引用评论id
      */
+    @JavascriptInterface
     public void updateQuote(String id){
         Toast.makeText(ArticleActivity.this, "引用"+id, Toast.LENGTH_SHORT).show();
         handler.sendEmptyMessage(MSG_UPDATE);
