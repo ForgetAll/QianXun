@@ -69,6 +69,8 @@ public class ConstantsBean {
     public static final String SUBSCRIBE_CATALOGS = "user/subscribe/catalog";
     //查看已订阅
     public static final String GET_SUBSCRIBED = "user/subscribe/catalog";
+    //提交订阅
+    public static final String POST_SUBSCRIPTION = "user/subscribe/user?userId=";
 
 
 

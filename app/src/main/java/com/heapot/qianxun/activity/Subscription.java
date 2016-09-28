@@ -20,6 +20,7 @@ import com.heapot.qianxun.adapter.TagsAdapter;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.bean.SubBean;
+import com.heapot.qianxun.bean.SubscribedBean;
 import com.heapot.qianxun.bean.TagsBean;
 import com.heapot.qianxun.helper.ItemTouchHelperCallback;
 import com.heapot.qianxun.helper.OnRecyclerViewItemClickListener;
@@ -49,6 +50,7 @@ public class Subscription extends BaseActivity  {
     //已订阅相关
     private RecyclerView sub;
     private List<SubBean> subList = new ArrayList<>();
+    private List<SubscribedBean.ContentBean.RowsBean> subscribedList = new ArrayList<>();
     private SubAdapter subAdapter;
     private GridLayoutManager gridLayoutManager;
     ItemTouchHelper helper;
@@ -66,10 +68,9 @@ public class Subscription extends BaseActivity  {
         tags = (RecyclerView) findViewById(R.id.rv_content);
     }
     private void initEvent(){
-        getCatalogs();
-        /**
-         * 已订阅列表，含拖拽功能
-         */
+        //初始化数据
+        initData();
+        // 已订阅列表，含拖拽功能
         gridLayoutManager = new GridLayoutManager(this,5){
             @Override
             public boolean canScrollVertically() {
@@ -82,10 +83,7 @@ public class Subscription extends BaseActivity  {
         helper = new ItemTouchHelper(callback);
         helper.attachToRecyclerView(sub);
 
-        /**
-         * 全部标签列表，不可拖拽
-         */
-
+        // 全部标签列表，不可拖拽
         linearLayoutManager = new LinearLayoutManager(this){
             @Override
             public boolean canScrollVertically() {
@@ -94,146 +92,6 @@ public class Subscription extends BaseActivity  {
         };
         tags.setLayoutManager(linearLayoutManager);
 
-    }
-
-
-    /**
-     * 获取分类
-     * 1、获取用户权限、获取token
-     * 2、判断网络状况
-     * 3、缓存数据
-     */
-    private void getCatalogs(){
-        boolean isAvailable = NetworkUtils.isAvailable(this);
-        if (isAvailable) {
-        }else {
-            //取出本地缓存数据，如果缓存无数据再提示用户检查网络
-            Logger.d(SerializableUtils.getSerializable(this,ConstantsBean.TAG_FILE_NAME));
-            Object object = SerializableUtils.getSerializable(this,ConstantsBean.TAG_FILE_NAME);
-            if (object == null){
-                //本地无数据，提示用户检查网络后重新加载
-                Toast.makeText(Subscription.this, "暂无数据，请检查网络", Toast.LENGTH_SHORT).show();
-            }else {
-                //本地有数据，直接加载
-                tagsList.addAll((Collection<? extends TagsBean.ContentBean>) object);
-                refreshSubList(tagsList);
-            }
-            //将加载到的数据添加到适配器
-            initList();
-        }
-
-    }
-    /**
-     * 普通用户获取分类
-     * @param url 分类API
-     */
-    private void getCatalogs(String url){
-
-
-    }
-    /**
-     * 需要用到Volley的逻辑必须写到Volley成功响应方法里面，否则会血崩！
-     */
-    private void initList(){
-        tagsAdapter = new TagsAdapter(Subscription.this, tagsList);
-        tags.setAdapter(tagsAdapter);
-        // 添加所有标签列表的点击事件
-        tagsAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                String id = tagsList.get(position).getId();
-                int status = tagsList.get(position).getSubscribeStatus();
-                //这里需要进行判断，如果是已订阅那点击就是取消，未订阅点击就是订阅
-                if (status == 0){
-                    postSubscribeTags(id,position);//提交订阅
-                }else if (status == 1){
-                }
-                tagsAdapter.notifyDataSetChanged();
-
-            }
-        });
-        //已订阅数据
-        subAdapter = new SubAdapter(Subscription.this,subList);
-        sub.setAdapter(subAdapter);
-        //点击事件
-        subAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                Logger.d(subList.get(position).getId());
-                //因为这里全都是已订阅的，所以点击就是取消订阅
-                String id = subList.get(position).getId();
-                //从网络请求取消订阅
-            }
-        });
-        //刷新数据
-        subAdapter.notifyDataSetChanged();
-        tagsAdapter.notifyDataSetChanged();
-    }
-
-    /**
-     *  提交订阅
-     * @param catalogId 订阅Id
-     * @param position 数据下标
-     */
-    private void postSubscribeTags(String catalogId, final int position){
-        String url = ConstantsBean.BASE_PATH+ConstantsBean.SUBSCRIBE_CATALOGS+"?catalogId="+catalogId;
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                Request.Method.POST, url, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Logger.json(String.valueOf(response));
-                        try {
-                            String status = response.getString("status");
-                            if (status.equals("success")){
-                                //提交成功,刷新本地存储的数据
-                                tagsList.get(position).setSubscribeStatus(1);
-                                refreshSubList(tagsList);
-                                SerializableUtils.setSerializable(Subscription.this,ConstantsBean.TAG_FILE_NAME, tagsList);
-                            }else {
-                                //提交订阅失败
-                                Toast.makeText(Subscription.this, ""+response.getString("message"), Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(Subscription.this, "服务器的锅！", Toast.LENGTH_SHORT).show();
-                    }
-                }
-        ){
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String,String> headers = new HashMap<>();
-                headers.put(ConstantsBean.KEY_TOKEN,CustomApplication.TOKEN);
-                return headers;
-            }
-        };
-        CustomApplication.getRequestQueue().add(jsonObjectRequest);
-
-    }
-
-
-
-    /**
-     * 每当总数据发生变化，这里都会变化
-     * @param list 将TagList传进来
-     */
-    private void refreshSubList(List<TagsBean.ContentBean> list){
-        subList.clear();//清空一下数据
-        SubBean subBean = new SubBean();
-        for (int i = 0; i < list.size(); i++) {
-            subBean.setId(list.get(i).getId());
-            subBean.setSubscribeStatus(1);
-            subBean.setName(list.get(i).getName());
-            subBean.setPosition(i);
-            subList.add(subBean);
-        }
-        subAdapter.notifyDataSetChanged();
     }
 
     /**
@@ -252,7 +110,10 @@ public class Subscription extends BaseActivity  {
             initRecycler();
         }
     }
-    //1、获取全部分类
+
+    /**
+     * 获取所有标签，包括用户订阅状态
+     */
     private void getTags(){
         String url = ConstantsBean.BASE_PATH + ConstantsBean.ORG_CODE+ConstantsBean.CATALOGS;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
@@ -263,19 +124,16 @@ public class Subscription extends BaseActivity  {
                         Logger.json(String.valueOf(response));
                         try {
                             String status = response.getString("status");
-                            if (status.equals("succcess")){
+                            if (status.equals("success")){
                                 TagsBean jsonBean = (TagsBean) JsonUtil.fromJson(String.valueOf(response),TagsBean.class);
                                 tagsList.addAll(jsonBean.getContent());
                                 SerializableUtils.setSerializable(Subscription.this,ConstantsBean.TAG_FILE_NAME, tagsList);
-                                //由于后台数据的问题，这里只是临时的解决办法,抽取出干净的数据
-                                refreshSubList(tagsList);
-                                initList();
                             }else {
-                                Object object = SerializableUtils.getSerializable(Subscription.this,ConstantsBean.TAG_FILE_NAME);
-                                if (object == null){
-                                    Toast.makeText(Subscription.this, "数据请求失败，暂无数据", Toast.LENGTH_SHORT).show();
-                                }
+                                Object object = getLocalData(ConstantsBean.TAG_FILE_NAME);
+                                tagsList.add((TagsBean.ContentBean) object);
+                                Toast.makeText(Subscription.this, "刷新数据失败", Toast.LENGTH_SHORT).show();
                             }
+                            initRecycler();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -313,6 +171,52 @@ public class Subscription extends BaseActivity  {
                             String status = response.getString("status");
                             if (status.equals("success")){
                                 //获取列表成功，加载列表
+                                SubscribedBean subBean;
+                            }else {
+                                Object object = getLocalData(ConstantsBean.SUB_FILE_NAME);
+                                subList.add((SubBean) object);
+                            }
+                            initRecycler();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }
+        ){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> map = new HashMap<>();
+                map.put(ConstantsBean.KEY_TOKEN,CustomApplication.TOKEN);
+                return map;
+            }
+        };
+        CustomApplication.getRequestQueue().add(jsonObjectRequest);
+    }
+
+    /**
+     * 提交订阅
+     * @param id 订阅标签的id
+     */
+    private void postSub(String id){
+        String url = ConstantsBean.BASE_PATH+ConstantsBean.POST_SUBSCRIPTION+id;
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.POST, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            String status = response.getString("status");
+                            if (status.equals("success")){
+                                getTags();
+                                getSub();
+                            }else {
+                                Toast.makeText(Subscription.this, ""+response.getString("message"), Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -335,21 +239,16 @@ public class Subscription extends BaseActivity  {
         };
         CustomApplication.getRequestQueue().add(jsonObjectRequest);
     }
-    //3、提交订阅
-    private void postSub(){
-
-    }
-    //4、提交排序
-    private void postSort(){
-
-    }
+//    //4、提交排序
+//    private void postSort(){
+//
+//    }
     /**
      * 取消订阅
      * @param id 所需要取消订阅标签的id
-     * @param position 该标签对应的position
      */
-    private void deleteSub(String id, final int position){
-        String url = "";
+    private void deleteSub(String id){
+        String url = ""+id;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.DELETE, url, null,
                 new Response.Listener<JSONObject>() {
@@ -403,9 +302,9 @@ public class Subscription extends BaseActivity  {
                 String id = tagsList.get(position).getId();
                 int status = tagsList.get(position).getSubscribeStatus();
                 if (status == 0){
-                    postSubscribeTags(id,position);
+                    postSub(id);
                 }else if (status == 1){
-                    deleteSub(id,position);
+                    deleteSub(id);
                 }
                 tagsAdapter.notifyDataSetChanged();
 
@@ -416,11 +315,16 @@ public class Subscription extends BaseActivity  {
             public void onItemClick(View view, int position) {
                 Logger.d(subList.get(position).getId());
                 String id = subList.get(position).getId();
-                deleteSub(id,position);
+                deleteSub(id);
             }
         });
     }
-    //7、取数据
+
+    /**
+     * 从本地指定文件下取数据
+     * @param fileName 文件名
+     * @return 返回类型
+     */
     private Object getLocalData(String fileName){
         Object object = SerializableUtils.getSerializable(this,fileName);
         return object;
