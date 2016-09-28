@@ -16,15 +16,33 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.adapter.MainTabFragmentAdapter;
 import com.heapot.qianxun.application.CustomApplication;
+import com.heapot.qianxun.bean.ConstantsBean;
+import com.heapot.qianxun.bean.SubscribedBean;
+import com.heapot.qianxun.helper.SerializableUtils;
+import com.heapot.qianxun.util.JsonUtil;
 import com.heapot.qianxun.util.PreferenceUtil;
 import com.orhanobut.logger.Logger;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
     private DrawerLayout mDrawerLayout;
@@ -35,9 +53,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private ViewPager mViewPager;
     private MainTabFragmentAdapter mPageAdapter;
 
-    private List<String> mList;
+    private List<SubscribedBean.ContentBean.RowsBean> mList;
 
     private FloatingActionButton mCreate;
+
+    private TextView mainTitle,subTitle;
+
+    private static final String PAGE_SCIENCE = "PAGE_SCIENCE";
+    private static final String PAGE_RECRUIT = "PAGE_RECRUIT";
+    private static final String PAGE_TRAIN = "PAGE_TRAIN";
 
     //主页界面
     @Override
@@ -65,6 +89,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mSubscription = (ImageView) findViewById(R.id.iv_subscription_choose);
         mCreate = (FloatingActionButton) findViewById(R.id.fab_create);
 
+        mainTitle = (TextView) findViewById(R.id.txt_first_title);
+        subTitle = (TextView) findViewById(R.id.txt_second_title);
+
         mList = new ArrayList<>();
 
         //测试token
@@ -89,20 +116,67 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mSubscription.setOnClickListener(this);
         mCreate.setOnClickListener(this);
 
+        //一些基本的初始化数据
+        mainTitle.setText("学术");
+        subTitle.setText("招聘 培训");
+
+
     }
 
     /**
-     * 模拟数据
+     * 初始化数据
      */
-    private void initData() {
-        //版本更新，软件更新接口上线之后可用
-      //  UpdateUtil.getInstance().checkUpdate(activity,null,false);
-        //模拟数据
-        for (int i = 0; i < 15; i++) {
-            mList.add("Tab-" + i);
+    private void initData(){
+        //先从本地获取，本地为空再从网络加载
+        Object object = SerializableUtils.getSerializable(MainActivity.this,ConstantsBean.SUB_FILE_NAME);
+        if (object != null){
+            mList.addAll((Collection<? extends SubscribedBean.ContentBean.RowsBean>) object);
+            initTab();
+        }else {
+            getSubscriptionTags();
         }
-        initTab();
+
     }
+    private void getSubscriptionTags(){
+        String url = ConstantsBean.BASE_PATH+ConstantsBean.GET_SUBSCRIBED;
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            String status = response.getString("status");
+                            if (status.equals("success")){
+                                SubscribedBean subscribedBean = (SubscribedBean) JsonUtil.fromJson(String.valueOf(response),SubscribedBean.class);
+                                mList.addAll(subscribedBean.getContent().getRows());
+                                SerializableUtils.setSerializable(MainActivity.this,ConstantsBean.SUB_FILE_NAME,mList);
+                                initTab();
+                            }else {
+                                Toast.makeText(MainActivity.this, "加载数据失败,我也不知道咋办了", Toast.LENGTH_SHORT).show();
+
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(MainActivity.this, "服务器出错了！", Toast.LENGTH_SHORT).show();
+                    }
+                }
+        ){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> map = new HashMap<>();
+                map.put(ConstantsBean.KEY_TOKEN,CustomApplication.TOKEN);
+                return map;
+            }
+        };
+        CustomApplication.getRequestQueue().add(jsonObjectRequest);
+    }
+
 
     /**
      * 实现动态添加Tab
@@ -157,6 +231,22 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
     public void setBanner(Bitmap bitmap){
         mBanner.setImageBitmap(bitmap);
+    }
+    public void setToolBarTitle(String name){
+        switch (name){
+            case PAGE_SCIENCE:
+                mainTitle.setText("学术");
+                subTitle.setText("招聘 培训");
+                break;
+            case PAGE_RECRUIT:
+                mainTitle.setText("招聘");
+                subTitle.setText("学术 培训");
+                break;
+            case PAGE_TRAIN:
+                mainTitle.setText("培训");
+                subTitle.setText("学术 招聘");
+                break;
+        }
     }
 
 
