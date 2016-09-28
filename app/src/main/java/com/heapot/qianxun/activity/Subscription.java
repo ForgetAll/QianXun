@@ -31,6 +31,7 @@ import com.orhanobut.logger.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -171,10 +172,13 @@ public class Subscription extends BaseActivity  {
                             String status = response.getString("status");
                             if (status.equals("success")){
                                 //获取列表成功，加载列表
-                                SubscribedBean subBean;
+                                SubscribedBean subBean = (SubscribedBean) JsonUtil.fromJson(String.valueOf(response),SubscribedBean.class);
+                                subscribedList.addAll(subBean.getContent().getRows());
+                                SerializableUtils.setSerializable(Subscription.this,ConstantsBean.SUB_FILE_NAME,subscribedList);
                             }else {
                                 Object object = getLocalData(ConstantsBean.SUB_FILE_NAME);
                                 subList.add((SubBean) object);
+                                Toast.makeText(Subscription.this, "刷新数据失败", Toast.LENGTH_SHORT).show();
                             }
                             initRecycler();
                         } catch (JSONException e) {
