@@ -106,7 +106,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                                     //设置全局变量
                                     CustomApplication.TOKEN = token;
                                     //设置跳转到主页-->学术页面,但是因为默认就是学术作为主页，所以这里其实并没有实际作用，仅保险起见设置，可删除
-                                    CustomApplication.CURRENT_PAGE = ConstantsBean.PAGE_SCIENCE;
+                                    CustomApplication.setCurrentPage(ConstantsBean.PAGE_SCIENCE);
                                     //存储到本地
                                     PreferenceUtil.putString("token", token);
                                     PreferenceUtil.putString("name", username);

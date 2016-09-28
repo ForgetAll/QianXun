@@ -5,6 +5,7 @@ import java.util.List;
 
 /**
  * Created by Karl on 2016/9/28.
+ *
  */
 public class SubscribedBean implements Serializable{
 
@@ -177,7 +178,7 @@ public class SubscribedBean implements Serializable{
                 this.status = status;
             }
 
-            public static class StatusBean {
+            public static class StatusBean implements Serializable{
                 private int index;
                 private String name;
 

@@ -108,15 +108,15 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
             //science学术、recruit招聘、train培训三个menu的点击事件，点击切换fragment
             case R.id.txt_menu_science:
                 ((MainActivity) mActivity).closeDrawer();
-                CustomApplication.CURRENT_PAGE = ConstantsBean.PAGE_SCIENCE;
+                CustomApplication.setCurrentPage(ConstantsBean.PAGE_SCIENCE);
                 break;
             case R.id.txt_menu_recruit:
                 ((MainActivity) mActivity).closeDrawer();
-                CustomApplication.CURRENT_PAGE = ConstantsBean.PAGE_RECRUIT;
+                CustomApplication.setCurrentPage(ConstantsBean.PAGE_RECRUIT);
                 break;
             case R.id.txt_menu_train:
                 ((MainActivity) mActivity).closeDrawer();
-                CustomApplication.CURRENT_PAGE = ConstantsBean.PAGE_TRAIN;
+                CustomApplication.setCurrentPage(ConstantsBean.PAGE_TRAIN);
                 break;
             //设置、帮助的点击事件
             case R.id.txt_menu_settings:

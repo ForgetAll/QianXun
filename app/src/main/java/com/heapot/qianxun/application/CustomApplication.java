@@ -18,9 +18,9 @@ public class CustomApplication extends Application {
 
     public static String TOKEN = "";
 
-    public static String CURRENT_PAGE = ConstantsBean.PAGE_SCIENCE;
+    private static String CURRENT_PAGE = ConstantsBean.PAGE_SCIENCE;
 
-    public static RequestQueue requestQueue;
+    private static RequestQueue requestQueue;
 
 
 
@@ -50,6 +50,22 @@ public class CustomApplication extends Application {
             return requestQueue;
         }
         return  requestQueue = Volley.newRequestQueue(context);
+    }
+
+    /**
+     *  获取主页当前页面名称
+     * @return 返回字符串
+     */
+    public static String getCurrentPageName(){
+        return CURRENT_PAGE;
+    }
+
+    /**
+     * 设置主页当前页面名称
+     * @param name
+     */
+    public static void setCurrentPage(String name){
+        CURRENT_PAGE = name;
     }
 
     /**

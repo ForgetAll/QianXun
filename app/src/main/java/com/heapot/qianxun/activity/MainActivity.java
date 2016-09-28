@@ -16,10 +16,12 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.adapter.MainTabFragmentAdapter;
 import com.heapot.qianxun.application.CustomApplication;
+import com.heapot.qianxun.bean.SubscribedBean;
 import com.heapot.qianxun.util.PreferenceUtil;
 import com.orhanobut.logger.Logger;
 
@@ -38,6 +40,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private List<String> mList;
 
     private FloatingActionButton mCreate;
+
+    private TextView mainTitle,subTitle;
+
+    private static final String PAGE_SCIENCE = "PAGE_SCIENCE";
+    private static final String PAGE_RECRUIT = "PAGE_RECRUIT";
+    private static final String PAGE_TRAIN = "PAGE_TRAIN";
 
     //主页界面
     @Override
@@ -65,6 +73,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mSubscription = (ImageView) findViewById(R.id.iv_subscription_choose);
         mCreate = (FloatingActionButton) findViewById(R.id.fab_create);
 
+        mainTitle = (TextView) findViewById(R.id.txt_first_title);
+        subTitle = (TextView) findViewById(R.id.txt_second_title);
+
         mList = new ArrayList<>();
 
         //测试token
@@ -88,6 +99,22 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mBanner.setOnClickListener(this);
         mSubscription.setOnClickListener(this);
         mCreate.setOnClickListener(this);
+
+        //一些基本的初始化数据
+        switch (CustomApplication.getCurrentPageName()){
+            case PAGE_SCIENCE:
+                mainTitle.setText("学术");
+                subTitle.setText("招聘 培训");
+                break;
+            case PAGE_RECRUIT:
+                mainTitle.setText("招聘");
+                subTitle.setText("学术 培训");
+                break;
+            case PAGE_TRAIN:
+                mainTitle.setText("培训");
+                subTitle.setText("招聘 学术");
+                break;
+        }
 
     }
 

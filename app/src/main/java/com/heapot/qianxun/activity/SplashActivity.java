@@ -90,7 +90,7 @@ public class SplashActivity extends BaseActivity {
                                     // 因为token只有三十分钟有效期，也就是说用户退出以后下次失效的可能性比较高，所以这里实际上没有存本地的意义
                                     PreferenceUtil.putString("token", token);
                                     //设置跳转到主页-->学术页面
-                                    CustomApplication.CURRENT_PAGE = ConstantsBean.PAGE_SCIENCE;
+                                    CustomApplication.setCurrentPage(ConstantsBean.PAGE_SCIENCE);
                                     //跳转页面,同时关闭当前页面
                                     intentToActivity(1);
                                     Logger.d("parse json ---> token:  " + token);
