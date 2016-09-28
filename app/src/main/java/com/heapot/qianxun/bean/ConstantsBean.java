@@ -67,6 +67,8 @@ public class ConstantsBean {
     public static final String SEND_RESET_MESSAGE = "findPasswordByPhone?phone=";
     //订阅分类
     public static final String SUBSCRIBE_CATALOGS = "user/subscribe/catalog";
+    //查看已订阅
+    public static final String GET_SUBSCRIBED = "user/subscribe/catalog";
 
 
 
