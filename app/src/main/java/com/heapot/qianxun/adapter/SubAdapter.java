@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.heapot.qianxun.R;
-import com.heapot.qianxun.bean.SubBean;
+import com.heapot.qianxun.bean.SubscribedBean;
 import com.heapot.qianxun.helper.ItemTouchHelperAdapter;
 import com.heapot.qianxun.helper.OnRecyclerViewItemClickListener;
 import com.heapot.qianxun.util.JsonUtil;
@@ -24,10 +24,10 @@ import java.util.List;
  */
 public class SubAdapter extends RecyclerView.Adapter<SubAdapter.DragViewHolder> implements ItemTouchHelperAdapter, View.OnClickListener {
     private Context context;
-    private List<SubBean> mList;
+    private List<SubscribedBean.ContentBean.RowsBean> mList;
     private OnRecyclerViewItemClickListener listener = null;
 
-    public SubAdapter(Context context, List<SubBean> mList) {
+    public SubAdapter(Context context, List<SubscribedBean.ContentBean.RowsBean> mList) {
         this.context = context;
         this.mList = mList;
     }

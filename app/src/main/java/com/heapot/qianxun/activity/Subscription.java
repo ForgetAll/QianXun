@@ -41,6 +41,7 @@ import java.util.Map;
 /**
  * Created by Karl on 2016/8/29.
  * 订阅列表
+ *
  */
 public class Subscription extends BaseActivity  {
     //全部数据相关
@@ -50,7 +51,6 @@ public class Subscription extends BaseActivity  {
     private LinearLayoutManager linearLayoutManager;
     //已订阅相关
     private RecyclerView sub;
-    private List<SubBean> subList = new ArrayList<>();
     private List<SubscribedBean.ContentBean.RowsBean> subscribedList = new ArrayList<>();
     private SubAdapter subAdapter;
     private GridLayoutManager gridLayoutManager;
@@ -107,7 +107,7 @@ public class Subscription extends BaseActivity  {
             getSub();
         }else {
             tagsList = (List<TagsBean.ContentBean>) getLocalData(ConstantsBean.TAG_FILE_NAME);
-            subList = (List<SubBean>) getLocalData(ConstantsBean.SUB_FILE_NAME);
+            subscribedList = (List<SubscribedBean.ContentBean.RowsBean>) getLocalData(ConstantsBean.SUB_FILE_NAME);
             initRecycler();
         }
     }
@@ -177,7 +177,7 @@ public class Subscription extends BaseActivity  {
                                 SerializableUtils.setSerializable(Subscription.this,ConstantsBean.SUB_FILE_NAME,subscribedList);
                             }else {
                                 Object object = getLocalData(ConstantsBean.SUB_FILE_NAME);
-                                subList.add((SubBean) object);
+                                subscribedList.addAll((Collection<? extends SubscribedBean.ContentBean.RowsBean>) object);
                                 Toast.makeText(Subscription.this, "刷新数据失败", Toast.LENGTH_SHORT).show();
                             }
                             initRecycler();
@@ -296,7 +296,7 @@ public class Subscription extends BaseActivity  {
         tags.setAdapter(tagsAdapter);
         tagsAdapter.notifyDataSetChanged();
 
-        subAdapter = new SubAdapter(Subscription.this,subList);
+        subAdapter = new SubAdapter(Subscription.this,subscribedList);
         sub.setAdapter(subAdapter);
         subAdapter.notifyDataSetChanged();
 
@@ -317,8 +317,8 @@ public class Subscription extends BaseActivity  {
         subAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Logger.d(subList.get(position).getId());
-                String id = subList.get(position).getId();
+                Logger.d(subscribedList.get(position).getId());
+                String id = subscribedList.get(position).getId();
                 deleteSub(id);
             }
         });
