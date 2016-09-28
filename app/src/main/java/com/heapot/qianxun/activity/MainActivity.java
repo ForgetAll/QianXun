@@ -101,20 +101,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mCreate.setOnClickListener(this);
 
         //一些基本的初始化数据
-        switch (CustomApplication.getCurrentPageName()){
-            case PAGE_SCIENCE:
-                mainTitle.setText("学术");
-                subTitle.setText("招聘 培训");
-                break;
-            case PAGE_RECRUIT:
-                mainTitle.setText("招聘");
-                subTitle.setText("学术 培训");
-                break;
-            case PAGE_TRAIN:
-                mainTitle.setText("培训");
-                subTitle.setText("招聘 学术");
-                break;
-        }
+        mainTitle.setText("学术");
+        subTitle.setText("招聘 培训");
+
 
     }
 
@@ -184,6 +173,22 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
     public void setBanner(Bitmap bitmap){
         mBanner.setImageBitmap(bitmap);
+    }
+    public void setToolBarTitle(String name){
+        switch (name){
+            case PAGE_SCIENCE:
+                mainTitle.setText("学术");
+                subTitle.setText("招聘 培训");
+                break;
+            case PAGE_RECRUIT:
+                mainTitle.setText("招聘");
+                subTitle.setText("学术 培训");
+                break;
+            case PAGE_TRAIN:
+                mainTitle.setText("培训");
+                subTitle.setText("学术 招聘");
+                break;
+        }
     }
 
 
