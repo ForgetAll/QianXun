@@ -17,16 +17,30 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.adapter.MainTabFragmentAdapter;
 import com.heapot.qianxun.application.CustomApplication;
+import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.bean.SubscribedBean;
+import com.heapot.qianxun.helper.SerializableUtils;
 import com.heapot.qianxun.util.PreferenceUtil;
 import com.orhanobut.logger.Logger;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
     private DrawerLayout mDrawerLayout;
@@ -37,7 +51,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private ViewPager mViewPager;
     private MainTabFragmentAdapter mPageAdapter;
 
-    private List<String> mList;
+    private List<SubscribedBean.ContentBean.RowsBean> mList;
 
     private FloatingActionButton mCreate;
 
@@ -108,23 +122,60 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
     /**
-     * 模拟数据
+     * 初始化数据
      */
-    private void initData() {
-        //版本更新，软件更新接口上线之后可用
-      //  UpdateUtil.getInstance().checkUpdate(activity,null,false);
-        //模拟数据
-        for (int i = 0; i < 15; i++) {
-            mList.add("Tab-" + i);
+    private void initData(){
+        //先从本地获取，本地为空再从网络加载
+        Object object = SerializableUtils.getSerializable(MainActivity.this,ConstantsBean.SUB_FILE_NAME);
+        if (object != null){
+            mList.addAll((Collection<? extends SubscribedBean.ContentBean.RowsBean>) object);
+            initTab();
+        }else {
+
         }
-        initTab();
+
     }
+    private void getSubscriptionTags(){
+        String url = ConstantsBean.BASE_PATH+ConstantsBean.GET_SUBSCRIBED;
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            String status = response.getString("status");
+                            if (status.equals("success")){
+
+                            }else {
+                                Toast.makeText(MainActivity.this, "加载数据失败", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }
+        ){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> map = new HashMap<>();
+                map.put(ConstantsBean.KEY_TOKEN,CustomApplication.TOKEN);
+                return map;
+            }
+        };
+    }
+
 
     /**
      * 实现动态添加Tab
      */
     private void initTab() {
-        mPageAdapter = new MainTabFragmentAdapter(getSupportFragmentManager(), this, mList);
+//        mPageAdapter = new MainTabFragmentAdapter(getSupportFragmentManager(), this, mList);
         mViewPager.setAdapter(mPageAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
