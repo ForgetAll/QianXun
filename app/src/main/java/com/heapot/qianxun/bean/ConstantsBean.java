@@ -10,10 +10,6 @@ public class ConstantsBean {
     public static final String KEY_SPLASH = "isEnter";
     //基本路径-已改
     public static final String BASE_PATH = "https://qinxi1992.xicp.net/";
-    //退出登录接口-仟询
-    public  static  final  String  LOGOUT="/admin/logout";
-    //个人信息接口-仟徇
-    public  static  final  String  PERSONAL_INFO="/admin/i";
     //获取当前用户权限接口-仟询
      public  static  final  String  ADMIN_PERMISSSIONS="/admin/permissions";
     //检测旧密码接口-仟询
@@ -70,6 +66,20 @@ public class ConstantsBean {
     public static final String GET_SUBSCRIBED = "user/subscribe/catalog";
     //提交订阅
     public static final String POST_SUBSCRIPTION = "user/subscribe/user?userId=";
+    //获取用户个人信息
+    public   static final String PERSONAL_INFO="user/i";
+    //个人发表的内容
+    public  static  final  String PERSONAL_ARTICLE="user/detail";
+    //修改个人信息put
+    public  static  final  String PERSONAL_FIX="user/i";
+    //验证原密码
+    public  static  final  String TEXT_PASSWORD="user/checkPwd?oldPassword=";
+    //修改密码
+    public  static  final  String CHANGE_PASSWORD="user/i";
+    /*验证原密码
+    POST: /user/checkPwd?oldPassword={oldPassword}
+    修改密码
+    POST: /user/updatePwd?oldPassword={oldPassword}&password={password}*/
 
 
 
@@ -89,7 +99,7 @@ public class ConstantsBean {
     public static final String name = "name";
     public static final String nickName = "nickname";
     //签名目前未定
-    public static final String userAutograph = "userAutograph";
+    public static final String userAutograph = "description";
 
     public static final String PAGE_SCIENCE = "PAGE_SCIENCE";
     public static final String PAGE_RECRUIT = "PAGE_RECRUIT";

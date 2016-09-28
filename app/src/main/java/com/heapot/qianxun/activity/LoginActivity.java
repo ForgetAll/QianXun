@@ -125,7 +125,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
                     }
                 },
                 new Response.ErrorListener() {

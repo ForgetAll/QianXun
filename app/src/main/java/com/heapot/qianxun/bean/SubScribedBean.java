@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Created by Karl on 2016/9/28.
  */
-public class SubscribedBean implements Serializable{
+public class SubScribedBean implements Serializable{
 
     /**
      * status : success

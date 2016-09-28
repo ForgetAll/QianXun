@@ -60,6 +60,7 @@ public class MyUserBean {
         private String salt;
         private String phone;
         private String email;
+        private String description;
         private String id;
         private long createTime;
         /**
@@ -116,6 +117,13 @@ public class MyUserBean {
 
         public void setEmail(String email) {
             this.email = email;
+        }
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
         }
 
         public String getId() {
@@ -226,6 +234,7 @@ public class MyUserBean {
                 "salt": "5a063c4ffaca6c01",
                 "phone": "18236969075",
                 "email": null,
+                "description": null,
                 "id": "2579f5a10a3b47ca9c0e2289e7096786",
                 "createTime": 1474945475208,
                 "status": {
