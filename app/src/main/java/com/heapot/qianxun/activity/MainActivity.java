@@ -30,12 +30,14 @@ import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.bean.SubscribedBean;
 import com.heapot.qianxun.helper.SerializableUtils;
+import com.heapot.qianxun.util.JsonUtil;
 import com.heapot.qianxun.util.PreferenceUtil;
 import com.orhanobut.logger.Logger;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -145,9 +147,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                         try {
                             String status = response.getString("status");
                             if (status.equals("success")){
-
+                                SubscribedBean subscribedBean = (SubscribedBean) JsonUtil.fromJson(String.valueOf(response),SubscribedBean.class);
+                                mList.addAll(subscribedBean.getContent().getRows());
+                                SerializableUtils.setSerializable(MainActivity.this,ConstantsBean.SUB_FILE_NAME,mList);
+                                initTab();
                             }else {
-                                Toast.makeText(MainActivity.this, "加载数据失败", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MainActivity.this, "加载数据失败,我也不知道咋办了", Toast.LENGTH_SHORT).show();
+
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -157,7 +163,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        Toast.makeText(MainActivity.this, "服务器出错了！", Toast.LENGTH_SHORT).show();
                     }
                 }
         ){
@@ -175,7 +181,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
      * 实现动态添加Tab
      */
     private void initTab() {
-//        mPageAdapter = new MainTabFragmentAdapter(getSupportFragmentManager(), this, mList);
+        mPageAdapter = new MainTabFragmentAdapter(getSupportFragmentManager(), this, mList);
         mViewPager.setAdapter(mPageAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
