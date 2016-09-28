@@ -133,7 +133,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             mList.addAll((Collection<? extends SubscribedBean.ContentBean.RowsBean>) object);
             initTab();
         }else {
-
+            getSubscriptionTags();
         }
 
     }
@@ -174,6 +174,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 return map;
             }
         };
+        CustomApplication.getRequestQueue().add(jsonObjectRequest);
     }
 
 
