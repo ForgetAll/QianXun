@@ -111,6 +111,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                                     PreferenceUtil.putString("token", token);
                                     PreferenceUtil.putString("name", username);
                                     PreferenceUtil.putString("password", password);
+                                    //PreferenceUtil.putString("ion","");
                                     PreferenceUtil.putString("isAdmin","false");
                                     //跳转页面,同时关闭当前页面
                                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);

@@ -102,7 +102,7 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
     }
 
     private void initEvent() {
-        /*nick = PreferenceUtil.getString(ConstantsBean.userNick);
+        /*nick = PreferenceUtil.getString(ConstantsBean.nickNme);
         autograph = PreferenceUtil.getString(ConstantsBean.userAutograph);
         mNick.setText(nick);
         mAutograph.setText(autograph);
@@ -271,7 +271,7 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
                 //修改昵称
                 case 201:
                     nick = intent.getStringExtra(ConstantsBean.INFO);
-                    updateUserInfo(ConstantsBean.userNick, nick);
+                    updateUserInfo(ConstantsBean.nickName, nick);
                     break;
                 //修改签名
                 case 202:

@@ -55,11 +55,11 @@ public class MyUserBean {
     }
 
     public static class ContentBean {
-        private Object loginName;
+        private String loginName;
         private String password;
         private String salt;
         private String phone;
-        private Object email;
+        private String email;
         private String id;
         private long createTime;
         /**
@@ -68,7 +68,7 @@ public class MyUserBean {
          */
 
         private StatusBean status;
-        private Object name;
+        private String  name;
         private String nickname;
         /**
          * index : 3
@@ -76,13 +76,13 @@ public class MyUserBean {
          */
 
         private TypeBean type;
-        private Object icon;
+        private String icon;
 
-        public Object getLoginName() {
+        public String getLoginName() {
             return loginName;
         }
 
-        public void setLoginName(Object loginName) {
+        public void setLoginName(String loginName) {
             this.loginName = loginName;
         }
 
@@ -110,11 +110,11 @@ public class MyUserBean {
             this.phone = phone;
         }
 
-        public Object getEmail() {
+        public String getEmail() {
             return email;
         }
 
-        public void setEmail(Object email) {
+        public void setEmail(String email) {
             this.email = email;
         }
 
@@ -142,11 +142,11 @@ public class MyUserBean {
             this.status = status;
         }
 
-        public Object getName() {
+        public String getName() {
             return name;
         }
 
-        public void setName(Object name) {
+        public void setName(String name) {
             this.name = name;
         }
 
@@ -166,11 +166,11 @@ public class MyUserBean {
             this.type = type;
         }
 
-        public Object getIcon() {
+        public String getIcon() {
             return icon;
         }
 
-        public void setIcon(Object icon) {
+        public void setIcon(String icon) {
             this.icon = icon;
         }
 
@@ -216,6 +216,7 @@ public class MyUserBean {
             }
         }
     }
+
    /* {
         "status": "success",
             "message": "",

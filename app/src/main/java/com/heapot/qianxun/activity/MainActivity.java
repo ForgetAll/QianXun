@@ -48,6 +48,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         initView();
         initEvent();
         initData();
+
     }
 
     //初始化控件

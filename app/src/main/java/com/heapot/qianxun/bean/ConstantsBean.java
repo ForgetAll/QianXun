@@ -1,7 +1,6 @@
 package com.heapot.qianxun.bean;
 
 import android.os.Environment;
-import android.os.StatFs;
 
 /**
  * Created by 15859 on 2016/9/3.
@@ -75,31 +74,18 @@ public class ConstantsBean {
     /*
      * 常量类key用于跳转传值
      */
-    public static final String KEY_LOOK_BEAN = "lookBean";
-    public static final String USER_ID = "userId";
-    public static final String USER_PHONE = "userPhone";
-    public static final String USER_PASS = "userPassword";
-    public static final String userImage = "userImage";
-    public static final String userName = "userName";
-    public static final String userNick = "userNick";
-    public static final String userSex = "userSex";
-    public static final String userBirth = "userBirth";
+    public static final String LOGINNAME = "loginName";
+    public static final String USER_PHONE = "phone";
+    public static final String USER_PASS = "password";
+    public static final String USER_ID = "id";
+    public static final String salt="salt";
+    public static final String email="email";
+    public static final String loginTime="createTime";
+    public static final String userImage = "icon";
+    public static final String name = "name";
+    public static final String nickName = "nickname";
+    //签名目前未定
     public static final String userAutograph = "userAutograph";
-    public static final String userProvince = "userProvince";
-    public static final String userCity = "userCity";
-    public static final String userArea = "userArea";
-    public static final String userAddress = "userAddress";
-    public static final String userLove = "userLove";
-    public static final String userIntegral = "userIntegral";
-    public static final String userLevel = "userLevel";
-    public static final String userQq = "userQq";
-    public static final String userWx = "userWx";
-    public static final String userSina = "userSina";
-    public static final String userSchool = "userSchool";
-    public static final String pushId = "pushId";
-    public static final String token = "token";
-    public static final String userLatitude = "userLatitude";
-    public static final String userLongitude = "userLongitude";
 
     public static final String PAGE_SCIENCE = "PAGE_SCIENCE";
     public static final String PAGE_RECRUIT = "PAGE_RECRUIT";

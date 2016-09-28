@@ -6,6 +6,7 @@ import com.heapot.qianxun.R;
 
 /**
  * Created by 15859 on 2016/9/27.
+ * 用户帮助类
  */
 public class SystemUserHelpActivity  extends BaseActivity{
     @Override
