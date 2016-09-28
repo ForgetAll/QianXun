@@ -66,6 +66,10 @@ public class ConstantsBean {
     public static final String SEND_RESET_MESSAGE = "findPasswordByPhone?phone=";
     //订阅分类
     public static final String SUBSCRIBE_CATALOGS = "user/subscribe/catalog";
+    //查看已订阅
+    public static final String GET_SUBSCRIBED = "user/subscribe/catalog";
+    //提交订阅
+    public static final String POST_SUBSCRIPTION = "user/subscribe/user?userId=";
 
 
 
@@ -93,6 +97,7 @@ public class ConstantsBean {
 
     //标签订阅本地文件名
     public static final String TAG_FILE_NAME = "Subscription";//存储所有标签的文件名
+    public static final String SUB_FILE_NAME = "Subscribed";//存储所有标签的文件名
 
 
 }

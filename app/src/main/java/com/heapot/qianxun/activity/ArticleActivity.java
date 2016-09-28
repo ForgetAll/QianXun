@@ -27,8 +27,9 @@ public class ArticleActivity extends BaseActivity {
     private boolean isConnected;//判断网络状态
     private EditText input_comment;
     private Handler handler;
-    private static final int MSG_SHOW_INPUT = 0;
-    private static final int MSG_HIDE_INPUT = 1;
+    private static final int MSG_SHOW_INPUT = 0;//显示输入框
+    private static final int MSG_HIDE_INPUT = 1;//隐藏输入框
+    private static final int MSG_UPDATE = 3;//更新引用
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +67,9 @@ public class ArticleActivity extends BaseActivity {
                     case MSG_HIDE_INPUT:
                         input_comment.setVisibility(View.GONE);
                         break;
+                    case MSG_UPDATE:
+                        input_comment.setFocusable(true);
+                        break;
                 }
             }
         };
@@ -92,8 +96,10 @@ public class ArticleActivity extends BaseActivity {
         Logger.d(s);
 
     }
+
     /**
      * 输入框显示与隐藏
+     * @param str 传入参数
      */
     @JavascriptInterface
     public void showInput(String str){
@@ -104,13 +110,24 @@ public class ArticleActivity extends BaseActivity {
     public void hideInput(){
         handler.sendEmptyMessage(MSG_HIDE_INPUT);
     }
+
     /**
      * 清空缓存
+     * @param isClear 是否清楚缓存
      */
     @JavascriptInterface
     public void clearCache(boolean isClear){
         webView.clearCache(isClear);
     }
 
+    /**
+     * 更新引用
+     * @param id 引用评论id
+     */
+    @JavascriptInterface
+    public void updateQuote(String id){
+        Toast.makeText(ArticleActivity.this, "引用"+id, Toast.LENGTH_SHORT).show();
+        handler.sendEmptyMessage(MSG_UPDATE);
+    }
 
 }

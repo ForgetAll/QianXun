@@ -63,16 +63,14 @@ public class SplashActivity extends BaseActivity {
         boolean isAvailable = NetworkUtils.isAvailable(this);
         if (isAvailable) {
             if (name == null || pass == null) {
-                Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
-                startActivity(intent);
+               intentToActivity(0);
             } else {
                     String url = ConstantsBean.BASE_PATH + ConstantsBean.LOGIN + "?loginName=" + name + "&password=" + pass;
                     postLoginClient(url);
             }
         }else {
             Toast.makeText(SplashActivity.this, "网络连接不可用", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(SplashActivity.this,MainActivity.class);
-            startActivity(intent);
+            intentToActivity(1);
         }
     }
     private void postLoginClient(String url){
@@ -94,16 +92,12 @@ public class SplashActivity extends BaseActivity {
                                     //设置跳转到主页-->学术页面
                                     CustomApplication.CURRENT_PAGE = ConstantsBean.PAGE_SCIENCE;
                                     //跳转页面,同时关闭当前页面
-                                    Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-                                    startActivity(intent);
-                                    SplashActivity.this.finish();
+                                    intentToActivity(1);
                                     Logger.d("parse json ---> token:  " + token);
                                 }
                             }else {
                                 Toast.makeText(SplashActivity.this, "登陆失败，请重新登陆", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(SplashActivity.this,LoginActivity.class);
-                                startActivity(intent);
-                                SplashActivity.this.finish();
+                                intentToActivity(0);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -115,13 +109,31 @@ public class SplashActivity extends BaseActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Logger.d(error);
-                        Toast.makeText(SplashActivity.this, "登陆失败，请重新登陆", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(SplashActivity.this,LoginActivity.class);
-                        startActivity(intent);
+                        intentToActivity(0);
                     }
                 }
         );
         CustomApplication.getRequestQueue().add(jsonObject);
 
+    }
+
+    /**
+     * 动态选择跳转事件
+     * @param i 状态码，0为跳转登陆，1为跳转主页
+     */
+    private void intentToActivity(int i){
+        Intent intent;
+        switch (i){
+            case 0:
+                intent = new Intent(SplashActivity.this,LoginActivity.class);
+                startActivity(intent);
+                SplashActivity.this.finish();
+                break;
+            case 1:
+                intent = new Intent(SplashActivity.this, MainActivity.class);
+                startActivity(intent);
+                SplashActivity.this.finish();
+                break;
+        }
     }
 }
