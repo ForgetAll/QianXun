@@ -295,46 +295,5 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
         return super.onKeyDown(keyCode, event);
     }
-//    private List<MyUserBean.ContentBean> userList = new ArrayList<>();
-    /**
-     * 在主页获取用户信息然后进行存储，直接在侧滑菜单进行绘制就可以了
-     */
-//    private void getUserInfo(){
-//        String url=ConstantsBean.BASE_PATH + ConstantsBean.PERSONAL_INFO;
-//        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-//                Request.Method.GET, url, null,
-//                new Response.Listener<JSONObject>() {
-//                    @Override
-//                    public void onResponse(JSONObject response) {
-//                        try {
-//                            String status = response.getString("status");
-//                            if (status.equals("success")){
-//                                userList = (List<MyUserBean.ContentBean>) JsonUtil.fromJson(String.valueOf(response),MyUserBean.class);
-////                                SerializableUtils.setSerializable(MainActivity.this,ConstantsBean.MY_USER_INFO,mList);
-//                                CustomApplication.user_nickName = userList.get(0).getName();
-//                                CustomApplication.user_quote = userList.get(0).getId();
-//                            }else {
-//                                Toast.makeText(MainActivity.this, "鬼知道出什么问题了", Toast.LENGTH_SHORT).show();
-//                            }
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                },
-//                new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//
-//                    }
-//                }
-//        ){
-//            @Override
-//            public Map<String, String> getHeaders() throws AuthFailureError {
-//                Map<String,String> headers = new HashMap<>();
-//                headers.put(ConstantsBean.KEY_TOKEN,CustomApplication.TOKEN);
-//                return headers;
-//            }
-//        };
-//        CustomApplication.getRequestQueue().add(jsonObjectRequest);
-//    }
+
 }

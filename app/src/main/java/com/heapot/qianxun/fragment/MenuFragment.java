@@ -32,6 +32,7 @@ import com.heapot.qianxun.helper.SerializableUtils;
 import com.heapot.qianxun.util.CommonUtil;
 import com.heapot.qianxun.util.JsonUtil;
 import com.heapot.qianxun.util.PreferenceUtil;
+import com.orhanobut.logger.Logger;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -85,24 +86,65 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         mSetting.setOnClickListener(this);
         mHeader.setOnClickListener(this);
         mHelp.setOnClickListener(this);
-//        initData();
-        mName.setText(CustomApplication.user_nickName);
-        mQuote.setText(CustomApplication.user_quote);
+        initData();
 
     }
-//    private void initData() {
-//        Object object = getLocalInfo(ConstantsBean.MY_USER_INFO);
-//        mList.addAll((Collection<? extends MyUserBean.ContentBean>) object);
-//        initUserInfo();
-//
-//    }
-//    private void initUserInfo(){
-//        String name = mList.get(0).getName();
-//        String id = mList.get(0).getId();
-//        mName.setText(name);
-//        mQuote.setText(id);
-//    }
+    private void initData() {
+        Object object = getLocalInfo(ConstantsBean.MY_USER_INFO);
+        if (object != null){
+            MyUserBean myUserBean = (MyUserBean) object;
+            mName.setText(myUserBean.getContent().getLoginName());
+            mQuote.setText(myUserBean.getContent().getId());
+        }else {
+            getUserInfo();
+        }
 
+    }
+    /**
+     * 在主页获取用户信息然后进行存储，直接在侧滑菜单进行绘制就可以了
+     */
+    private void getUserInfo(){
+        String url=ConstantsBean.BASE_PATH + ConstantsBean.PERSONAL_INFO;
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            String status = response.getString("status");
+                            if (status.equals("success")){
+                                MyUserBean myUserBean = (MyUserBean) JsonUtil.fromJson(String.valueOf(response),MyUserBean.class);
+                                SerializableUtils.setSerializable(getContext(),ConstantsBean.MY_USER_INFO,myUserBean);
+                                mName.setText(myUserBean.getContent().getLoginName());
+                                mQuote.setText(myUserBean.getContent().getId());
+                            }else {
+                                Toast.makeText(getContext(), response.getString("message"), Toast.LENGTH_SHORT).show();
+                                Logger.d(response.getString("message"));
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }
+        ){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> headers = new HashMap<>();
+                headers.put(ConstantsBean.KEY_TOKEN,CustomApplication.TOKEN);
+                return headers;
+            }
+        };
+        CustomApplication.getRequestQueue().add(jsonObjectRequest);
+    }
+    private Object getLocalInfo(String fileName){
+        return SerializableUtils.getSerializable(getContext(),fileName);
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -141,9 +183,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
 
         }
     }
-//    private Object getLocalInfo(String fileName){
-//        return SerializableUtils.getSerializable(getContext(),fileName);
-//    }
+
 
     /**
      * 回收Activity

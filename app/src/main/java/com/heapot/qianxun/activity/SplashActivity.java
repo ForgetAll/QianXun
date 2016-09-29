@@ -8,6 +8,7 @@ import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -21,6 +22,9 @@ import com.orhanobut.logger.Logger;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Karl on 2016/9/19.
@@ -81,6 +85,7 @@ public class SplashActivity extends BaseActivity {
                     public void onResponse(JSONObject response) {
                         try {
                             if (response.getString("status").equals("success")) {
+
                                 if (response.has("content")) {
                                     JSONObject content = response.getJSONObject("content");
                                     String token = content.getString("auth-token");
