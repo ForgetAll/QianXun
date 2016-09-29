@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,8 +19,6 @@ import com.heapot.qianxun.activity.SystemHelpActivity;
 import com.heapot.qianxun.activity.SystemSettingActivity;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
-import com.heapot.qianxun.util.CommonUtil;
-import com.heapot.qianxun.util.PreferenceUtil;
 
 /**
  * Created by Karl on 2016/8/20.
@@ -45,35 +42,53 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
     }
 
     private void getData() {
+        /*String url=ConstantsBean.BASE_PATH + ConstantsBean.PERSONAL_INFO;
+        Ion.with(getActivity()).load(url).as(MyUserBean.class).setCallback(new FutureCallback<MyUserBean>() {
+            @Override
+            public void onCompleted(Exception e, MyUserBean result) {
+                Log.e("result数据",result.toString());
+                if (result != null && result.getStatus().equals("success")) {
+                    MyUserBean.ContentBean userBean = result.getContent();
+                    LogUtils.e("userBean:", JsonUtil.toJson(userBean));
+                    PreferenceUtil.putString(ConstantsBean.userImage, userBean.getIcon());
+                    PreferenceUtil.putString(ConstantsBean.USER_ID, userBean.getId());
+                    PreferenceUtil.putString(ConstantsBean.email, userBean.getEmail());
+                    PreferenceUtil.putString(ConstantsBean.loginTime, userBean.getLoginName());
+                    PreferenceUtil.putString(ConstantsBean.name, userBean.getName());
+                    PreferenceUtil.putString(ConstantsBean.nickName, userBean.getNickname());
+                    PreferenceUtil.putString(ConstantsBean.userAutograph, userBean.getDescription());
 
-        if (!TextUtils.isEmpty(PreferenceUtil.getString(ConstantsBean.userImage))) {
+                }
+            }
+        });*/
+      /*  if (!TextUtils.isEmpty(PreferenceUtil.getString(ConstantsBean.userImage))) {
             CommonUtil.loadImage(mIcon, PreferenceUtil.getString(ConstantsBean.userImage), R.drawable.imagetest);
         } else {
             mIcon.setImageResource(R.drawable.imagetest);
-        }
+        }*/
 
       //  mName.setText(PreferenceUtil.getString(ConstantsBean.nickName));
        // mQuote.setText(PreferenceUtil.getString(ConstantsBean.userAutograph));
 
     }
 
-   /* @Override
+    /*@Override
     public void onResume() {
         super.onResume();
         String url=ConstantsBean.BASE_PATH + ConstantsBean.PERSONAL_INFO;
-        Ion.with(getContext()).load(url).as(MyUserBean.class).setCallback(new FutureCallback<MyUserBean>() {
+        Ion.with(getActivity()).load(url).as(MyUserBean.class).setCallback(new FutureCallback<MyUserBean>() {
             @Override
             public void onCompleted(Exception e, MyUserBean result) {
                 if (result != null && result.getStatus().equals("success")) {
-                    MyUserBean.ContentBean useBean = result.getContent();
-                    LogUtils.e("userBean:", result.toString());
-                    PreferenceUtil.putString(ConstantsBean.userImage, useBean.getIcon());
-                    PreferenceUtil.putString(ConstantsBean.USER_ID, useBean.getId());
-                    PreferenceUtil.putString(ConstantsBean.email, useBean.getEmail());
-                    PreferenceUtil.putString(ConstantsBean.loginTime, useBean.getLoginName());
-                    PreferenceUtil.putString(ConstantsBean.name, useBean.getName());
-                    PreferenceUtil.putString(ConstantsBean.nickName, useBean.getNickname());
-                    PreferenceUtil.putString(ConstantsBean.userAutograph, useBean.getDescription());
+                    MyUserBean.ContentBean userBean = result.getContent();
+                    LogUtils.e("userBean:", JsonUtil.toJson(userBean));
+                    PreferenceUtil.putString(ConstantsBean.userImage, userBean.getIcon());
+                    PreferenceUtil.putString(ConstantsBean.USER_ID, userBean.getId());
+                    PreferenceUtil.putString(ConstantsBean.email, userBean.getEmail());
+                    PreferenceUtil.putString(ConstantsBean.loginTime, userBean.getLoginName());
+                    PreferenceUtil.putString(ConstantsBean.name, userBean.getName());
+                    PreferenceUtil.putString(ConstantsBean.nickName, userBean.getNickname());
+                    PreferenceUtil.putString(ConstantsBean.userAutograph, userBean.getDescription());
 
                 }
             }

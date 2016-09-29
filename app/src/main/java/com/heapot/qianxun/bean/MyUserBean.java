@@ -1,10 +1,12 @@
 package com.heapot.qianxun.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by 15859 on 2016/9/27.
  * 个人实体类
  */
-public class MyUserBean {
+public class MyUserBean implements Serializable{
     /**
      * status : success
      * message :
@@ -54,7 +56,7 @@ public class MyUserBean {
         this.content = content;
     }
 
-    public static class ContentBean {
+    public static class ContentBean implements Serializable{
         private String loginName;
         private String password;
         private String salt;
@@ -182,7 +184,7 @@ public class MyUserBean {
             this.icon = icon;
         }
 
-        public static class StatusBean {
+        public static class StatusBean implements Serializable{
             private int index;
             private String name;
 
@@ -203,7 +205,7 @@ public class MyUserBean {
             }
         }
 
-        public static class TypeBean {
+        public static class TypeBean implements Serializable{
             private int index;
             private String name;
 

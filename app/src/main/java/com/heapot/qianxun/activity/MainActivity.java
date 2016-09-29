@@ -28,7 +28,7 @@ import com.heapot.qianxun.R;
 import com.heapot.qianxun.adapter.MainTabFragmentAdapter;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
-import com.heapot.qianxun.bean.SubscribedBean;
+import com.heapot.qianxun.bean.SubScribedBean;
 import com.heapot.qianxun.helper.SerializableUtils;
 import com.heapot.qianxun.util.JsonUtil;
 import com.heapot.qianxun.util.PreferenceUtil;
@@ -37,7 +37,6 @@ import com.orhanobut.logger.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -53,7 +52,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private ViewPager mViewPager;
     private MainTabFragmentAdapter mPageAdapter;
 
-    private List<SubscribedBean.ContentBean.RowsBean> mList;
+    private List<SubScribedBean.ContentBean.RowsBean> mList;
 
     private FloatingActionButton mCreate;
 
@@ -130,7 +129,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         //先从本地获取，本地为空再从网络加载
         Object object = SerializableUtils.getSerializable(MainActivity.this,ConstantsBean.SUB_FILE_NAME);
         if (object != null){
-            mList.addAll((Collection<? extends SubscribedBean.ContentBean.RowsBean>) object);
+            mList.addAll((Collection<? extends SubScribedBean.ContentBean.RowsBean>) object);
             initTab();
         }else {
             getSubscriptionTags();
@@ -147,8 +146,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                         try {
                             String status = response.getString("status");
                             if (status.equals("success")){
-                                SubscribedBean subscribedBean = (SubscribedBean) JsonUtil.fromJson(String.valueOf(response),SubscribedBean.class);
-                                mList.addAll(subscribedBean.getContent().getRows());
+                                SubScribedBean subScribedBean = (SubScribedBean) JsonUtil.fromJson(String.valueOf(response),SubScribedBean.class);
+                                mList.addAll(subScribedBean.getContent().getRows());
                                 SerializableUtils.setSerializable(MainActivity.this,ConstantsBean.SUB_FILE_NAME,mList);
                                 initTab();
                             }else {

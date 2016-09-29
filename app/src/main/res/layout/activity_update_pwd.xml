@@ -33,11 +33,11 @@
             android:paddingRight="16dp"
             android:text="完成"
             android:textColor="#ffffff"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:visibility="gone"/>
     </RelativeLayout>
-
     <EditText
-        android:id="@+id/et_info"
+        android:id="@+id/et_oldPwd"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_marginTop="20dp"
@@ -46,5 +46,42 @@
         android:drawablePadding="10dp"
         android:paddingLeft="10dp"
         android:maxLength="20"
-        android:hint="请输入修改内容"/>
+        android:hint="请输入当前密码"
+        android:visibility="gone"/>
+    <EditText
+        android:id="@+id/et_newPwdOne"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="20dp"
+        android:background="@android:color/white"
+        android:drawableLeft="@mipmap/person_alter"
+        android:drawablePadding="10dp"
+        android:paddingLeft="10dp"
+        android:maxLength="20"
+        android:hint="请输入新密码"/>
+    <EditText
+        android:id="@+id/et_newPwdTwo"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="20dp"
+        android:background="@android:color/white"
+        android:drawableLeft="@mipmap/person_alter"
+        android:drawablePadding="10dp"
+        android:paddingLeft="10dp"
+        android:maxLength="20"
+        android:hint="请输入新密码"
+        android:visibility="gone"/>
+    <TextView
+        android:id="@+id/tv_sure"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_above="@+id/tv_girl"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/btn_shape_ok"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:text="确定"
+        android:textSize="18sp" />
 </LinearLayout>

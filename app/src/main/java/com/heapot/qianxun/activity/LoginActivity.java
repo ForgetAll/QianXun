@@ -26,11 +26,10 @@ import org.json.JSONObject;
 
 /**
  * Created by Karl on 2016/9/17.
- *
  */
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
-    private EditText edt_name,edt_pass;
-    private TextView removeData,showPass,reset,register,mLook;
+    private EditText edt_name, edt_pass;
+    private TextView removeData, showPass, reset, register, mLook;
     private Button login;
 
     private static boolean isShowPass = false;
@@ -44,7 +43,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         initEvent();
 
     }
-    private void initView(){
+
+    private void initView() {
         edt_name = (EditText) findViewById(R.id.edt_login_phone);
         edt_pass = (EditText) findViewById(R.id.edt_login_password);
 
@@ -53,10 +53,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         login = (Button) findViewById(R.id.btn_login);
         register = (TextView) findViewById(R.id.txt_login_to_register);
         reset = (TextView) findViewById(R.id.txt_reset_password);
-       mLook=(TextView) findViewById(R.id.tv_look);
+        mLook = (TextView) findViewById(R.id.tv_look);
 
     }
-    private void initEvent(){
+
+    private void initEvent() {
         removeData.setOnClickListener(this);
         showPass.setOnClickListener(this);
         login.setOnClickListener(this);
@@ -71,25 +72,26 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
      * 先以管理员登陆，失败后以普通用户登陆
      */
     //登陆前需要检查网络状态
-    private void postLogin(){
+    private void postLogin() {
         String username = edt_name.getText().toString();
         String password = edt_pass.getText().toString();
         boolean isAvailable = NetworkUtils.isAvailable(this);
-        if (isAvailable){
+        if (isAvailable) {
             Toast.makeText(LoginActivity.this, "请稍等", Toast.LENGTH_SHORT).show();
-            postLogin(username,password);
-        }else {
+            postLogin(username, password);
+        } else {
             Toast.makeText(LoginActivity.this, "请检查网络连接", Toast.LENGTH_SHORT).show();
         }
     }
 
     /**
      * 普通用户登陆
+     *
      * @param username 用户名
      * @param password 用户密码
      */
-    private void postLogin(final String username, final String password){
-        String url = ConstantsBean.BASE_PATH+ConstantsBean.LOGIN+"?loginName="+username+"&password="+password;
+    private void postLogin(final String username, final String password) {
+        String url = ConstantsBean.BASE_PATH + ConstantsBean.LOGIN + "?loginName=" + username + "&password=" + password;
         JsonObjectRequest jsonObject = new JsonObjectRequest(
                 Request.Method.POST,
                 url,
@@ -111,16 +113,16 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                                     PreferenceUtil.putString("token", token);
                                     PreferenceUtil.putString("name", username);
                                     PreferenceUtil.putString("password", password);
-                                    //PreferenceUtil.putString("ion","");
-                                    PreferenceUtil.putString("isAdmin","false");
+                                    PreferenceUtil.putString("isAdmin", "false");
                                     //跳转页面,同时关闭当前页面
                                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                     startActivity(intent);
                                     LoginActivity.this.finish();
                                     Logger.d("parse json ---> token:  " + token);
+
                                 }
-                            }else {
-                                Toast.makeText(LoginActivity.this, "登陆失败"+response.get("message"), Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(LoginActivity.this, "登陆失败" + response.get("message"), Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -142,16 +144,16 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.txt_remove_data:
                 edt_name.setText("");
                 break;
             case R.id.txt_show_pass:
-                if (isShowPass){
+                if (isShowPass) {
                     //明文显示密码
                     edt_pass.setTransformationMethod(PasswordTransformationMethod.getInstance());
                     showPass.setText("隐藏密码");
-                }else {
+                } else {
                     //密文显示密码
                     edt_pass.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
                     showPass.setText("显示密码");
@@ -165,12 +167,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 break;
             case R.id.txt_login_to_register:
                 //跳转注册页面
-                Intent intentToRegister = new Intent(LoginActivity.this,RegisterActivity.class);
+                Intent intentToRegister = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(intentToRegister);
                 break;
             case R.id.txt_reset_password:
                 //找回密码
-                Intent intentForgetPass = new Intent(LoginActivity.this,FindPassActivity.class);
+                Intent intentForgetPass = new Intent(LoginActivity.this, FindPassActivity.class);
                 startActivity(intentForgetPass);
                 break;
            /* case R.id.tv_look:
@@ -179,4 +181,5 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 break;*/
         }
     }
+
 }
