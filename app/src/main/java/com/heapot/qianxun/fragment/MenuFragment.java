@@ -53,7 +53,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
     private View mMenuView;
     private Activity mActivity;
 
-    private List<MyUserBean.ContentBean> mList = new ArrayList<>();
+//    private List<MyUserBean.ContentBean> mList = new ArrayList<>();
 
     @Nullable
     @Override
@@ -85,65 +85,23 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         mSetting.setOnClickListener(this);
         mHeader.setOnClickListener(this);
         mHelp.setOnClickListener(this);
-        initData();
-
-
-    }
-    private void initData() {
-        boolean isConnection = NetworkUtils.isAvailable(getContext());
-        if (isConnection){
-            Object object = getLocalInfo(ConstantsBean.MY_USER_INFO);
-            mList.addAll((Collection<? extends MyUserBean.ContentBean>) object);
-            initUserInfo();
-        }else {
-            getUserInfo();//从网络获取
-        }
-
+//        initData();
+        mName.setText(CustomApplication.user_nickName);
+        mQuote.setText(CustomApplication.user_quote);
 
     }
-    private void getUserInfo(){
-        String url=ConstantsBean.BASE_PATH + ConstantsBean.PERSONAL_INFO;
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                Request.Method.GET, url, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            String status = response.getString("status");
-                            if (status.equals("success")){
-                                mList = (List<MyUserBean.ContentBean>) JsonUtil.fromJson(String.valueOf(response),MyUserBean.class);
-                                SerializableUtils.setSerializable(getContext(),ConstantsBean.MY_USER_INFO,mList);
-                                initUserInfo();
-                            }else {
-                                Toast.makeText(getContext(), "鬼知道出什么问题了", Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                }
-        ){
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String,String> headers = new HashMap<>();
-                headers.put(ConstantsBean.KEY_TOKEN,CustomApplication.TOKEN);
-                return headers;
-            }
-        };
-        CustomApplication.getRequestQueue().add(jsonObjectRequest);
-    }
-    private void initUserInfo(){
-        String name = mList.get(0).getName();
-        String id = mList.get(0).getId();
-        mName.setText(name);
-        mQuote.setText(id);
-    }
+//    private void initData() {
+//        Object object = getLocalInfo(ConstantsBean.MY_USER_INFO);
+//        mList.addAll((Collection<? extends MyUserBean.ContentBean>) object);
+//        initUserInfo();
+//
+//    }
+//    private void initUserInfo(){
+//        String name = mList.get(0).getName();
+//        String id = mList.get(0).getId();
+//        mName.setText(name);
+//        mQuote.setText(id);
+//    }
 
     @Override
     public void onClick(View v) {
@@ -183,9 +141,9 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
 
         }
     }
-    private Object getLocalInfo(String fileName){
-        return SerializableUtils.getSerializable(getContext(),fileName);
-    }
+//    private Object getLocalInfo(String fileName){
+//        return SerializableUtils.getSerializable(getContext(),fileName);
+//    }
 
     /**
      * 回收Activity

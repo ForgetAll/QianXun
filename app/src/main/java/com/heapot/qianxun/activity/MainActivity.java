@@ -29,6 +29,7 @@ import com.heapot.qianxun.R;
 import com.heapot.qianxun.adapter.MainTabFragmentAdapter;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
+import com.heapot.qianxun.bean.MyUserBean;
 import com.heapot.qianxun.bean.SubscribedBean;
 import com.heapot.qianxun.helper.SerializableUtils;
 import com.heapot.qianxun.util.JsonUtil;
@@ -96,12 +97,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mList = new ArrayList<>();
 
         //测试token
-        Logger.d("打印本地token-->"+PreferenceUtil.getString("token"));
-        Logger.d("打印application中的token---》"+ CustomApplication.TOKEN);
+        Logger.d("打印本地token-->"+PreferenceUtil.getString("token")+"打印application中的token---》"+ CustomApplication.TOKEN);
     }
 
     private void initEvent() {
         initData();
+//        getUserInfo();
         //状态栏和抽屉效果
         mToolBar.setTitle("");
         setSupportActionBar(mToolBar);
@@ -132,7 +133,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         boolean isConnected = NetworkUtils.isAvailable(this);
         if (isConnected){
             getSubscriptionTags();
-
         }else {
             Logger.d("网络不正常");
             Object object = SerializableUtils.getSerializable(MainActivity.this, ConstantsBean.SUB_FILE_NAME);
@@ -157,13 +157,19 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                             String status = response.getString("status");
                             if (status.equals("success")){
                                 SubscribedBean subscribedBean = (SubscribedBean) JsonUtil.fromJson(String.valueOf(response),SubscribedBean.class);
-                                mList.addAll(subscribedBean.getContent().getRows());
+                                String name = subscribedBean.getContent().getRows().get(0).getName();
+                                Logger.d(name);
+                                for (int i = 0; i < subscribedBean.getContent().getRows().size(); i++) {
+                                    if (subscribedBean.getContent().getRows().get(i) != null){
+                                        mList.add(subscribedBean.getContent().getRows().get(i));
+                                    }
+                                }
+//                                mList.addAll(subscribedBean.getContent().getRows());
                                 SerializableUtils.setSerializable(MainActivity.this,ConstantsBean.SUB_FILE_NAME,mList);
-                                Logger.d(""+mList.size());
-//                                initTab();
+                                initTab();
                             }else {
                                 Toast.makeText(MainActivity.this, "加载数据失败,我也不知道咋办了", Toast.LENGTH_SHORT).show();
-
+                                Logger.d(response.get("message"));
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -289,4 +295,46 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
         return super.onKeyDown(keyCode, event);
     }
+//    private List<MyUserBean.ContentBean> userList = new ArrayList<>();
+    /**
+     * 在主页获取用户信息然后进行存储，直接在侧滑菜单进行绘制就可以了
+     */
+//    private void getUserInfo(){
+//        String url=ConstantsBean.BASE_PATH + ConstantsBean.PERSONAL_INFO;
+//        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+//                Request.Method.GET, url, null,
+//                new Response.Listener<JSONObject>() {
+//                    @Override
+//                    public void onResponse(JSONObject response) {
+//                        try {
+//                            String status = response.getString("status");
+//                            if (status.equals("success")){
+//                                userList = (List<MyUserBean.ContentBean>) JsonUtil.fromJson(String.valueOf(response),MyUserBean.class);
+////                                SerializableUtils.setSerializable(MainActivity.this,ConstantsBean.MY_USER_INFO,mList);
+//                                CustomApplication.user_nickName = userList.get(0).getName();
+//                                CustomApplication.user_quote = userList.get(0).getId();
+//                            }else {
+//                                Toast.makeText(MainActivity.this, "鬼知道出什么问题了", Toast.LENGTH_SHORT).show();
+//                            }
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                },
+//                new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//
+//                    }
+//                }
+//        ){
+//            @Override
+//            public Map<String, String> getHeaders() throws AuthFailureError {
+//                Map<String,String> headers = new HashMap<>();
+//                headers.put(ConstantsBean.KEY_TOKEN,CustomApplication.TOKEN);
+//                return headers;
+//            }
+//        };
+//        CustomApplication.getRequestQueue().add(jsonObjectRequest);
+//    }
 }

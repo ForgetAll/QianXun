@@ -22,7 +22,10 @@ public class CustomApplication extends Application {
 
     private static RequestQueue requestQueue;
 
-
+    //测试，利用全局变量传值个人信息
+    public static String user_nickName = "";
+    public static String user_icon = "";
+    public static String user_quote = "";
 
     @Override
     public void onCreate() {
