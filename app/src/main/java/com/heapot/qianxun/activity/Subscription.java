@@ -19,7 +19,7 @@ import com.heapot.qianxun.adapter.SubAdapter;
 import com.heapot.qianxun.adapter.TagsAdapter;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
-import com.heapot.qianxun.bean.SubScribedBean;
+import com.heapot.qianxun.bean.SubscribedBean;
 import com.heapot.qianxun.bean.TagsBean;
 import com.heapot.qianxun.helper.ItemTouchHelperCallback;
 import com.heapot.qianxun.helper.OnRecyclerViewItemClickListener;
@@ -49,7 +49,7 @@ public class Subscription extends BaseActivity  {
     private LinearLayoutManager linearLayoutManager;
     //已订阅相关
     private RecyclerView sub;
-    private List<SubScribedBean.ContentBean.RowsBean> subscribedList = new ArrayList<>();
+    private List<SubscribedBean.ContentBean.RowsBean> subscribedList = new ArrayList<>();
     private SubAdapter subAdapter;
     private GridLayoutManager gridLayoutManager;
     ItemTouchHelper helper;
@@ -105,7 +105,7 @@ public class Subscription extends BaseActivity  {
             getSub();
         }else {
             tagsList = (List<TagsBean.ContentBean>) getLocalData(ConstantsBean.TAG_FILE_NAME);
-            subscribedList = (List<SubScribedBean.ContentBean.RowsBean>) getLocalData(ConstantsBean.SUB_FILE_NAME);
+            subscribedList = (List<SubscribedBean.ContentBean.RowsBean>) getLocalData(ConstantsBean.SUB_FILE_NAME);
             initRecycler();
         }
     }
@@ -170,12 +170,12 @@ public class Subscription extends BaseActivity  {
                             String status = response.getString("status");
                             if (status.equals("success")){
                                 //获取列表成功，加载列表
-                                SubScribedBean subBean = (SubScribedBean) JsonUtil.fromJson(String.valueOf(response),SubScribedBean.class);
+                                SubscribedBean subBean = (SubscribedBean) JsonUtil.fromJson(String.valueOf(response),SubscribedBean.class);
                                 subscribedList.addAll(subBean.getContent().getRows());
                                 SerializableUtils.setSerializable(Subscription.this,ConstantsBean.SUB_FILE_NAME,subscribedList);
                             }else {
                                 Object object = getLocalData(ConstantsBean.SUB_FILE_NAME);
-                                subscribedList.addAll((Collection<? extends SubScribedBean.ContentBean.RowsBean>) object);
+                                subscribedList.addAll((Collection<? extends SubscribedBean.ContentBean.RowsBean>) object);
                                 Toast.makeText(Subscription.this, "刷新数据失败", Toast.LENGTH_SHORT).show();
                             }
                             initRecycler();

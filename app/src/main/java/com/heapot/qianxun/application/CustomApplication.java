@@ -22,8 +22,6 @@ public class CustomApplication extends Application {
 
     private static RequestQueue requestQueue;
 
-
-
     @Override
     public void onCreate() {
         super.onCreate();

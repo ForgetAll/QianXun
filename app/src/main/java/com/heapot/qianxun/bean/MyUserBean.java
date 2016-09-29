@@ -1,5 +1,9 @@
 package com.heapot.qianxun.bean;
 
+import com.heapot.qianxun.helper.SerializableUtils;
+
+import java.io.Serializable;
+
 import java.io.Serializable;
 
 /**
@@ -56,7 +60,7 @@ public class MyUserBean implements Serializable{
         this.content = content;
     }
 
-    public static class ContentBean implements Serializable{
+    public static class ContentBean {
         private String loginName;
         private String password;
         private String salt;
@@ -184,7 +188,7 @@ public class MyUserBean implements Serializable{
             this.icon = icon;
         }
 
-        public static class StatusBean implements Serializable{
+        public static class StatusBean {
             private int index;
             private String name;
 

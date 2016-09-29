@@ -24,11 +24,13 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.blankj.utilcode.utils.NetworkUtils;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.adapter.MainTabFragmentAdapter;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
-import com.heapot.qianxun.bean.SubScribedBean;
+import com.heapot.qianxun.bean.MyUserBean;
+import com.heapot.qianxun.bean.SubscribedBean;
 import com.heapot.qianxun.helper.SerializableUtils;
 import com.heapot.qianxun.util.JsonUtil;
 import com.heapot.qianxun.util.PreferenceUtil;
@@ -37,6 +39,7 @@ import com.orhanobut.logger.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -52,7 +55,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private ViewPager mViewPager;
     private MainTabFragmentAdapter mPageAdapter;
 
-    private List<SubScribedBean.ContentBean.RowsBean> mList;
+    private List<SubscribedBean.ContentBean.RowsBean> mList;
 
     private FloatingActionButton mCreate;
 
@@ -70,7 +73,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         setTransparentBar();
         initView();
         initEvent();
-        initData();
+
 
     }
 
@@ -94,11 +97,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mList = new ArrayList<>();
 
         //测试token
-        Logger.d("打印本地token-->"+PreferenceUtil.getString("token"));
-        Logger.d("打印application中的token---》"+ CustomApplication.TOKEN);
+        Logger.d("打印本地token-->"+PreferenceUtil.getString("token")+"打印application中的token---》"+ CustomApplication.TOKEN);
     }
 
     private void initEvent() {
+        initData();
+//        getUserInfo();
         //状态栏和抽屉效果
         mToolBar.setTitle("");
         setSupportActionBar(mToolBar);
@@ -126,13 +130,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
      * 初始化数据
      */
     private void initData(){
-        //先从本地获取，本地为空再从网络加载
-        Object object = SerializableUtils.getSerializable(MainActivity.this,ConstantsBean.SUB_FILE_NAME);
-        if (object != null){
-            mList.addAll((Collection<? extends SubScribedBean.ContentBean.RowsBean>) object);
-            initTab();
-        }else {
+        boolean isConnected = NetworkUtils.isAvailable(this);
+        if (isConnected){
             getSubscriptionTags();
+        }else {
+            Logger.d("网络不正常");
+            Object object = SerializableUtils.getSerializable(MainActivity.this, ConstantsBean.SUB_FILE_NAME);
+            if (object != null) {
+                mList.addAll((Collection<? extends SubscribedBean.ContentBean.RowsBean>) object);
+                initTab();
+            } else {
+                Toast.makeText(MainActivity.this, "没网没数据怎么办", Toast.LENGTH_SHORT).show();
+            }
         }
 
     }
@@ -143,16 +152,24 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+
                         try {
                             String status = response.getString("status");
                             if (status.equals("success")){
-                                SubScribedBean subScribedBean = (SubScribedBean) JsonUtil.fromJson(String.valueOf(response),SubScribedBean.class);
-                                mList.addAll(subScribedBean.getContent().getRows());
+                                SubscribedBean subscribedBean = (SubscribedBean) JsonUtil.fromJson(String.valueOf(response),SubscribedBean.class);
+                                String name = subscribedBean.getContent().getRows().get(0).getName();
+                                Logger.d(name);
+                                for (int i = 0; i < subscribedBean.getContent().getRows().size(); i++) {
+                                    if (subscribedBean.getContent().getRows().get(i) != null){
+                                        mList.add(subscribedBean.getContent().getRows().get(i));
+                                    }
+                                }
+//                                mList.addAll(subscribedBean.getContent().getRows());
                                 SerializableUtils.setSerializable(MainActivity.this,ConstantsBean.SUB_FILE_NAME,mList);
                                 initTab();
                             }else {
                                 Toast.makeText(MainActivity.this, "加载数据失败,我也不知道咋办了", Toast.LENGTH_SHORT).show();
-
+                                Logger.d(response.get("message"));
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -278,4 +295,5 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
         return super.onKeyDown(keyCode, event);
     }
+
 }
