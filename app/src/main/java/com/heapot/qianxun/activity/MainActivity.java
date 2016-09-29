@@ -24,6 +24,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.blankj.utilcode.utils.NetworkUtils;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.adapter.MainTabFragmentAdapter;
 import com.heapot.qianxun.application.CustomApplication;
@@ -71,7 +72,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         setTransparentBar();
         initView();
         initEvent();
-        initData();
+
 
     }
 
@@ -100,6 +101,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void initEvent() {
+        initData();
         //状态栏和抽屉效果
         mToolBar.setTitle("");
         setSupportActionBar(mToolBar);
@@ -127,13 +129,19 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
      * 初始化数据
      */
     private void initData(){
-        //先从本地获取，本地为空再从网络加载
-        Object object = SerializableUtils.getSerializable(MainActivity.this,ConstantsBean.SUB_FILE_NAME);
-        if (object != null){
-            mList.addAll((Collection<? extends SubscribedBean.ContentBean.RowsBean>) object);
-            initTab();
-        }else {
+        boolean isConnected = NetworkUtils.isAvailable(this);
+        if (isConnected){
             getSubscriptionTags();
+
+        }else {
+            Logger.d("网络不正常");
+            Object object = SerializableUtils.getSerializable(MainActivity.this, ConstantsBean.SUB_FILE_NAME);
+            if (object != null) {
+                mList.addAll((Collection<? extends SubscribedBean.ContentBean.RowsBean>) object);
+                initTab();
+            } else {
+                Toast.makeText(MainActivity.this, "没网没数据怎么办", Toast.LENGTH_SHORT).show();
+            }
         }
 
     }
@@ -144,13 +152,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+
                         try {
                             String status = response.getString("status");
                             if (status.equals("success")){
                                 SubscribedBean subscribedBean = (SubscribedBean) JsonUtil.fromJson(String.valueOf(response),SubscribedBean.class);
                                 mList.addAll(subscribedBean.getContent().getRows());
                                 SerializableUtils.setSerializable(MainActivity.this,ConstantsBean.SUB_FILE_NAME,mList);
-                                initTab();
+                                Logger.d(""+mList.size());
+//                                initTab();
                             }else {
                                 Toast.makeText(MainActivity.this, "加载数据失败,我也不知道咋办了", Toast.LENGTH_SHORT).show();
 

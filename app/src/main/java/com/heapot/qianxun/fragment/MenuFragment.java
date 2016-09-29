@@ -12,7 +12,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.blankj.utilcode.utils.NetworkUtils;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.activity.MainActivity;
 import com.heapot.qianxun.activity.PersonalActivity;
@@ -20,8 +27,20 @@ import com.heapot.qianxun.activity.SystemHelpActivity;
 import com.heapot.qianxun.activity.SystemSettingActivity;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
+import com.heapot.qianxun.bean.MyUserBean;
+import com.heapot.qianxun.helper.SerializableUtils;
 import com.heapot.qianxun.util.CommonUtil;
+import com.heapot.qianxun.util.JsonUtil;
 import com.heapot.qianxun.util.PreferenceUtil;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Karl on 2016/8/20.
@@ -34,52 +53,17 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
     private View mMenuView;
     private Activity mActivity;
 
+    private List<MyUserBean.ContentBean> mList = new ArrayList<>();
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mMenuView = inflater.inflate(R.layout.fragment_menu, container, false);
         initView();
         initEvent();
-        getData();
+
         return mMenuView;
     }
-
-    private void getData() {
-
-        if (!TextUtils.isEmpty(PreferenceUtil.getString(ConstantsBean.userImage))) {
-            CommonUtil.loadImage(mIcon, PreferenceUtil.getString(ConstantsBean.userImage), R.drawable.imagetest);
-        } else {
-            mIcon.setImageResource(R.drawable.imagetest);
-        }
-
-      //  mName.setText(PreferenceUtil.getString(ConstantsBean.nickName));
-       // mQuote.setText(PreferenceUtil.getString(ConstantsBean.userAutograph));
-
-    }
-
-   /* @Override
-    public void onResume() {
-        super.onResume();
-        String url=ConstantsBean.BASE_PATH + ConstantsBean.PERSONAL_INFO;
-        Ion.with(getContext()).load(url).as(MyUserBean.class).setCallback(new FutureCallback<MyUserBean>() {
-            @Override
-            public void onCompleted(Exception e, MyUserBean result) {
-                if (result != null && result.getStatus().equals("success")) {
-                    MyUserBean.ContentBean useBean = result.getContent();
-                    LogUtils.e("userBean:", result.toString());
-                    PreferenceUtil.putString(ConstantsBean.userImage, useBean.getIcon());
-                    PreferenceUtil.putString(ConstantsBean.USER_ID, useBean.getId());
-                    PreferenceUtil.putString(ConstantsBean.email, useBean.getEmail());
-                    PreferenceUtil.putString(ConstantsBean.loginTime, useBean.getLoginName());
-                    PreferenceUtil.putString(ConstantsBean.name, useBean.getName());
-                    PreferenceUtil.putString(ConstantsBean.nickName, useBean.getNickname());
-                    PreferenceUtil.putString(ConstantsBean.userAutograph, useBean.getDescription());
-
-                }
-            }
-        });
-    }*/
-
     private void initView() {
         mIcon = (ImageView) mMenuView.findViewById(R.id.iv_menu_image);
         mName = (TextView) mMenuView.findViewById(R.id.txt_menu_name);
@@ -102,6 +86,64 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         mHeader.setOnClickListener(this);
         mHelp.setOnClickListener(this);
 
+        mName.setText("KArl");
+        mQuote.setText("12345");
+
+    }
+    private void initData() {
+        boolean isConnection = NetworkUtils.isAvailable(getContext());
+        if (isConnection){
+            Object object = getLocalInfo(ConstantsBean.MY_USER_INFO);
+            mList.addAll((Collection<? extends MyUserBean.ContentBean>) object);
+            initUserInfo();
+        }else {
+            getUserInfo();//从网络获取
+        }
+
+
+    }
+    private void getUserInfo(){
+        String url=ConstantsBean.BASE_PATH + ConstantsBean.PERSONAL_INFO;
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            String status = response.getString("status");
+                            if (status.equals("success")){
+                                mList = (List<MyUserBean.ContentBean>) JsonUtil.fromJson(String.valueOf(response),MyUserBean.class);
+                                SerializableUtils.setSerializable(getContext(),ConstantsBean.MY_USER_INFO,mList);
+                                initUserInfo();
+                            }else {
+                                Toast.makeText(getContext(), "鬼知道出什么问题了", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }
+        ){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> headers = new HashMap<>();
+                headers.put(ConstantsBean.KEY_TOKEN,CustomApplication.TOKEN);
+                return headers;
+            }
+        };
+        CustomApplication.getRequestQueue().add(jsonObjectRequest);
+    }
+    private void initUserInfo(){
+        String name = mList.get(0).getName();
+        String id = mList.get(0).getId();
+        mName.setText(name);
+        mQuote.setText(id);
     }
 
     @Override
@@ -141,6 +183,9 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
                 break;
 
         }
+    }
+    private Object getLocalInfo(String fileName){
+        return SerializableUtils.getSerializable(getContext(),fileName);
     }
 
     /**
