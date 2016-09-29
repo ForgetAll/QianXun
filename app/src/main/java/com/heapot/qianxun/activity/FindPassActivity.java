@@ -103,11 +103,11 @@ public class FindPassActivity extends BaseActivity implements View.OnClickListen
                         Logger.json(String.valueOf(response));
                         //比较简单，手动解析
                         try {
-                            JSONObject jsonObject = new JSONObject(String.valueOf(response));
-                            if (jsonObject.getString("status").equals("success")){
+                            String status = response.getString("status");
+                            if (status.equals("success")){
                                 Toast.makeText(FindPassActivity.this, "发送成功，请稍等", Toast.LENGTH_SHORT).show();
                             }else {
-                                Toast.makeText(FindPassActivity.this, jsonObject.get("message").toString(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(FindPassActivity.this, response.getString("message"), Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

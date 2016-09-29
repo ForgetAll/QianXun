@@ -85,9 +85,8 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         mSetting.setOnClickListener(this);
         mHeader.setOnClickListener(this);
         mHelp.setOnClickListener(this);
+        initData();
 
-        mName.setText("KArl");
-        mQuote.setText("12345");
 
     }
     private void initData() {
