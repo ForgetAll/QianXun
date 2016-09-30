@@ -114,6 +114,7 @@ public class Subscription extends BaseActivity  {
      * 获取所有标签，包括用户订阅状态
      */
     private void getTags(){
+        tagsList.clear();//先清空数据
         String url = ConstantsBean.BASE_PATH + ConstantsBean.ORG_CODE+ConstantsBean.CATALOGS;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.GET,url, null,
@@ -160,6 +161,8 @@ public class Subscription extends BaseActivity  {
      * 查看已订阅列表
      */
     private void getSub(){
+        //先清空一下数据
+        subscribedList.clear();
         String url = ConstantsBean.BASE_PATH+ConstantsBean.GET_SUBSCRIBED;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.GET, url, null,
