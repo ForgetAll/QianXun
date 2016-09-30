@@ -26,7 +26,7 @@ import org.json.JSONObject;
  * Created by 15859 on 2016/9/28.
  * 修改密码
  */
-public class SystemChangePassWord extends BaseActivity implements View.OnClickListener {
+public class SystemChangePassword extends BaseActivity implements View.OnClickListener {
     private EditText mOldPwd, mOneNewPwd, mTwoNewPwd;
     private TextView mComplete, mBack, mSure;
 
@@ -57,10 +57,10 @@ public class SystemChangePassWord extends BaseActivity implements View.OnClickLi
                 //判断网络连接
                 boolean isAvailable = NetworkUtils.isAvailable(this);
                 if (isAvailable) {
-                    Toast.makeText(SystemChangePassWord.this, "请稍等", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SystemChangePassword.this, "请稍等", Toast.LENGTH_SHORT).show();
                     checkPwd(oldPwd);
                 } else {
-                    Toast.makeText(SystemChangePassWord.this, "请检查网络", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SystemChangePassword.this, "请检查网络", Toast.LENGTH_SHORT).show();
                 }
 
                 break;
@@ -87,14 +87,14 @@ public class SystemChangePassWord extends BaseActivity implements View.OnClickLi
                     public void onResponse(JSONObject response) {
                         try {
                             if (response.getString("status").equals("success")) {
-                                Toast.makeText(SystemChangePassWord.this, "验证成功", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SystemChangePassword.this, "验证成功", Toast.LENGTH_SHORT).show();
                                 mOldPwd.setVisibility(View.GONE);
                                 mOneNewPwd.setVisibility(View.VISIBLE);
                                 mTwoNewPwd.setVisibility(View.VISIBLE);
                                 mSure.setVisibility(View.GONE);
                                 mComplete.setVisibility(View.VISIBLE);
                             } else {
-                                Toast.makeText(SystemChangePassWord.this, "密码输入错误", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SystemChangePassword.this, "密码输入错误", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -104,7 +104,7 @@ public class SystemChangePassWord extends BaseActivity implements View.OnClickLi
             @Override
             public void onErrorResponse(VolleyError error) {
                 Logger.d(error);
-                Toast.makeText(SystemChangePassWord.this, "密码输入错误", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SystemChangePassword.this, "密码输入错误", Toast.LENGTH_SHORT).show();
             }
         });
         CustomApplication.getRequestQueue().add(objectRequest);
@@ -122,13 +122,13 @@ public class SystemChangePassWord extends BaseActivity implements View.OnClickLi
                         public void onResponse(JSONObject response) {
                             try {
                                 if (response.getString("status").equals("success")) {
-                                    Toast.makeText(SystemChangePassWord.this, "密码修改完成,请重新登陆", Toast.LENGTH_SHORT).show();
-                                    Intent updatePwd = new Intent(SystemChangePassWord.this, LoginActivity.class);
+                                    Toast.makeText(SystemChangePassword.this, "密码修改完成,请重新登陆", Toast.LENGTH_SHORT).show();
+                                    Intent updatePwd = new Intent(SystemChangePassword.this, LoginActivity.class);
                                     startActivity(updatePwd);
                                     finish();
                                     ActivityCollector.finishAll();
                                 } else {
-                                    Toast.makeText(SystemChangePassWord.this, "密码修改失败", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(SystemChangePassword.this, "密码修改失败", Toast.LENGTH_SHORT).show();
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -137,13 +137,13 @@ public class SystemChangePassWord extends BaseActivity implements View.OnClickLi
                     }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(SystemChangePassWord.this, "密码输入错误", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SystemChangePassword.this, "密码输入错误", Toast.LENGTH_SHORT).show();
                 }
             }
             );
             CustomApplication.getRequestQueue().add(jsonObjectRequest);
         } else {
-            Toast.makeText(SystemChangePassWord.this, "密码输入错误", Toast.LENGTH_SHORT).show();
+            Toast.makeText(SystemChangePassword.this, "密码输入错误", Toast.LENGTH_SHORT).show();
         }
     }
 }
