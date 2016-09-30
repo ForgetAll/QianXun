@@ -65,8 +65,8 @@ public class SplashActivity extends BaseActivity {
             if (name == null || pass == null) {
                intentToActivity(0);
             } else {
-                    String url = ConstantsBean.BASE_PATH + ConstantsBean.LOGIN + "?loginName=" + name + "&password=" + pass;
-                    postLoginClient(url);
+                String url = ConstantsBean.BASE_PATH + ConstantsBean.LOGIN + "?loginName=" + name + "&password=" + pass;
+                postLoginClient(url);
             }
         }else {
             Toast.makeText(SplashActivity.this, "网络连接不可用", Toast.LENGTH_SHORT).show();
