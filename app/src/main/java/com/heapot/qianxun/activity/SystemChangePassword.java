@@ -57,11 +57,11 @@ public class SystemChangePassword extends BaseActivity implements View.OnClickLi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_sure:
-                String oldPwd = mOldPwd.getText().toString();
                 //判断网络连接
                 boolean isAvailable = NetworkUtils.isAvailable(this);
                 if (isAvailable) {
                     Toast.makeText(SystemChangePassword.this, "请稍等", Toast.LENGTH_SHORT).show();
+                    String oldPwd = mOldPwd.getText().toString();
                     checkPwd(oldPwd);
                 } else {
                     Toast.makeText(SystemChangePassword.this, "请检查网络", Toast.LENGTH_SHORT).show();
@@ -93,6 +93,7 @@ public class SystemChangePassword extends BaseActivity implements View.OnClickLi
                         try {
                             String status = response.getString("status");
                             Logger.d(status);
+                            Logger.d(response.getString("message"));
                             if (status.equals("success")) {
                                 Toast.makeText(SystemChangePassword.this, "验证成功", Toast.LENGTH_SHORT).show();
                                 mOldPwd.setVisibility(View.GONE);
@@ -113,13 +114,12 @@ public class SystemChangePassword extends BaseActivity implements View.OnClickLi
                 Logger.d(error);
                 Toast.makeText(SystemChangePassword.this, "密码输入有误", Toast.LENGTH_SHORT).show();
             }
-        })
-        {
+        }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
 
-                Map<String,String> headers=new HashMap<>();
-                headers.put(ConstantsBean.KEY_TOKEN,CustomApplication.TOKEN);
+                Map<String, String> headers = new HashMap<>();
+                headers.put(ConstantsBean.KEY_TOKEN, CustomApplication.TOKEN);
                 return headers;
             }
         };
@@ -156,12 +156,12 @@ public class SystemChangePassword extends BaseActivity implements View.OnClickLi
                     Toast.makeText(SystemChangePassword.this, "密码输入错误", Toast.LENGTH_SHORT).show();
                 }
             }
-            ){
+            ) {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
 
-                    Map<String,String> headers=new HashMap<>();
-                    headers.put(ConstantsBean.KEY_TOKEN,CustomApplication.TOKEN);
+                    Map<String, String> headers = new HashMap<>();
+                    headers.put(ConstantsBean.KEY_TOKEN, CustomApplication.TOKEN);
                     return headers;
                 }
             };

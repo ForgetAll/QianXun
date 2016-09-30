@@ -75,7 +75,7 @@ public class ConstantsBean {
     //验证原密码
     public  static  final  String CHECK_PWD="/user/checkPwd?oldPassword=";
     //修改密码
-    public  static  final  String UPDATE_PWD="user/updatePwd?oldPassword=";
+    public  static  final  String UPDATE_PWD="/user/updatePwd?oldPassword=";
     /*验证原密码
     POST: /user/checkPwd?oldPassword={oldPassword}
     修改密码
