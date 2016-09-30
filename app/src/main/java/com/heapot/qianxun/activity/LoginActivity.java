@@ -18,6 +18,7 @@ import com.blankj.utilcode.utils.NetworkUtils;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
+import com.heapot.qianxun.util.CommonUtil;
 import com.heapot.qianxun.util.PreferenceUtil;
 import com.orhanobut.logger.Logger;
 
@@ -77,9 +78,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         String username = edt_name.getText().toString();
         String password = edt_pass.getText().toString();
         boolean isAvailable = NetworkUtils.isAvailable(this);
+        Boolean isPhone = CommonUtil.isMobileNO(username);
         if (isAvailable) {
-            Toast.makeText(LoginActivity.this, "请稍等", Toast.LENGTH_SHORT).show();
-            postLogin(username, password);
+            if (isPhone) {
+                Toast.makeText(LoginActivity.this, "请稍等", Toast.LENGTH_SHORT).show();
+                postLogin(username, password);
+            }else {
+                Toast.makeText(LoginActivity.this, "请检查手机号", Toast.LENGTH_SHORT).show();
+            }
         } else {
             Toast.makeText(LoginActivity.this, "请检查网络连接", Toast.LENGTH_SHORT).show();
         }

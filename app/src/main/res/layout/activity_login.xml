@@ -48,9 +48,9 @@
                 android:layout_height="60dp"
                 android:layout_weight="1"
                 android:background="#E8EDEC"
-                android:hint="请输入账号"
+                android:hint="请输入手机号"
                 android:textColorHint="#2B6151"
-                android:inputType="text"/>
+                android:inputType="phone"/>
             <TextView
                 android:id="@+id/txt_remove_data"
                 android:layout_width="wrap_content"
