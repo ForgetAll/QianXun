@@ -29,7 +29,6 @@ import com.heapot.qianxun.R;
 import com.heapot.qianxun.adapter.MainTabFragmentAdapter;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
-import com.heapot.qianxun.bean.MyUserBean;
 import com.heapot.qianxun.bean.SubscribedBean;
 import com.heapot.qianxun.helper.SerializableUtils;
 import com.heapot.qianxun.util.JsonUtil;
@@ -39,7 +38,6 @@ import com.orhanobut.logger.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -152,7 +150,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-
                         try {
                             String status = response.getString("status");
                             if (status.equals("success")){
