@@ -250,7 +250,7 @@ public class Subscription extends BaseActivity  {
      * @param id 所需要取消订阅标签的id
      */
     private void deleteSub(String id){
-        String url = ""+id;
+        String url = ConstantsBean.BASE_PATH+ConstantsBean.CANCEL_SUBSCRIPTION+id;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.DELETE, url, null,
                 new Response.Listener<JSONObject>() {
@@ -274,7 +274,7 @@ public class Subscription extends BaseActivity  {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        Toast.makeText(Subscription.this, "未知错误", Toast.LENGTH_SHORT).show();
                     }
                 }
         ){
@@ -288,7 +288,10 @@ public class Subscription extends BaseActivity  {
         CustomApplication.getRequestQueue().add(jsonObjectRequest);
 
     }
-    //6、初始化列表
+
+    /**
+     * 初始化列表
+     */
     private void initRecycler(){
         tagsAdapter = new TagsAdapter(Subscription.this, tagsList);
         tags.setAdapter(tagsAdapter);
