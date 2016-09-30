@@ -114,6 +114,7 @@ public class Subscription extends BaseActivity  {
      * 获取所有标签，包括用户订阅状态
      */
     private void getTags(){
+        tagsList.clear();//先清空数据
         String url = ConstantsBean.BASE_PATH + ConstantsBean.ORG_CODE+ConstantsBean.CATALOGS;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.GET,url, null,
@@ -160,6 +161,8 @@ public class Subscription extends BaseActivity  {
      * 查看已订阅列表
      */
     private void getSub(){
+        //先清空一下数据
+        subscribedList.clear();
         String url = ConstantsBean.BASE_PATH+ConstantsBean.GET_SUBSCRIBED;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.GET, url, null,
@@ -205,7 +208,7 @@ public class Subscription extends BaseActivity  {
      * 提交订阅
      * @param id 订阅标签的id
      */
-    private void postSub(String id){
+    private void postSub(final String id){
         String url = ConstantsBean.BASE_PATH+ConstantsBean.POST_SUBSCRIPTION+id;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.POST, url, null,
@@ -215,6 +218,7 @@ public class Subscription extends BaseActivity  {
                         try {
                             String status = response.getString("status");
                             if (status.equals("success")){
+                                Logger.d("订阅成功："+id);
                                 getTags();
                                 getSub();
                             }else {
@@ -250,7 +254,7 @@ public class Subscription extends BaseActivity  {
      * @param id 所需要取消订阅标签的id
      */
     private void deleteSub(String id){
-        String url = ""+id;
+        String url = ConstantsBean.BASE_PATH+ConstantsBean.CANCEL_SUBSCRIPTION+id;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.DELETE, url, null,
                 new Response.Listener<JSONObject>() {
@@ -274,7 +278,7 @@ public class Subscription extends BaseActivity  {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        Toast.makeText(Subscription.this, "未知错误", Toast.LENGTH_SHORT).show();
                     }
                 }
         ){
@@ -288,7 +292,10 @@ public class Subscription extends BaseActivity  {
         CustomApplication.getRequestQueue().add(jsonObjectRequest);
 
     }
-    //6、初始化列表
+
+    /**
+     * 初始化列表
+     */
     private void initRecycler(){
         tagsAdapter = new TagsAdapter(Subscription.this, tagsList);
         tags.setAdapter(tagsAdapter);
@@ -302,6 +309,9 @@ public class Subscription extends BaseActivity  {
             @Override
             public void onItemClick(View view, int position) {
                 String id = tagsList.get(position).getId();
+                String name = tagsList.get(position).getName();
+                Toast.makeText(Subscription.this, "订阅名单"+name, Toast.LENGTH_SHORT).show();
+                Logger.d("点击了："+name+",id是："+id);
                 int status = tagsList.get(position).getSubscribeStatus();
                 if (status == 0){
                     postSub(id);

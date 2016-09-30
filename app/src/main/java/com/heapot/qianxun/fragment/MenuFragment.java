@@ -152,7 +152,19 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
                             if (status.equals("success")){
                                 MyUserBean myUserBean = (MyUserBean) JsonUtil.fromJson(String.valueOf(response),MyUserBean.class);
                                 SerializableUtils.setSerializable(getContext(),ConstantsBean.MY_USER_INFO,myUserBean);
-                                mName.setText(myUserBean.getContent().getLoginName());
+                                String loginName = myUserBean.getContent().getLoginName();
+                                String nickName = myUserBean.getContent().getNickname();
+                                String name = myUserBean.getContent().getName();
+                                String phone = myUserBean.getContent().getPhone();
+                                if (loginName == null){
+                                    mName.setText(loginName);
+                                }else if (nickName == null){
+                                    mName.setText(nickName);
+                                }else if(name == null){
+                                    mName.setText(name);
+                                }else {
+                                    mName.setText(phone);
+                                }
                                 mQuote.setText(myUserBean.getContent().getId());
                             }else {
                                 Toast.makeText(getContext(), response.getString("message"), Toast.LENGTH_SHORT).show();

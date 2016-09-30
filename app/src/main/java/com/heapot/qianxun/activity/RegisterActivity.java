@@ -205,7 +205,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     }
 
     /**
-     * 提交登陆请求
+     * 提交注册请求
      * @param phone 手机号
      * @param pass 密码
      * @param message 验证码
@@ -226,15 +226,13 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                         try {
                             String status = response.getString("status");
                             if (status.equals("success")){
+                                //注册成功，登录中
+                                Toast.makeText(RegisterActivity.this, "注册成功，登录中...", Toast.LENGTH_SHORT).show();
+                                postLogin(phone,pass);
                                 //保存账户信息到本地,因为这里以手机号为主，所以将手机号作为登陆名存储
                                 PreferenceUtil.putString("name",phone);
                                 PreferenceUtil.putString("password",pass);
                                 PreferenceUtil.putString("nickname",nickname);
-                                //注册成功，跳转页面
-                                Intent intent = new Intent(RegisterActivity.this,Subscription.class);
-                                startActivity(intent);
-                                //关闭登录和注册页面，因为开始只有这两个活动，完全可以使用finishAll()
-                                ActivityCollector.finishAll();
                             }else {
                                 Toast.makeText(RegisterActivity.this, "注册失败："+response.getString("message"), Toast.LENGTH_SHORT).show();
                             }
@@ -258,6 +256,48 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     private void lostFocus(){
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+    /**
+     * 后台注册成功不返回token所以需要登录一下
+     */
+    private void postLogin(final String phone, final String pass){
+        String url = ConstantsBean.BASE_PATH + ConstantsBean.LOGIN + "?loginName=" + phone + "&password=" + pass;
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.POST, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            if (response.getString("status").equals("success")) {
+                                if (response.has("content")) {
+                                    JSONObject content = response.getJSONObject("content");
+                                    String token = content.getString("auth-token");
+                                    //设置全局变量
+                                    CustomApplication.TOKEN = token;
+                                    CustomApplication.setCurrentPage(ConstantsBean.PAGE_SCIENCE);
+                                    //注册成功，跳转页面
+                                    Intent intent = new Intent(RegisterActivity.this,Subscription.class);
+                                    startActivity(intent);
+                                    //关闭登录和注册页面，因为开始只有这两个活动，完全可以使用finishAll()
+                                    ActivityCollector.finishAll();
+                                    Logger.d("parse json ---> token:  " + token);
+                                }
+                            } else {
+                                Toast.makeText(RegisterActivity.this, "登陆失败" + response.get("message"), Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(RegisterActivity.this, "发生未知错误", Toast.LENGTH_SHORT).show();
+                    }
+                }
+        );
+        CustomApplication.getRequestQueue().add(jsonObjectRequest);
     }
 
 }
