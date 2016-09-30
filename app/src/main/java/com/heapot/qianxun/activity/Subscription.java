@@ -208,7 +208,7 @@ public class Subscription extends BaseActivity  {
      * 提交订阅
      * @param id 订阅标签的id
      */
-    private void postSub(String id){
+    private void postSub(final String id){
         String url = ConstantsBean.BASE_PATH+ConstantsBean.POST_SUBSCRIPTION+id;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.POST, url, null,
@@ -218,6 +218,7 @@ public class Subscription extends BaseActivity  {
                         try {
                             String status = response.getString("status");
                             if (status.equals("success")){
+                                Logger.d("订阅成功："+id);
                                 getTags();
                                 getSub();
                             }else {
@@ -308,6 +309,9 @@ public class Subscription extends BaseActivity  {
             @Override
             public void onItemClick(View view, int position) {
                 String id = tagsList.get(position).getId();
+                String name = tagsList.get(position).getName();
+                Toast.makeText(Subscription.this, "订阅名单"+name, Toast.LENGTH_SHORT).show();
+                Logger.d("点击了："+name+",id是："+id);
                 int status = tagsList.get(position).getSubscribeStatus();
                 if (status == 0){
                     postSub(id);
