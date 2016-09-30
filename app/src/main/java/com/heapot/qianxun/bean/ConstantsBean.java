@@ -65,7 +65,7 @@ public class ConstantsBean {
     //查看已订阅
     public static final String GET_SUBSCRIBED = "user/subscribe/catalog";
     //提交订阅
-    public static final String POST_SUBSCRIPTION = "user/subscribe/catalog?catalogId==";
+    public static final String POST_SUBSCRIPTION = "user/subscribe/catalog?catalogId=";
     //根据用户id取消订阅
     public static final String CANCEL_SUBSCRIPTION = "user/subscribe/user?userId=";
     //获取用户个人信息
