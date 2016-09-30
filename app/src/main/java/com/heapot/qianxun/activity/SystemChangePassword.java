@@ -7,6 +7,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -21,6 +22,9 @@ import com.orhanobut.logger.Logger;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by 15859 on 2016/9/28.
@@ -79,6 +83,7 @@ public class SystemChangePassword extends BaseActivity implements View.OnClickLi
     //验证原密码
     private void checkPwd(String oldPwd) {
         String url = ConstantsBean.BASE_PATH + ConstantsBean.CHECK_PWD + oldPwd;
+        Logger.d(url);
         JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.POST,
                 url,
                 null,
@@ -86,7 +91,9 @@ public class SystemChangePassword extends BaseActivity implements View.OnClickLi
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            if (response.getString("status").equals("success")) {
+                            String status = response.getString("status");
+                            Logger.d(status);
+                            if (status.equals("success")) {
                                 Toast.makeText(SystemChangePassword.this, "验证成功", Toast.LENGTH_SHORT).show();
                                 mOldPwd.setVisibility(View.GONE);
                                 mOneNewPwd.setVisibility(View.VISIBLE);
@@ -104,9 +111,18 @@ public class SystemChangePassword extends BaseActivity implements View.OnClickLi
             @Override
             public void onErrorResponse(VolleyError error) {
                 Logger.d(error);
-                Toast.makeText(SystemChangePassword.this, "密码输入错误", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SystemChangePassword.this, "密码输入有误", Toast.LENGTH_SHORT).show();
             }
-        });
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+
+                Map<String,String> headers=new HashMap<>();
+                headers.put(ConstantsBean.KEY_TOKEN,CustomApplication.TOKEN);
+                return headers;
+            }
+        };
         CustomApplication.getRequestQueue().add(objectRequest);
     }
 
@@ -140,7 +156,16 @@ public class SystemChangePassword extends BaseActivity implements View.OnClickLi
                     Toast.makeText(SystemChangePassword.this, "密码输入错误", Toast.LENGTH_SHORT).show();
                 }
             }
-            );
+            ){
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+
+                    Map<String,String> headers=new HashMap<>();
+                    headers.put(ConstantsBean.KEY_TOKEN,CustomApplication.TOKEN);
+                    return headers;
+                }
+            };
+
             CustomApplication.getRequestQueue().add(jsonObjectRequest);
         } else {
             Toast.makeText(SystemChangePassword.this, "密码输入错误", Toast.LENGTH_SHORT).show();

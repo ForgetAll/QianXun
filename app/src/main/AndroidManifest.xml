@@ -67,6 +67,12 @@
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden"></activity>
         <!--管理员登陆页面-->
         <activity android:name=".activity.AdminLoginActivity"></activity>
+        <!--关于我们-->
+        <activity android:name=".activity.SystemAboutUs"></activity>
+        <!--用户使用帮助-->
+        <activity android:name=".activity.SystemUserHelpActivity"></activity>
+        <!--修改密码-->
+        <activity android:name=".activity.SystemChangePassword"></activity>
     </application>
 
 </manifest>
