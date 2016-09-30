@@ -26,6 +26,7 @@ import org.json.JSONObject;
 
 /**
  * Created by Karl on 2016/9/17.
+ * 注册页面
  */
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
     private EditText edt_name, edt_pass;
@@ -92,6 +93,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
      */
     private void postLogin(final String username, final String password) {
         String url = ConstantsBean.BASE_PATH + ConstantsBean.LOGIN + "?loginName=" + username + "&password=" + password;
+        Logger.d(url);
         JsonObjectRequest jsonObject = new JsonObjectRequest(
                 Request.Method.POST,
                 url,

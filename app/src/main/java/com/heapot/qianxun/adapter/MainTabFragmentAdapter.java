@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.heapot.qianxun.bean.SubScribedBean;
+import com.heapot.qianxun.bean.SubscribedBean;
 import com.heapot.qianxun.fragment.PageFragment;
 
 import java.util.List;
@@ -16,10 +16,10 @@ import java.util.List;
  *
  */
 public class MainTabFragmentAdapter extends FragmentPagerAdapter {
-    private List<SubScribedBean.ContentBean.RowsBean> mList;
+    private List<SubscribedBean.ContentBean.RowsBean> mList;
     private Context mContext;
 
-    public MainTabFragmentAdapter(FragmentManager fm, Context context, List<SubScribedBean.ContentBean.RowsBean> list) {
+    public MainTabFragmentAdapter(FragmentManager fm, Context context, List<SubscribedBean.ContentBean.RowsBean> list) {
         super(fm);
         this.mContext = context;
         this.mList = list;
