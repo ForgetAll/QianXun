@@ -53,7 +53,6 @@ public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.SubscribedView
         int status = mList.get(position).getSubscribeStatus();
         String name = mList.get(position).getName();
         holder.textView.setText(name);
-        Logger.d(name);
         //状态为0是未订阅
         if (status == 0){
             holder.textView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
