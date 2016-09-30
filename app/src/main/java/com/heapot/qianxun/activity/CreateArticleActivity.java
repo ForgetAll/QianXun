@@ -6,6 +6,8 @@ import com.heapot.qianxun.R;
 
 /**
  * Created by Karl on 2016/9/22.
+ * 创建文章内容
+ *
  */
 public class CreateArticleActivity extends BaseActivity {
     @Override
