@@ -58,7 +58,7 @@ public class SplashActivity extends BaseActivity {
     }
     //跳转页面，这个过程中需要进行自动登陆，如果失败自动进入Login页面重新登陆
     private void startActivity(){
-        String name = PreferenceUtil.getString("name");
+        String name = PreferenceUtil.getString("phone");
         String pass = PreferenceUtil.getString("password");
         boolean isAvailable = NetworkUtils.isAvailable(this);
         if (isAvailable) {

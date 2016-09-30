@@ -119,7 +119,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                                     CustomApplication.setCurrentPage(ConstantsBean.PAGE_SCIENCE);
                                     //存储到本地
                                     PreferenceUtil.putString("token", token);
-                                    PreferenceUtil.putString("name", username);
+                                    PreferenceUtil.putString("phone", username);
                                     PreferenceUtil.putString("password", password);
                                     //跳转页面,同时关闭当前页面
                                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
