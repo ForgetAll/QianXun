@@ -10,18 +10,16 @@ import android.widget.TextView;
 
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.application.ActivityCollector;
-import com.heapot.qianxun.bean.ConstantsBean;
-import com.heapot.qianxun.helper.SerializableUtils;
 import com.heapot.qianxun.util.ClearCacheTask;
 import com.heapot.qianxun.util.PreferenceUtil;
 import com.heapot.qianxun.util.UpdateUtil;
-import com.heapot.qianxun.widget.ExitPopup;
 
 /**
  * Created by 15859 on 2016/9/17.
+ * 系统设置类
  */
 public class SystemSettingActivity extends BaseActivity implements View.OnClickListener {
-    private TextView mBack, mCache, mVersion, mSuggest, mExit;
+    private TextView mBack, mCache, mVersion, mSuggest, mExit,mUpdatePwd;
     private RelativeLayout mClear, mUpdate;
 
     @Override
@@ -32,18 +30,28 @@ public class SystemSettingActivity extends BaseActivity implements View.OnClickL
     }
 
     private void findVew() {
+        //返回
         mBack = (TextView) findViewById(R.id.tv_back);
+        //清除缓存
         mClear = (RelativeLayout) findViewById(R.id.rl_clear);
+        //显示缓存
         mCache = (TextView) findViewById(R.id.tv_cache);
+        //更新软件
         mUpdate = (RelativeLayout) findViewById(R.id.rl_update);
+        //版本显示
         mVersion = (TextView) findViewById(R.id.tv_version);
+        //意见反馈，当前为gone状态，后续添加
         mSuggest = (TextView) findViewById(R.id.tv_suggest);
+        //退出登录
         mExit = (TextView) findViewById(R.id.tv_exit);
+        //修改密码
+        mUpdatePwd=(TextView)findViewById(R.id.tv_updatePwd);
         mBack.setOnClickListener(this);
         mClear.setOnClickListener(this);
         mUpdate.setOnClickListener(this);
         mSuggest.setOnClickListener(this);
         mExit.setOnClickListener(this);
+        mUpdatePwd.setOnClickListener(this);
     }
 
     @Override
@@ -64,6 +72,11 @@ public class SystemSettingActivity extends BaseActivity implements View.OnClickL
                 break;
             //提交意见
             case R.id.tv_suggest:
+                break;
+            //修改密码
+            case R.id.tv_updatePwd:
+                Intent updatePwd=new Intent(SystemSettingActivity.this,SystemChangePassword.class);
+                startActivity(updatePwd);
                 break;
             //退出登录
             case R.id.tv_exit:

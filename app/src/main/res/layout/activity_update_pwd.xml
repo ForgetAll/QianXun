@@ -47,7 +47,7 @@
         android:paddingLeft="10dp"
         android:maxLength="20"
         android:hint="请输入当前密码"
-        android:visibility="gone"/>
+        />
     <EditText
         android:id="@+id/et_newPwdOne"
         android:layout_width="match_parent"
@@ -58,7 +58,8 @@
         android:drawablePadding="10dp"
         android:paddingLeft="10dp"
         android:maxLength="20"
-        android:hint="请输入新密码"/>
+        android:hint="请输入新密码"
+        android:visibility="gone"/>
     <EditText
         android:id="@+id/et_newPwdTwo"
         android:layout_width="match_parent"

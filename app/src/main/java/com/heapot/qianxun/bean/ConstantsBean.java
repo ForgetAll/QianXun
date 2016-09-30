@@ -75,7 +75,7 @@ public class ConstantsBean {
     //修改个人信息put
     public  static  final  String PERSONAL_FIX="user/i";
     //验证原密码
-    public  static  final  String CHECK_PWD="user/checkPwd?oldPassword=";
+    public  static  final  String CHECK_PWD="/user/checkPwd?oldPassword=";
     //修改密码
     public  static  final  String UPDATE_PWD="user/updatePwd?oldPassword=";
     /*验证原密码

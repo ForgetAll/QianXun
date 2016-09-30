@@ -10,6 +10,7 @@ import com.heapot.qianxun.util.ActivityUtil;
 
 /**
  * Created by 15859 on 2016/9/17.
+ * 系统帮助类
  */
 public class SystemHelpActivity extends BaseActivity implements View.OnClickListener {
     private TextView mAbout,mHelp;
