@@ -19,7 +19,6 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.blankj.utilcode.utils.NetworkUtils;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.activity.MainActivity;
 import com.heapot.qianxun.activity.PersonalActivity;
@@ -37,10 +36,7 @@ import com.orhanobut.logger.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -127,7 +123,9 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
 
     }
     private void initData() {
-        Object object = getLocalInfo(ConstantsBean.MY_USER_INFO);
+        MyUserBean.ContentBean userBean=new MyUserBean.ContentBean();
+
+                Object object = getLocalInfo(ConstantsBean.MY_USER_INFO);
         if (object != null){
             MyUserBean myUserBean = (MyUserBean) object;
             mName.setText(myUserBean.getContent().getLoginName());
@@ -158,14 +156,23 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
                                 String phone = myUserBean.getContent().getPhone();
                                 if (loginName == null){
                                     mName.setText(loginName);
+                                    PreferenceUtil.putString(ConstantsBean.showname,loginName);
                                 }else if (nickName == null){
                                     mName.setText(nickName);
+                                    PreferenceUtil.putString(ConstantsBean.showname,nickName);
                                 }else if(name == null){
                                     mName.setText(name);
+                                    PreferenceUtil.putString(ConstantsBean.showname,name);
                                 }else {
                                     mName.setText(phone);
+                                    PreferenceUtil.putString(ConstantsBean.showname,phone);
                                 }
                                 mQuote.setText(myUserBean.getContent().getId());
+                                if (!TextUtils.isEmpty(PreferenceUtil.getString(ConstantsBean.userImage))) {
+                                    CommonUtil.loadImage(mIcon, PreferenceUtil.getString(ConstantsBean.userImage), R.drawable.imagetest);
+                                } else {
+                                    mIcon.setImageResource(R.drawable.imagetest);
+                                }
                             }else {
                                 Toast.makeText(getContext(), response.getString("message"), Toast.LENGTH_SHORT).show();
                                 Logger.d(response.getString("message"));

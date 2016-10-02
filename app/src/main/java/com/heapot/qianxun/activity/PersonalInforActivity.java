@@ -19,6 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.heapot.qianxun.R;
+import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.bean.UserBean;
 import com.heapot.qianxun.util.CommonUtil;
@@ -180,7 +181,7 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
         }
         String data = JsonUtil.toJson(userBean);
         //发送数据
-        Ion.with(this).load(ConstantsBean.BASE_PATH + ConstantsBean.UPLOAD).setStringBody(data).asString().setCallback(new FutureCallback<String>() {
+        Ion.with(this).load(ConstantsBean.BASE_PATH + ConstantsBean.UPLOAD).setHeader(ConstantsBean.KEY_TOKEN, CustomApplication.TOKEN).setStringBody(data).asString().setCallback(new FutureCallback<String>() {
             @Override
             public void onCompleted(Exception e, String result) {
                 if (!TextUtils.isEmpty(result)) {

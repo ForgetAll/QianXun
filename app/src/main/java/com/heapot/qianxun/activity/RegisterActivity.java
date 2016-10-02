@@ -230,7 +230,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                                 Toast.makeText(RegisterActivity.this, "注册成功，登录中...", Toast.LENGTH_SHORT).show();
                                 postLogin(phone,pass);
                                 //保存账户信息到本地,因为这里以手机号为主，所以将手机号作为登陆名存储
-                                PreferenceUtil.putString("name",phone);
+                                PreferenceUtil.putString("phone",phone);
                                 PreferenceUtil.putString("password",pass);
                                 PreferenceUtil.putString("nickname",nickname);
                             }else {

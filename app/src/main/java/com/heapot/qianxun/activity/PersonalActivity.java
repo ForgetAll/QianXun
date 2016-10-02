@@ -75,11 +75,10 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
 
         for (int i = 0; i < 1; i++) {
             mList.add("Tab-" + i);
-
         }
         initTab();
-    }
 
+    }
     private void initTab() {
         mPersonalPageAdapter = new PersonalPageAdapter(getSupportFragmentManager(), this, mList);
         mViewPager.setAdapter(mPersonalPageAdapter);
