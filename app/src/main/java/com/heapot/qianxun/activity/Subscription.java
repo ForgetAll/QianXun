@@ -1,11 +1,13 @@
 package com.heapot.qianxun.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -41,7 +43,7 @@ import java.util.Map;
  * 订阅列表
  *
  */
-public class Subscription extends BaseActivity  {
+public class Subscription extends BaseActivity implements View.OnClickListener {
     //全部数据相关
     private RecyclerView tags;
     private List<TagsBean.ContentBean> tagsList = new ArrayList<>();//全部数据
@@ -54,6 +56,9 @@ public class Subscription extends BaseActivity  {
     private GridLayoutManager gridLayoutManager;
     ItemTouchHelper helper;
 
+    //加入跳转按钮
+    private TextView btnToMain;
+    Intent toMain;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +70,8 @@ public class Subscription extends BaseActivity  {
     private void initView(){
         sub = (RecyclerView) findViewById(R.id.rv_drag);
         tags = (RecyclerView) findViewById(R.id.rv_content);
+        btnToMain = (TextView) findViewById(R.id.btn_close_subscription);
+        toMain = getIntent();
     }
     private void initEvent(){
         //初始化数据
@@ -90,7 +97,8 @@ public class Subscription extends BaseActivity  {
             }
         };
         tags.setLayoutManager(linearLayoutManager);
-
+        //添加点击监听事件
+        btnToMain.setOnClickListener(this);
     }
 
     /**
@@ -327,6 +335,7 @@ public class Subscription extends BaseActivity  {
             public void onItemClick(View view, int position) {
                 Logger.d(subscribedList.get(position).getId());
                 String id = subscribedList.get(position).getId();
+                Logger.d("点击了"+position+",id:"+id);
                 deleteSub(id);
             }
         });
@@ -340,5 +349,24 @@ public class Subscription extends BaseActivity  {
     private Object getLocalData(String fileName){
         Object object = SerializableUtils.getSerializable(this,fileName);
         return object;
+    }
+
+    @Override
+    public void onClick(View v) {
+        Logger.d(CustomApplication.isReturnMain);
+        if (CustomApplication.isReturnMain){
+            //返回的话使用return
+            boolean is = toMain.getBooleanExtra("toSub",false);
+            Logger.d(is);
+            toMain.putExtra("toMain",true);
+            setResult(1,toMain);
+        }else {
+            //关闭当前页面，直接跳转到主页
+            Intent intent = new Intent(Subscription.this,MainActivity.class);
+
+            startActivity(intent);
+            CustomApplication.isReturnMain = true;
+        }
+        Subscription.this.finish();
     }
 }

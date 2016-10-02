@@ -132,7 +132,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         if (isConnected){
             getSubscriptionTags();
         }else {
-            Logger.d("网络不正常");
             Object object = SerializableUtils.getSerializable(MainActivity.this, ConstantsBean.SUB_FILE_NAME);
             if (object != null) {
                 mList.addAll((Collection<? extends SubscribedBean.ContentBean.RowsBean>) object);
@@ -156,13 +155,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                                 SubscribedBean subscribedBean = (SubscribedBean) JsonUtil.fromJson(String.valueOf(response),SubscribedBean.class);
                                 String name = subscribedBean.getContent().getRows().get(0).getName();
                                 Logger.d(name);
+                                mList.clear();
                                 for (int i = 0; i < subscribedBean.getContent().getRows().size(); i++) {
                                     if (subscribedBean.getContent().getRows().get(i) != null){
                                         mList.add(subscribedBean.getContent().getRows().get(i));
                                     }
                                 }
-                                //暂时加上去的跳转
-
 //                                mList.addAll(subscribedBean.getContent().getRows());
                                 SerializableUtils.setSerializable(MainActivity.this,ConstantsBean.SUB_FILE_NAME,mList);
                                 initTab();
@@ -225,7 +223,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case R.id.iv_subscription_choose:
                 Intent intent = new Intent(this, Subscription.class);
-                startActivity(intent);
+                CustomApplication.isReturnMain = true;
+                intent.putExtra("toSub",true);
+                startActivityForResult(intent,0);
                 break;
             case R.id.fab_create:
                 Intent createIntent = new Intent(this,CreateActivity.class);
@@ -293,4 +293,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         return super.onKeyDown(keyCode, event);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Logger.d("返回的数据"+data.getBooleanExtra("toMain",false));
+        if (requestCode == 0 && resultCode == 1){
+            initData();//刷新数据
+            Logger.d("主页→Tags→主页：刷新了");
+        }else {
+            Logger.d("没有刷新数据");
+        }
+    }
 }

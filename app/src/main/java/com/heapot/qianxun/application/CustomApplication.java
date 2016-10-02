@@ -23,7 +23,7 @@ public class CustomApplication extends Application {
     private static RequestQueue requestQueue;
 
     //该全局变量的意义：判断流程是：注册→标签订阅→主页，还是：主页→标签订阅→主页
-    public static boolean isReturnMain = false;
+    public static boolean isReturnMain = true;
 
     @Override
     public void onCreate() {
