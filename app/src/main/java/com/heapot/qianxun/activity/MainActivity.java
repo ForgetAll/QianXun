@@ -161,6 +161,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                                         mList.add(subscribedBean.getContent().getRows().get(i));
                                     }
                                 }
+                                //暂时加上去的跳转
+
 //                                mList.addAll(subscribedBean.getContent().getRows());
                                 SerializableUtils.setSerializable(MainActivity.this,ConstantsBean.SUB_FILE_NAME,mList);
                                 initTab();

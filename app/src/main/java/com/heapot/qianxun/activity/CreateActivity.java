@@ -1,16 +1,13 @@
 package com.heapot.qianxun.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Toast;
 
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.adapter.CreateAdapter;
-import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.helper.OnRecyclerViewItemClickListener;
 import com.heapot.qianxun.util.PreferenceUtil;
 import com.orhanobut.logger.Logger;
@@ -61,6 +58,8 @@ public class CreateActivity extends BaseActivity {
                     case 1:
                         break;
                     case 2:
+                        Intent course = new Intent(CreateActivity.this,CreateCourseActivity.class);
+                        startActivity(course);
                         break;
                 }
             }

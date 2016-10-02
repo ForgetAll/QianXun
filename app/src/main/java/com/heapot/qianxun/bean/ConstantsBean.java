@@ -10,12 +10,6 @@ public class ConstantsBean {
     public static final String KEY_SPLASH = "isEnter";
     //基本路径-已改
     public static final String BASE_PATH = "https://qinxi1992.xicp.net/";
-    //获取当前用户权限接口-仟询
-     public  static  final  String  ADMIN_PERMISSSIONS="/admin/permissions";
-    //检测旧密码接口-仟询
-     public  static  final  String  ADMIN_CHECKPWD="/admin/checkPwd";
-    //修改密码接口-仟询
-      static  final  String  ADMIN_UPDATEPWD="/admin/updatePwdpublic";
     //更新
     public static final String UPDATE = "/user/update";
     //文件上传
@@ -78,10 +72,6 @@ public class ConstantsBean {
     public  static  final  String CHECK_PWD="/user/checkPwd?oldPassword=";
     //修改密码
     public  static  final  String UPDATE_PWD="/user/updatePwd?oldPassword=";
-    /*验证原密码
-    POST: /user/checkPwd?oldPassword={oldPassword}
-    修改密码
-    POST: /user/updatePwd?oldPassword={oldPassword}&password={password}*/
 
 
 

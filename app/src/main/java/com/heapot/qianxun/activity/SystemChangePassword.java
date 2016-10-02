@@ -1,6 +1,5 @@
 package com.heapot.qianxun.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -14,7 +13,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.blankj.utilcode.utils.NetworkUtils;
 import com.heapot.qianxun.R;
-import com.heapot.qianxun.application.ActivityCollector;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.util.PreferenceUtil;
@@ -60,7 +58,7 @@ public class SystemChangePassword extends BaseActivity implements View.OnClickLi
                 //判断网络连接
                 boolean isAvailable = NetworkUtils.isAvailable(this);
                 if (isAvailable) {
-                    Toast.makeText(SystemChangePassword.this, "请稍等", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(SystemChangePassword.this, "请稍等", Toast.LENGTH_SHORT).show();
                     String oldPwd = mOldPwd.getText().toString();
                     checkPwd(oldPwd);
                 } else {
@@ -127,7 +125,7 @@ public class SystemChangePassword extends BaseActivity implements View.OnClickLi
     }
 
     //新密码设置
-    private void update(String onePwd, String twoPwd) {
+    private void update(final String onePwd, String twoPwd) {
         if (onePwd.equals(twoPwd)) {
             String url = ConstantsBean.BASE_PATH + ConstantsBean.UPDATE_PWD + PreferenceUtil.getString("password") + "&password=" + onePwd;
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
@@ -138,11 +136,9 @@ public class SystemChangePassword extends BaseActivity implements View.OnClickLi
                         public void onResponse(JSONObject response) {
                             try {
                                 if (response.getString("status").equals("success")) {
-                                    Toast.makeText(SystemChangePassword.this, "密码修改完成,请重新登陆", Toast.LENGTH_SHORT).show();
-                                    Intent updatePwd = new Intent(SystemChangePassword.this, LoginActivity.class);
-                                    startActivity(updatePwd);
-                                    finish();
-                                    ActivityCollector.finishAll();
+                                    PreferenceUtil.putString("password", onePwd);
+                                    String url = ConstantsBean.BASE_PATH + ConstantsBean.LOGIN + "?loginName=" + PreferenceUtil.getString("phone") + "&password=" + onePwd;
+                                    reLogin(url);
                                 } else {
                                     Toast.makeText(SystemChangePassword.this, "密码修改失败", Toast.LENGTH_SHORT).show();
                                 }
@@ -150,10 +146,53 @@ public class SystemChangePassword extends BaseActivity implements View.OnClickLi
                                 e.printStackTrace();
                             }
                         }
+
+                        //修改密码之后自动登陆
+                        private void reLogin(String url) {
+                            JsonObjectRequest jsonObject = new JsonObjectRequest(
+                                    Request.Method.POST, url, null,
+                                    new Response.Listener<JSONObject>() {
+                                        @Override
+                                        public void onResponse(JSONObject response) {
+                                            try {
+                                                if (response.getString("status").equals("success")) {
+
+                                                    if (response.has("content")) {
+                                                        JSONObject content = response.getJSONObject("content");
+                                                        String token = content.getString("auth-token");
+                                                        //设置全局变量
+                                                        CustomApplication.TOKEN = token;
+                                                        //存储到本地
+                                                        // 因为token只有三十分钟有效期，也就是说用户退出以后下次失效的可能性比较高，所以这里实际上没有存本地的意义
+                                                        PreferenceUtil.putString("token", token);
+                                                        Toast.makeText(SystemChangePassword.this, "密码修改成功", Toast.LENGTH_SHORT).show();
+                                                        finish();
+                                                        Logger.d("parse json ---> token:  " + token);
+                                                    }
+                                                } else {
+                                                    Toast.makeText(SystemChangePassword.this, "后台登陆失败，请重新登陆", Toast.LENGTH_SHORT).show();
+
+                                                }
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+
+                                        }
+                                    },
+                                    new Response.ErrorListener() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
+                                            Toast.makeText(SystemChangePassword.this, "后台登陆失败，请重新登陆", Toast.LENGTH_SHORT).show();
+
+                                        }
+                                    }
+                            );
+                            CustomApplication.getRequestQueue().add(jsonObject);
+                        }
                     }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(SystemChangePassword.this, "密码输入错误", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SystemChangePassword.this, "新密码输入有误，请重新输入", Toast.LENGTH_SHORT).show();
                 }
             }
             ) {
@@ -168,7 +207,7 @@ public class SystemChangePassword extends BaseActivity implements View.OnClickLi
 
             CustomApplication.getRequestQueue().add(jsonObjectRequest);
         } else {
-            Toast.makeText(SystemChangePassword.this, "密码输入错误", Toast.LENGTH_SHORT).show();
+            Toast.makeText(SystemChangePassword.this, "新密码输入有误，请重新输入", Toast.LENGTH_SHORT).show();
         }
     }
 }

@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F7F7F7"
+    android:orientation="vertical">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/rl_title"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="#0000ff">
+
+        <TextView
+            android:id="@+id/tv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:drawableLeft="@drawable/ic_back"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:text="返回"
+            android:textColor="@android:color/white"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tv_set"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:text="完成"
+            android:textColor="@android:color/white"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#ffffff">
+
+                <ImageView
+                    android:id="@+id/iv_image"
+                    android:layout_width="80dp"
+                    android:layout_height="60dp"
+                    android:layout_margin="12dp"
+                    android:src="@drawable/bye" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/iv_image"
+                    android:background="@null"
+                    android:hint="请在此处键入标题" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:background="#ffffff">
+
+                <ImageView
+                    android:id="@+id/iv_class"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="12dp"
+                    android:src="@drawable/imagetest" />
+
+                <TextView
+                    android:id="@+id/tv_classTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="22dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_toRightOf="@+id/iv_class"
+                    android:text="请选择课程分类"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/tv_classContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="18dp"
+                    android:layout_below="@+id/tv_classTitle"
+                    android:layout_marginBottom="12dp"
+                    android:layout_toRightOf="@+id/iv_class"
+                    android:text="课程将发布在选择的分类之下"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tv_classChoose"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="12dp"
+                    android:text="单选" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:background="#ffffff">
+
+                <ImageView
+                    android:id="@+id/iv_begin"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="12dp"
+                    android:src="@drawable/imagetest" />
+
+                <TextView
+                    android:id="@+id/tv_beginTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="22dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_toRightOf="@+id/iv_begin"
+                    android:text="报名开始时间"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/tv_beginContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="18dp"
+                    android:layout_below="@+id/tv_beginTitle"
+                    android:layout_marginBottom="12dp"
+                    android:layout_toRightOf="@+id/iv_begin"
+                    android:text="课程将发布在选择的分类之下"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tv_beginChoose"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="12dp"
+                    android:text="9/28" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:background="#ffffff">
+
+                <ImageView
+                    android:id="@+id/iv_end"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="12dp"
+                    android:src="@drawable/imagetest" />
+
+                <TextView
+                    android:id="@+id/tv_endTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="22dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_toRightOf="@+id/iv_end"
+                    android:text="报名开始时间"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/tv_endContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="18dp"
+                    android:layout_below="@+id/tv_endTitle"
+                    android:layout_marginBottom="12dp"
+                    android:layout_toRightOf="@+id/iv_end"
+                    android:text="课程将发布在选择的分类之下"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tv_endChoose"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="12dp"
+                    android:text="10/1" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:background="#ffffff">
+
+                <ImageView
+                    android:id="@+id/iv_number"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="12dp"
+                    android:src="@drawable/imagetest" />
+
+                <TextView
+                    android:id="@+id/tv_numberTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="22dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_toRightOf="@+id/iv_number"
+                    android:text="请设置人数上限"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/tv_numberContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="18dp"
+                    android:layout_below="@+id/tv_numberTitle"
+                    android:layout_marginBottom="12dp"
+                    android:layout_toRightOf="@+id/iv_number"
+                    android:text="如不设置则不限制人数"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tv_numberChoose"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="12dp"
+                    android:text="2000" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:background="#ffffff">
+
+                <ImageView
+                    android:id="@+id/iv_describe"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="12dp"
+                    android:src="@drawable/imagetest" />
+
+                <TextView
+                    android:id="@+id/tv_describeTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="22dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_toRightOf="@+id/iv_describe"
+                    android:text="请选择课程分类"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/tv_describeContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="18dp"
+                    android:layout_below="@+id/tv_describeTitle"
+                    android:layout_marginBottom="12dp"
+                    android:layout_toRightOf="@+id/iv_describe"
+                    android:text="课程将发布在选择的分类之下"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:layout_centerVertical="true"
+                    android:id="@+id/iv_describeChoose"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/back_24_black" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="6dp"
+                android:background="#ffffff"
+                android:gravity="center_vertical"
+                android:paddingLeft="12dp"
+                android:text="更多填写项"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>
