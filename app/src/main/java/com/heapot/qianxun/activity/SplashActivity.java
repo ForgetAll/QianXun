@@ -139,6 +139,7 @@ public class SplashActivity extends BaseActivity {
             case 1:
 //                intent = new Intent(SplashActivity.this, MainActivity.class);
                 intent = new Intent(SplashActivity.this, Subscription.class);
+                CustomApplication.isReturnMain = false;
                 startActivity(intent);
                 SplashActivity.this.finish();
                 break;
