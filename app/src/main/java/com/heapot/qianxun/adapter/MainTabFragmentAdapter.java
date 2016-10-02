@@ -19,25 +19,39 @@ import java.util.List;
 public class MainTabFragmentAdapter extends FragmentPagerAdapter {
     private List<SubscribedBean.ContentBean.RowsBean> mList = new ArrayList<>();
     private Context mContext;
+    private int count;
 
     public MainTabFragmentAdapter(FragmentManager fm, Context context, List<SubscribedBean.ContentBean.RowsBean> list) {
         super(fm);
         this.mContext = context;
         this.mList = list;
+        count = list.size();
     }
 
     @Override
     public Fragment getItem(int position) {
-        return PageFragment.newInstance(position+1,mList.get(position).getId());
+        if (count == 0){
+            return PageFragment.newInstance(-1,"暂无数据");
+        }else {
+            return PageFragment.newInstance(position + 1, mList.get(position).getId());
+        }
     }
 
     @Override
     public int getCount() {
-        return mList.size();
+        if (count == 0){
+            return 1;
+        }else {
+            return count;
+        }
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return mList.get(position).getName();
+        if (count == 0){
+            return "暂无数据";
+        }else {
+            return mList.get(position).getName();
+        }
     }
 }

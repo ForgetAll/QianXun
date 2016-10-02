@@ -15,7 +15,9 @@ import android.widget.Toast;
 
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.activity.ArticleActivity;
+import com.heapot.qianxun.activity.Subscription;
 import com.heapot.qianxun.adapter.MainTabAdapter;
+import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.helper.OnRecyclerViewItemClickListener;
 import com.orhanobut.logger.Logger;
 
@@ -38,7 +40,8 @@ public class PageFragment extends Fragment {
     private MainTabAdapter adapter;
     private List<String> list = new ArrayList<>();
 
-
+    //空数据
+    private TextView textView;
 
     public static PageFragment newInstance(int page,String id) {
         Bundle args = new Bundle();
@@ -59,13 +62,34 @@ public class PageFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.layout_list,container,false);
-        Logger.d("当前页面是 #"+mPage+"，Id是："+mId);
-        initView();
-        initEvent();
+        if (mPage == -1){
+            mView = inflater.inflate(R.layout.layout_empty_data,container,false);
+
+        }else {
+            mView = inflater.inflate(R.layout.layout_list,container,false);
+            initView();
+            initEvent();
+        }
         return mView;
     }
+    /**
+     * 以下为空数据的情况
+     */
+    private void initEmptyView(){
+        textView = (TextView) mView.findViewById(R.id.txt_main_to_sub);
 
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), Subscription.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    /**
+     * 以下为有数据的情况
+     */
     private void initView(){
         recyclerView = (RecyclerView) mView.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false));

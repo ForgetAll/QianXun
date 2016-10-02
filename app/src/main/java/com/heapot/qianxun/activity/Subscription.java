@@ -49,13 +49,11 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
     //全部数据相关
     private RecyclerView tags;
     private List<TagsBean.ContentBean> tagsList = new ArrayList<>();//全部数据
-    private List<TagsBean.ContentBean> checkTagsList = new ArrayList<>();
     private TagsAdapter tagsAdapter;
     private LinearLayoutManager linearLayoutManager;
     //已订阅相关
     private RecyclerView sub;
     private List<SubscribedBean.ContentBean.RowsBean> subscribedList = new ArrayList<>();
-    private List<SubscribedBean.ContentBean.RowsBean> subList = new ArrayList<>();
     private SubAdapter subAdapter;
     private GridLayoutManager gridLayoutManager;
     ItemTouchHelper helper;
@@ -64,10 +62,6 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
     private TextView btnToMain;
     Intent toMain;
     public static boolean isEmpty = true;
-    //加一层过滤
-    private  String CURRENT_PAGE_SC = ConstantsBean.PAGE_SCIENCE;
-    private  String CURRENT_PAGE_RE = ConstantsBean.PAGE_RECRUIT;
-    private  String CURRENT_PAGE_TR = ConstantsBean.PAGE_TRAIN;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -143,18 +137,27 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Logger.json(String.valueOf(response));
                         try {
                             String status = response.getString("status");
                             if (status.equals("success")){
                                 TagsBean jsonBean = (TagsBean) JsonUtil.fromJson(String.valueOf(response),TagsBean.class);
                                 tagsList.addAll(jsonBean.getContent());
                                 SerializableUtils.setSerializable(Subscription.this,ConstantsBean.TAG_FILE_NAME, tagsList);
+                                List<Integer> list = new ArrayList<>();
+                                int count = 0;
+                                for (TagsBean.ContentBean tag : tagsList){
+                                    if (tag.getPid() == null){
+                                        list.add(count);
+                                    }
+                                    count++;
+                                }
+
                             }else {
                                 Object object = getLocalData(ConstantsBean.TAG_FILE_NAME);
                                 tagsList.add((TagsBean.ContentBean) object);
                                 Toast.makeText(Subscription.this, "刷新数据失败", Toast.LENGTH_SHORT).show();
                             }
+
                             initRecycler();
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -203,33 +206,6 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
                                 subscribedList.addAll((Collection<? extends SubscribedBean.ContentBean.RowsBean>) object);
                                 Toast.makeText(Subscription.this, "刷新数据失败", Toast.LENGTH_SHORT).show();
                             }
-                            //加一层过滤,
-                            String current = CustomApplication.getCurrentPageName();
-                            int count = tagsList.size();
-                            Logger.d(current+"总数据："+count);
-
-//                            String id_1 = null,id_2 = null,id_3 = null;
-//
-//                            //找出第一级标题
-//                            for (int i = 0; i < count; i++) {
-//                                String pid = tagsList.get(i).getPid().toString();
-//                                String id = tagsList.get(i).getId();
-//                                String codes = tagsList.get(i).getCode();
-//                                if (tagsList.get(i).getPid() == null){
-//                                    switch (codes){
-//                                        case "articles":
-//                                            id_1 = id;
-//                                            break;
-//                                        case "jobs":
-//                                            id_2 = id;
-//                                            break;
-//                                        case "activities":
-//                                            id_3 = id;
-//                                            break;
-//                                    }
-//                                }
-//                            }
-//                            Logger.d("CurrentPage:"+current+",id01:"+id_1);
                             initRecycler();
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -346,43 +322,7 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
      * 初始化列表
      */
     private void initRecycler(){
-
-//        int count = tagsList.size();
-//        if (current.equals(CURRENT_PAGE_SC)){
-//            for (int i = 0; i < count; i++) {
-//                checkTagsList.clear();
-//                if (tagsList.get(i).getCode().equals("articles")){
-//                    String id = tagsList.get(i).getId();
-//                    if (tagsList.get(i).getPid().equals(id)){
-//                        checkTagsList.add(tagsList.get(i));
-//                        Logger.d(""+checkTagsList.get(0).getName());
-//                    }
-//                }
-//            }
-//        }else if (current.equals(CURRENT_PAGE_RE)){
-//            checkTagsList.clear();
-//            for (int i = 0; i < count; i++) {
-//                if (tagsList.get(i).getCode().equals("jobs")){
-//                    String id = tagsList.get(i).getId();
-//                    if (tagsList.get(i).getPid().equals(id)){
-//                        checkTagsList.add(tagsList.get(i));
-//                        Logger.d(""+checkTagsList.get(0).getName());
-//                    }
-//                }
-//            }
-//
-//        }else if (current.equals(CURRENT_PAGE_TR)){
-//            checkTagsList.clear();
-//            for (int i = 0; i < count; i++) {
-//                if (tagsList.get(i).getCode().equals("activities")){
-//                    String id = tagsList.get(i).getId();
-//                    if (tagsList.get(i).getPid().equals(id)){
-//                        checkTagsList.add(tagsList.get(i));
-//                        Logger.d(""+checkTagsList.get(0).getName());
-//                    }
-//                }
-//            }
-//        }
+        Logger.d(tagsList);
         tagsAdapter = new TagsAdapter(Subscription.this, tagsList);
         tags.setAdapter(tagsAdapter);
         tagsAdapter.notifyDataSetChanged();
@@ -396,8 +336,6 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
             public void onItemClick(View view, int position) {
                 String id = tagsList.get(position).getId();
                 String name = tagsList.get(position).getName();
-                Toast.makeText(Subscription.this, "订阅名单"+name, Toast.LENGTH_SHORT).show();
-                Logger.d("点击了："+name+",id是："+id);
                 int status = tagsList.get(position).getSubscribeStatus();
                 if (status == 0){
                     postSub(id);
@@ -413,7 +351,6 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
             public void onItemClick(View view, int position) {
                 Logger.d(subscribedList.get(position).getId());
                 String id = subscribedList.get(position).getId();
-                Logger.d("点击了"+position+",id:"+id);
                 deleteSub(id);
             }
         });
@@ -438,7 +375,6 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        Logger.d("订阅标签是否为空"+isEmpty);
         if (isEmpty) {
             Toast.makeText(Subscription.this, "至少订阅一项", Toast.LENGTH_SHORT).show();
         } else {
@@ -459,14 +395,11 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void onBackPressed() {
-        Logger.d("按下返回键了");
         if (isEmpty){
             Toast.makeText(Subscription.this, "至少订阅一项", Toast.LENGTH_SHORT).show();
-            Logger.d("至少订阅一项");
         }else{
             if (CustomApplication.isReturnMain) {
                 //返回的话使用return
-//                boolean is = toMain.getBooleanExtra("toSub", false);//传递数据成功
                 toMain.putExtra("toMain", true);
                 setResult(1, toMain);
             } else {
