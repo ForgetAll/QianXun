@@ -382,19 +382,30 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
         }
     }
 
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//        if (keyCode == KeyEvent.KEYCODE_BACK){
+//            Toast.makeText(Subscription.this, "点击返回", Toast.LENGTH_SHORT).show();
+//            Logger.d("点击返回键了");
+//            if (CustomApplication.isReturnMain) {
+//                if (isEmpty) {
+//                    Toast.makeText(Subscription.this, "标签不能为空", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//            return false;
+//        }else {
+//            return super.onKeyDown(keyCode, event);
+//        }
+//    }
+
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK){
-            Toast.makeText(Subscription.this, "点击返回", Toast.LENGTH_SHORT).show();
-            Logger.d("点击返回键了");
-            if (CustomApplication.isReturnMain) {
-                if (isEmpty) {
-                    Toast.makeText(Subscription.this, "标签不能为空", Toast.LENGTH_SHORT).show();
-                }
-            }
-            return false;
-        }else {
-            return super.onKeyDown(keyCode, event);
+    public void onBackPressed() {
+        Logger.d("按下返回键了");
+        if (isEmpty){
+            Toast.makeText(Subscription.this, "至少订阅一项", Toast.LENGTH_SHORT).show();
+            Logger.d("至少订阅一项");
+        }else{
+            super.onBackPressed();
         }
     }
 }
