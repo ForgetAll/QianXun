@@ -24,6 +24,10 @@ public class CustomApplication extends Application {
 
     //该全局变量的意义：判断流程是：注册→标签订阅→主页，还是：主页→标签订阅→主页
     public static boolean isReturnMain = true;
+    //添加主页页面的ID
+    public static String PAGE_ARTICLES_ID = "f3b8d91b8f9c4a03a4a06a5678e79872";
+    public static String PAGE_ACTIVITIES_ID = "9025053c65e04a6992374c5d43f31acf";
+    public static String PAGE_JOBS_ID = "af3a09e8a4414c97a038a2d735064ebc";
 
     @Override
     public void onCreate() {

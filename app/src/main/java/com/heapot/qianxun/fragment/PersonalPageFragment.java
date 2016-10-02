@@ -9,8 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.heapot.qianxun.R;
@@ -23,13 +21,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Karl on 2016/8/25.
- * 每个模块（学术招聘培训）对应页面下每个Tab对应的列表
- *
+ * Created by 李大总管 on 2016/10/2.
  */
-public class PageFragment extends Fragment {
+public class PersonalPageFragment extends Fragment{
     public static final String PAGE = "PAGE";
-    public static final String ID = "PAGE_ID";
     private int mPage;
     private String mId;
     View mView;
@@ -40,10 +35,9 @@ public class PageFragment extends Fragment {
 
 
 
-    public static PageFragment newInstance(int page,String id) {
+    public static PageFragment newInstance(int page) {
         Bundle args = new Bundle();
         args.putInt(PAGE,page);
-        args.putString(ID,id);
         PageFragment pageFragment = new PageFragment();
         pageFragment.setArguments(args);
         return pageFragment;
@@ -53,7 +47,6 @@ public class PageFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mPage = getArguments().getInt(PAGE);
-        mId = getArguments().getString(ID);
     }
 
     @Nullable
@@ -95,5 +88,4 @@ public class PageFragment extends Fragment {
             list.add("Tab #"+mPage+" Item #"+i);
         }
     }
-
 }
