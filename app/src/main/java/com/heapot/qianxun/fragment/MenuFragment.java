@@ -70,8 +70,8 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
             mIcon.setImageResource(R.drawable.imagetest);
         }
 
-      //  mName.setText(PreferenceUtil.getString(ConstantsBean.nickName));
-       // mQuote.setText(PreferenceUtil.getString(ConstantsBean.userAutograph));
+        //  mName.setText(PreferenceUtil.getString(ConstantsBean.nickName));
+        // mQuote.setText(PreferenceUtil.getString(ConstantsBean.userAutograph));
 
     }
 
@@ -122,24 +122,26 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         initData();
 
     }
-    private void initData() {
-        MyUserBean.ContentBean userBean=new MyUserBean.ContentBean();
 
-                Object object = getLocalInfo(ConstantsBean.MY_USER_INFO);
-        if (object != null){
+    private void initData() {
+        MyUserBean.ContentBean userBean = new MyUserBean.ContentBean();
+
+        Object object = getLocalInfo(ConstantsBean.MY_USER_INFO);
+        if (object != null) {
             MyUserBean myUserBean = (MyUserBean) object;
             mName.setText(myUserBean.getContent().getLoginName());
             mQuote.setText(myUserBean.getContent().getId());
-        }else {
+        } else {
             getUserInfo();
         }
 
     }
+
     /**
      * 在主页获取用户信息然后进行存储，直接在侧滑菜单进行绘制就可以了
      */
-    private void getUserInfo(){
-        String url=ConstantsBean.BASE_PATH + ConstantsBean.PERSONAL_INFO;
+    private void getUserInfo() {
+        String url = ConstantsBean.BASE_PATH + ConstantsBean.PERSONAL_INFO;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
@@ -147,25 +149,25 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
                     public void onResponse(JSONObject response) {
                         try {
                             String status = response.getString("status");
-                            if (status.equals("success")){
-                                MyUserBean myUserBean = (MyUserBean) JsonUtil.fromJson(String.valueOf(response),MyUserBean.class);
-                                SerializableUtils.setSerializable(getContext(),ConstantsBean.MY_USER_INFO,myUserBean);
+                            if (status.equals("success")) {
+                                MyUserBean myUserBean = (MyUserBean) JsonUtil.fromJson(String.valueOf(response), MyUserBean.class);
+                                SerializableUtils.setSerializable(getContext(), ConstantsBean.MY_USER_INFO, myUserBean);
                                 String loginName = myUserBean.getContent().getLoginName();
                                 String nickName = myUserBean.getContent().getNickname();
                                 String name = myUserBean.getContent().getName();
                                 String phone = myUserBean.getContent().getPhone();
-                                if (loginName == null){
+                                if (loginName != null ) {
                                     mName.setText(loginName);
-                                    PreferenceUtil.putString(ConstantsBean.showname,loginName);
-                                }else if (nickName == null){
+                                    PreferenceUtil.putString(ConstantsBean.showname, loginName);
+                                } else if (nickName != null) {
                                     mName.setText(nickName);
-                                    PreferenceUtil.putString(ConstantsBean.showname,nickName);
-                                }else if(name == null){
+                                    PreferenceUtil.putString(ConstantsBean.showname, nickName);
+                                } else if (name != null) {
                                     mName.setText(name);
-                                    PreferenceUtil.putString(ConstantsBean.showname,name);
-                                }else {
+                                    PreferenceUtil.putString(ConstantsBean.showname, name);
+                                } else {
                                     mName.setText(phone);
-                                    PreferenceUtil.putString(ConstantsBean.showname,phone);
+                                    PreferenceUtil.putString(ConstantsBean.showname, phone);
                                 }
                                 mQuote.setText(myUserBean.getContent().getId());
                                 if (!TextUtils.isEmpty(PreferenceUtil.getString(ConstantsBean.userImage))) {
@@ -173,7 +175,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
                                 } else {
                                     mIcon.setImageResource(R.drawable.imagetest);
                                 }
-                            }else {
+                            } else {
                                 Toast.makeText(getContext(), response.getString("message"), Toast.LENGTH_SHORT).show();
                                 Logger.d(response.getString("message"));
                             }
@@ -188,19 +190,21 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
 
                     }
                 }
-        ){
+        ) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String,String> headers = new HashMap<>();
-                headers.put(ConstantsBean.KEY_TOKEN,CustomApplication.TOKEN);
+                Map<String, String> headers = new HashMap<>();
+                headers.put(ConstantsBean.KEY_TOKEN, CustomApplication.TOKEN);
                 return headers;
             }
         };
         CustomApplication.getRequestQueue().add(jsonObjectRequest);
     }
-    private Object getLocalInfo(String fileName){
-        return SerializableUtils.getSerializable(getContext(),fileName);
+
+    private Object getLocalInfo(String fileName) {
+        return SerializableUtils.getSerializable(getContext(), fileName);
     }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
