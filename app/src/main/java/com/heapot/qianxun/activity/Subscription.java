@@ -23,6 +23,7 @@ import com.heapot.qianxun.adapter.SubAdapter;
 import com.heapot.qianxun.adapter.TagsAdapter;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
+import com.heapot.qianxun.bean.SubBean;
 import com.heapot.qianxun.bean.SubscribedBean;
 import com.heapot.qianxun.bean.TagsBean;
 import com.heapot.qianxun.helper.ItemTouchHelperCallback;
@@ -48,20 +49,21 @@ import java.util.Map;
 public class Subscription extends BaseActivity implements View.OnClickListener {
     //全部数据相关
     private RecyclerView tags;
-    private List<TagsBean.ContentBean> tagsList = new ArrayList<>();//全部数据
+    private List<TagsBean.ContentBean> tagsList = new ArrayList<>();//全部二级数据
     private TagsAdapter tagsAdapter;
     private LinearLayoutManager linearLayoutManager;
     //已订阅相关
     private RecyclerView sub;
-    private List<SubscribedBean.ContentBean.RowsBean> subscribedList = new ArrayList<>();
+//    private List<SubscribedBean.ContentBean.RowsBean> subscribedList = new ArrayList<>();
+    private List<SubBean> subList = new ArrayList<>();
     private SubAdapter subAdapter;
     private GridLayoutManager gridLayoutManager;
     ItemTouchHelper helper;
-
+    //全部数据集合
+    List<TagsBean.ContentBean> list = new ArrayList<>();
+    int page = 0;
     //加入跳转按钮
     private TextView btnToMain;
-    Intent toMain;
-    public static boolean isEmpty = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,12 +76,21 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
         sub = (RecyclerView) findViewById(R.id.rv_drag);
         tags = (RecyclerView) findViewById(R.id.rv_content);
         btnToMain = (TextView) findViewById(R.id.btn_close_subscription);
-        toMain = getIntent();
+        switch (CustomApplication.getCurrentPageName()){
+            case "PAGE_SCIENCE":
+                page =0;
+                break;
+            case "PAGE_RECRUIT":
+                page = 1;
+                break;
+            case "PAGE_TRAIN":
+                page = 2;
+                break;
+        }
     }
     private void initEvent(){
         //初始化数据
         initData();
-        boolean is = toMain.getBooleanExtra("toSub", false);//传递数据成功
         // 已订阅列表，含拖拽功能
         gridLayoutManager = new GridLayoutManager(this,5){
             @Override
@@ -106,259 +117,61 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
     }
 
     /**
-     * 初始化数据
-     * 1、网络正常情况下，从网络请求
-     * 2、网络不正常的情况下从本地取
+     * 初始化数据:从本地获取
      */
     private void initData(){
-        boolean isConnected = NetworkUtils.isAvailable(this);
-        if (isConnected){
-            getTags();
-            getSub();
-        }else {
-            tagsList = (List<TagsBean.ContentBean>) getLocalData(ConstantsBean.TAG_FILE_NAME);
-            subscribedList = (List<SubscribedBean.ContentBean.RowsBean>) getLocalData(ConstantsBean.SUB_FILE_NAME);
-            if (tagsList.size() == 0 || subscribedList.size() == 0){
-                Toast.makeText(Subscription.this, "本地没有数据", Toast.LENGTH_SHORT).show();
-            }else {
-                initRecycler();
+        Object objTags =  SerializableUtils.getSerializable(Subscription.this,ConstantsBean.TAG_FILE_NAME);
+        list.addAll((Collection<? extends TagsBean.ContentBean>) objTags);
+        List<Integer> posList = new ArrayList<>();
+        //获取指定二级标题
+        for (int i = 0; i < list.size(); i++) {
+            switch (page){
+                case 0:
+                    if (list.get(i).getPid() != null || list.get(i).getCode().equals("articles")){
+                        posList.add(i);
+                    }
+                    break;
+                case 1:
+                    if (list.get(i).getPid() != null || list.get(i).getCode().equals("jobs")){
+                        posList.add(i);
+                    }
+                    break;
+                case 2:
+                    if (list.get(i).getPid() != null || list.get(i).getCode().equals("activities")){
+                        posList.add(i);
+                    }
+                    break;
             }
         }
-    }
-
-    /**
-     * 获取所有标签，包括用户订阅状态
-     */
-    private void getTags(){
-        tagsList.clear();//先清空数据
-        String url = ConstantsBean.BASE_PATH + ConstantsBean.ORG_CODE+ConstantsBean.CATALOGS;
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                Request.Method.GET,url, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Logger.json(String.valueOf(response));
-                        try {
-                            String status = response.getString("status");
-                            if (status.equals("success")){
-                                TagsBean jsonBean = (TagsBean) JsonUtil.fromJson(String.valueOf(response),TagsBean.class);
-                                tagsList.addAll(jsonBean.getContent());
-                                SerializableUtils.setSerializable(Subscription.this,ConstantsBean.TAG_FILE_NAME, tagsList);
-                            }else {
-                                Object object = getLocalData(ConstantsBean.TAG_FILE_NAME);
-                                tagsList.add((TagsBean.ContentBean) object);
-                                Toast.makeText(Subscription.this, "刷新数据失败", Toast.LENGTH_SHORT).show();
-                            }
-                            initRecycler();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(Subscription.this, "服务器错误！", Toast.LENGTH_SHORT).show();
-                    }
-                }
-        ){
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String,String> headers = new HashMap<>();
-                headers.put(ConstantsBean.KEY_TOKEN,CustomApplication.TOKEN);
-                return headers;
+        //将获取到的二级标题赋给TagsList
+        for (int i = 0; i < posList.size(); i++) {
+            tagsList.add(list.get(posList.get(i)));
+        }
+//        tagsList.addAll((Collection<? extends TagsBean.ContentBean>) objTags);
+        //再从当期页面标签获取到已订阅的赋给SubList
+        SubBean subBean;
+        for (int i = 0; i < tagsList.size(); i++) {
+            subBean = new SubBean();
+            if (tagsList.get(i).getSubscribeStatus() == 1){
+                subBean.setId(tagsList.get(i).getId());
+                subBean.setPid(tagsList.get(i).getPid().toString());
+                subBean.setName(tagsList.get(i).getName());
+                subBean.setStatus(tagsList.get(i).getSubscribeStatus());
+                subList.add(subBean);
             }
-        };
-        CustomApplication.getRequestQueue().add(jsonObjectRequest);
+        }
+        initRecycler();
     }
-
-    /**
-     * 查看已订阅列表
-     */
-    private void getSub(){
-        //先清空一下数据
-        subscribedList.clear();
-        String url = ConstantsBean.BASE_PATH+ConstantsBean.GET_SUBSCRIBED;
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                Request.Method.GET, url, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            String status = response.getString("status");
-                            if (status.equals("success")){
-                                //获取列表成功，加载列表
-                                SubscribedBean subBean = (SubscribedBean) JsonUtil.fromJson(String.valueOf(response),SubscribedBean.class);
-                                subscribedList.addAll(subBean.getContent().getRows());
-                                SerializableUtils.setSerializable(Subscription.this,ConstantsBean.SUB_FILE_NAME,subscribedList);
-                            }else {
-                                Object object = getLocalData(ConstantsBean.SUB_FILE_NAME);
-                                subscribedList.addAll((Collection<? extends SubscribedBean.ContentBean.RowsBean>) object);
-                                Toast.makeText(Subscription.this, "刷新数据失败", Toast.LENGTH_SHORT).show();
-                            }
-                            //加一层过滤,
-                            String current = CustomApplication.getCurrentPageName();
-                            int count = tagsList.size();
-                            Logger.d(current+"总数据："+count);
-                            initRecycler();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                }
-        ){
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> map = new HashMap<>();
-                map.put(ConstantsBean.KEY_TOKEN,CustomApplication.TOKEN);
-                return map;
-            }
-        };
-        CustomApplication.getRequestQueue().add(jsonObjectRequest);
-    }
-
-    /**
-     * 提交订阅
-     * @param id 订阅标签的id
-     */
-    private void postSub(final String id){
-        String url = ConstantsBean.BASE_PATH+ConstantsBean.POST_SUBSCRIPTION+id;
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                Request.Method.POST, url, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            String status = response.getString("status");
-                            if (status.equals("success")){
-                                Logger.d("订阅成功："+id);
-                                getTags();
-                                getSub();
-                            }else {
-                                Toast.makeText(Subscription.this, ""+response.getString("message"), Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                }
-        ){
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> map = new HashMap<>();
-                map.put(ConstantsBean.KEY_TOKEN,CustomApplication.TOKEN);
-                return map;
-            }
-        };
-        CustomApplication.getRequestQueue().add(jsonObjectRequest);
-    }
-//    //4、提交排序
-//    private void postSort(){
-//
-//    }
-    /**
-     * 取消订阅
-     * @param id 所需要取消订阅标签的id
-     */
-    private void deleteSub(String id){
-        String url = ConstantsBean.BASE_PATH+ConstantsBean.CANCEL_SUBSCRIPTION+id;
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                Request.Method.DELETE, url, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            String status = response.getString("status");
-                            if (status.equals("success")){
-                                //删除成功以后重新加载数据
-                                getSub();
-                                getTags();
-                            }else {
-                                //取消订阅失败
-                                Toast.makeText(Subscription.this, ""+response.getString("message"), Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(Subscription.this, "未知错误", Toast.LENGTH_SHORT).show();
-                    }
-                }
-        ){
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String,String> headers = new HashMap<>();
-                headers.put(ConstantsBean.KEY_TOKEN,CustomApplication.TOKEN);
-                return headers;
-            }
-        };
-        CustomApplication.getRequestQueue().add(jsonObjectRequest);
-
-    }
-
     /**
      * 初始化列表
      */
     private void initRecycler(){
-
-//        int count = tagsList.size();
-//        if (current.equals(CURRENT_PAGE_SC)){
-//            for (int i = 0; i < count; i++) {
-//                checkTagsList.clear();
-//                if (tagsList.get(i).getCode().equals("articles")){
-//                    String id = tagsList.get(i).getId();
-//                    if (tagsList.get(i).getPid().equals(id)){
-//                        checkTagsList.add(tagsList.get(i));
-//                        Logger.d(""+checkTagsList.get(0).getName());
-//                    }
-//                }
-//            }
-//        }else if (current.equals(CURRENT_PAGE_RE)){
-//            checkTagsList.clear();
-//            for (int i = 0; i < count; i++) {
-//                if (tagsList.get(i).getCode().equals("jobs")){
-//                    String id = tagsList.get(i).getId();
-//                    if (tagsList.get(i).getPid().equals(id)){
-//                        checkTagsList.add(tagsList.get(i));
-//                        Logger.d(""+checkTagsList.get(0).getName());
-//                    }
-//                }
-//            }
-//
-//        }else if (current.equals(CURRENT_PAGE_TR)){
-//            checkTagsList.clear();
-//            for (int i = 0; i < count; i++) {
-//                if (tagsList.get(i).getCode().equals("activities")){
-//                    String id = tagsList.get(i).getId();
-//                    if (tagsList.get(i).getPid().equals(id)){
-//                        checkTagsList.add(tagsList.get(i));
-//                        Logger.d(""+checkTagsList.get(0).getName());
-//                    }
-//                }
-//            }
-//        }
         tagsAdapter = new TagsAdapter(Subscription.this, tagsList);
         tags.setAdapter(tagsAdapter);
         tagsAdapter.notifyDataSetChanged();
 
-        subAdapter = new SubAdapter(Subscription.this,subscribedList);
+//        subAdapter = new SubAdapter(Subscription.this,subscribedList);
+        subAdapter = new SubAdapter(Subscription.this,subList);
         sub.setAdapter(subAdapter);
         subAdapter.notifyDataSetChanged();
 
@@ -366,87 +179,93 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
             @Override
             public void onItemClick(View view, int position) {
                 String id = tagsList.get(position).getId();
-                String name = tagsList.get(position).getName();
-                Toast.makeText(Subscription.this, "订阅名单"+name, Toast.LENGTH_SHORT).show();
-                Logger.d("点击了："+name+",id是："+id);
                 int status = tagsList.get(position).getSubscribeStatus();
                 if (status == 0){
-                    postSub(id);
+                    tagsList.get(position).setSubscribeStatus(1);
+                    //同步SubList
+                    SubBean subBean = new SubBean();
+                    subBean.setId(tagsList.get(position).getId());
+                    subBean.setPid(tagsList.get(position).getPid().toString());
+                    subBean.setName(tagsList.get(position).getName());
+                    subBean.setStatus(tagsList.get(position).getSubscribeStatus());
+                    subList.add(subBean);
+                    //还需要更新list
+                    int count = 0;
+                    for (int i = 0; i < list.size(); i++) {
+                        if (list.get(i).getId().equals(id)){
+                            count = i;
+                        }
+                    }
+                    list.get(count).setSubscribeStatus(1);
                 }else if (status == 1){
-                    deleteSub(id);
+                    tagsList.get(position).setSubscribeStatus(0);
+                    //删除数据联动
+                    int count = 0;
+                    for (int i = 0; i < subList.size(); i++) {
+                        if (subList.get(i).getId().equals(id)){
+                            count = i;
+                        }
+                    }
+                    subList.remove(count);
+                    //还需要更新list
+                    int count2 = 0;
+                    for (int i = 0; i < list.size(); i++) {
+                        if (list.get(i).getId().equals(id)){
+                            count2 = i;
+                        }
+                    }
+                    list.get(count2).setSubscribeStatus(1);
                 }
+                subAdapter = new SubAdapter(Subscription.this,subList);
+                subAdapter.notifyDataSetChanged();
+                tagsAdapter = new TagsAdapter(Subscription.this,tagsList);
                 tagsAdapter.notifyDataSetChanged();
+                //刷新以后改变本地数据存储
+                SerializableUtils.setSerializable(Subscription.this,ConstantsBean.TAG_FILE_NAME,list);
 
             }
         });
         subAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Logger.d(subscribedList.get(position).getId());
-                String id = subscribedList.get(position).getId();
-                Logger.d("点击了"+position+",id:"+id);
-                deleteSub(id);
+                //实现联动
+                String id = subList.get(position).getId();
+                int pos = 0;
+                int count = tagsList.size();
+                for (int i = 0; i < count; i++) {
+                    if (tagsList.get(i).getId().equals(id)){
+                        pos = i;
+                    }
+                }
+                tagsList.get(pos).setSubscribeStatus(0);
+                tagsAdapter = new TagsAdapter(Subscription.this,tagsList);
+                tagsAdapter.notifyDataSetChanged();
+
+                //还需要更新list
+                int pos2 = 0;
+                for (int i = 0; i < list.size(); i++) {
+                    if (list.get(i).getId().equals(id)){
+                        pos2 = i;
+                    }
+                }
+                list.get(pos2).setSubscribeStatus(0);
+                SerializableUtils.setSerializable(Subscription.this,ConstantsBean.TAG_FILE_NAME,list);
+                //自身也要删除
+                subList.remove(position);
+                subAdapter = new SubAdapter(Subscription.this,subList);
+                subAdapter.notifyDataSetChanged();
             }
         });
-
-        if (subscribedList.size() == 0){
-            isEmpty = true;
-
-        }else {
-            isEmpty = false;
-        }
-    }
-
-    /**
-     * 从本地指定文件下取数据
-     * @param fileName 文件名
-     * @return 返回类型
-     */
-    private Object getLocalData(String fileName){
-        Object object = SerializableUtils.getSerializable(this,fileName);
-        return object;
     }
 
     @Override
     public void onClick(View v) {
-        Logger.d("订阅标签是否为空"+isEmpty);
-        if (isEmpty) {
-            Toast.makeText(Subscription.this, "至少订阅一项", Toast.LENGTH_SHORT).show();
-        } else {
-            if (CustomApplication.isReturnMain) {
-                //返回的话使用return
-//                boolean is = toMain.getBooleanExtra("toSub", false);//传递数据成功
-                toMain.putExtra("toMain", true);
-                setResult(1, toMain);
-            } else {
-                //关闭当前页面，直接跳转到主页
-                Intent intent = new Intent(Subscription.this, MainActivity.class);
-                startActivity(intent);
-                CustomApplication.isReturnMain = true;
-            }
-            Subscription.this.finish();
-        }
+       //点击click的时候将页面改动进行存储，同时发送广播进行刷新
+
     }
 
     @Override
     public void onBackPressed() {
-        Logger.d("按下返回键了");
-        if (isEmpty){
-            Toast.makeText(Subscription.this, "至少订阅一项", Toast.LENGTH_SHORT).show();
-            Logger.d("至少订阅一项");
-        }else{
-            if (CustomApplication.isReturnMain) {
-                //返回的话使用return
-//                boolean is = toMain.getBooleanExtra("toSub", false);//传递数据成功
-                toMain.putExtra("toMain", true);
-                setResult(1, toMain);
-            } else {
-                //关闭当前页面，直接跳转到主页
-                Intent intent = new Intent(Subscription.this, MainActivity.class);
-                startActivity(intent);
-                CustomApplication.isReturnMain = true;
-            }
-            super.onBackPressed();
-        }
+        super.onBackPressed();
     }
 }
