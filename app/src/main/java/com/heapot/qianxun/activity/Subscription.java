@@ -6,6 +6,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -378,6 +379,22 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
                 CustomApplication.isReturnMain = true;
             }
             Subscription.this.finish();
+        }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK){
+            Toast.makeText(Subscription.this, "点击返回", Toast.LENGTH_SHORT).show();
+            Logger.d("点击返回键了");
+            if (CustomApplication.isReturnMain) {
+                if (isEmpty) {
+                    Toast.makeText(Subscription.this, "标签不能为空", Toast.LENGTH_SHORT).show();
+                }
+            }
+            return false;
+        }else {
+            return super.onKeyDown(keyCode, event);
         }
     }
 }
