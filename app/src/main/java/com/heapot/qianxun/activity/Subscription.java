@@ -6,6 +6,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
@@ -78,6 +79,7 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
     private void initEvent(){
         //初始化数据
         initData();
+        boolean is = toMain.getBooleanExtra("toSub", false);//传递数据成功
         // 已订阅列表，含拖拽功能
         gridLayoutManager = new GridLayoutManager(this,5){
             @Override
@@ -368,8 +370,7 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
         } else {
             if (CustomApplication.isReturnMain) {
                 //返回的话使用return
-                boolean is = toMain.getBooleanExtra("toSub", false);
-                Logger.d(is);
+//                boolean is = toMain.getBooleanExtra("toSub", false);//传递数据成功
                 toMain.putExtra("toMain", true);
                 setResult(1, toMain);
             } else {
@@ -382,22 +383,6 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
         }
     }
 
-//    @Override
-//    public boolean onKeyDown(int keyCode, KeyEvent event) {
-//        if (keyCode == KeyEvent.KEYCODE_BACK){
-//            Toast.makeText(Subscription.this, "点击返回", Toast.LENGTH_SHORT).show();
-//            Logger.d("点击返回键了");
-//            if (CustomApplication.isReturnMain) {
-//                if (isEmpty) {
-//                    Toast.makeText(Subscription.this, "标签不能为空", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//            return false;
-//        }else {
-//            return super.onKeyDown(keyCode, event);
-//        }
-//    }
-
     @Override
     public void onBackPressed() {
         Logger.d("按下返回键了");
@@ -405,6 +390,10 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
             Toast.makeText(Subscription.this, "至少订阅一项", Toast.LENGTH_SHORT).show();
             Logger.d("至少订阅一项");
         }else{
+
+//            Logger.d("接收到数据为"+is);
+            toMain.putExtra("toMain", true);
+            setResult(1, toMain);
             super.onBackPressed();
         }
     }
