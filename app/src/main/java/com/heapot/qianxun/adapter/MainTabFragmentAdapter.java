@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import com.heapot.qianxun.bean.SubscribedBean;
 import com.heapot.qianxun.fragment.PageFragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,7 +17,7 @@ import java.util.List;
  *
  */
 public class MainTabFragmentAdapter extends FragmentPagerAdapter {
-    private List<SubscribedBean.ContentBean.RowsBean> mList;
+    private List<SubscribedBean.ContentBean.RowsBean> mList = new ArrayList<>();
     private Context mContext;
 
     public MainTabFragmentAdapter(FragmentManager fm, Context context, List<SubscribedBean.ContentBean.RowsBean> list) {
@@ -27,7 +28,7 @@ public class MainTabFragmentAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return PageFragment.newInstance(position+1);
+        return PageFragment.newInstance(position+1,mList.get(position).getId());
     }
 
     @Override

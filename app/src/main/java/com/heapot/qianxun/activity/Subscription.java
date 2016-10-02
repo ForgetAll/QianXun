@@ -42,18 +42,20 @@ import java.util.Map;
 
 /**
  * Created by Karl on 2016/8/29.
- * 订阅列表
+ * 订阅列表，该页面最理想的状态应该是不加载数据，从本地获取
  *
  */
 public class Subscription extends BaseActivity implements View.OnClickListener {
     //全部数据相关
     private RecyclerView tags;
     private List<TagsBean.ContentBean> tagsList = new ArrayList<>();//全部数据
+    private List<TagsBean.ContentBean> checkTagsList = new ArrayList<>();
     private TagsAdapter tagsAdapter;
     private LinearLayoutManager linearLayoutManager;
     //已订阅相关
     private RecyclerView sub;
     private List<SubscribedBean.ContentBean.RowsBean> subscribedList = new ArrayList<>();
+    private List<SubscribedBean.ContentBean.RowsBean> subList = new ArrayList<>();
     private SubAdapter subAdapter;
     private GridLayoutManager gridLayoutManager;
     ItemTouchHelper helper;
@@ -62,6 +64,10 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
     private TextView btnToMain;
     Intent toMain;
     public static boolean isEmpty = true;
+    //加一层过滤
+    private  String CURRENT_PAGE_SC = ConstantsBean.PAGE_SCIENCE;
+    private  String CURRENT_PAGE_RE = ConstantsBean.PAGE_RECRUIT;
+    private  String CURRENT_PAGE_TR = ConstantsBean.PAGE_TRAIN;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -118,7 +124,11 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
         }else {
             tagsList = (List<TagsBean.ContentBean>) getLocalData(ConstantsBean.TAG_FILE_NAME);
             subscribedList = (List<SubscribedBean.ContentBean.RowsBean>) getLocalData(ConstantsBean.SUB_FILE_NAME);
-            initRecycler();
+            if (tagsList.size() == 0 || subscribedList.size() == 0){
+                Toast.makeText(Subscription.this, "本地没有数据", Toast.LENGTH_SHORT).show();
+            }else {
+                initRecycler();
+            }
         }
     }
 
@@ -193,6 +203,33 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
                                 subscribedList.addAll((Collection<? extends SubscribedBean.ContentBean.RowsBean>) object);
                                 Toast.makeText(Subscription.this, "刷新数据失败", Toast.LENGTH_SHORT).show();
                             }
+                            //加一层过滤,
+                            String current = CustomApplication.getCurrentPageName();
+                            int count = tagsList.size();
+                            Logger.d(current+"总数据："+count);
+
+//                            String id_1 = null,id_2 = null,id_3 = null;
+//
+//                            //找出第一级标题
+//                            for (int i = 0; i < count; i++) {
+//                                String pid = tagsList.get(i).getPid().toString();
+//                                String id = tagsList.get(i).getId();
+//                                String codes = tagsList.get(i).getCode();
+//                                if (tagsList.get(i).getPid() == null){
+//                                    switch (codes){
+//                                        case "articles":
+//                                            id_1 = id;
+//                                            break;
+//                                        case "jobs":
+//                                            id_2 = id;
+//                                            break;
+//                                        case "activities":
+//                                            id_3 = id;
+//                                            break;
+//                                    }
+//                                }
+//                            }
+//                            Logger.d("CurrentPage:"+current+",id01:"+id_1);
                             initRecycler();
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -309,6 +346,43 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
      * 初始化列表
      */
     private void initRecycler(){
+
+//        int count = tagsList.size();
+//        if (current.equals(CURRENT_PAGE_SC)){
+//            for (int i = 0; i < count; i++) {
+//                checkTagsList.clear();
+//                if (tagsList.get(i).getCode().equals("articles")){
+//                    String id = tagsList.get(i).getId();
+//                    if (tagsList.get(i).getPid().equals(id)){
+//                        checkTagsList.add(tagsList.get(i));
+//                        Logger.d(""+checkTagsList.get(0).getName());
+//                    }
+//                }
+//            }
+//        }else if (current.equals(CURRENT_PAGE_RE)){
+//            checkTagsList.clear();
+//            for (int i = 0; i < count; i++) {
+//                if (tagsList.get(i).getCode().equals("jobs")){
+//                    String id = tagsList.get(i).getId();
+//                    if (tagsList.get(i).getPid().equals(id)){
+//                        checkTagsList.add(tagsList.get(i));
+//                        Logger.d(""+checkTagsList.get(0).getName());
+//                    }
+//                }
+//            }
+//
+//        }else if (current.equals(CURRENT_PAGE_TR)){
+//            checkTagsList.clear();
+//            for (int i = 0; i < count; i++) {
+//                if (tagsList.get(i).getCode().equals("activities")){
+//                    String id = tagsList.get(i).getId();
+//                    if (tagsList.get(i).getPid().equals(id)){
+//                        checkTagsList.add(tagsList.get(i));
+//                        Logger.d(""+checkTagsList.get(0).getName());
+//                    }
+//                }
+//            }
+//        }
         tagsAdapter = new TagsAdapter(Subscription.this, tagsList);
         tags.setAdapter(tagsAdapter);
         tagsAdapter.notifyDataSetChanged();

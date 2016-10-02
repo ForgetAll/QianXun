@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.heapot.qianxun.fragment.PageFragment;
 import com.heapot.qianxun.fragment.PersonalFirstFragment;
+import com.heapot.qianxun.fragment.PersonalPageFragment;
 
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class PersonalPageAdapter extends FragmentPagerAdapter {
         if (position == 0) {
             return new PersonalFirstFragment();
         } else {
-            return PageFragment.newInstance(position + 1);
+            return PersonalPageFragment.newInstance(position + 1);
         }
 
     }
