@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -18,12 +19,20 @@ import com.blankj.utilcode.utils.NetworkUtils;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
+import com.heapot.qianxun.bean.SubscribedBean;
+import com.heapot.qianxun.helper.SerializableUtils;
 import com.heapot.qianxun.util.CommonUtil;
+import com.heapot.qianxun.util.JsonUtil;
 import com.heapot.qianxun.util.PreferenceUtil;
 import com.orhanobut.logger.Logger;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Karl on 2016/9/17.
@@ -35,7 +44,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private Button login;
 
     private static boolean isShowPass = false;
-
+    private List<SubscribedBean.ContentBean.RowsBean> subList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,13 +130,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                                     PreferenceUtil.putString("token", token);
                                     PreferenceUtil.putString("phone", username);
                                     PreferenceUtil.putString("password", password);
-                                    //跳转页面,同时关闭当前页面
-                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                    startActivity(intent);
-                                    LoginActivity.this.finish();
-                                    Logger.d("parse json ---> token:  " + token);
-
-                                }
+                                    //先验证是否为空
+                                    getSubTags(token);
+                                                                    }
                             } else {
                                 Toast.makeText(LoginActivity.this, "登陆失败" + response.get("message"), Toast.LENGTH_SHORT).show();
                             }
@@ -189,4 +194,58 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         }
     }
 
+    /**
+     * 获取已订阅标签，查询是否为空
+     */
+    private void getSubTags(final String token){
+        String url = ConstantsBean.BASE_PATH+ConstantsBean.GET_SUBSCRIBED;
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            String status = response.getString("status");
+                            if (status.equals("success")){
+                                //获取列表成功，加载列表
+                                SubscribedBean subBean = (SubscribedBean) JsonUtil.fromJson(String.valueOf(response),SubscribedBean.class);
+                                subList.addAll(subBean.getContent().getRows());
+                                SerializableUtils.setSerializable(LoginActivity.this,ConstantsBean.SUB_FILE_NAME,subList);
+                                checkInfo();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }
+        ){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> map = new HashMap<>();
+                map.put(ConstantsBean.KEY_TOKEN,token);
+                return map;
+            }
+        };
+        CustomApplication.getRequestQueue().add(jsonObjectRequest);
+    }
+    private void checkInfo(){
+        int count = subList.size();
+        if (count == 0){
+            //跳转页面,同时关闭当前页面
+            Intent intent = new Intent(LoginActivity.this, Subscription.class);
+            startActivity(intent);
+            LoginActivity.this.finish();
+        }else {
+            //跳转页面,同时关闭当前页面
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+            LoginActivity.this.finish();
+        }
+    }
 }

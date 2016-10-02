@@ -60,7 +60,7 @@ public class MyUserBean implements Serializable{
         this.content = content;
     }
 
-    public static class ContentBean {
+    public static class ContentBean implements Serializable{
         private String loginName;
         private String password;
         private String salt;
@@ -188,7 +188,7 @@ public class MyUserBean implements Serializable{
             this.icon = icon;
         }
 
-        public static class StatusBean {
+        public static class StatusBean implements Serializable {
             private int index;
             private String name;
 

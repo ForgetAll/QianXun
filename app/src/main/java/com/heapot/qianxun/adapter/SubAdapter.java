@@ -68,7 +68,7 @@ public class SubAdapter extends RecyclerView.Adapter<SubAdapter.DragViewHolder> 
 
     @Override
     public void onClick(View v) {
-        if (listener == null){
+        if (listener != null){
             listener.onItemClick(v, (Integer) v.getTag());
         }
     }
