@@ -20,7 +20,7 @@ public class ConstantsBean {
     public static final String BASE_IMAGE_PATH = "http://122.114.85.104:8080/images/classes/res/images/";
 
     public static final String CONFIG_NAME = "config";
-    public static String INFO="info";
+
     //相机拍照请求码
     public static final int CARMA_RESULT_CODE = 101;
     public static final String HEAD_IMAGE_PATH = Environment.getExternalStorageDirectory() + "/headImage.jpg";
@@ -90,6 +90,8 @@ public class ConstantsBean {
     public static final String userImage = "icon";
     public static final String name = "name";
     public static final String nickName = "nickname";
+    public static final String showname="showname";
+    public static String INFO="info";
     //签名目前未定
     public static final String userAutograph = "description";
 
