@@ -156,14 +156,13 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
                                 String nickName = myUserBean.getContent().getNickname();
                                 String name = myUserBean.getContent().getName();
                                 String phone = myUserBean.getContent().getPhone();
-                                if (loginName != null) {
+                                if (loginName != null || !loginName.equals("")) {
                                     mName.setText(loginName);
-                                    Logger.d(loginName);
                                     PreferenceUtil.putString(ConstantsBean.showname, loginName);
-                                } else if (nickName != null) {
+                                } else if (nickName != null || !nickName.equals("")) {
                                     mName.setText(nickName);
                                     PreferenceUtil.putString(ConstantsBean.showname, nickName);
-                                } else if (name != null) {
+                                } else if (name != null || !name.equals("")) {
                                     mName.setText(name);
                                     PreferenceUtil.putString(ConstantsBean.showname, name);
                                 } else {

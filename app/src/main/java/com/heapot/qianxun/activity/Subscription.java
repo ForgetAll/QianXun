@@ -390,10 +390,17 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
             Toast.makeText(Subscription.this, "至少订阅一项", Toast.LENGTH_SHORT).show();
             Logger.d("至少订阅一项");
         }else{
-
-//            Logger.d("接收到数据为"+is);
-            toMain.putExtra("toMain", true);
-            setResult(1, toMain);
+            if (CustomApplication.isReturnMain) {
+                //返回的话使用return
+//                boolean is = toMain.getBooleanExtra("toSub", false);//传递数据成功
+                toMain.putExtra("toMain", true);
+                setResult(1, toMain);
+            } else {
+                //关闭当前页面，直接跳转到主页
+                Intent intent = new Intent(Subscription.this, MainActivity.class);
+                startActivity(intent);
+                CustomApplication.isReturnMain = true;
+            }
             super.onBackPressed();
         }
     }
