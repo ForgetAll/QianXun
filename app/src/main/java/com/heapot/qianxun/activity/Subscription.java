@@ -59,6 +59,7 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
     //加入跳转按钮
     private TextView btnToMain;
     Intent toMain;
+    public static boolean isEmpty = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -339,6 +340,13 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
                 deleteSub(id);
             }
         });
+
+        if (subscribedList.size() == 0){
+            isEmpty = true;
+
+        }else {
+            isEmpty = false;
+        }
     }
 
     /**
@@ -353,20 +361,23 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        Logger.d(CustomApplication.isReturnMain);
-        if (CustomApplication.isReturnMain){
-            //返回的话使用return
-            boolean is = toMain.getBooleanExtra("toSub",false);
-            Logger.d(is);
-            toMain.putExtra("toMain",true);
-            setResult(1,toMain);
-        }else {
-            //关闭当前页面，直接跳转到主页
-            Intent intent = new Intent(Subscription.this,MainActivity.class);
-
-            startActivity(intent);
-            CustomApplication.isReturnMain = true;
+        Logger.d("订阅标签是否为空"+isEmpty);
+        if (isEmpty) {
+            Toast.makeText(Subscription.this, "至少订阅一项", Toast.LENGTH_SHORT).show();
+        } else {
+            if (CustomApplication.isReturnMain) {
+                //返回的话使用return
+                boolean is = toMain.getBooleanExtra("toSub", false);
+                Logger.d(is);
+                toMain.putExtra("toMain", true);
+                setResult(1, toMain);
+            } else {
+                //关闭当前页面，直接跳转到主页
+                Intent intent = new Intent(Subscription.this, MainActivity.class);
+                startActivity(intent);
+                CustomApplication.isReturnMain = true;
+            }
+            Subscription.this.finish();
         }
-        Subscription.this.finish();
     }
 }

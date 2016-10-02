@@ -100,7 +100,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private void initEvent() {
         initData();
-//        getUserInfo();
         //状态栏和抽屉效果
         mToolBar.setTitle("");
         setSupportActionBar(mToolBar);
@@ -120,9 +119,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         //一些基本的初始化数据
         mainTitle.setText("学术");
         subTitle.setText("招聘 培训");
-
-
     }
+
 
     /**
      * 初始化数据
@@ -140,7 +138,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 Toast.makeText(MainActivity.this, "没网没数据怎么办", Toast.LENGTH_SHORT).show();
             }
         }
-
     }
     private void getSubscriptionTags(){
         String url = ConstantsBean.BASE_PATH+ConstantsBean.GET_SUBSCRIBED;
@@ -154,18 +151,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                             if (status.equals("success")){
                                 SubscribedBean subscribedBean = (SubscribedBean) JsonUtil.fromJson(String.valueOf(response),SubscribedBean.class);
                                 String name = subscribedBean.getContent().getRows().get(0).getName();
-                                Logger.d(name);
                                 mList.clear();
                                 for (int i = 0; i < subscribedBean.getContent().getRows().size(); i++) {
                                     if (subscribedBean.getContent().getRows().get(i) != null){
                                         mList.add(subscribedBean.getContent().getRows().get(i));
                                     }
                                 }
-//                                mList.addAll(subscribedBean.getContent().getRows());
-                                SerializableUtils.setSerializable(MainActivity.this,ConstantsBean.SUB_FILE_NAME,mList);
+                                SerializableUtils.setSerializable(MainActivity.this, ConstantsBean.SUB_FILE_NAME, mList);
                                 initTab();
                             }else {
-                                Toast.makeText(MainActivity.this, "加载数据失败,我也不知道咋办了", Toast.LENGTH_SHORT).show();
                                 Logger.d(response.get("message"));
                             }
                         } catch (JSONException e) {
@@ -297,7 +291,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Logger.d("返回的数据"+data.getBooleanExtra("toMain",false));
         if (requestCode == 0 && resultCode == 1){
-            initData();//刷新数据
+//            initData();//刷新数据
             Logger.d("主页→Tags→主页：刷新了");
         }else {
             Logger.d("没有刷新数据");
