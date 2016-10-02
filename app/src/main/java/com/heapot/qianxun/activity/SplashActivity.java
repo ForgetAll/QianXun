@@ -8,6 +8,7 @@ import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -16,11 +17,16 @@ import com.blankj.utilcode.utils.NetworkUtils;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
+import com.heapot.qianxun.bean.SubscribedBean;
+import com.heapot.qianxun.util.JsonUtil;
 import com.heapot.qianxun.util.PreferenceUtil;
 import com.orhanobut.logger.Logger;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Karl on 2016/9/19.
@@ -66,14 +72,14 @@ public class SplashActivity extends BaseActivity {
                intentToActivity(0);
             } else {
                 String url = ConstantsBean.BASE_PATH + ConstantsBean.LOGIN + "?loginName=" + name + "&password=" + pass;
-                postLoginClient(url);
+                postLogin(url);
             }
         }else {
             Toast.makeText(SplashActivity.this, "网络连接不可用", Toast.LENGTH_SHORT).show();
             intentToActivity(0);
         }
     }
-    private void postLoginClient(String url){
+    private void postLogin(String url){
         JsonObjectRequest jsonObject = new JsonObjectRequest(
                 Request.Method.POST,url,null,
                 new Response.Listener<JSONObject>() {
@@ -131,10 +137,12 @@ public class SplashActivity extends BaseActivity {
                 SplashActivity.this.finish();
                 break;
             case 1:
-                intent = new Intent(SplashActivity.this, MainActivity.class);
+//                intent = new Intent(SplashActivity.this, MainActivity.class);
+                intent = new Intent(SplashActivity.this, Subscription.class);
                 startActivity(intent);
                 SplashActivity.this.finish();
                 break;
         }
     }
+
 }
