@@ -17,6 +17,8 @@ import java.util.List;
 
 /**
  * Created by Karl on 2016/9/13.
+ * description： 创建项目页面
+ *
  */
 public class CreateActivity extends BaseActivity {
     private RecyclerView createGridView;
@@ -75,27 +77,8 @@ public class CreateActivity extends BaseActivity {
         list.add("创建课程");
         adapter = new CreateAdapter(this,list);
     }
-    /**
-     * 验证本地是否有管理员账号，如果有，直接登陆，否则跳转管理员登陆
-     */
-    private void adminLogin(){
-        String adminName = PreferenceUtil.getString("adminName");
-        String adminPassword = PreferenceUtil.getString("adminPassword");
-        if (adminName.equals("") || adminPassword.equals("")){
-            //本地有账户密码，直接登陆获取token
 
-        }else {
-            //本地没有账户密码，跳转登陆页面，要求用户以管理员身份登陆
-            Intent intent = new Intent(CreateActivity.this,AdminLoginActivity.class);
-            startActivity(intent);
-        }
-    }
-    /**
-     * 管理员登陆
-     */
-    private void postAdminLogin(){
 
-    }
 
 
 
