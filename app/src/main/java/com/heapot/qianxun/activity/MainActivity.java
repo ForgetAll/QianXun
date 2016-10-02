@@ -291,7 +291,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Logger.d("返回的数据"+data.getBooleanExtra("toMain",false));
         if (requestCode == 0 && resultCode == 1){
-//            initData();//刷新数据
+            initData();//刷新数据
             Logger.d("主页→Tags→主页：刷新了");
         }else {
             Logger.d("没有刷新数据");
