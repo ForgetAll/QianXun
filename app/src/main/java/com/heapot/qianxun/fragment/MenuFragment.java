@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,41 +61,6 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         return mMenuView;
     }
 
-    private void getData() {
-
-        if (!TextUtils.isEmpty(PreferenceUtil.getString(ConstantsBean.userImage))) {
-            CommonUtil.loadImage(mIcon, PreferenceUtil.getString(ConstantsBean.userImage), R.drawable.imagetest);
-        } else {
-            mIcon.setImageResource(R.drawable.imagetest);
-        }
-
-        //  mName.setText(PreferenceUtil.getString(ConstantsBean.nickName));
-        // mQuote.setText(PreferenceUtil.getString(ConstantsBean.userAutograph));
-
-    }
-
-   /* @Override
-    public void onResume() {
-        super.onResume();
-        String url=ConstantsBean.BASE_PATH + ConstantsBean.PERSONAL_INFO;
-        Ion.with(getContext()).load(url).as(MyUserBean.class).setCallback(new FutureCallback<MyUserBean>() {
-            @Override
-            public void onCompleted(Exception e, MyUserBean result) {
-                if (result != null && result.getStatus().equals("success")) {
-                    MyUserBean.ContentBean useBean = result.getContent();
-                    LogUtils.e("userBean:", result.toString());
-                    PreferenceUtil.putString(ConstantsBean.userImage, useBean.getIcon());
-                    PreferenceUtil.putString(ConstantsBean.USER_ID, useBean.getId());
-                    PreferenceUtil.putString(ConstantsBean.email, useBean.getEmail());
-                    PreferenceUtil.putString(ConstantsBean.loginTime, useBean.getLoginName());
-                    PreferenceUtil.putString(ConstantsBean.name, useBean.getName());
-                    PreferenceUtil.putString(ConstantsBean.nickName, useBean.getNickname());
-                    PreferenceUtil.putString(ConstantsBean.userAutograph, useBean.getDescription());
-
-                }
-            }
-        });
-    }*/
 
     private void initView() {
         mIcon = (ImageView) mMenuView.findViewById(R.id.iv_menu_image);
@@ -124,13 +88,30 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initData() {
-        MyUserBean.ContentBean userBean = new MyUserBean.ContentBean();
-
         Object object = getLocalInfo(ConstantsBean.MY_USER_INFO);
         if (object != null) {
             MyUserBean myUserBean = (MyUserBean) object;
-            mName.setText(myUserBean.getContent().getLoginName());
-            mQuote.setText(myUserBean.getContent().getId());
+            if (myUserBean.getContent().getDescription() != null) {
+                mQuote.setText(myUserBean.getContent().getDescription());
+                PreferenceUtil.putString(ConstantsBean.userAutograph, mQuote.toString());
+            } else {
+                mQuote.setText("请设置签名");
+                PreferenceUtil.putString(ConstantsBean.userAutograph, "请设置签名");
+            }
+            String nickName = myUserBean.getContent().getNickname();
+            if (nickName!=null){
+                mName.setText(nickName);
+                PreferenceUtil.putString(ConstantsBean.showname, nickName);
+            }else {
+                mName.setText("请设置昵称");
+                PreferenceUtil.putString(ConstantsBean.showname, "请设置昵称");
+            }
+            if (myUserBean.getContent().getIcon()!=null){
+                CommonUtil.loadImage(mIcon,myUserBean.getContent().getIcon(),R.drawable.imagetest);
+                PreferenceUtil.putString(ConstantsBean.userImage,myUserBean.getContent().getIcon());
+            }else {
+                mIcon.setImageResource(R.drawable.imagetest);
+            }
         } else {
             getUserInfo();
         }
@@ -152,29 +133,8 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
                             if (status.equals("success")) {
                                 MyUserBean myUserBean = (MyUserBean) JsonUtil.fromJson(String.valueOf(response), MyUserBean.class);
                                 SerializableUtils.setSerializable(getContext(), ConstantsBean.MY_USER_INFO, myUserBean);
-                                String loginName = myUserBean.getContent().getLoginName();
-                                String nickName = myUserBean.getContent().getNickname();
-                                String name = myUserBean.getContent().getName();
-                                String phone = myUserBean.getContent().getPhone();
-                                if (loginName != null || !loginName.equals("")) {
-                                    mName.setText(loginName);
-                                    PreferenceUtil.putString(ConstantsBean.showname, loginName);
-                                } else if (nickName != null || !nickName.equals("")) {
-                                    mName.setText(nickName);
-                                    PreferenceUtil.putString(ConstantsBean.showname, nickName);
-                                } else if (name != null || !name.equals("")) {
-                                    mName.setText(name);
-                                    PreferenceUtil.putString(ConstantsBean.showname, name);
-                                } else {
-                                    mName.setText(phone);
-                                    PreferenceUtil.putString(ConstantsBean.showname, phone);
-                                }
-                                mQuote.setText(myUserBean.getContent().getId());
-                                if (!TextUtils.isEmpty(PreferenceUtil.getString(ConstantsBean.userImage))) {
-                                    CommonUtil.loadImage(mIcon, PreferenceUtil.getString(ConstantsBean.userImage), R.drawable.imagetest);
-                                } else {
-                                    mIcon.setImageResource(R.drawable.imagetest);
-                                }
+
+
                             } else {
                                 Toast.makeText(getContext(), response.getString("message"), Toast.LENGTH_SHORT).show();
                                 Logger.d(response.getString("message"));

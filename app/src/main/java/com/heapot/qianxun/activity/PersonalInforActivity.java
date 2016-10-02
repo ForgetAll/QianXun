@@ -21,7 +21,8 @@ import android.widget.TextView;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
-import com.heapot.qianxun.bean.UserBean;
+import com.heapot.qianxun.bean.MyUserBean;
+import com.heapot.qianxun.bean.UploadBean;
 import com.heapot.qianxun.util.CommonUtil;
 import com.heapot.qianxun.util.FileUploadTask;
 import com.heapot.qianxun.util.JsonUtil;
@@ -30,9 +31,6 @@ import com.heapot.qianxun.util.ToastUtil;
 import com.heapot.qianxun.widget.PhotoCarmaWindow;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.File;
 
@@ -57,18 +55,21 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
         public boolean handleMessage(Message msg) {
             String resutlt = (String) msg.obj;
             if (!TextUtils.isEmpty(resutlt)) {
-                //{"stateCode":200,"data":"284434b8-c795-48b6-9426-b092fc7c8a6f.jpg"}
-                JSONObject object = null;
-                try {
-                    object = new JSONObject(resutlt);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                if (object.optInt("stateCode") == 200) {
-                    String path = object.optString("data");
-                    CommonUtil.loadImage(mHead, ConstantsBean.BASE_IMAGE_PATH + path, R.mipmap.imagetest);
+                /*{
+                "content": {
+                    "code": "yes",
+                            "tip": "上传成功",
+                            "url": "http://odxpoei6h.bkt.clouddn.com/qianxun57ee46f0873f2.jpg"
+                },
+                "return_code": "success"
+            }*/
+                UploadBean uploadBean = (UploadBean) JsonUtil.fromJson(String.valueOf(resutlt),UploadBean.class);
+           String return_code= uploadBean.getReturn_code();
+                if (return_code.equals("success")) {
+                    String path = uploadBean.getContent().getUrl();
+                    CommonUtil.loadImage(mHead, path, R.mipmap.imagetest);
                     //修改用户头像路径
-                    updateUserInfo(ConstantsBean.userImage, ConstantsBean.BASE_IMAGE_PATH + path);
+                    updateUserInfo(ConstantsBean.userImage, path);
                 }
             }
             return false;
@@ -103,12 +104,12 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
     }
 
     private void initEvent() {
-        /*nick = PreferenceUtil.getString(ConstantsBean.nickNme);
+        nick = PreferenceUtil.getString(ConstantsBean.nickName);
         autograph = PreferenceUtil.getString(ConstantsBean.userAutograph);
         mNick.setText(nick);
         mAutograph.setText(autograph);
         String imagePath = PreferenceUtil.getString(ConstantsBean.userImage);
-        CommonUtil.loadImage(mHead, imagePath, R.mipmap.imagetest);*/
+        CommonUtil.loadImage(mHead, imagePath, R.mipmap.imagetest);
     }
 //toolbar
     private void setTransparentBar() {
@@ -162,30 +163,30 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
      */
     private void updateUserInfo(final String key, final String info) {
 
-        UserBean userBean = new UserBean();
-        userBean.setUserId(userId);
+        MyUserBean.ContentBean userBean=new MyUserBean.ContentBean();
+        userBean.setId(userId);
         switch (requestCode) {
             //昵称
             case 201:
-                userBean.setUserNick(info);
+                userBean.setNickname(info);
                 break;
             //签名
             case 202:
-                userBean.setUserAutograph(info);
+                userBean.setDescription(info);
                 break;
             //头像
             case 203:
-                userBean.setUserImage(info);
+                userBean.setIcon(info);
                 break;
 
         }
         String data = JsonUtil.toJson(userBean);
         //发送数据
-        Ion.with(this).load(ConstantsBean.BASE_PATH + ConstantsBean.UPLOAD).setHeader(ConstantsBean.KEY_TOKEN, CustomApplication.TOKEN).setStringBody(data).asString().setCallback(new FutureCallback<String>() {
+        Ion.with(this).load(ConstantsBean.UPLOAD).setHeader(ConstantsBean.KEY_TOKEN, CustomApplication.TOKEN).setStringBody(data).asString().setCallback(new FutureCallback<String>() {
             @Override
             public void onCompleted(Exception e, String result) {
                 if (!TextUtils.isEmpty(result)) {
-                    if (result.contains("200")) {
+                    if (result.contains("success")) {
                         switch (requestCode) {
                             //昵称
                             case 201:
@@ -215,7 +216,7 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
     //上传头像
     private void uploadImageFile(File file) {
         FileUploadTask task = new FileUploadTask(this, handler, file);
-        task.execute(ConstantsBean.BASE_PATH + ConstantsBean.UPLOAD);
+        task.execute(ConstantsBean.UPLOAD);
     }
     //裁剪图片
     private void cropImage(Uri uri) {
