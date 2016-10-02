@@ -91,7 +91,10 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         Object object = getLocalInfo(ConstantsBean.MY_USER_INFO);
         if (object != null) {
             MyUserBean myUserBean = (MyUserBean) object;
-            if (myUserBean.getContent().getDescription() != null) {
+            if (PreferenceUtil.getString(ConstantsBean.userAutograph)!=null){
+                mQuote.setText(PreferenceUtil.getString(ConstantsBean.userAutograph));
+            }
+           else if (myUserBean.getContent().getDescription() != null) {
                 mQuote.setText(myUserBean.getContent().getDescription());
                 PreferenceUtil.putString(ConstantsBean.userAutograph, mQuote.toString());
             } else {
@@ -101,10 +104,10 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
             String nickName = myUserBean.getContent().getNickname();
             if (nickName!=null){
                 mName.setText(nickName);
-                PreferenceUtil.putString(ConstantsBean.showname, nickName);
+                PreferenceUtil.putString(ConstantsBean.nickName, nickName);
             }else {
                 mName.setText("请设置昵称");
-                PreferenceUtil.putString(ConstantsBean.showname, "请设置昵称");
+                PreferenceUtil.putString(ConstantsBean.nickName, "请设置昵称");
             }
             if (myUserBean.getContent().getIcon()!=null){
                 CommonUtil.loadImage(mIcon,myUserBean.getContent().getIcon(),R.drawable.imagetest);

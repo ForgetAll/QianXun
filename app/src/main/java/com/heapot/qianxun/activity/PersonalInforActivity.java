@@ -31,6 +31,7 @@ import com.heapot.qianxun.util.ToastUtil;
 import com.heapot.qianxun.widget.PhotoCarmaWindow;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
+import com.orhanobut.logger.Logger;
 
 import java.io.File;
 
@@ -53,7 +54,9 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
     private Handler handler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
+            Logger.d(msg);
             String resutlt = (String) msg.obj;
+            Logger.d(resutlt);
             if (!TextUtils.isEmpty(resutlt)) {
                 /*{
                 "content": {
@@ -64,7 +67,7 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
                 "return_code": "success"
             }*/
                 UploadBean uploadBean = (UploadBean) JsonUtil.fromJson(String.valueOf(resutlt),UploadBean.class);
-           String return_code= uploadBean.getReturn_code();
+                 String return_code= uploadBean.getReturn_code();
                 if (return_code.equals("success")) {
                     String path = uploadBean.getContent().getUrl();
                     CommonUtil.loadImage(mHead, path, R.mipmap.imagetest);
@@ -105,11 +108,21 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
 
     private void initEvent() {
         nick = PreferenceUtil.getString(ConstantsBean.nickName);
+        if (nick!=null){
+            mNick.setText(nick);
+        }else {
+            mNick.setText("请设置昵称");
+        }
         autograph = PreferenceUtil.getString(ConstantsBean.userAutograph);
         mNick.setText(nick);
         mAutograph.setText(autograph);
         String imagePath = PreferenceUtil.getString(ConstantsBean.userImage);
-        CommonUtil.loadImage(mHead, imagePath, R.mipmap.imagetest);
+        if (imagePath!=null){
+            CommonUtil.loadImage(mHead, imagePath, R.mipmap.imagetest);
+        }else {
+            mHead.setImageResource(R.drawable.imagetest);
+        }
+
     }
 //toolbar
     private void setTransparentBar() {
