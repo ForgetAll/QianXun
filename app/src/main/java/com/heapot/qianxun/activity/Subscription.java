@@ -49,13 +49,11 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
     //全部数据相关
     private RecyclerView tags;
     private List<TagsBean.ContentBean> tagsList = new ArrayList<>();//全部数据
-    private List<TagsBean.ContentBean> checkTagsList = new ArrayList<>();
     private TagsAdapter tagsAdapter;
     private LinearLayoutManager linearLayoutManager;
     //已订阅相关
     private RecyclerView sub;
     private List<SubscribedBean.ContentBean.RowsBean> subscribedList = new ArrayList<>();
-    private List<SubscribedBean.ContentBean.RowsBean> subList = new ArrayList<>();
     private SubAdapter subAdapter;
     private GridLayoutManager gridLayoutManager;
     ItemTouchHelper helper;
@@ -64,10 +62,6 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
     private TextView btnToMain;
     Intent toMain;
     public static boolean isEmpty = true;
-    //加一层过滤
-    private  String CURRENT_PAGE_SC = ConstantsBean.PAGE_SCIENCE;
-    private  String CURRENT_PAGE_RE = ConstantsBean.PAGE_RECRUIT;
-    private  String CURRENT_PAGE_TR = ConstantsBean.PAGE_TRAIN;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -207,29 +201,6 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
                             String current = CustomApplication.getCurrentPageName();
                             int count = tagsList.size();
                             Logger.d(current+"总数据："+count);
-
-//                            String id_1 = null,id_2 = null,id_3 = null;
-//
-//                            //找出第一级标题
-//                            for (int i = 0; i < count; i++) {
-//                                String pid = tagsList.get(i).getPid().toString();
-//                                String id = tagsList.get(i).getId();
-//                                String codes = tagsList.get(i).getCode();
-//                                if (tagsList.get(i).getPid() == null){
-//                                    switch (codes){
-//                                        case "articles":
-//                                            id_1 = id;
-//                                            break;
-//                                        case "jobs":
-//                                            id_2 = id;
-//                                            break;
-//                                        case "activities":
-//                                            id_3 = id;
-//                                            break;
-//                                    }
-//                                }
-//                            }
-//                            Logger.d("CurrentPage:"+current+",id01:"+id_1);
                             initRecycler();
                         } catch (JSONException e) {
                             e.printStackTrace();
