@@ -29,7 +29,9 @@ import com.heapot.qianxun.R;
 import com.heapot.qianxun.adapter.MainTabFragmentAdapter;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
+import com.heapot.qianxun.bean.SubBean;
 import com.heapot.qianxun.bean.SubscribedBean;
+import com.heapot.qianxun.bean.TagsBean;
 import com.heapot.qianxun.helper.SerializableUtils;
 import com.heapot.qianxun.util.JsonUtil;
 import com.heapot.qianxun.util.PreferenceUtil;
@@ -53,7 +55,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private ViewPager mViewPager;
     private MainTabFragmentAdapter mPageAdapter;
 
-    private List<SubscribedBean.ContentBean.RowsBean> mList;
+    private List<SubBean> mList = new ArrayList<>();
+    private List<TagsBean.ContentBean> list = new ArrayList<>();
 
     private FloatingActionButton mCreate;
 
@@ -62,6 +65,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private static final String PAGE_SCIENCE = "PAGE_SCIENCE";
     private static final String PAGE_RECRUIT = "PAGE_RECRUIT";
     private static final String PAGE_TRAIN = "PAGE_TRAIN";
+    private int page = 0;
+    private String pid = CustomApplication.PAGE_ARTICLES_ID;
 
     //主页界面
     @Override
@@ -93,6 +98,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         subTitle = (TextView) findViewById(R.id.txt_second_title);
 
         mList = new ArrayList<>();
+        switch (CustomApplication.getCurrentPageName()){
+            case "PAGE_SCIENCE":
+                page = 0;
+                pid = CustomApplication.PAGE_ARTICLES_ID;
+                break;
+            case "PAGE_RECRUIT":
+                page = 1;
+                pid = CustomApplication.PAGE_JOBS_ID;
+                break;
+            case "PAGE_TRAIN":
+                page = 2;
+                pid = CustomApplication.PAGE_ACTIVITIES_ID;
+                break;
+        }
 
         //测试token
         Logger.d("打印本地token-->"+PreferenceUtil.getString("token")+"打印application中的token---》"+ CustomApplication.TOKEN);
@@ -126,62 +145,45 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
      * 初始化数据
      */
     private void initData(){
-        boolean isConnected = NetworkUtils.isAvailable(this);
-        if (isConnected){
-            getSubscriptionTags();
-        }else {
-            Object object = SerializableUtils.getSerializable(MainActivity.this, ConstantsBean.SUB_FILE_NAME);
-            if (object != null) {
-                mList.addAll((Collection<? extends SubscribedBean.ContentBean.RowsBean>) object);
-                initTab();
-            } else {
-                Toast.makeText(MainActivity.this, "没网没数据怎么办", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-    private void getSubscriptionTags(){
-        String url = ConstantsBean.BASE_PATH+ConstantsBean.GET_SUBSCRIBED;
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                Request.Method.GET, url, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            String status = response.getString("status");
-                            if (status.equals("success")){
-                                SubscribedBean subscribedBean = (SubscribedBean) JsonUtil.fromJson(String.valueOf(response),SubscribedBean.class);
-                                String name = subscribedBean.getContent().getRows().get(0).getName();
-                                mList.clear();
-                                for (int i = 0; i < subscribedBean.getContent().getRows().size(); i++) {
-                                    if (subscribedBean.getContent().getRows().get(i) != null){
-                                        mList.add(subscribedBean.getContent().getRows().get(i));
-                                    }
-                                }
-                                SerializableUtils.setSerializable(MainActivity.this, ConstantsBean.SUB_FILE_NAME, mList);
-                                initTab();
-                            }else {
-                                Logger.d(response.get("message"));
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+        Object object = SerializableUtils.getSerializable(MainActivity.this, ConstantsBean.TAG_FILE_NAME);
+        if (object != null) {
+            list.addAll((Collection<? extends TagsBean.ContentBean>) object);//获取所有数据
+            List<Integer> posList = new ArrayList<>();
+            //获取指定二级标题的pos
+            for (int i = 0; i < list.size(); i++) {
+                switch (page){
+                    case 0:
+                        if (list.get(i).getPid() != null && list.get(i).getPid().equals(CustomApplication.PAGE_ARTICLES_ID) && list.get(i).getSubscribeStatus() == 1){
+                            posList.add(i);
                         }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(MainActivity.this, "服务器出错了！", Toast.LENGTH_SHORT).show();
-                    }
+                        break;
+                    case 1:
+                        if (list.get(i).getPid() != null && list.get(i).getPid().equals(CustomApplication.PAGE_JOBS_ID) && list.get(i).getSubscribeStatus() == 1){
+                            posList.add(i);
+                        }
+                        break;
+                    case 2:
+                        if (list.get(i).getPid() != null && list.get(i).getPid().equals(CustomApplication.PAGE_ACTIVITIES_ID) && list.get(i).getSubscribeStatus() == 1){
+                            posList.add(i);
+                        }
+                        break;
                 }
-        ){
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String,String> map = new HashMap<>();
-                map.put(ConstantsBean.KEY_TOKEN,CustomApplication.TOKEN);
-                return map;
             }
-        };
-        CustomApplication.getRequestQueue().add(jsonObjectRequest);
+            //获取指定页面的二级标题赋值给mList
+            SubBean subBean;
+            for (int i = 0; i < posList.size(); i++) {
+                subBean = new SubBean();
+                subBean.setId(list.get(posList.get(i)).getId());
+                subBean.setPid(list.get(posList.get(i)).getPid().toString());
+                subBean.setName(list.get(posList.get(i)).getName());
+                subBean.setStatus(list.get(posList.get(i)).getSubscribeStatus());
+                mList.add(subBean);
+            }
+            Logger.d("本地拿到的所有数据大小list："+list.size()+",当前页面："+page+",拿到的数据mList："+mList.size());
+            initTab();
+        } else {
+
+        }
     }
 
 
@@ -217,9 +219,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case R.id.iv_subscription_choose:
                 Intent intent = new Intent(this, Subscription.class);
-                CustomApplication.isReturnMain = true;
-                intent.putExtra("toSub",true);
-                startActivityForResult(intent,0);
+                startActivity(intent);
                 break;
             case R.id.fab_create:
                 Intent createIntent = new Intent(this,CreateActivity.class);
@@ -285,16 +285,5 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             return false;
         }
         return super.onKeyDown(keyCode, event);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Logger.d("返回的数据"+data.getBooleanExtra("toMain",false));
-        if (requestCode == 0 && resultCode == 1){
-            initData();//刷新数据
-            Logger.d("主页→Tags→主页：刷新了");
-        }else {
-            Logger.d("没有刷新数据");
-        }
     }
 }

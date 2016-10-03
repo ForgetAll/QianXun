@@ -73,6 +73,12 @@
         <activity android:name=".activity.SystemUserHelpActivity"></activity>
         <!--修改密码-->
         <activity android:name=".activity.SystemChangePassword"></activity>
+        <!--对广播接收器进行注册-->
+        <receiver android:name=".broadcast.RefreshReceiver">
+            <intent-filter>
+                <action android:name="com.karl.refresh"></action>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

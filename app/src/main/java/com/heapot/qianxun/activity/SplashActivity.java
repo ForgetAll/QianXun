@@ -42,6 +42,7 @@ public class SplashActivity extends BaseActivity {
             @Override
             public void onAnimationStart(Animation animation) {
                 imageView.setImageResource(R.drawable.splash);
+
             }
 
             @Override
@@ -93,7 +94,7 @@ public class SplashActivity extends BaseActivity {
                                     //设置跳转到主页-->学术页面
                                     CustomApplication.setCurrentPage(ConstantsBean.PAGE_SCIENCE);
                                     //跳转页面,同时关闭当前页面
-                                    LoadTagsUtils.getSubTags(SplashActivity.this,token);
+                                    LoadTagsUtils.getTags(SplashActivity.this,token);
                                 }
                             }else {
                                 Toast.makeText(SplashActivity.this, "登陆失败，请重新登陆", Toast.LENGTH_SHORT).show();

@@ -40,7 +40,7 @@ public class LoadTagsUtils {
      */
     public static void getTags(final Context context, final String token){
 
-        String url = ConstantsBean.BASE_PATH + ConstantsBean.ORG_CODE+ConstantsBean.CATALOGS;
+        String url = ConstantsBean.BASE_PATH + ConstantsBean.CATALOGS;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.GET,url, null,
                 new Response.Listener<JSONObject>() {

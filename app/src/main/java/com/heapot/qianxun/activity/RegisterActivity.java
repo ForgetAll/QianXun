@@ -277,7 +277,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                                     CustomApplication.TOKEN = token;
                                     CustomApplication.setCurrentPage(ConstantsBean.PAGE_SCIENCE);
                                     //注册成功，跳转页面
-                                    LoadTagsUtils.getSubTags(RegisterActivity.this,token);
+                                    LoadTagsUtils.getTags(RegisterActivity.this,token);
                                     //关闭登录和注册页面，因为开始只有这两个活动，完全可以使用finishAll()
 //                                    ActivityCollector.finishAll();
                                 }

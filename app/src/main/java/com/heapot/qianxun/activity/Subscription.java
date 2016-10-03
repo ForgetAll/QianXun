@@ -54,7 +54,6 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
     private LinearLayoutManager linearLayoutManager;
     //已订阅相关
     private RecyclerView sub;
-//    private List<SubscribedBean.ContentBean.RowsBean> subscribedList = new ArrayList<>();
     private List<SubBean> subList = new ArrayList<>();
     private SubAdapter subAdapter;
     private GridLayoutManager gridLayoutManager;
@@ -64,6 +63,7 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
     int page = 0;
     //加入跳转按钮
     private TextView btnToMain;
+    int sum = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,10 +99,12 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
             }
         };
         sub.setLayoutManager(gridLayoutManager);
+        subAdapter = new SubAdapter(Subscription.this,subList);
         sub.setAdapter(subAdapter);
         ItemTouchHelper.Callback callback = new ItemTouchHelperCallback(subAdapter);
         helper = new ItemTouchHelper(callback);
         helper.attachToRecyclerView(sub);
+
 
         // 全部标签列表，不可拖拽
         linearLayoutManager = new LinearLayoutManager(this){
@@ -112,8 +114,96 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
             }
         };
         tags.setLayoutManager(linearLayoutManager);
+        tagsAdapter = new TagsAdapter(Subscription.this,tagsList);
+        tags.setAdapter(tagsAdapter);
         //添加点击监听事件
         btnToMain.setOnClickListener(this);
+        tagsAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Toast.makeText(Subscription.this, "点击了", Toast.LENGTH_SHORT).show();
+                String id = tagsList.get(position).getId();
+                int status = tagsList.get(position).getSubscribeStatus();
+                if (status == 0){
+                    tagsList.get(position).setSubscribeStatus(1);
+                    //SubList,添加
+                    SubBean subBean = new SubBean();
+                    subBean.setId(tagsList.get(position).getId());
+                    subBean.setPid(tagsList.get(position).getPid().toString());
+                    subBean.setName(tagsList.get(position).getName());
+                    subBean.setStatus(tagsList.get(position).getSubscribeStatus());
+                    subList.add(subBean);
+                    //还需要更新list，找出相同id的数据在list的下标
+                    int count = 0;
+                    for (int i = 0; i < list.size(); i++) {
+                        if (list.get(i).getId().equals(id)){
+                            count = i;
+                        }
+                    }
+                    list.get(count).setSubscribeStatus(1);//修改指定地方的状态
+                    Logger.d(list.get(count).getName()+list.get(count).getSubscribeStatus());
+                }else if (status == 1){
+                    tagsList.get(position).setSubscribeStatus(0);
+                    //删除数据联动,找到SubList中相同id的数据下标
+                    int count = 0;
+                    for (int i = 0; i < subList.size(); i++) {
+                        if (subList.get(i).getId().equals(id)){
+                            count = i;
+                        }
+                    }
+                    subList.remove(count);//删除指定下标的数据
+                    //还需要更新list，原理同上
+                    int count2 = 0;
+                    for (int i = 0; i < list.size(); i++) {
+                        if (list.get(i).getId().equals(id)){
+                            count2 = i;
+                        }
+                    }
+                    list.get(count2).setSubscribeStatus(0);
+                }
+                //加载数据源并更新数据
+                sub.setAdapter(subAdapter);
+                subAdapter.notifyDataSetChanged();
+                tags.setAdapter(tagsAdapter);
+                tagsAdapter.notifyDataSetChanged();
+                //重新进行本地数据存储
+                SerializableUtils.setSerializable(Subscription.this,ConstantsBean.TAG_FILE_NAME,list);
+
+            }
+        });
+
+        subAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+
+                Toast.makeText(Subscription.this, "点击了"+(sum++), Toast.LENGTH_SHORT).show();
+                //实现联动
+                String id = subList.get(position).getId();
+                int pos = 0;
+                for (int i = 0; i < tagsList.size(); i++) {
+                    if (tagsList.get(i).getId().equals(id)){
+                        pos = i;
+                    }
+                }
+                tagsList.get(pos).setSubscribeStatus(0);
+                tags.setAdapter(tagsAdapter);
+                tagsAdapter.notifyDataSetChanged();
+
+                //还需要更新list
+                int pos2 = 0;
+                for (int i = 0; i < list.size(); i++) {
+                    if (list.get(i).getId().equals(id)){
+                        pos2 = i;
+                    }
+                }
+                list.get(pos2).setSubscribeStatus(0);
+                SerializableUtils.setSerializable(Subscription.this,ConstantsBean.TAG_FILE_NAME,list);//重新存储
+                //自身也要删除
+                subList.remove(position);
+                sub.setAdapter(subAdapter);
+                subAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
     /**
@@ -127,17 +217,17 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
         for (int i = 0; i < list.size(); i++) {
             switch (page){
                 case 0:
-                    if (list.get(i).getPid() != null || list.get(i).getCode().equals("articles")){
+                    if (list.get(i).getPid() != null && list.get(i).getPid().equals(CustomApplication.PAGE_ARTICLES_ID)){
                         posList.add(i);
                     }
                     break;
                 case 1:
-                    if (list.get(i).getPid() != null || list.get(i).getCode().equals("jobs")){
+                    if (list.get(i).getPid() != null && list.get(i).getPid().equals(CustomApplication.PAGE_JOBS_ID)){
                         posList.add(i);
                     }
                     break;
                 case 2:
-                    if (list.get(i).getPid() != null || list.get(i).getCode().equals("activities")){
+                    if (list.get(i).getPid() != null && list.get(i).getPid().equals(CustomApplication.PAGE_ACTIVITIES_ID)){
                         posList.add(i);
                     }
                     break;
@@ -160,112 +250,20 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
                 subList.add(subBean);
             }
         }
-        initRecycler();
+        Logger.d("所有数据List："+list.size()+",当前二级标题:"+tagsList.size()+"，已订阅二级标题"+subList.size());
     }
-    /**
-     * 初始化列表
-     */
-    private void initRecycler(){
-        tagsAdapter = new TagsAdapter(Subscription.this, tagsList);
-        tags.setAdapter(tagsAdapter);
-        tagsAdapter.notifyDataSetChanged();
-
-//        subAdapter = new SubAdapter(Subscription.this,subscribedList);
-        subAdapter = new SubAdapter(Subscription.this,subList);
-        sub.setAdapter(subAdapter);
-        subAdapter.notifyDataSetChanged();
-
-        tagsAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                String id = tagsList.get(position).getId();
-                int status = tagsList.get(position).getSubscribeStatus();
-                if (status == 0){
-                    tagsList.get(position).setSubscribeStatus(1);
-                    //同步SubList
-                    SubBean subBean = new SubBean();
-                    subBean.setId(tagsList.get(position).getId());
-                    subBean.setPid(tagsList.get(position).getPid().toString());
-                    subBean.setName(tagsList.get(position).getName());
-                    subBean.setStatus(tagsList.get(position).getSubscribeStatus());
-                    subList.add(subBean);
-                    //还需要更新list
-                    int count = 0;
-                    for (int i = 0; i < list.size(); i++) {
-                        if (list.get(i).getId().equals(id)){
-                            count = i;
-                        }
-                    }
-                    list.get(count).setSubscribeStatus(1);
-                }else if (status == 1){
-                    tagsList.get(position).setSubscribeStatus(0);
-                    //删除数据联动
-                    int count = 0;
-                    for (int i = 0; i < subList.size(); i++) {
-                        if (subList.get(i).getId().equals(id)){
-                            count = i;
-                        }
-                    }
-                    subList.remove(count);
-                    //还需要更新list
-                    int count2 = 0;
-                    for (int i = 0; i < list.size(); i++) {
-                        if (list.get(i).getId().equals(id)){
-                            count2 = i;
-                        }
-                    }
-                    list.get(count2).setSubscribeStatus(1);
-                }
-                subAdapter = new SubAdapter(Subscription.this,subList);
-                subAdapter.notifyDataSetChanged();
-                tagsAdapter = new TagsAdapter(Subscription.this,tagsList);
-                tagsAdapter.notifyDataSetChanged();
-                //刷新以后改变本地数据存储
-                SerializableUtils.setSerializable(Subscription.this,ConstantsBean.TAG_FILE_NAME,list);
-
-            }
-        });
-        subAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                //实现联动
-                String id = subList.get(position).getId();
-                int pos = 0;
-                int count = tagsList.size();
-                for (int i = 0; i < count; i++) {
-                    if (tagsList.get(i).getId().equals(id)){
-                        pos = i;
-                    }
-                }
-                tagsList.get(pos).setSubscribeStatus(0);
-                tagsAdapter = new TagsAdapter(Subscription.this,tagsList);
-                tagsAdapter.notifyDataSetChanged();
-
-                //还需要更新list
-                int pos2 = 0;
-                for (int i = 0; i < list.size(); i++) {
-                    if (list.get(i).getId().equals(id)){
-                        pos2 = i;
-                    }
-                }
-                list.get(pos2).setSubscribeStatus(0);
-                SerializableUtils.setSerializable(Subscription.this,ConstantsBean.TAG_FILE_NAME,list);
-                //自身也要删除
-                subList.remove(position);
-                subAdapter = new SubAdapter(Subscription.this,subList);
-                subAdapter.notifyDataSetChanged();
-            }
-        });
-    }
-
     @Override
     public void onClick(View v) {
-       //点击click的时候将页面改动进行存储，同时发送广播进行刷新
+        //点击click的时候将页面改动进行存储，同时发送广播进行刷新
+        Intent  intent = new Intent("com.karl.refresh");
+        sendBroadcast(intent);
 
     }
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+//        super.onBackPressed();
+        Subscription.this.finish();
     }
+
 }

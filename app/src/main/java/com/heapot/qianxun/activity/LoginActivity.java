@@ -131,7 +131,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                                     PreferenceUtil.putString("token", token);
                                     PreferenceUtil.putString("phone", username);
                                     PreferenceUtil.putString("password", password);
-                                    LoadTagsUtils.getSubTags(LoginActivity.this,token);//加载数据并存储
+                                    LoadTagsUtils.getTags(LoginActivity.this,token);//加载数据并存储
                                                                     }
                             } else {
                                 Toast.makeText(LoginActivity.this, "登陆失败" + response.get("message"), Toast.LENGTH_SHORT).show();
