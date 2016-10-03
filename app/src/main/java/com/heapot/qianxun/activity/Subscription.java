@@ -2,6 +2,7 @@ package com.heapot.qianxun.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -60,7 +61,7 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
     ItemTouchHelper helper;
     //全部数据集合
     List<TagsBean.ContentBean> list = new ArrayList<>();
-    int page = 0;
+    private String pid = CustomApplication.PAGE_ARTICLES_ID;
     //加入跳转按钮
     private TextView btnToMain;
     List<SubBean> oldSubList = new ArrayList<>();
@@ -76,17 +77,7 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
         sub = (RecyclerView) findViewById(R.id.rv_drag);
         tags = (RecyclerView) findViewById(R.id.rv_content);
         btnToMain = (TextView) findViewById(R.id.btn_close_subscription);
-        switch (CustomApplication.getCurrentPageName()){
-            case "PAGE_SCIENCE":
-                page =0;
-                break;
-            case "PAGE_RECRUIT":
-                page = 1;
-                break;
-            case "PAGE_TRAIN":
-                page = 2;
-                break;
-        }
+
     }
     private void initEvent(){
         //初始化数据
@@ -208,27 +199,25 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
      * 初始化数据:从本地获取
      */
     private void initData(){
+        //判断当前页面是什么
+        switch (CustomApplication.getCurrentPageName()){
+            case "PAGE_SCIENCE":
+                pid = CustomApplication.PAGE_ARTICLES_ID;
+                break;
+            case "PAGE_RECRUIT":
+                pid = CustomApplication.PAGE_JOBS_ID;
+                break;
+            case "PAGE_TRAIN":
+                pid = CustomApplication.PAGE_ACTIVITIES_ID;
+                break;
+        }
         Object objTags =  SerializableUtils.getSerializable(Subscription.this,ConstantsBean.TAG_FILE_NAME);
         list.addAll((Collection<? extends TagsBean.ContentBean>) objTags);
         List<Integer> posList = new ArrayList<>();
-        //获取指定二级标题
+        //获取当前页面的二级标题
         for (int i = 0; i < list.size(); i++) {
-            switch (page){
-                case 0:
-                    if (list.get(i).getPid() != null && list.get(i).getPid().equals(CustomApplication.PAGE_ARTICLES_ID)){
-                        posList.add(i);
-                    }
-                    break;
-                case 1:
-                    if (list.get(i).getPid() != null && list.get(i).getPid().equals(CustomApplication.PAGE_JOBS_ID)){
-                        posList.add(i);
-                    }
-                    break;
-                case 2:
-                    if (list.get(i).getPid() != null && list.get(i).getPid().equals(CustomApplication.PAGE_ACTIVITIES_ID)){
-                        posList.add(i);
-                    }
-                    break;
+            if (list.get(i).getPid() != null && list.get(i).getPid().equals(pid)){
+                posList.add(i);
             }
         }
         //将获取到的二级标题赋给TagsList
@@ -265,27 +254,43 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void onBackPressed() {
-        if (isUpdate()) {
-            //点击click的时候将页面改动进行存储，同时发送广播进行刷新
-            Intent intent = new Intent("com.karl.refresh");
-            sendBroadcast(intent);
-            Subscription.this.finish();
-        }else {
-            super.onBackPressed();
-        }
-
+//        if (isUpdate()) {
+//            //点击click的时候将页面改动进行存储，同时发送广播进行刷新
+//            Intent intent = new Intent("com.karl.refresh");
+////            sendBroadcast(intent);
+//            LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(this);
+//            localBroadcastManager.sendBroadcast(intent);//发送本地广播
+//            Subscription.this.finish();
+//        }else {
+//            super.onBackPressed();
+//        }
+        Intent intent = new Intent("com.karl.refresh");
+        intent.putExtra("sub","新增三个订阅");
+        intent.putExtra("del","删除三个订阅");
+        LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(this);
+        localBroadcastManager.sendBroadcast(intent);//发送本地广播
+        super.onBackPressed();
     }
     private boolean isUpdate(){
         boolean isUpdate;
-        int newCount = subList.size();
-        int oldCount = oldSubList.size();
-        int count =0;
+        //考虑到位置不同的因素，所以进行下列筛选
+        int newCount = subList.size();//新数据大小
+        int oldCount = oldSubList.size();//旧数据大小
+        int count =0;//计数君，记录发生变化的数据有多少
+        List<Integer> listInNew = new ArrayList<>();//新集合中没变的对象下标
+        List<Integer> listInOld = new ArrayList<>();//旧集合中没有变化的对象下标
+
         if (newCount == oldCount){
             //数量相同不能确定数据是否更新了
             for (int i = 0; i < newCount; i++) {
                 for (int j = 0; j < oldCount; j++) {
+                    //拿新集合的数据去旧的集合比较，有的表示没变化，没有的表示是新增加的
                     if (subList.get(i).getId().equals(oldSubList.get(j).getId())){
                         count++;
+                        //记录新集合相对旧集合中没有变化的对象的position
+                        listInNew.add(i);
+                        //旧集合逐一和新集合比较，没有的就是删除的，有的就是不变的
+                        listInOld.add(j);
                     }
                 }
             }
@@ -298,6 +303,16 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
         }else {
             //数量不同一定更新数据了
             isUpdate =true;
+        }
+        //如果需要刷新数据
+        //本地存储的时候，记得区分当前是什么页面的标签
+        String current = CustomApplication.getCurrentPageName();
+        if (current.equals(ConstantsBean.PAGE_SCIENCE)){
+
+        }else if (current.equals(ConstantsBean.PAGE_RECRUIT)){
+
+        }else if (current.equals(ConstantsBean.PAGE_TRAIN)){
+
         }
         return isUpdate;
     }

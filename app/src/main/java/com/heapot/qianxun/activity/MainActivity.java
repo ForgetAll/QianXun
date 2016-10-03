@@ -1,12 +1,16 @@
 package com.heapot.qianxun.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -19,32 +23,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.blankj.utilcode.utils.NetworkUtils;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.adapter.MainTabFragmentAdapter;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.bean.SubBean;
-import com.heapot.qianxun.bean.SubscribedBean;
 import com.heapot.qianxun.bean.TagsBean;
 import com.heapot.qianxun.helper.SerializableUtils;
-import com.heapot.qianxun.util.JsonUtil;
 import com.heapot.qianxun.util.PreferenceUtil;
 import com.orhanobut.logger.Logger;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
     private DrawerLayout mDrawerLayout;
@@ -54,19 +45,19 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private ImageView mSubscription, mSearch, mNotification, mStar;
     private ViewPager mViewPager;
     private MainTabFragmentAdapter mPageAdapter;
-
     private List<SubBean> mList = new ArrayList<>();
     private List<TagsBean.ContentBean> list = new ArrayList<>();
-
     private FloatingActionButton mCreate;
-
     private TextView mainTitle,subTitle;
-
     private static final String PAGE_SCIENCE = "PAGE_SCIENCE";
     private static final String PAGE_RECRUIT = "PAGE_RECRUIT";
     private static final String PAGE_TRAIN = "PAGE_TRAIN";
-    private int page = 0;
     private String pid = CustomApplication.PAGE_ARTICLES_ID;
+
+    //本地广播尝试
+    private IntentFilter intentFilter;
+    private RefreshReceiver refreshReceiver;
+    private LocalBroadcastManager localBroadcastManager;
 
     //主页界面
     @Override
@@ -98,20 +89,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         subTitle = (TextView) findViewById(R.id.txt_second_title);
 
         mList = new ArrayList<>();
-        switch (CustomApplication.getCurrentPageName()){
-            case "PAGE_SCIENCE":
-                page = 0;
-                pid = CustomApplication.PAGE_ARTICLES_ID;
-                break;
-            case "PAGE_RECRUIT":
-                page = 1;
-                pid = CustomApplication.PAGE_JOBS_ID;
-                break;
-            case "PAGE_TRAIN":
-                page = 2;
-                pid = CustomApplication.PAGE_ACTIVITIES_ID;
-                break;
-        }
+        //注册本地广播
+        localReceiver();
 
         //测试token
         Logger.d("打印本地token-->"+PreferenceUtil.getString("token")+"打印application中的token---》"+ CustomApplication.TOKEN);
@@ -140,34 +119,48 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         subTitle.setText("招聘 培训");
     }
 
+    /**
+     * 本地广播接收
+     */
+    private void localReceiver(){
+        localBroadcastManager = LocalBroadcastManager.getInstance(this);//获取实例
+        intentFilter = new IntentFilter();
+        intentFilter.addAction("com.karl.refresh");
+        refreshReceiver = new RefreshReceiver();
+        localBroadcastManager.registerReceiver(refreshReceiver,intentFilter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        localBroadcastManager.unregisterReceiver(refreshReceiver);
+    }
 
     /**
      * 初始化数据
      */
     private void initData(){
+        switch (CustomApplication.getCurrentPageName()){
+            case "PAGE_SCIENCE":
+                pid = CustomApplication.PAGE_ARTICLES_ID;
+                break;
+            case "PAGE_RECRUIT":
+                pid = CustomApplication.PAGE_JOBS_ID;
+                break;
+            case "PAGE_TRAIN":
+                pid = CustomApplication.PAGE_ACTIVITIES_ID;
+                break;
+        }
         Object object = SerializableUtils.getSerializable(MainActivity.this, ConstantsBean.TAG_FILE_NAME);
         if (object != null) {
             list.addAll((Collection<? extends TagsBean.ContentBean>) object);//获取所有数据
             List<Integer> posList = new ArrayList<>();
             //获取指定二级标题的pos
             for (int i = 0; i < list.size(); i++) {
-                switch (page){
-                    case 0:
-                        if (list.get(i).getPid() != null && list.get(i).getPid().equals(CustomApplication.PAGE_ARTICLES_ID) && list.get(i).getSubscribeStatus() == 1){
-                            posList.add(i);
-                        }
-                        break;
-                    case 1:
-                        if (list.get(i).getPid() != null && list.get(i).getPid().equals(CustomApplication.PAGE_JOBS_ID) && list.get(i).getSubscribeStatus() == 1){
-                            posList.add(i);
-                        }
-                        break;
-                    case 2:
-                        if (list.get(i).getPid() != null && list.get(i).getPid().equals(CustomApplication.PAGE_ACTIVITIES_ID) && list.get(i).getSubscribeStatus() == 1){
-                            posList.add(i);
-                        }
-                        break;
+                if (list.get(i).getPid() != null && list.get(i).getPid().equals(pid) && list.get(i).getSubscribeStatus() == 1){
+                    posList.add(i);
                 }
+
             }
             //获取指定页面的二级标题赋值给mList
             SubBean subBean;
@@ -179,7 +172,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 subBean.setStatus(list.get(posList.get(i)).getSubscribeStatus());
                 mList.add(subBean);
             }
-            Logger.d("本地拿到的所有数据大小list："+list.size()+",当前页面："+page+",拿到的数据mList："+mList.size());
+            Logger.d("本地拿到的所有数据大小list："+list.size()+",当前页面id："+pid+",拿到的数据mList："+mList.size());
             initTab();
         } else {
 
@@ -285,5 +278,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             return false;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    /**
+     * 广播接收器
+     */
+    class RefreshReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String post = intent.getExtras().getString("sub");
+            String del = intent.getExtras().getString("del");
+            Toast.makeText(context, "刷新订阅数据"+post+","+del, Toast.LENGTH_SHORT).show();
+        }
     }
 }
