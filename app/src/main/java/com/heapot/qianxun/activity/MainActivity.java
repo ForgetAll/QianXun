@@ -286,9 +286,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     class RefreshReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            String post = intent.getExtras().getString("sub");
-            String del = intent.getExtras().getString("del");
-            Toast.makeText(context, "刷新订阅数据"+post+","+del, Toast.LENGTH_SHORT).show();
+            String[] post = intent.getExtras().getStringArray("post");
+            String[] del = intent.getExtras().getStringArray("post");
+            if (post.length == 0){
+                Toast.makeText(context, "post为空", Toast.LENGTH_SHORT).show();
+            }
+            if (del.length == 0){
+                Toast.makeText(context, "del为空", Toast.LENGTH_SHORT).show();
+            }
+            initData();
         }
     }
 }

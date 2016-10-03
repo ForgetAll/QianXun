@@ -36,6 +36,7 @@ import com.orhanobut.logger.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -243,78 +244,180 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
     }
     @Override
     public void onClick(View v) {
-        if (isUpdate()) {
-            //点击click的时候将页面改动进行存储，同时发送广播进行刷新
-            Intent intent = new Intent("com.karl.refresh");
-            sendBroadcast(intent);
-        }
-        Subscription.this.finish();
+//        if (isUpdate()) {
+//            //点击click的时候将页面改动进行存储，同时发送广播进行刷新
+//            Intent intent = new Intent("com.karl.refresh");
+//            sendBroadcast(intent);
+//        }
+//        Subscription.this.finish();
 
     }
 
     @Override
     public void onBackPressed() {
-//        if (isUpdate()) {
-//            //点击click的时候将页面改动进行存储，同时发送广播进行刷新
-//            Intent intent = new Intent("com.karl.refresh");
-////            sendBroadcast(intent);
-//            LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(this);
-//            localBroadcastManager.sendBroadcast(intent);//发送本地广播
-//            Subscription.this.finish();
-//        }else {
-//            super.onBackPressed();
-//        }
-        Intent intent = new Intent("com.karl.refresh");
-        intent.putExtra("sub","新增三个订阅");
-        intent.putExtra("del","删除三个订阅");
-        LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(this);
-        localBroadcastManager.sendBroadcast(intent);//发送本地广播
-        super.onBackPressed();
+
+        int status = isUpdate();
+        switch (status){
+            case 0://不需要刷新
+                super.onBackPressed();
+                break;
+            case 1:
+                updateData(1);
+                break;
+            case 2:
+                updateData(2);
+                break;
+            case 3:
+                updateData(3);
+                break;
+        }
     }
-    private boolean isUpdate(){
-        boolean isUpdate;
+
+    /**
+     * 判断是否刷新
+     * @return 0-不刷新，1-只提交更新，2-只提交删除，3-更新和删除都要提交
+     */
+    private int isUpdate() {
+        int status;
         //考虑到位置不同的因素，所以进行下列筛选
         int newCount = subList.size();//新数据大小
         int oldCount = oldSubList.size();//旧数据大小
-        int count =0;//计数君，记录发生变化的数据有多少
-        List<Integer> listInNew = new ArrayList<>();//新集合中没变的对象下标
-        List<Integer> listInOld = new ArrayList<>();//旧集合中没有变化的对象下标
-
-        if (newCount == oldCount){
-            //数量相同不能确定数据是否更新了
+        int count = 0;
+        if (newCount == 0 && oldCount == 0) {
+            //初始值和结束值都为0，不需要刷新
+            status = 0;
+        } else if (newCount == 0 && oldCount != 0) {
+            //初始值为0，结束不为零，说明需要提交订阅
+            status = 1;
+        } else if (newCount != 0 && oldCount == 0) {
+            //初始值不为零，结束为零，说明需要删除
+            status = 2;
+        } else {
+            //初始不为零，结束也不为零，需要另外判断
+            //求出来交集数量,与新旧总数各自对比
             for (int i = 0; i < newCount; i++) {
                 for (int j = 0; j < oldCount; j++) {
-                    //拿新集合的数据去旧的集合比较，有的表示没变化，没有的表示是新增加的
-                    if (subList.get(i).getId().equals(oldSubList.get(j).getId())){
+                    if (subList.get(i).getId().equals(oldSubList.get(j).getId())) {
                         count++;
-                        //记录新集合相对旧集合中没有变化的对象的position
-                        listInNew.add(i);
-                        //旧集合逐一和新集合比较，没有的就是删除的，有的就是不变的
-                        listInOld.add(j);
                     }
                 }
             }
-            //每找到相同的就计数一次，如果最后相同的次数等于总数，那说明数据没有变化.加入排序以后不能这么玩。。。
-            if (count == newCount){
-                isUpdate = false;
-            }else {
-                isUpdate = true;
+            if (count == 0){
+                //新旧数据完全不一样，那肯定是完全变化了，返回3
+                status = 3 ;
+            }else {//有交集，交集不为零
+                if (newCount == oldCount){
+                    //新旧数据一样多，
+                    if (count == oldCount){
+                        //这种情况说明没有变化
+                        status = 0;
+                    }else {
+                        //总数相同，交集比总数少，那肯定多出来的就是需要提交和取消的，而且数量相同
+                        status = 3;
+                    }
+                }else if (newCount > oldCount){
+                    if (count == oldCount){
+                        //最小值是oldCount，等于交集，说明没有取消的都是增加的
+                        status =1;
+                    }else if (count < oldCount){
+                        //交集比最小的小，那肯定有取消的有增加的，而且增加的比取消的多
+                        status = 3;
+                    }else {
+                        status=0;//这个实际是没用的，因为交集只能小于等于集合
+                    }
+                }else{
+                    if (count == newCount){
+                        status = 2;//全都是取消的
+                    }else if (count < newCount){
+                        status = 3;//有取消的有新增的，取消的比新增的多
+                    }else {
+                        status=0;//这个实际是没用的，因为交集只能小于等于集合
+                    }
+                }
             }
-        }else {
-            //数量不同一定更新数据了
-            isUpdate =true;
-        }
-        //如果需要刷新数据
-        //本地存储的时候，记得区分当前是什么页面的标签
-        String current = CustomApplication.getCurrentPageName();
-        if (current.equals(ConstantsBean.PAGE_SCIENCE)){
-
-        }else if (current.equals(ConstantsBean.PAGE_RECRUIT)){
-
-        }else if (current.equals(ConstantsBean.PAGE_TRAIN)){
 
         }
-        return isUpdate;
+        return status;
     }
+    //拿出需要提交订阅的数据
+    private void updateData(int n) {
+        List<SubBean> listForPost = new ArrayList<>();
+        List<SubBean> listForDel = new ArrayList<>();
+        listForPost.addAll(subList);
+        listForDel.addAll(oldSubList);
+        int newCount = listForPost.size();//新数据大小
+        int oldCount = listForDel.size();//旧数据大小
+        switch (n){
+            case 1:
+                //只有更新没有取消，那就说明交集就是old数据，
+                if (oldCount != 0){//这时候求出来交集最重要
+                    List<Integer> postList = new ArrayList<>();
+                    for (int i = 0; i < newCount; i++) {
+                        for (int j = 0; j < oldCount; j++) {
+                            if (listForPost.get(i).getId().equals(listForDel.get(i).getId())){
+                                postList.add(i);
+                            }
+                        }
+                    }
+                    //取出来交集的下标，删除就好
+                    for (int i = 0; i < postList.size(); i++) {
+                        listForPost.remove(postList.get(i));
+                    }
+
+                }else {
+                    //旧数据为零，就不用改动新数据了，全都是新的
+                }
+                break;
+            case 2:
+                //只有取消没有更新，那肯定交集就是new数据
+                if (newCount != 0){
+                    List<Integer> delList = new ArrayList<>();
+                    for (int i = 0; i < oldCount; i++) {
+                        for (int j = 0; j < newCount; j++) {
+                            if (listForDel.get(i).getId().equals(listForPost.get(i).getId())){
+                                delList.add(i);
+                            }
+                        }
+                    }
+                    for (int i = 0; i < delList.size(); i++) {
+                        listForDel.remove(delList.get(i));
+                    }
+                }
+                break;
+            case 3:
+                //有取消有更新，两者都不为0的时候有取消有更新
+                List<Integer> pList = new ArrayList<>();
+                List<Integer> dList = new ArrayList<>();
+                for (int i = 0; i < oldCount; i++) {
+                    for (int j = 0; j < newCount; j++) {
+                        if (listForDel.get(i).getId().equals(listForPost.get(i).getId())){
+                            pList.add(j);
+                            dList.add(i);
+                        }
+                    }
+                }
+                for (int i = 0; i < pList.size(); i++) {
+                    listForPost.remove(pList.get(i));
+                }
+                for (int i = 0; i < dList.size(); i++) {
+                    listForDel.remove(dList.get(i));
+                }
+                break;
+        }
+
+    }
+
+    /**
+     * 发送广播
+     */
+    private void sendBroadcast(int n){
+        //发送广播并关闭页面
+        Intent intent = new Intent("com.karl.refresh");
+        intent.putExtra("status",0);
+        LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(this);
+        localBroadcastManager.sendBroadcast(intent);//发送本地广播
+        Subscription.this.finish();
+    }
+
 
 }
