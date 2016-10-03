@@ -77,9 +77,13 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void initData() {
-        String nick = PreferenceUtil.getString(ConstantsBean.showname);
+       String nick = PreferenceUtil.getString(ConstantsBean.nickName);
+        if (nick!=null){
+            mName.setText(nick);
+        }else {
+            mName.setText("请设置昵称");
+        }
         String autograph = PreferenceUtil.getString(ConstantsBean.userAutograph);
-        mName.setText(nick);
         mSign.setText(autograph);
         if (!TextUtils.isEmpty(PreferenceUtil.getString(ConstantsBean.userImage))) {
             CommonUtil.loadImage(mHeadUrl, PreferenceUtil.getString(ConstantsBean.userImage), R.drawable.imagetest);
