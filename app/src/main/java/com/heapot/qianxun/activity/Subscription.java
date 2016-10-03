@@ -63,7 +63,7 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
     int page = 0;
     //加入跳转按钮
     private TextView btnToMain;
-    int sum = 0;
+    List<SubBean> oldSubList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -175,8 +175,6 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
         subAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-
-                Toast.makeText(Subscription.this, "点击了"+(sum++), Toast.LENGTH_SHORT).show();
                 //实现联动
                 String id = subList.get(position).getId();
                 int pos = 0;
@@ -250,20 +248,58 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
                 subList.add(subBean);
             }
         }
+        //存储已订阅标签
+        oldSubList.addAll(subList);
         Logger.d("所有数据List："+list.size()+",当前二级标题:"+tagsList.size()+"，已订阅二级标题"+subList.size());
     }
     @Override
     public void onClick(View v) {
-        //点击click的时候将页面改动进行存储，同时发送广播进行刷新
-        Intent  intent = new Intent("com.karl.refresh");
-        sendBroadcast(intent);
+        if (isUpdate()) {
+            //点击click的时候将页面改动进行存储，同时发送广播进行刷新
+            Intent intent = new Intent("com.karl.refresh");
+            sendBroadcast(intent);
+        }
+        Subscription.this.finish();
 
     }
 
     @Override
     public void onBackPressed() {
-//        super.onBackPressed();
-        Subscription.this.finish();
+        if (isUpdate()) {
+            //点击click的时候将页面改动进行存储，同时发送广播进行刷新
+            Intent intent = new Intent("com.karl.refresh");
+            sendBroadcast(intent);
+            Subscription.this.finish();
+        }else {
+            super.onBackPressed();
+        }
+
+    }
+    private boolean isUpdate(){
+        boolean isUpdate;
+        int newCount = subList.size();
+        int oldCount = oldSubList.size();
+        int count =0;
+        if (newCount == oldCount){
+            //数量相同不能确定数据是否更新了
+            for (int i = 0; i < newCount; i++) {
+                for (int j = 0; j < oldCount; j++) {
+                    if (subList.get(i).getId().equals(oldSubList.get(j).getId())){
+                        count++;
+                    }
+                }
+            }
+            //每找到相同的就计数一次，如果最后相同的次数等于总数，那说明数据没有变化.加入排序以后不能这么玩。。。
+            if (count == newCount){
+                isUpdate = false;
+            }else {
+                isUpdate = true;
+            }
+        }else {
+            //数量不同一定更新数据了
+            isUpdate =true;
+        }
+        return isUpdate;
     }
 
 }
