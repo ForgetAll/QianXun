@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp">
+        <TextView
+            android:id="@+id/tv_phoneTite"
+            android:layout_width="wrap_content"
+            android:layout_height="56dp"
+            android:text="手机号码："
+            android:textSize="20sp"
+            android:gravity="center_vertical"
+            android:paddingLeft="12dp"/>
+        <TextView
+            android:id="@+id/tv_phoneNumber"
+            android:layout_toRightOf="@+id/tv_phoneTite"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textSize="20sp"
+            android:gravity="center_vertical"
+           />
+    </RelativeLayout>
+
+
+</LinearLayout>

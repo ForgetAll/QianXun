@@ -12,8 +12,7 @@ public class ConstantsBean {
     public static final String BASE_PATH = "https://qinxi1992.xicp.net/";
     //更新
     public static final String UPDATE = "/user/update";
-    //文件上传
-    public static final String UPLOAD = "/file/upload";
+
     //查询软件(版本更新)
     public static final String APP_SELECT = "/app/select";
     //图片基本路径
@@ -72,6 +71,8 @@ public class ConstantsBean {
     public  static  final  String CHECK_PWD="/user/checkPwd?oldPassword=";
     //修改密码
     public  static  final  String UPDATE_PWD="/user/updatePwd?oldPassword=";
+    //文件上传接口
+    public  static  final  String UPLOAD="http://114.215.252.158/qiniu/upload.php";
 
 
 

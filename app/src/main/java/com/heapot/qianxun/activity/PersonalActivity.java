@@ -8,6 +8,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -17,6 +18,10 @@ import android.widget.TextView;
 
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.adapter.PersonalPageAdapter;
+import com.heapot.qianxun.bean.ConstantsBean;
+import com.heapot.qianxun.util.CommonUtil;
+import com.heapot.qianxun.util.PreferenceUtil;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,6 +77,17 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void initData() {
+        String nick = PreferenceUtil.getString(ConstantsBean.showname);
+        String autograph = PreferenceUtil.getString(ConstantsBean.userAutograph);
+        mName.setText(nick);
+        mSign.setText(autograph);
+        if (!TextUtils.isEmpty(PreferenceUtil.getString(ConstantsBean.userImage))) {
+            CommonUtil.loadImage(mHeadUrl, PreferenceUtil.getString(ConstantsBean.userImage), R.drawable.imagetest);
+        } else {
+            mHeadUrl.setImageResource(R.drawable.imagetest);
+        }
+        Logger.d(mSign);
+        Logger.d(mHeadUrl);
 
         for (int i = 0; i < 1; i++) {
             mList.add("Tab-" + i);
@@ -79,6 +95,7 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
         initTab();
 
     }
+
     private void initTab() {
         mPersonalPageAdapter = new PersonalPageAdapter(getSupportFragmentManager(), this, mList);
         mViewPager.setAdapter(mPersonalPageAdapter);

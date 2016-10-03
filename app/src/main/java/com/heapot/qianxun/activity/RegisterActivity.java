@@ -20,6 +20,7 @@ import com.heapot.qianxun.application.ActivityCollector;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.util.CommonUtil;
+import com.heapot.qianxun.util.LoadTagsUtils;
 import com.heapot.qianxun.util.PreferenceUtil;
 import com.orhanobut.logger.Logger;
 
@@ -276,12 +277,9 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                                     CustomApplication.TOKEN = token;
                                     CustomApplication.setCurrentPage(ConstantsBean.PAGE_SCIENCE);
                                     //注册成功，跳转页面
-                                    Intent intent = new Intent(RegisterActivity.this,Subscription.class);
-                                    startActivity(intent);
-                                    CustomApplication.isReturnMain =false;
+                                    LoadTagsUtils.getTags(RegisterActivity.this,token);
                                     //关闭登录和注册页面，因为开始只有这两个活动，完全可以使用finishAll()
-                                    ActivityCollector.finishAll();
-                                    Logger.d("parse json ---> token:  " + token);
+//                                    ActivityCollector.finishAll();
                                 }
                             } else {
                                 Toast.makeText(RegisterActivity.this, "登陆失败" + response.get("message"), Toast.LENGTH_SHORT).show();
