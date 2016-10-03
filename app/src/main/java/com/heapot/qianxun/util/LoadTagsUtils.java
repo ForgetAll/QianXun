@@ -32,13 +32,14 @@ import java.util.Map;
  *
  */
 public class LoadTagsUtils {
-    private static List<SubscribedBean.ContentBean.RowsBean> subList = new ArrayList<>();
-    private List<TagsBean.ContentBean> tagsList = new ArrayList<>();
+    static List<SubscribedBean.ContentBean.RowsBean> subList = new ArrayList<>();
+    static List<TagsBean.ContentBean> tagsList = new ArrayList<>();
     /**
      * 加载全部标签并存储到本地，加载成功以后请求加载已订阅标签
      * @param token token
      */
-    private void getTags(final Context context, final String token){
+    public static void getTags(final Context context, final String token){
+
         String url = ConstantsBean.BASE_PATH + ConstantsBean.ORG_CODE+ConstantsBean.CATALOGS;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.GET,url, null,
@@ -52,7 +53,27 @@ public class LoadTagsUtils {
                                 TagsBean jsonBean = (TagsBean) JsonUtil.fromJson(String.valueOf(response), TagsBean.class);
                                 tagsList.addAll(jsonBean.getContent());
                                 SerializableUtils.setSerializable(context, ConstantsBean.TAG_FILE_NAME, tagsList);
-                                getSubTags(context,token);
+                                List<Integer> posList = new ArrayList<>();
+                                //获取三个主页的id
+                                for (int i = 0; i < tagsList.size(); i++) {
+                                    if (tagsList.get(i).getPid() == null){
+                                        posList.add(i);
+                                    }
+                                }
+                                for (int i = 0; i < posList.size(); i++) {
+                                    if (tagsList.get(i).getCode().equals("articles")){
+                                        CustomApplication.PAGE_ARTICLES_ID = tagsList.get(posList.get(i)).getId();
+                                    }else if (tagsList.get(i).equals("jobs")){
+                                        CustomApplication.PAGE_JOBS_ID =  tagsList.get(posList.get(i)).getId();
+                                    }else if (tagsList.get(i).getCode().equals("activities")){
+                                        CustomApplication.PAGE_ACTIVITIES_ID = tagsList.get(posList.get(i)).getId();
+                                    }
+                                }
+                                Logger.d("所有数据List："+tagsList.size()+"，获取到的主页id下标集合POSList："+posList.size());
+//                                getSubTags(context,token);
+                                Intent intent = new Intent(context,MainActivity.class);
+                                context.startActivity(intent);
+                                ActivityCollector.finishAll();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
