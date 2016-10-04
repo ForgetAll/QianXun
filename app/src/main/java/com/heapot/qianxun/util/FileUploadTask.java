@@ -49,6 +49,6 @@ public class FileUploadTask extends AsyncTask<String, Void, String> {
         Message msg = Message.obtain();
         msg.obj = o;
         handler.sendMessage(msg);
-        Log.e("result:", o + "");
+        Log.e("result:", o );
     }
 }

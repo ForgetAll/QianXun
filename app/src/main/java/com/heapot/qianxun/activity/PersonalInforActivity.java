@@ -22,7 +22,6 @@ import com.heapot.qianxun.R;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.bean.MyUserBean;
-import com.heapot.qianxun.bean.UploadBean;
 import com.heapot.qianxun.util.CommonUtil;
 import com.heapot.qianxun.util.FileUploadTask;
 import com.heapot.qianxun.util.JsonUtil;
@@ -31,7 +30,9 @@ import com.heapot.qianxun.util.ToastUtil;
 import com.heapot.qianxun.widget.PhotoCarmaWindow;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
-import com.orhanobut.logger.Logger;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 
@@ -50,14 +51,31 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
     private String nick;
     private String autograph;
     private RelativeLayout mBottomSet;
-    private TextView mCarmaView,mPhotoView;
+    private TextView mCarmaView, mPhotoView;
     private Handler handler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
-            Logger.d(msg);
             String resutlt = (String) msg.obj;
-            Logger.d(resutlt);
+            Log.d("上传头像返回数据", resutlt);
             if (!TextUtils.isEmpty(resutlt)) {
+                JSONObject jsonObject = null;
+                try {
+                    jsonObject = new JSONObject(resutlt);
+                    Log.e("jsonObject", String.valueOf(jsonObject));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                if (jsonObject.optString("return_code").equals("success")) {
+                    try {
+                        JSONObject content = jsonObject.getJSONObject("content");
+                        String path = content.getString("url");
+                        Log.e("上传头像返回的数据", path);
+                        //Glide.with(activity).load(path).into(mHead);
+                        CommonUtil.loadImage(mHead, path + "", R.mipmap.imagetest);
+                        updateUserInfo(ConstantsBean.userImage, path);
+                    } catch (JSONException e) {
+                    }
+                }
                 /*{
                 "content": {
                     "code": "yes",
@@ -66,14 +84,6 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
                 },
                 "return_code": "success"
             }*/
-                UploadBean uploadBean = (UploadBean) JsonUtil.fromJson(String.valueOf(resutlt),UploadBean.class);
-                 String return_code= uploadBean.getReturn_code();
-                if (return_code.equals("success")) {
-                    String path = uploadBean.getContent().getUrl();
-                    CommonUtil.loadImage(mHead, path, R.mipmap.imagetest);
-                    //修改用户头像路径
-                    updateUserInfo(ConstantsBean.userImage, path);
-                }
             }
             return false;
         }
@@ -88,9 +98,10 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
 
 
     }
-//查找控件
+
+    //查找控件
     private void initView() {
-       mBack=(TextView) findViewById(R.id.tv_back);
+        mBack = (TextView) findViewById(R.id.tv_back);
         mHead = (ImageView) findViewById(R.id.iv_head);
         mNick = (TextView) findViewById(R.id.tv_nick);
         mAutograph = (TextView) findViewById(R.id.tv_autograph);
@@ -98,9 +109,9 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
         findViewById(R.id.rl_nick).setOnClickListener(this);
         mPhotoView = (TextView) findViewById(R.id.tv_girl);
         mPhotoView.setOnClickListener(this);
-        mCarmaView = (TextView)findViewById(R.id.tv_boy);
+        mCarmaView = (TextView) findViewById(R.id.tv_boy);
         mCarmaView.setOnClickListener(this);
-       mBottomSet=(RelativeLayout) findViewById(R.id.rl_bottomSet);
+        mBottomSet = (RelativeLayout) findViewById(R.id.rl_bottomSet);
         mBottomSet.setOnClickListener(this);
         mHead.setOnClickListener(this);
         mBack.setOnClickListener(this);
@@ -108,25 +119,26 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
 
     private void initEvent() {
         nick = PreferenceUtil.getString(ConstantsBean.nickName);
-        if (nick!=null){
+        if (nick != null) {
             mNick.setText(nick);
-        }else {
+        } else {
             mNick.setText("请设置昵称");
         }
         autograph = PreferenceUtil.getString(ConstantsBean.userAutograph);
         mNick.setText(nick);
         mAutograph.setText(autograph);
         String imagePath = PreferenceUtil.getString(ConstantsBean.userImage);
-        if (imagePath!=null){
+        if (imagePath != null) {
             CommonUtil.loadImage(mHead, imagePath, R.mipmap.imagetest);
-        }else {
+        } else {
             mHead.setImageResource(R.drawable.imagetest);
         }
 
     }
-//toolbar
+
+    //toolbar
     private void setTransparentBar() {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
                     | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
@@ -138,10 +150,11 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
             window.setNavigationBarColor(Color.TRANSPARENT);
         }
     }
-//点击事件
+
+    //点击事件
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             //返回
             case R.id.tv_back:
                 finish();
@@ -163,11 +176,13 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
 
         }
     }
-   //修改头像
+
+    //修改头像
     private void setHeadImage() {
         PhotoCarmaWindow bottomPopup = new PhotoCarmaWindow(PersonalInforActivity.this);
         bottomPopup.showPopupWindow();
     }
+
     /**
      * 更新用户信息
      *
@@ -176,8 +191,9 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
      */
     private void updateUserInfo(final String key, final String info) {
 
-        MyUserBean.ContentBean userBean=new MyUserBean.ContentBean();
+        MyUserBean.ContentBean userBean = new MyUserBean.ContentBean();
         userBean.setId(userId);
+        userBean.setPhone(PreferenceUtil.getString(ConstantsBean.USER_PHONE));
         switch (requestCode) {
             //昵称
             case 201:
@@ -195,7 +211,9 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
         }
         String data = JsonUtil.toJson(userBean);
         //发送数据
-        Ion.with(this).load(ConstantsBean.UPLOAD).setHeader(ConstantsBean.KEY_TOKEN, CustomApplication.TOKEN).setStringBody(data).asString().setCallback(new FutureCallback<String>() {
+        Ion.with(this).load(ConstantsBean.BASE_PATH + ConstantsBean.PERSONAL_FIX )
+                .setHeader(ConstantsBean.KEY_TOKEN, CustomApplication.TOKEN)
+                .setStringBody(data).asString().setCallback(new FutureCallback<String>() {
             @Override
             public void onCompleted(Exception e, String result) {
                 if (!TextUtils.isEmpty(result)) {
@@ -210,7 +228,7 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
                             case 202:
                                 PreferenceUtil.putString(key, info);
                                 mAutograph.setText(info);
-                            //头像
+                                //头像
                             case 203:
                                 PreferenceUtil.putString(key, info);
                                 break;
@@ -226,11 +244,13 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
             }
         });
     }
+
     //上传头像
     private void uploadImageFile(File file) {
         FileUploadTask task = new FileUploadTask(this, handler, file);
         task.execute(ConstantsBean.UPLOAD);
     }
+
     //裁剪图片
     private void cropImage(Uri uri) {
         Uri outuri = Uri.fromFile(new File(ConstantsBean.HEAD_IMAGE_PATH));
@@ -253,12 +273,12 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
     }
 
 
-
-     private void jumpAlterActivity(String info) {
+    private void jumpAlterActivity(String info) {
         Intent intent = new Intent(PersonalInforActivity.this, PersonInfoAlterActivity.class);
         intent.putExtra(ConstantsBean.INFO, info);
         startActivityForResult(intent, requestCode);
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
@@ -275,13 +295,16 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
                 case 102:
                     //上传图片
                     File file = new File(ConstantsBean.HEAD_IMAGE_PATH);
+                    if (file.exists()) {
+                        Log.e("file", file.getAbsolutePath());
+                    }
                     uploadImageFile(file);
                     break;
                 //相册返回
                 case 103:
                     Uri uri1 = intent.getData();
                     cropImage(uri1);
-                   // yasuo(uri1);
+                    // yasuo(uri1);
                     break;
                 //修改昵称
                 case 201:

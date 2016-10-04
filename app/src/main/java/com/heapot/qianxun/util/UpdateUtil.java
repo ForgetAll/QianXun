@@ -7,7 +7,6 @@ import android.text.Html;
 import android.view.View;
 import android.widget.TextView;
 
-import com.heapot.qianxun.bean.AppBean;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.bean.UpdateResultBean;
 import com.heapot.qianxun.service.UpdateService;
@@ -36,7 +35,7 @@ public class UpdateUtil {
             dialog.setMessage("正在检查，请稍候...");
             dialog.show();
         }
-        Ion.with(context).load(ConstantsBean.BASE_PATH + ConstantsBean.APP_SELECT).setStringBody("")
+        Ion.with(context).load(ConstantsBean.UPDATE_VERSION).setStringBody("")
                 .as(UpdateResultBean.class).setCallback(new FutureCallback<UpdateResultBean>() {
             @Override
             public void onCompleted(Exception e, UpdateResultBean result) {
@@ -44,9 +43,10 @@ public class UpdateUtil {
                     dialog.dismiss();
                 }
                 if (result != null) {
-                    if (result.getStateCode() == 200) {
-                        final AppBean bean = result.getData();
-                        if (bean.getVersion() == (PackageUtils.getAppVersionCode(context))) {
+                    if (result.getReturn_code().equals("success")) {
+                         final UpdateResultBean.ContentBean bean = result.getContent();
+                      int Version= bean.getVersion();
+                        if (Version == (PackageUtils.getAppVersionCode(context))) {
                             //版本相等，没有更新
                             if (isShowTip) {
                                 ToastUtil.show("已是最新版本");
@@ -57,7 +57,7 @@ public class UpdateUtil {
                             appPopup.showPopupWindow();
                             appPopup.getTv_content().setText(Html.fromHtml(bean.getAppDescribe()));
                             if (textView!=null){
-                                textView.setText(bean.getCode());
+                                textView.setText(bean.getVersioncode());
                             }
                             appPopup.getTv_ok().setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -65,7 +65,7 @@ public class UpdateUtil {
                                     appPopup.dismiss();
                                     //开启服务更新
                                     Intent intent = new Intent(context, UpdateService.class);
-                                    intent.putExtra(ConstantsBean.APP_UEL, bean);
+                                    intent.putExtra(ConstantsBean.UPDATE_VERSION,  bean);
                                     context.startService(intent);
                                 }
                             });

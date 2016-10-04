@@ -21,6 +21,7 @@ public class ClearCacheTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... params) {
+        //清除数据
         Glide.get(context).clearDiskCache();
         return null;
     }

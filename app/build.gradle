@@ -35,6 +35,8 @@ dependencies {
     compile 'com.github.razerdp:BasePopup:v1.1.7'
     //Ion加载上传
     compile 'com.koushikdutta.ion:ion:2.+'
+    /*选择器*/
+    compile 'com.bigkoo:pickerview:2.0.8'
     //glide包
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.android.support:support-v4:23.4.0'
