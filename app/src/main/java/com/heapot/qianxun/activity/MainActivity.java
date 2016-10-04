@@ -31,6 +31,7 @@ import com.heapot.qianxun.bean.SubBean;
 import com.heapot.qianxun.bean.TagsBean;
 import com.heapot.qianxun.helper.SerializableUtils;
 import com.heapot.qianxun.util.PreferenceUtil;
+import com.heapot.qianxun.util.SubUtils;
 import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
@@ -286,13 +287,39 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     class RefreshReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            String[] post = intent.getExtras().getStringArray("post");
-            String[] del = intent.getExtras().getStringArray("post");
-            if (post.length == 0){
-                Toast.makeText(context, "post为空", Toast.LENGTH_SHORT).show();
-            }
-            if (del.length == 0){
-                Toast.makeText(context, "del为空", Toast.LENGTH_SHORT).show();
+            int status = intent.getExtras().getInt("status");
+            switch (status){
+                case 0://无更新,不需要操作
+                    break;
+                case 1:
+                    //只提交更新
+                    List<String> post = new ArrayList<>();
+                    post.addAll((Collection<? extends String>) intent.getExtras().getSerializable("postList"));
+                    for (int i = 0; i < post.size(); i++) {
+                        SubUtils.postSub(MainActivity.this,post.get(i));
+                    }
+                    break;
+                case 2:
+                    List<String> del = new ArrayList<>();
+                    del.addAll((Collection<? extends String>) intent.getExtras().getSerializable("delList"));
+                    for (int i = 0; i < del.size(); i++) {
+                        SubUtils.deleteSub(MainActivity.this,del.get(i));
+                    }
+                    //只提交取消
+                    break;
+                case 3:
+                    //订阅和取消都要提交
+                    List<String> postList = new ArrayList<>();
+                    postList.addAll((Collection<? extends String>) intent.getExtras().getSerializable("postList"));
+                    for (int i = 0; i < postList.size(); i++) {
+                        SubUtils.postSub(MainActivity.this,postList.get(i));
+                    }
+                    List<String> delList = new ArrayList<>();
+                    delList.addAll((Collection<? extends String>) intent.getExtras().getSerializable("delList"));
+                    for (int i = 0; i < delList.size(); i++) {
+                        SubUtils.deleteSub(MainActivity.this,delList.get(i));
+                    }
+                    break;
             }
             initData();
         }

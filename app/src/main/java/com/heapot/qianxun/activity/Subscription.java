@@ -63,9 +63,10 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
     //全部数据集合
     List<TagsBean.ContentBean> list = new ArrayList<>();
     private String pid = CustomApplication.PAGE_ARTICLES_ID;
+    List<String> postIdList = new ArrayList<>();//实时记录要提交的数据
+    List<String> deleteIdList = new ArrayList<>();//实时记录要删除的数据
     //加入跳转按钮
     private TextView btnToMain;
-    List<SubBean> oldSubList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -134,6 +135,27 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
                     }
                     list.get(count).setSubscribeStatus(1);//修改指定地方的状态
                     Logger.d(list.get(count).getName()+list.get(count).getSubscribeStatus());
+                    //添加之前判断一下会否存在该id
+                    boolean hasPost = false;
+                    for (int i = 0; i < postIdList.size(); i++) {
+                        if (id.equals(postIdList.get(i))){
+                            hasPost = true;
+                        }
+                    }
+                    if (!hasPost){
+                        postIdList.add(id);//添加要订阅的id
+                    }
+
+                    //添加要订阅的，如果del中存在该id，需要取消删除，
+                    boolean hasDEL = false;
+                    for (int i = 0; i < deleteIdList.size(); i++) {
+                        if (id.equals(deleteIdList.get(i))){
+                            hasDEL =true;
+                        }
+                    }
+                    if (hasDEL){
+                        deleteIdList.remove(id);
+                    }
                 }else if (status == 1){
                     tagsList.get(position).setSubscribeStatus(0);
                     //删除数据联动,找到SubList中相同id的数据下标
@@ -152,6 +174,21 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
                         }
                     }
                     list.get(count2).setSubscribeStatus(0);
+                    deleteIdList.add(id);
+                    //删除要提交的,需要判断是否存在该id
+                    boolean has = false;
+                    for (int i = 0; i < postIdList.size(); i++) {
+                        if (id.equals(postIdList.get(i))){
+                            //若存在has为true
+                            has  = true;
+                        }
+                    }
+                    if (has){
+                        //如果存在id就删除，如果不存在，直接本地修改好就行了。
+                        postIdList.remove(id);
+                    }
+
+
                 }
                 //加载数据源并更新数据
                 sub.setAdapter(subAdapter);
@@ -192,6 +229,26 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
                 subList.remove(position);
                 sub.setAdapter(subAdapter);
                 subAdapter.notifyDataSetChanged();
+                //取消订阅数据，肯定要加入del中，但是如果post中已经有也要删除
+                boolean hasDel = false;
+                for (int i = 0; i < deleteIdList.size(); i++) {
+                    if (id.equals(deleteIdList.get(i))){
+                        hasDel = true;//说明存在，不需要添加
+                    }
+                }
+                if (!hasDel) {
+                    deleteIdList.add(id);
+                }
+                //取消订阅数据，如果post数据里有也要删除，因为没必要提交
+                boolean hasPost = false;
+                for (int i = 0; i < postIdList.size(); i++) {
+                    if (id.equals(postIdList.get(i))){
+                        hasPost = true;
+                    }
+                }
+                if (hasPost){
+                    postIdList.remove(id);
+                }
             }
         });
     }
@@ -238,8 +295,6 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
                 subList.add(subBean);
             }
         }
-        //存储已订阅标签
-        oldSubList.addAll(subList);
         Logger.d("所有数据List："+list.size()+",当前二级标题:"+tagsList.size()+"，已订阅二级标题"+subList.size());
     }
     @Override
@@ -256,13 +311,44 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
     /**
      * 发送广播
      */
-    private void sendBroadcast(int n){
+    private void sendBroadcast(){
+        int status = getRefreshStatus();
         //发送广播并关闭页面
         Intent intent = new Intent("com.karl.refresh");
-        intent.putExtra("status",0);
+        intent.putExtra("status",status);
+        switch (status){
+            case 0://没有更新不需要处理
+                break;
+            case 1:
+                intent.putExtra("postList", (Serializable) postIdList);
+                break;
+            case 2:
+                intent.putExtra("delList", (Serializable) deleteIdList);
+                break;
+            case 3:
+                intent.putExtra("postList", (Serializable) postIdList);
+                intent.putExtra("delList", (Serializable) deleteIdList);
+                break;
+        }
         LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(this);
         localBroadcastManager.sendBroadcast(intent);//发送本地广播
         Subscription.this.finish();
+    }
+    private int getRefreshStatus(){
+        int status = 0;//不需要刷新
+        int del = deleteIdList.size();
+        int pos = postIdList.size();
+        if (del == 0 && pos == 0){
+            status = 0;//不需要删除
+        }else if (del == 0 && pos != 0){
+            status =1;//只需要更新提交订阅
+        }else if (del != 0 && pos == 0){
+            status =2;//只需要取消订阅
+        }else{
+            //两个都不为零，需要取消和提交
+            status =3;
+        }
+        return status;
     }
 
 
