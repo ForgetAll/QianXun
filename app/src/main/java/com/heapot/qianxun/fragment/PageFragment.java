@@ -67,20 +67,6 @@ public class PageFragment extends Fragment {
         initEvent();
         return mView;
     }
-    /**
-     * 以下为空数据的情况
-     */
-    private void initEmptyView(){
-        textView = (TextView) mView.findViewById(R.id.txt_main_to_sub);
-
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), Subscription.class);
-                startActivity(intent);
-            }
-        });
-    }
 
     /**
      * 以下为有数据的情况
@@ -89,8 +75,6 @@ public class PageFragment extends Fragment {
         recyclerView = (RecyclerView) mView.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false));
         recyclerView.setHasFixedSize(true);
-
-
     }
     private void initEvent(){
         adapter = new MainTabAdapter(getContext(),list);
@@ -111,7 +95,7 @@ public class PageFragment extends Fragment {
      */
     private void loadData(){
         for (int i = 0; i < 20; i++) {
-            list.add("Tab #"+mPage+" Item #"+i);
+            list.add("tab数量"+mId+"Tab #"+mPage+" Item #"+i);
         }
     }
 

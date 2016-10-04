@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 
 import com.heapot.qianxun.bean.SubBean;
 import com.heapot.qianxun.bean.SubscribedBean;
@@ -20,13 +21,11 @@ import java.util.List;
 public class MainTabFragmentAdapter extends FragmentPagerAdapter {
     private List<SubBean> mList = new ArrayList<>();
     private Context mContext;
-    private int count;
 
     public MainTabFragmentAdapter(FragmentManager fm, Context context, List<SubBean> list) {
         super(fm);
         this.mContext = context;
         this.mList = list;
-        count = list.size();
     }
 
     @Override
@@ -38,15 +37,12 @@ public class MainTabFragmentAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return count;
+        return mList.size();
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        if (count == 0){
-            return "暂无数据";
-        }else {
-            return mList.get(position).getName();
-        }
+        return mList.get(position).getName();
     }
+
 }

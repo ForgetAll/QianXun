@@ -8,6 +8,8 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.LocalBroadcastManager;
@@ -59,6 +61,32 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private IntentFilter intentFilter;
     private RefreshReceiver refreshReceiver;
     private LocalBroadcastManager localBroadcastManager;
+
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == 1){
+                initData();
+                if (mList.size() != 0){
+                    initTab();
+                }else {
+                    Toast.makeText(MainActivity.this, "快去订阅标签", Toast.LENGTH_SHORT).show();
+                    //传一个假数据进去，提示用户去订阅
+                    SubBean subBean = new SubBean();
+                    subBean.setName("暂无订阅");
+                    subBean.setId("empty");
+                    subBean.setPid(null);
+                    subBean.setStatus(0);
+                    mList.add(subBean);
+                    mViewPager.setAdapter(mPageAdapter);
+                    mPageAdapter.notifyDataSetChanged();
+                    mTabLayout.setupWithViewPager(mViewPager);
+                }
+            }
+        }
+    };
+
+
 
     //主页界面
     @Override
@@ -119,24 +147,22 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mainTitle.setText("学术");
         subTitle.setText("招聘 培训");
 
-
-    }
-    /**
-     * tab
-     */
-    private void initTab(){
-        mPageAdapter = new MainTabFragmentAdapter(getSupportFragmentManager(), this, mList);
-        mViewPager.setAdapter(mPageAdapter);
-        mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
-    }
+        if (mList.size() != 0){
+            initTab();
+        }else {
+            Toast.makeText(MainActivity.this, "快去订阅标签", Toast.LENGTH_SHORT).show();
 
+        }
+    }
 
 
     /**
      * 初始化数据
      */
-    private void initData(){
+    public  void initData(){
+        mList.clear();
+        list.clear();
         switch (CustomApplication.getCurrentPageName()){
             case "PAGE_SCIENCE":
                 pid = CustomApplication.PAGE_ARTICLES_ID;
@@ -157,7 +183,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 if (list.get(i).getPid() != null && list.get(i).getPid().equals(pid) && list.get(i).getSubscribeStatus() == 1){
                     posList.add(i);
                 }
-
             }
             //获取指定页面的二级标题赋值给mList
             SubBean subBean;
@@ -169,16 +194,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 subBean.setStatus(list.get(posList.get(i)).getSubscribeStatus());
                 mList.add(subBean);
             }
-            Logger.d("本地拿到的所有数据大小list："+list.size()+",当前页面id："+pid+",拿到的数据mList："+mList.size());
+            Logger.d("当前页面："+CustomApplication.getCurrentPageName()+",当前数据大小"+mList.size());
 
-            if (mList.size() != 0){
-                initTab();
-            }else {
-                Toast.makeText(MainActivity.this, "快去订阅标签", Toast.LENGTH_SHORT).show();
-            }
         } else {
 
         }
+    }
+    public void initTab(){
+        mPageAdapter = new MainTabFragmentAdapter(getSupportFragmentManager(), this, mList);
+        mViewPager.setAdapter(mPageAdapter);
+        mPageAdapter.notifyDataSetChanged();
+        mTabLayout.setupWithViewPager(mViewPager);
     }
 
     /**
@@ -237,6 +263,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 subTitle.setText("学术 招聘");
                 break;
         }
+    }
+    public void refreshData(){
+        handler.sendEmptyMessage(1);
+
     }
 
 
@@ -325,12 +355,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                         SubUtils.deleteSub(MainActivity.this,delList.get(i));
                     }
                     break;
+                case 5:
+                    break;
             }
 
             if (status != 0){
-                initData();
+                handler.sendEmptyMessage(1);
             }
-
         }
     }
 }
