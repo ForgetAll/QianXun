@@ -4,9 +4,15 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.PagerAdapter;
+import android.view.ViewGroup;
 
+import com.heapot.qianxun.bean.SubBean;
 import com.heapot.qianxun.bean.SubscribedBean;
+import com.heapot.qianxun.fragment.MenuFragment;
 import com.heapot.qianxun.fragment.PageFragment;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,10 +23,10 @@ import java.util.List;
  *
  */
 public class MainTabFragmentAdapter extends FragmentPagerAdapter {
-    private List<SubscribedBean.ContentBean.RowsBean> mList = new ArrayList<>();
+    private List<SubBean> mList = new ArrayList<>();
     private Context mContext;
 
-    public MainTabFragmentAdapter(FragmentManager fm, Context context, List<SubscribedBean.ContentBean.RowsBean> list) {
+    public MainTabFragmentAdapter(FragmentManager fm, Context context, List<SubBean> list) {
         super(fm);
         this.mContext = context;
         this.mList = list;
@@ -28,16 +34,32 @@ public class MainTabFragmentAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return PageFragment.newInstance(position+1,mList.get(position).getId());
+
+        return PageFragment.newInstance(position + 1, mList.get(position).getId());
+
     }
 
     @Override
     public int getCount() {
-        return mList.size();
+
+        return mList==null?0:mList.size();
+//        return mList.size();
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
         return mList.get(position).getName();
     }
+
+    @Override
+    public Object instantiateItem(ViewGroup container, int position) {
+        PageFragment pageFragment = (PageFragment) super.instantiateItem(container, position);
+        return pageFragment;
+    }
+
+    @Override
+    public int getItemPosition(Object object) {
+        return PagerAdapter.POSITION_NONE;
+    }
+
 }

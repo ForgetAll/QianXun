@@ -1,12 +1,18 @@
 package com.heapot.qianxun.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -19,30 +25,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.blankj.utilcode.utils.NetworkUtils;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.adapter.MainTabFragmentAdapter;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
-import com.heapot.qianxun.bean.SubscribedBean;
+import com.heapot.qianxun.bean.SubBean;
+import com.heapot.qianxun.bean.TagsBean;
 import com.heapot.qianxun.helper.SerializableUtils;
-import com.heapot.qianxun.util.JsonUtil;
 import com.heapot.qianxun.util.PreferenceUtil;
+import com.heapot.qianxun.util.SubUtils;
 import com.orhanobut.logger.Logger;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
     private DrawerLayout mDrawerLayout;
@@ -52,16 +48,36 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private ImageView mSubscription, mSearch, mNotification, mStar;
     private ViewPager mViewPager;
     private MainTabFragmentAdapter mPageAdapter;
-
-    private List<SubscribedBean.ContentBean.RowsBean> mList;
-
+    private List<SubBean> mList = new ArrayList<>();
+    private List<TagsBean.ContentBean> list = new ArrayList<>();
     private FloatingActionButton mCreate;
-
     private TextView mainTitle,subTitle;
-
     private static final String PAGE_SCIENCE = "PAGE_SCIENCE";
     private static final String PAGE_RECRUIT = "PAGE_RECRUIT";
     private static final String PAGE_TRAIN = "PAGE_TRAIN";
+    private String pid = CustomApplication.PAGE_ARTICLES_ID;
+
+    //本地广播尝试
+    private IntentFilter intentFilter;
+    private RefreshReceiver refreshReceiver;
+    private LocalBroadcastManager localBroadcastManager;
+
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == 1){
+                initData();
+                mViewPager.setAdapter(mPageAdapter);
+                mPageAdapter.notifyDataSetChanged();
+                mTabLayout.setupWithViewPager(mViewPager);
+                if (mList.size() == 0){
+                    Toast.makeText(MainActivity.this, "快去订阅标签", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    };
+
+
 
     //主页界面
     @Override
@@ -92,7 +108,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mainTitle = (TextView) findViewById(R.id.txt_first_title);
         subTitle = (TextView) findViewById(R.id.txt_second_title);
 
-        mList = new ArrayList<>();
+
+        //注册本地广播
+        localReceiver();
 
         //测试token
         Logger.d("打印本地token-->"+PreferenceUtil.getString("token")+"打印application中的token---》"+ CustomApplication.TOKEN);
@@ -119,82 +137,61 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         //一些基本的初始化数据
         mainTitle.setText("学术");
         subTitle.setText("招聘 培训");
+
+        mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+        mPageAdapter = new MainTabFragmentAdapter(getSupportFragmentManager(), this, mList);
+        mViewPager.setAdapter(mPageAdapter);
+        mPageAdapter.notifyDataSetChanged();
+        mTabLayout.setupWithViewPager(mViewPager);
+        if (mList.size() == 0){
+            Toast.makeText(MainActivity.this, "快去订阅标签", Toast.LENGTH_SHORT).show();
+        }
     }
 
 
     /**
      * 初始化数据
      */
-    private void initData(){
-        boolean isConnected = NetworkUtils.isAvailable(this);
-        if (isConnected){
-            getSubscriptionTags();
-        }else {
-            Object object = SerializableUtils.getSerializable(MainActivity.this, ConstantsBean.SUB_FILE_NAME);
-            if (object != null) {
-                mList.addAll((Collection<? extends SubscribedBean.ContentBean.RowsBean>) object);
-                initTab();
-            } else {
-                Toast.makeText(MainActivity.this, "没网没数据怎么办", Toast.LENGTH_SHORT).show();
+    public  void initData(){
+        mList.clear();
+        list.clear();
+        switch (CustomApplication.getCurrentPageName()){
+            case "PAGE_SCIENCE":
+                pid = CustomApplication.PAGE_ARTICLES_ID;
+                break;
+            case "PAGE_RECRUIT":
+                pid = CustomApplication.PAGE_JOBS_ID;
+                break;
+            case "PAGE_TRAIN":
+                pid = CustomApplication.PAGE_ACTIVITIES_ID;
+                break;
+        }
+        Object object = SerializableUtils.getSerializable(MainActivity.this, ConstantsBean.TAG_FILE_NAME);
+        if (object != null) {
+            list.addAll((Collection<? extends TagsBean.ContentBean>) object);//获取所有数据
+            List<Integer> posList = new ArrayList<>();
+            //获取指定二级标题的pos
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).getPid() != null && list.get(i).getPid().equals(pid) && list.get(i).getSubscribeStatus() == 1){
+                    posList.add(i);
+                }
             }
+            //获取指定页面的二级标题赋值给mList
+            SubBean subBean;
+            for (int i = 0; i < posList.size(); i++) {
+                subBean = new SubBean();
+                subBean.setId(list.get(posList.get(i)).getId());
+                subBean.setPid(list.get(posList.get(i)).getPid().toString());
+                subBean.setName(list.get(posList.get(i)).getName());
+                subBean.setStatus(list.get(posList.get(i)).getSubscribeStatus());
+                mList.add(subBean);
+            }
+            Logger.d("当前页面："+CustomApplication.getCurrentPageName()+",当前数据大小"+mList.size());
+
+        } else {
+
         }
     }
-    private void getSubscriptionTags(){
-        String url = ConstantsBean.BASE_PATH+ConstantsBean.GET_SUBSCRIBED;
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                Request.Method.GET, url, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            String status = response.getString("status");
-                            if (status.equals("success")){
-                                SubscribedBean subscribedBean = (SubscribedBean) JsonUtil.fromJson(String.valueOf(response),SubscribedBean.class);
-                                String name = subscribedBean.getContent().getRows().get(0).getName();
-                                mList.clear();
-                                for (int i = 0; i < subscribedBean.getContent().getRows().size(); i++) {
-                                    if (subscribedBean.getContent().getRows().get(i) != null){
-                                        mList.add(subscribedBean.getContent().getRows().get(i));
-                                    }
-                                }
-                                SerializableUtils.setSerializable(MainActivity.this, ConstantsBean.SUB_FILE_NAME, mList);
-                                initTab();
-                            }else {
-                                Logger.d(response.get("message"));
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(MainActivity.this, "服务器出错了！", Toast.LENGTH_SHORT).show();
-                    }
-                }
-        ){
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String,String> map = new HashMap<>();
-                map.put(ConstantsBean.KEY_TOKEN,CustomApplication.TOKEN);
-                return map;
-            }
-        };
-        CustomApplication.getRequestQueue().add(jsonObjectRequest);
-    }
-
-
-    /**
-     * 实现动态添加Tab
-     */
-    private void initTab() {
-        mPageAdapter = new MainTabFragmentAdapter(getSupportFragmentManager(), this, mList);
-        mViewPager.setAdapter(mPageAdapter);
-        mTabLayout.setupWithViewPager(mViewPager);
-        mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
-    }
-
 
     /**
      * 点击事件
@@ -217,9 +214,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case R.id.iv_subscription_choose:
                 Intent intent = new Intent(this, Subscription.class);
-                CustomApplication.isReturnMain = true;
-                intent.putExtra("toSub",true);
-                startActivityForResult(intent,0);
+                startActivity(intent);
                 break;
             case R.id.fab_create:
                 Intent createIntent = new Intent(this,CreateActivity.class);
@@ -255,6 +250,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
         }
     }
+    public void refreshData(){
+        handler.sendEmptyMessage(1);
+
+    }
 
 
     /**
@@ -286,15 +285,69 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
         return super.onKeyDown(keyCode, event);
     }
+    /**
+     * 本地广播接收
+     */
+    private void localReceiver(){
+        localBroadcastManager = LocalBroadcastManager.getInstance(this);//获取实例
+        intentFilter = new IntentFilter();
+        intentFilter.addAction("com.karl.refresh");
+        refreshReceiver = new RefreshReceiver();
+        localBroadcastManager.registerReceiver(refreshReceiver,intentFilter);
+    }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Logger.d("返回的数据"+data.getBooleanExtra("toMain",false));
-        if (requestCode == 0 && resultCode == 1){
-            initData();//刷新数据
-            Logger.d("主页→Tags→主页：刷新了");
-        }else {
-            Logger.d("没有刷新数据");
+    protected void onDestroy() {
+        super.onDestroy();
+        localBroadcastManager.unregisterReceiver(refreshReceiver);
+    }
+
+    /**
+     * 广播接收器
+     */
+    class RefreshReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int status = intent.getExtras().getInt("status");
+            switch (status){
+                case 0://无更新,不需要操作
+                    break;
+                case 1:
+                    //只提交更新
+                    List<String> post = new ArrayList<>();
+                    post.addAll((Collection<? extends String>) intent.getExtras().getSerializable("postList"));
+                    for (int i = 0; i < post.size(); i++) {
+                        SubUtils.postSub(MainActivity.this,post.get(i));
+                    }
+                    break;
+                case 2:
+                    List<String> del = new ArrayList<>();
+                    del.addAll((Collection<? extends String>) intent.getExtras().getSerializable("delList"));
+                    for (int i = 0; i < del.size(); i++) {
+                        SubUtils.deleteSub(MainActivity.this,del.get(i));
+                    }
+                    //只提交取消
+                    break;
+                case 3:
+                    //订阅和取消都要提交
+                    List<String> postList = new ArrayList<>();
+                    postList.addAll((Collection<? extends String>) intent.getExtras().getSerializable("postList"));
+                    for (int i = 0; i < postList.size(); i++) {
+                        SubUtils.postSub(MainActivity.this,postList.get(i));
+                    }
+                    List<String> delList = new ArrayList<>();
+                    delList.addAll((Collection<? extends String>) intent.getExtras().getSerializable("delList"));
+                    for (int i = 0; i < delList.size(); i++) {
+                        SubUtils.deleteSub(MainActivity.this,delList.get(i));
+                    }
+                    break;
+                case 5:
+                    break;
+            }
+
+            if (status != 0){
+                handler.sendEmptyMessage(1);
+            }
         }
     }
 }

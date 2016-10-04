@@ -15,7 +15,9 @@ import android.widget.Toast;
 
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.activity.ArticleActivity;
+import com.heapot.qianxun.activity.Subscription;
 import com.heapot.qianxun.adapter.MainTabAdapter;
+import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.helper.OnRecyclerViewItemClickListener;
 import com.orhanobut.logger.Logger;
 
@@ -38,7 +40,8 @@ public class PageFragment extends Fragment {
     private MainTabAdapter adapter;
     private List<String> list = new ArrayList<>();
 
-
+    //空数据
+    private TextView textView;
 
     public static PageFragment newInstance(int page,String id) {
         Bundle args = new Bundle();
@@ -60,18 +63,19 @@ public class PageFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.layout_list,container,false);
-        Logger.d("当前页面是 #"+mPage+"，Id是："+mId);
+        Logger.d(""+mPage);
         initView();
         initEvent();
         return mView;
     }
 
+    /**
+     * 以下为有数据的情况
+     */
     private void initView(){
         recyclerView = (RecyclerView) mView.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false));
         recyclerView.setHasFixedSize(true);
-
-
     }
     private void initEvent(){
         adapter = new MainTabAdapter(getContext(),list);
@@ -92,7 +96,7 @@ public class PageFragment extends Fragment {
      */
     private void loadData(){
         for (int i = 0; i < 20; i++) {
-            list.add("Tab #"+mPage+" Item #"+i);
+            list.add("tab数量"+mId+"Tab #"+mPage+" Item #"+i);
         }
     }
 

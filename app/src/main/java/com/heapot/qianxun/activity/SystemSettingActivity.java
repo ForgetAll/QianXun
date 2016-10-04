@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.application.ActivityCollector;
+import com.heapot.qianxun.bean.ConstantsBean;
+import com.heapot.qianxun.helper.SerializableUtils;
 import com.heapot.qianxun.util.ClearCacheTask;
 import com.heapot.qianxun.util.PreferenceUtil;
 import com.heapot.qianxun.util.UpdateUtil;
@@ -92,6 +94,7 @@ public class SystemSettingActivity extends BaseActivity implements View.OnClickL
                 ActivityCollector.finishAll();
                 Intent intent = new Intent(SystemSettingActivity.this, LoginActivity.class);
                 startActivity(intent);
+                SerializableUtils.deleteSerializable(this, ConstantsBean.TAG_FILE_NAME);
                 break;
         }
     }

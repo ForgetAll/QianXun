@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -175,16 +176,19 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
             case R.id.txt_menu_science:
                 ((MainActivity) mActivity).closeDrawer();
                 ((MainActivity) mActivity).setToolBarTitle(ConstantsBean.PAGE_SCIENCE);
+                ((MainActivity) mActivity).refreshData();
                 CustomApplication.setCurrentPage(ConstantsBean.PAGE_SCIENCE);
                 break;
             case R.id.txt_menu_recruit:
                 ((MainActivity) mActivity).closeDrawer();
                 ((MainActivity) mActivity).setToolBarTitle(ConstantsBean.PAGE_RECRUIT);
+                ((MainActivity) mActivity).refreshData();
                 CustomApplication.setCurrentPage(ConstantsBean.PAGE_RECRUIT);
                 break;
             case R.id.txt_menu_train:
                 ((MainActivity) mActivity).closeDrawer();
                 ((MainActivity) mActivity).setToolBarTitle(ConstantsBean.PAGE_TRAIN);
+                ((MainActivity) mActivity).refreshData();
                 CustomApplication.setCurrentPage(ConstantsBean.PAGE_TRAIN);
                 break;
             //设置、帮助的点击事件
@@ -206,7 +210,6 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
 
         }
     }
-
 
     /**
      * 回收Activity

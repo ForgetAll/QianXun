@@ -8,12 +8,15 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.heapot.qianxun.R;
+import com.heapot.qianxun.bean.SubBean;
 import com.heapot.qianxun.bean.SubscribedBean;
 import com.heapot.qianxun.helper.ItemTouchHelperAdapter;
 import com.heapot.qianxun.helper.OnRecyclerViewItemClickListener;
 import com.heapot.qianxun.util.JsonUtil;
 import com.heapot.qianxun.util.PreferenceUtil;
+import com.orhanobut.logger.Logger;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -24,10 +27,10 @@ import java.util.List;
  */
 public class SubAdapter extends RecyclerView.Adapter<SubAdapter.DragViewHolder> implements ItemTouchHelperAdapter, View.OnClickListener {
     private Context context;
-    private List<SubscribedBean.ContentBean.RowsBean> mList;
+    private List<SubBean> mList = new ArrayList<>();
     private OnRecyclerViewItemClickListener listener = null;
 
-    public SubAdapter(Context context, List<SubscribedBean.ContentBean.RowsBean> mList) {
+    public SubAdapter(Context context, List<SubBean> mList) {
         this.context = context;
         this.mList = mList;
     }
@@ -43,7 +46,9 @@ public class SubAdapter extends RecyclerView.Adapter<SubAdapter.DragViewHolder> 
     @Override
     public void onBindViewHolder(DragViewHolder holder, int position) {
         holder.textView.setText(mList.get(position).getName());
+
         holder.itemView.setTag(position);
+
     }
 
     @Override
@@ -55,7 +60,6 @@ public class SubAdapter extends RecyclerView.Adapter<SubAdapter.DragViewHolder> 
     public boolean onItemMove(int fromPosition, int toPosition) {
         Collections.swap(mList,fromPosition,toPosition);
         notifyItemMoved(fromPosition,toPosition);
-//        Logger.json(JsonUtil.toJson(mList));
         PreferenceUtil.putString("Subscribed",JsonUtil.toJson(mList));
         return true;
     }
@@ -70,6 +74,7 @@ public class SubAdapter extends RecyclerView.Adapter<SubAdapter.DragViewHolder> 
     public void onClick(View v) {
         if (listener != null){
             listener.onItemClick(v, (Integer) v.getTag());
+            Logger.d("点击了");
         }
     }
     public void setOnItemClickListener(OnRecyclerViewItemClickListener listener){
