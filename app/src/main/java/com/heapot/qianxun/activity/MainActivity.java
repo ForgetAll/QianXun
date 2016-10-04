@@ -118,24 +118,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         //一些基本的初始化数据
         mainTitle.setText("学术");
         subTitle.setText("招聘 培训");
-    }
 
+
+    }
     /**
-     * 本地广播接收
+     * tab
      */
-    private void localReceiver(){
-        localBroadcastManager = LocalBroadcastManager.getInstance(this);//获取实例
-        intentFilter = new IntentFilter();
-        intentFilter.addAction("com.karl.refresh");
-        refreshReceiver = new RefreshReceiver();
-        localBroadcastManager.registerReceiver(refreshReceiver,intentFilter);
+    private void initTab(){
+        mPageAdapter = new MainTabFragmentAdapter(getSupportFragmentManager(), this, mList);
+        mViewPager.setAdapter(mPageAdapter);
+        mTabLayout.setupWithViewPager(mViewPager);
+        mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        localBroadcastManager.unregisterReceiver(refreshReceiver);
-    }
+
 
     /**
      * 初始化数据
@@ -174,23 +170,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 mList.add(subBean);
             }
             Logger.d("本地拿到的所有数据大小list："+list.size()+",当前页面id："+pid+",拿到的数据mList："+mList.size());
-            initTab();
+
+            if (mList.size() != 0){
+                initTab();
+            }else {
+                Toast.makeText(MainActivity.this, "快去订阅标签", Toast.LENGTH_SHORT).show();
+            }
         } else {
 
         }
     }
-
-
-    /**
-     * 实现动态添加Tab
-     */
-    private void initTab() {
-        mPageAdapter = new MainTabFragmentAdapter(getSupportFragmentManager(), this, mList);
-        mViewPager.setAdapter(mPageAdapter);
-        mTabLayout.setupWithViewPager(mViewPager);
-        mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
-    }
-
 
     /**
      * 点击事件
@@ -280,6 +269,22 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
         return super.onKeyDown(keyCode, event);
     }
+    /**
+     * 本地广播接收
+     */
+    private void localReceiver(){
+        localBroadcastManager = LocalBroadcastManager.getInstance(this);//获取实例
+        intentFilter = new IntentFilter();
+        intentFilter.addAction("com.karl.refresh");
+        refreshReceiver = new RefreshReceiver();
+        localBroadcastManager.registerReceiver(refreshReceiver,intentFilter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        localBroadcastManager.unregisterReceiver(refreshReceiver);
+    }
 
     /**
      * 广播接收器
@@ -321,7 +326,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     }
                     break;
             }
-            initData();
+
+            if (status != 0){
+                initData();
+            }
+
         }
     }
 }

@@ -62,14 +62,9 @@ public class PageFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if (mPage == -1){
-            mView = inflater.inflate(R.layout.layout_empty_data,container,false);
-
-        }else {
-            mView = inflater.inflate(R.layout.layout_list,container,false);
-            initView();
-            initEvent();
-        }
+        mView = inflater.inflate(R.layout.layout_list,container,false);
+        initView();
+        initEvent();
         return mView;
     }
     /**

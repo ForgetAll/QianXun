@@ -31,20 +31,14 @@ public class MainTabFragmentAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        if (count == 0){
-            return PageFragment.newInstance(-1,"暂无数据");
-        }else {
-            return PageFragment.newInstance(position + 1, mList.get(position).getId());
-        }
+
+        return PageFragment.newInstance(position + 1, mList.get(position).getId());
+
     }
 
     @Override
     public int getCount() {
-        if (count == 0){
-            return 1;
-        }else {
-            return count;
-        }
+        return count;
     }
 
     @Override

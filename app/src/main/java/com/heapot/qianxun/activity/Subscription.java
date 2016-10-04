@@ -299,12 +299,12 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
     }
     @Override
     public void onClick(View v) {
-
+        sendBroadcast();
     }
 
     @Override
     public void onBackPressed() {
-
+        sendBroadcast();
     }
 
 
