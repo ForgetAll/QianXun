@@ -5,9 +5,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.PagerAdapter;
+import android.view.ViewGroup;
 
 import com.heapot.qianxun.bean.SubBean;
 import com.heapot.qianxun.bean.SubscribedBean;
+import com.heapot.qianxun.fragment.MenuFragment;
 import com.heapot.qianxun.fragment.PageFragment;
 
 import java.util.ArrayList;
@@ -37,7 +40,7 @@ public class MainTabFragmentAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return mList.size();
+        return mList==null?0:mList.size();
     }
 
     @Override
@@ -45,4 +48,14 @@ public class MainTabFragmentAdapter extends FragmentPagerAdapter {
         return mList.get(position).getName();
     }
 
+    @Override
+    public Object instantiateItem(ViewGroup container, int position) {
+        PageFragment pageFragment = (PageFragment) super.instantiateItem(container, position);
+        return pageFragment;
+    }
+
+    @Override
+    public int getItemPosition(Object object) {
+        return PagerAdapter.POSITION_NONE;
+    }
 }

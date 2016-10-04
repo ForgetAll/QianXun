@@ -72,12 +72,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 }else {
                     Toast.makeText(MainActivity.this, "快去订阅标签", Toast.LENGTH_SHORT).show();
                     //传一个假数据进去，提示用户去订阅
-                    SubBean subBean = new SubBean();
-                    subBean.setName("暂无订阅");
-                    subBean.setId("empty");
-                    subBean.setPid(null);
-                    subBean.setStatus(0);
-                    mList.add(subBean);
+//                    SubBean subBean = new SubBean();
+//                    subBean.setName("暂无订阅");
+//                    subBean.setId("empty");
+//                    subBean.setPid(null);
+//                    subBean.setStatus(0);
+//                    mList.add(subBean);
                     mViewPager.setAdapter(mPageAdapter);
                     mPageAdapter.notifyDataSetChanged();
                     mTabLayout.setupWithViewPager(mViewPager);
