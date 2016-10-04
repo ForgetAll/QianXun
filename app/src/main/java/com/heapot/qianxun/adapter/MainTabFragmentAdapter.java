@@ -12,6 +12,7 @@ import com.heapot.qianxun.bean.SubBean;
 import com.heapot.qianxun.bean.SubscribedBean;
 import com.heapot.qianxun.fragment.MenuFragment;
 import com.heapot.qianxun.fragment.PageFragment;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +41,9 @@ public class MainTabFragmentAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
+
         return mList==null?0:mList.size();
+//        return mList.size();
     }
 
     @Override
@@ -58,4 +61,5 @@ public class MainTabFragmentAdapter extends FragmentPagerAdapter {
     public int getItemPosition(Object object) {
         return PagerAdapter.POSITION_NONE;
     }
+
 }

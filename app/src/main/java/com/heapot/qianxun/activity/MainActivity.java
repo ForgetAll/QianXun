@@ -67,20 +67,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         public void handleMessage(Message msg) {
             if (msg.what == 1){
                 initData();
-                if (mList.size() != 0){
-                    initTab();
-                }else {
+                mViewPager.setAdapter(mPageAdapter);
+                mPageAdapter.notifyDataSetChanged();
+                mTabLayout.setupWithViewPager(mViewPager);
+                if (mList.size() == 0){
                     Toast.makeText(MainActivity.this, "快去订阅标签", Toast.LENGTH_SHORT).show();
-                    //传一个假数据进去，提示用户去订阅
-//                    SubBean subBean = new SubBean();
-//                    subBean.setName("暂无订阅");
-//                    subBean.setId("empty");
-//                    subBean.setPid(null);
-//                    subBean.setStatus(0);
-//                    mList.add(subBean);
-                    mViewPager.setAdapter(mPageAdapter);
-                    mPageAdapter.notifyDataSetChanged();
-                    mTabLayout.setupWithViewPager(mViewPager);
                 }
             }
         }
@@ -117,7 +108,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mainTitle = (TextView) findViewById(R.id.txt_first_title);
         subTitle = (TextView) findViewById(R.id.txt_second_title);
 
-        mList = new ArrayList<>();
+
         //注册本地广播
         localReceiver();
 
@@ -148,11 +139,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         subTitle.setText("招聘 培训");
 
         mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
-        if (mList.size() != 0){
-            initTab();
-        }else {
+        mPageAdapter = new MainTabFragmentAdapter(getSupportFragmentManager(), this, mList);
+        mViewPager.setAdapter(mPageAdapter);
+        mPageAdapter.notifyDataSetChanged();
+        mTabLayout.setupWithViewPager(mViewPager);
+        if (mList.size() == 0){
             Toast.makeText(MainActivity.this, "快去订阅标签", Toast.LENGTH_SHORT).show();
-
         }
     }
 
@@ -199,12 +191,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         } else {
 
         }
-    }
-    public void initTab(){
-        mPageAdapter = new MainTabFragmentAdapter(getSupportFragmentManager(), this, mList);
-        mViewPager.setAdapter(mPageAdapter);
-        mPageAdapter.notifyDataSetChanged();
-        mTabLayout.setupWithViewPager(mViewPager);
     }
 
     /**
