@@ -25,12 +25,16 @@ import com.heapot.qianxun.activity.Subscription;
 import com.heapot.qianxun.adapter.MainTabAdapter;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
+import com.heapot.qianxun.bean.MainListBean;
 import com.heapot.qianxun.helper.OnRecyclerViewItemClickListener;
+import com.heapot.qianxun.util.JsonUtil;
 import com.orhanobut.logger.Logger;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -54,10 +58,7 @@ public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     private RecyclerView recyclerView;
     private MainTabAdapter adapter;
-    private List<String> list = new ArrayList<>();
-
-    //空数据
-    private TextView textView;
+    private List<MainListBean.ContentBean> list = new ArrayList<>();
 
     public static PageFragment newInstance(int page,String id) {
         Bundle args = new Bundle();
@@ -97,17 +98,16 @@ public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     private void initEvent(){
 
         loadData();
-//        adapter = new MainTabAdapter(getContext(),list);
-//        recyclerView.setAdapter(adapter);
-//        //添加点击事件
-//        adapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
-//            @Override
-//            public void onItemClick(View view, int position) {
-//                Toast.makeText(getContext(), "点击了", Toast.LENGTH_SHORT).show();
-//                Intent intent = new Intent(getActivity(), ArticleActivity.class);
-//                startActivity(intent);
-//            }
-//        });
+
+        //添加点击事件
+        adapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Toast.makeText(getContext(), "点击了", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), ArticleActivity.class);
+                startActivity(intent);
+            }
+        });
 
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorSchemeResources(
@@ -144,7 +144,12 @@ public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Logger.json(String.valueOf(response));
+                        MainListBean mainListBean = (MainListBean) JsonUtil.fromJson(String.valueOf(response),MainListBean.class);
+                        list.addAll(mainListBean.getContent());
+                        Logger.d("获取到集合的大小"+list.size());
+                        adapter = new MainTabAdapter(getContext(),list);
+                        recyclerView.setAdapter(adapter);
+                        adapter.notifyDataSetChanged();
                     }
                 },
                 new Response.ErrorListener() {
