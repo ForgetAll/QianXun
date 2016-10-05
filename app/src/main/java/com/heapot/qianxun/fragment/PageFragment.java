@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -29,12 +30,15 @@ import java.util.List;
  * 每个模块（学术招聘培训）对应页面下每个Tab对应的列表
  *
  */
-public class PageFragment extends Fragment {
+public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     public static final String PAGE = "PAGE";
     public static final String ID = "PAGE_ID";
     private int mPage;
     private String mId;
     View mView;
+
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private boolean isRefresh = false;
 
     private RecyclerView recyclerView;
     private MainTabAdapter adapter;
@@ -76,6 +80,8 @@ public class PageFragment extends Fragment {
         recyclerView = (RecyclerView) mView.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false));
         recyclerView.setHasFixedSize(true);
+
+        swipeRefreshLayout = (SwipeRefreshLayout) mView.findViewById(R.id.srl_main_fragment);
     }
     private void initEvent(){
         adapter = new MainTabAdapter(getContext(),list);
@@ -90,6 +96,14 @@ public class PageFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setColorSchemeResources(
+                android.R.color.holo_green_light,
+                android.R.color.holo_blue_light,
+                android.R.color.holo_purple,
+                android.R.color.holo_orange_light
+        );
     }
     /**
      * 模拟数据
@@ -100,4 +114,10 @@ public class PageFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onRefresh() {
+        if (!isRefresh){
+            swipeRefreshLayout.setRefreshing(false);
+        }
+    }
 }
