@@ -63,7 +63,7 @@ public class PersonalTabAdapter extends RecyclerView.Adapter<PersonalTabAdapter.
         private TextView textView;
         public PersonalViewHolder(View itemView) {
             super(itemView);
-            textView = (TextView) itemView.findViewById(R.id.item_text);
+            textView = (TextView) itemView.findViewById(R.id.txt_main_list_title);
         }
     }
 

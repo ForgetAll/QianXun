@@ -27,6 +27,7 @@ import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.bean.MainListBean;
 import com.heapot.qianxun.helper.OnRecyclerViewItemClickListener;
+import com.heapot.qianxun.util.CommonUtil;
 import com.heapot.qianxun.util.JsonUtil;
 import com.orhanobut.logger.Logger;
 
@@ -96,7 +97,7 @@ public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         swipeRefreshLayout = (SwipeRefreshLayout) mView.findViewById(R.id.srl_main_fragment);
     }
     private void initEvent(){
-
+        list.clear();
         loadData();
 
         adapter = new MainTabAdapter(getContext(),list);
@@ -104,9 +105,9 @@ public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         adapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Toast.makeText(getContext(), "点击了", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getActivity(), ArticleActivity.class);
-                startActivity(intent);
+                Logger.d("点击了第"+position+"，集合大小是"+list.size());
+//                Intent intent = new Intent(getActivity(), ArticleActivity.class);
+//                startActivity(intent);
             }
         });
 
@@ -135,6 +136,7 @@ public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             pageNum = 1;//重置页面为第一页
             list.clear();//清空list数据，放便重新赋值
             loadData();
+            Toast.makeText(getContext(), "已刷新", Toast.LENGTH_SHORT).show();
         }
     }
     //获取指定标签对应的列表
@@ -150,7 +152,6 @@ public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                         Logger.d("获取到集合的大小"+list.size());
                         recyclerView.setAdapter(adapter);
                         adapter.notifyDataSetChanged();
-
                     }
                 },
                 new Response.ErrorListener() {
