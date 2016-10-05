@@ -84,7 +84,7 @@
                     android:layout_height="22dp"
                     android:layout_marginTop="12dp"
                     android:layout_toRightOf="@+id/iv_class"
-                    android:text="请选择课程分类"
+                    android:text="请选择招聘单位"
                     android:textSize="18sp" />
 
                 <TextView
@@ -94,7 +94,7 @@
                     android:layout_below="@+id/tv_classTitle"
                     android:layout_marginBottom="12dp"
                     android:layout_toRightOf="@+id/iv_class"
-                    android:text="课程将发布在选择的分类之下"
+                    android:text="职位将发布在选择的公司之下"
                     android:textSize="14sp" />
 
                 <TextView
@@ -104,49 +104,90 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_marginTop="12dp"
-                    android:text="单选" />
+                    android:text="两个已选" />
             </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="2dp"
                 android:background="#ffffff">
 
                 <ImageView
-                    android:id="@+id/iv_begin"
+                    android:id="@+id/iv_company1"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_margin="12dp"
                     android:src="@drawable/imagetest" />
 
                 <TextView
-                    android:id="@+id/tv_beginTitle"
+                    android:id="@+id/tv_company1Title"
                     android:layout_width="match_parent"
                     android:layout_height="22dp"
                     android:layout_marginTop="12dp"
-                    android:layout_toRightOf="@+id/iv_begin"
-                    android:text="报名开始时间"
+                    android:layout_toRightOf="@+id/iv_company1"
+                    android:text="公司1"
                     android:textSize="18sp" />
 
                 <TextView
-                    android:id="@+id/tv_beginContent"
+                    android:id="@+id/tv_company1Content"
                     android:layout_width="match_parent"
                     android:layout_height="18dp"
-                    android:layout_below="@+id/tv_beginTitle"
+                    android:layout_below="@+id/tv_company1Title"
                     android:layout_marginBottom="12dp"
-                    android:layout_toRightOf="@+id/iv_begin"
+                    android:layout_toRightOf="@+id/iv_company1"
                     android:text="课程将发布在选择的分类之下"
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/tv_beginChoose"
+                    android:id="@+id/tv_company1Choose"
                     android:layout_marginRight="12dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_marginTop="12dp"
-                    android:text="9/28" />
+                    android:text="已选" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:background="#ffffff">
+
+                <ImageView
+                    android:id="@+id/iv_company2"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="12dp"
+                    android:src="@drawable/imagetest" />
+
+                <TextView
+                    android:id="@+id/tv_company2Title"
+                    android:layout_width="match_parent"
+                    android:layout_height="22dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_toRightOf="@+id/iv_company2"
+                    android:text="公司1"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/tv_company2Content"
+                    android:layout_width="match_parent"
+                    android:layout_height="18dp"
+                    android:layout_below="@+id/tv_company2Title"
+                    android:layout_marginBottom="12dp"
+                    android:layout_toRightOf="@+id/iv_company2"
+                    android:text="课程将发布在选择的分类之下"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tv_company2Choose"
+                    android:layout_marginRight="12dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="12dp"
+                    android:text="未选" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -168,7 +209,7 @@
                     android:layout_height="22dp"
                     android:layout_marginTop="12dp"
                     android:layout_toRightOf="@+id/iv_end"
-                    android:text="报名结束时间"
+                    android:text="请选择职位的大类"
                     android:textSize="18sp" />
 
                 <TextView
@@ -178,7 +219,7 @@
                     android:layout_below="@+id/tv_endTitle"
                     android:layout_marginBottom="12dp"
                     android:layout_toRightOf="@+id/iv_end"
-                    android:text="课程将发布在选择的分类之下"
+                    android:text="职位根据选择出现在不同的模块之下"
                     android:textSize="14sp" />
 
                 <TextView
@@ -188,7 +229,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_marginTop="12dp"
-                    android:text="10/1" />
+                    android:text="单选" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -210,7 +251,7 @@
                     android:layout_height="22dp"
                     android:layout_marginTop="12dp"
                     android:layout_toRightOf="@+id/iv_number"
-                    android:text="请设置人数上限"
+                    android:text="请设定详细职位"
                     android:textSize="18sp" />
 
                 <TextView
@@ -220,7 +261,7 @@
                     android:layout_below="@+id/tv_numberTitle"
                     android:layout_marginBottom="12dp"
                     android:layout_toRightOf="@+id/iv_number"
-                    android:text="如不设置则不限制人数"
+                    android:text="辅助精确搜索"
                     android:textSize="14sp" />
 
                 <TextView
@@ -252,7 +293,7 @@
                     android:layout_height="22dp"
                     android:layout_marginTop="12dp"
                     android:layout_toRightOf="@+id/iv_describe"
-                    android:text="请选择课程分类"
+                    android:text="职位描述"
                     android:textSize="18sp" />
 
                 <TextView
@@ -262,7 +303,7 @@
                     android:layout_below="@+id/tv_describeTitle"
                     android:layout_marginBottom="12dp"
                     android:layout_toRightOf="@+id/iv_describe"
-                    android:text="课程将发布在选择的分类之下"
+                    android:text="请在此处详细描述此职位"
                     android:textSize="14sp" />
 
                 <ImageView
@@ -275,16 +316,6 @@
                     android:src="@drawable/back_24_black" />
             </RelativeLayout>
 
-            <TextView
-                android:id="@+id/tv_more"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_marginTop="6dp"
-                android:background="#ffffff"
-                android:gravity="center_vertical"
-                android:paddingLeft="12dp"
-                android:text="更多填写项"
-                android:textSize="18sp" />
         </LinearLayout>
 
     </ScrollView>
