@@ -99,6 +99,7 @@ public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
         loadData();
 
+        adapter = new MainTabAdapter(getContext(),list);
         //添加点击事件
         adapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
             @Override
@@ -147,9 +148,9 @@ public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                         MainListBean mainListBean = (MainListBean) JsonUtil.fromJson(String.valueOf(response),MainListBean.class);
                         list.addAll(mainListBean.getContent());
                         Logger.d("获取到集合的大小"+list.size());
-                        adapter = new MainTabAdapter(getContext(),list);
                         recyclerView.setAdapter(adapter);
                         adapter.notifyDataSetChanged();
+
                     }
                 },
                 new Response.ErrorListener() {

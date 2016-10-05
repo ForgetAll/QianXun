@@ -11,6 +11,7 @@ import com.heapot.qianxun.R;
 import com.heapot.qianxun.bean.MainListBean;
 import com.heapot.qianxun.helper.OnRecyclerViewItemClickListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,7 +22,7 @@ import java.util.List;
 public class MainTabAdapter extends RecyclerView.Adapter<MainTabAdapter.MainTabViewHolder> implements View.OnClickListener {
 
     private Context context;
-    private List<MainListBean.ContentBean> mList;
+    private List<MainListBean.ContentBean> mList = new ArrayList<>();
     private LayoutInflater inflater;
     private OnRecyclerViewItemClickListener mListener =null;
 
@@ -47,7 +48,7 @@ public class MainTabAdapter extends RecyclerView.Adapter<MainTabAdapter.MainTabV
 
     @Override
     public int getItemCount() {
-        return mList.size();
+        return mList==null?0:mList.size();
     }
 
     @Override
