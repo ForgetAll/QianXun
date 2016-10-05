@@ -7,41 +7,26 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.blankj.utilcode.utils.NetworkUtils;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.adapter.SubAdapter;
 import com.heapot.qianxun.adapter.TagsAdapter;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.bean.SubBean;
-import com.heapot.qianxun.bean.SubscribedBean;
 import com.heapot.qianxun.bean.TagsBean;
 import com.heapot.qianxun.helper.ItemTouchHelperCallback;
 import com.heapot.qianxun.helper.OnRecyclerViewItemClickListener;
 import com.heapot.qianxun.helper.SerializableUtils;
-import com.heapot.qianxun.util.JsonUtil;
 import com.orhanobut.logger.Logger;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Karl on 2016/8/29.

@@ -10,15 +10,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.activity.ArticleActivity;
-import com.heapot.qianxun.activity.Subscription;
 import com.heapot.qianxun.adapter.MainTabAdapter;
-import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.helper.OnRecyclerViewItemClickListener;
 import com.orhanobut.logger.Logger;
 

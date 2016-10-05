@@ -61,9 +61,11 @@
             android:name=".activity.CreateArticleActivity"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden"></activity>
         <!--创建课程-->
-        <activity android:name=".activity.CreateCourseActivity"></activity>
+        <activity android:name=".activity.CreateCourseActivity"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"></activity>
         <!--创建工作招聘-->
-        <activity android:name=".activity.CreateJobActivity"></activity>
+        <activity android:name=".activity.CreateJobActivity"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"></activity>
         <!--自动更新服务-->
         <service android:name=".service.UpdateService"></service>
         <!--文章详情-->

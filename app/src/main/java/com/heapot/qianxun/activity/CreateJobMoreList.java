@@ -7,15 +7,10 @@ import com.heapot.qianxun.R;
 /**
  * Created by 15859 on 2016/10/5.
  */
-public class CreateJobActivity extends BaseActivity{
+public class CreateJobMoreList extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_job);
-        findView();
-    }
-
-    private void findView() {
-
+setContentView(R.layout.create_job_more_list);
     }
 }
