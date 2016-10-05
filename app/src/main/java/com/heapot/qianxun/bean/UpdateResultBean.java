@@ -12,14 +12,15 @@ public class UpdateResultBean implements Serializable{
      * appName : kyku
      * appDescribe : gkgkj
      * appUrl : hjghj
-     * id : 93e7aea33364828872efc04bec759149
+     * id : e702317d4be0dd897a3e16091a16df90
      * appDownCount : 1
-     * version : ykuyk
+     * version : 2
+     * versioncode : 2.2
      */
 
     private ContentBean content;
     /**
-     * content : {"appIcon":"khykhk","appName":"kyku","appDescribe":"gkgkj","appUrl":"hjghj","id":"93e7aea33364828872efc04bec759149","appDownCount":"1","version":"ykuyk"}
+     * content : {"appIcon":"khykhk","appName":"kyku","appDescribe":"gkgkj","appUrl":"hjghj","id":"e702317d4be0dd897a3e16091a16df90","appDownCount":"1","version":"2","versioncode":"2.2"}
      * return_code : success
      */
 
@@ -41,23 +42,14 @@ public class UpdateResultBean implements Serializable{
         this.return_code = return_code;
     }
 
-    public static class ContentBean implements Serializable {
+    public static class ContentBean implements Serializable{
         private String appIcon;
         private String appName;
         private String appDescribe;
         private String appUrl;
         private String id;
-        private Integer appDownCount;
+        private int appDownCount;
         private Integer version;
-
-        public String getVersioncode() {
-            return versioncode;
-        }
-
-        public void setVersioncode(String versioncode) {
-            this.versioncode = versioncode;
-        }
-
         private String versioncode;
 
         public String getAppIcon() {
@@ -100,31 +92,41 @@ public class UpdateResultBean implements Serializable{
             this.id = id;
         }
 
-        public Integer getAppDownCount() {
+        public int getAppDownCount() {
             return appDownCount;
         }
 
-        public void setAppDownCount(Integer appDownCount) {
+        public void setAppDownCount(int appDownCount) {
             this.appDownCount = appDownCount;
         }
 
-        public int getVersion() {
+        public Integer getVersion() {
             return version;
         }
 
-        public void setVersion(int version) {
+        public void setVersion(Integer version) {
             this.version = version;
         }
+
+        public String getVersioncode() {
+            return versioncode;
+        }
+
+        public void setVersioncode(String versioncode) {
+            this.versioncode = versioncode;
+        }
     }
-    /*{
+
+   /* {
         "content": {
         "appIcon": "khykhk",
                 "appName": "kyku",
                 "appDescribe": "gkgkj",
                 "appUrl": "hjghj",
-                "id": "93e7aea33364828872efc04bec759149",
+                "id": "e702317d4be0dd897a3e16091a16df90",
                 "appDownCount": "1",
-                "version": "ykuyk"
+                "version": "2",
+                "versioncode": "2.2"
     },
         "return_code": "success"
     }*/

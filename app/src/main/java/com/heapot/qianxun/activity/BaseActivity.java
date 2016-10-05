@@ -21,6 +21,7 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        activity=this;
         Logger.d(getClass().getSimpleName());
         ActivityCollector.addActivity(this);
 //        //监听网络广播

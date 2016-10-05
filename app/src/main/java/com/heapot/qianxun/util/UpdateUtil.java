@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -13,6 +14,7 @@ import com.heapot.qianxun.service.UpdateService;
 import com.heapot.qianxun.widget.UpdateAppPopup;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
+import com.orhanobut.logger.Logger;
 
 /**
  * Created by 15859 on 2016/9/23.
@@ -35,10 +37,11 @@ public class UpdateUtil {
             dialog.setMessage("正在检查，请稍候...");
             dialog.show();
         }
-        Ion.with(context).load(ConstantsBean.UPDATE_VERSION).setStringBody("")
+        Ion.with(context).load(ConstantsBean.UPDATE_VERSION)
                 .as(UpdateResultBean.class).setCallback(new FutureCallback<UpdateResultBean>() {
             @Override
             public void onCompleted(Exception e, UpdateResultBean result) {
+                Logger.d(result);
                 if (dialog != null) {
                     dialog.dismiss();
                 }
@@ -58,6 +61,7 @@ public class UpdateUtil {
                             appPopup.getTv_content().setText(Html.fromHtml(bean.getAppDescribe()));
                             if (textView!=null){
                                 textView.setText(bean.getVersioncode());
+                                Log.e("给用户看的版本号",bean.getVersioncode());
                             }
                             appPopup.getTv_ok().setOnClickListener(new View.OnClickListener() {
                                 @Override

@@ -8,11 +8,15 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.application.ActivityCollector;
+import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.helper.SerializableUtils;
 import com.heapot.qianxun.util.ClearCacheTask;
+import com.heapot.qianxun.util.FileSizeUtil;
+import com.heapot.qianxun.util.PackageUtils;
 import com.heapot.qianxun.util.PreferenceUtil;
 import com.heapot.qianxun.util.UpdateUtil;
 
@@ -29,6 +33,15 @@ public class SystemSettingActivity extends BaseActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
         findVew();
+        getData();
+    }
+
+    private void getData() {
+        mVersion.setText(PackageUtils.getAppVersionName(CustomApplication.getContext()));
+        //获取缓存的路径
+        String path = Glide.getPhotoCacheDir(this).getPath();
+        String size = FileSizeUtil.getAutoFileOrFilesSize(path);
+        mCache.setText(size);
     }
 
     private void findVew() {

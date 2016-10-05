@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.heapot.qianxun.application.CustomApplication;
 
 /**
  * Created by 15859 on 2016/9/22.
@@ -22,7 +23,7 @@ public class ClearCacheTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... params) {
         //清除数据
-        Glide.get(context).clearDiskCache();
+        Glide.get(CustomApplication.getContext()).clearDiskCache();
         return null;
     }
 

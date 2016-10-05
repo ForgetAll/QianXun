@@ -87,7 +87,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         setTransparentBar();
         initView();
         initEvent();
-
+   //检查版本更新,待修改完后台数据 就把注销去掉
+      //  UpdateUtil.getInstance().checkUpdate(activity, null, false);
 
     }
 
@@ -117,6 +118,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void initEvent() {
+
         initData();
         //状态栏和抽屉效果
         mToolBar.setTitle("");
