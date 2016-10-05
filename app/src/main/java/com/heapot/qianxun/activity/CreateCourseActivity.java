@@ -22,7 +22,7 @@ public class CreateCourseActivity extends BaseActivity implements View.OnClickLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.publish_course);
+        setContentView(R.layout.activity_create_course);
         findView();
     }
 

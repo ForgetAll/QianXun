@@ -9,7 +9,6 @@ import android.view.View;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.adapter.CreateAdapter;
 import com.heapot.qianxun.helper.OnRecyclerViewItemClickListener;
-import com.heapot.qianxun.util.PreferenceUtil;
 import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
@@ -58,6 +57,8 @@ public class CreateActivity extends BaseActivity {
                         startActivity(intent);
                         break;
                     case 1:
+                        Intent job= new Intent(CreateActivity.this,CreateJobActivity.class);
+                        startActivity(job);
                         break;
                     case 2:
                         Intent course = new Intent(CreateActivity.this,CreateCourseActivity.class);
