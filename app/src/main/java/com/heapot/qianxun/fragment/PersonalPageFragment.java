@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.activity.ArticleActivity;
-import com.heapot.qianxun.adapter.MainTabAdapter;
 import com.heapot.qianxun.adapter.PersonalTabAdapter;
 import com.heapot.qianxun.helper.OnRecyclerViewItemClickListener;
 import com.orhanobut.logger.Logger;
@@ -33,7 +32,6 @@ public class PersonalPageFragment extends Fragment implements SwipeRefreshLayout
 
     private RecyclerView recyclerView;
     private PersonalTabAdapter personalTabAdapter;
-    private MainTabAdapter adapter;
     private List<String> list = new ArrayList<>();
     private SwipeRefreshLayout swipeRefreshLayout;
     private boolean isRefresh = false;

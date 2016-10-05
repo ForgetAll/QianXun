@@ -6,17 +6,8 @@ import android.os.Environment;
  * Created by 15859 on 2016/9/3.
  */
 public class ConstantsBean {
-    //是否进入引导界面
-    public static final String KEY_SPLASH = "isEnter";
     //基本路径-已改
     public static final String BASE_PATH = "https://qinxi1992.xicp.net/";
-    //更新
-    public static final String UPDATE = "/user/update";
-
-    //查询软件(版本更新)
-    public static final String APP_SELECT = "/app/select";
-    //图片基本路径
-    public static final String BASE_IMAGE_PATH = "http://122.114.85.104:8080/images/classes/res/images/";
 
     public static final String CONFIG_NAME = "config";
 
