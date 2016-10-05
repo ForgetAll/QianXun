@@ -73,6 +73,9 @@ public class ConstantsBean {
     public  static  final  String UPDATE_PWD="/user/updatePwd?oldPassword=";
     //文件上传接口
     public  static  final  String UPLOAD="http://114.215.252.158/qiniu/upload.php";
+    //版本更新
+    public  static  final  String UPDATE_VERSION="http://114.215.252.158/qianxun_article/index/apk_version/get_version.api.php";
+
 
 
 

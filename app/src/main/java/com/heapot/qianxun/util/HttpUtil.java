@@ -1,5 +1,10 @@
 package com.heapot.qianxun.util;
 
+import android.util.Log;
+
+import com.heapot.qianxun.application.CustomApplication;
+import com.heapot.qianxun.bean.ConstantsBean;
+
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -64,6 +69,8 @@ public class HttpUtil {
             //设置请求头
             conn.setRequestProperty("Connection", "keep-alive");
             conn.setRequestProperty("Cache-Control", "no-cache");
+            Log.e("token",CustomApplication.TOKEN);
+            conn.setRequestProperty(ConstantsBean.KEY_TOKEN, CustomApplication.TOKEN);
             conn.setRequestProperty("Content-Type",
                     "multipart/form-data; boundary=" + boundary);
             //允许输出和输入
@@ -93,14 +100,22 @@ public class HttpUtil {
             dataOutputStream.flush();
             //获取响应信息
             if (conn.getResponseCode() == 200) {
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+              /*  BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                 char[] chars = new char[conn.getContentLength()];
                 StringBuilder stringBuilder = new StringBuilder();
                 int length;
                 while ((length = bufferedReader.read(chars)) != -1) {
                     stringBuilder.append(chars, 0, length);
+                }*/
+                InputStream inputStream=conn.getInputStream();
+                byte[] bytes=new byte[1024];
+                int length;
+                String result="";
+                while ((length=inputStream.read(bytes))!=-1){
+                    result=new String(bytes,0,length);
                 }
-                return stringBuilder.toString();
+
+                return result;
             }
         } catch (IOException e) {
             e.printStackTrace();

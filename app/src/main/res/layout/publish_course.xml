@@ -23,7 +23,7 @@
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/tv_set"
+            android:id="@+id/tv_complete"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
@@ -99,6 +99,7 @@
 
                 <TextView
                     android:id="@+id/tv_classChoose"
+                    android:layout_marginRight="12dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -140,6 +141,7 @@
 
                 <TextView
                     android:id="@+id/tv_beginChoose"
+                    android:layout_marginRight="12dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -166,7 +168,7 @@
                     android:layout_height="22dp"
                     android:layout_marginTop="12dp"
                     android:layout_toRightOf="@+id/iv_end"
-                    android:text="报名开始时间"
+                    android:text="报名结束时间"
                     android:textSize="18sp" />
 
                 <TextView
@@ -181,6 +183,7 @@
 
                 <TextView
                     android:id="@+id/tv_endChoose"
+                    android:layout_marginRight="12dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -222,6 +225,7 @@
 
                 <TextView
                     android:id="@+id/tv_numberChoose"
+                   android:layout_marginRight="12dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -262,6 +266,7 @@
                     android:textSize="14sp" />
 
                 <ImageView
+                    android:layout_marginRight="12dp"
                     android:layout_centerVertical="true"
                     android:id="@+id/iv_describeChoose"
                     android:layout_width="wrap_content"
@@ -271,6 +276,7 @@
             </RelativeLayout>
 
             <TextView
+                android:id="@+id/tv_more"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:layout_marginTop="6dp"

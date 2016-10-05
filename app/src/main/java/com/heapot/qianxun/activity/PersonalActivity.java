@@ -90,6 +90,7 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
         } else {
             mHeadUrl.setImageResource(R.drawable.imagetest);
         }
+        //Glide.with(activity).load("http://odxpoei6h.bkt.clouddn.com/qianxun57f1fb7f9a56e.jpeg").into(mHeadUrl);
         Logger.d(mSign);
         Logger.d(mHeadUrl);
 

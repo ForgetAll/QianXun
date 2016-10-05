@@ -60,6 +60,8 @@
         <activity
             android:name=".activity.CreateArticleActivity"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden"></activity>
+        <!--创建课程-->
+        <activity android:name=".activity.CreateCourseActivity"></activity>
         <!--自动更新服务-->
         <service android:name=".service.UpdateService"></service>
         <!--文章详情-->
