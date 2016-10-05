@@ -104,7 +104,6 @@ public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         adapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Logger.d("点击了第"+position+"，集合大小是"+list.size());
 //                Intent intent = new Intent(getActivity(), ArticleActivity.class);
 //                startActivity(intent);
             }
