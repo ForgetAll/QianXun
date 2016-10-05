@@ -51,7 +51,7 @@ public class OrderListAdapter extends BaseAdapter {
             viewHolder=new ViewHolder();
             convertView = mInflater.inflate(R.layout.layout_list_item, null);
             Log.e("此处运行了。。。。。。。。。。。。。。。。","");
-            viewHolder.mItemText = (TextView) convertView.findViewById(R.id.item_text);
+            viewHolder.mItemText = (TextView) convertView.findViewById(R.id.txt_main_list_title);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();

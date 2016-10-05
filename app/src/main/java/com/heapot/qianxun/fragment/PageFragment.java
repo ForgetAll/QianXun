@@ -27,6 +27,7 @@ import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.bean.MainListBean;
 import com.heapot.qianxun.helper.OnRecyclerViewItemClickListener;
+import com.heapot.qianxun.util.CommonUtil;
 import com.heapot.qianxun.util.JsonUtil;
 import com.orhanobut.logger.Logger;
 
@@ -82,7 +83,9 @@ public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         mView = inflater.inflate(R.layout.layout_list,container,false);
         initView();
         initEvent();
+        Logger.d("OnCreate-");
         return mView;
+
     }
 
     /**
@@ -92,21 +95,18 @@ public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         recyclerView = (RecyclerView) mView.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false));
         recyclerView.setHasFixedSize(true);
-
         swipeRefreshLayout = (SwipeRefreshLayout) mView.findViewById(R.id.srl_main_fragment);
     }
     private void initEvent(){
-
         loadData();
-
         adapter = new MainTabAdapter(getContext(),list);
         //添加点击事件
         adapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Toast.makeText(getContext(), "点击了", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getActivity(), ArticleActivity.class);
-                startActivity(intent);
+                Logger.d("点击了第"+position+"，集合大小是"+list.size());
+//                Intent intent = new Intent(getActivity(), ArticleActivity.class);
+//                startActivity(intent);
             }
         });
 
@@ -122,6 +122,7 @@ public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefre
      * 模拟数据
      */
     private void loadData(){
+        Logger.d("LoadData");
         String id = mId;
         if (mId != null ){
             getListWithTags(id);
@@ -135,10 +136,12 @@ public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             pageNum = 1;//重置页面为第一页
             list.clear();//清空list数据，放便重新赋值
             loadData();
+            Toast.makeText(getContext(), "已刷新", Toast.LENGTH_SHORT).show();
         }
     }
     //获取指定标签对应的列表
     private void getListWithTags(String id){
+        Logger.d(id);
         String url = ConstantsBean.GET_LIST_WITH_TAG+"catalogId=" +id+"&page="+pageNum+"&pagesize="+pageSize;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.GET, url, null,
@@ -147,10 +150,9 @@ public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                     public void onResponse(JSONObject response) {
                         MainListBean mainListBean = (MainListBean) JsonUtil.fromJson(String.valueOf(response),MainListBean.class);
                         list.addAll(mainListBean.getContent());
-                        Logger.d("获取到集合的大小"+list.size());
+                        Logger.d("请求数据,获取到集合的大小"+list.size());
                         recyclerView.setAdapter(adapter);
                         adapter.notifyDataSetChanged();
-
                     }
                 },
                 new Response.ErrorListener() {

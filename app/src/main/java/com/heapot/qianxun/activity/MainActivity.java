@@ -61,24 +61,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private IntentFilter intentFilter;
     private RefreshReceiver refreshReceiver;
     private LocalBroadcastManager localBroadcastManager;
-
-    private Handler handler = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            if (msg.what == 1){
-                initData();
-                mViewPager.setAdapter(mPageAdapter);
-                mPageAdapter.notifyDataSetChanged();
-                mTabLayout.setupWithViewPager(mViewPager);
-                if (mList.size() == 0){
-                    Toast.makeText(MainActivity.this, "快去订阅标签", Toast.LENGTH_SHORT).show();
-                }
-            }
-        }
-    };
-
-
-
     //主页界面
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,7 +125,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         mPageAdapter = new MainTabFragmentAdapter(getSupportFragmentManager(), this, mList);
         mViewPager.setAdapter(mPageAdapter);
-        mPageAdapter.notifyDataSetChanged();
         mTabLayout.setupWithViewPager(mViewPager);
         if (mList.size() == 0){
             Toast.makeText(MainActivity.this, "快去订阅标签", Toast.LENGTH_SHORT).show();
@@ -253,7 +234,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
     }
     public void refreshData(){
-        handler.sendEmptyMessage(1);
+        initData();
+        mViewPager.setAdapter(mPageAdapter);
+        mPageAdapter.notifyDataSetChanged();
+        mTabLayout.setupWithViewPager(mViewPager);
+        if (mList.size() == 0){
+            Toast.makeText(MainActivity.this, "快去订阅标签", Toast.LENGTH_SHORT).show();
+        }
 
     }
 
@@ -348,7 +335,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             }
 
             if (status != 0){
-                handler.sendEmptyMessage(1);
+                Logger.d("发生变化了"+status);
+                initData();
+                mViewPager.setAdapter(mPageAdapter);
+                mPageAdapter.notifyDataSetChanged();
+                mTabLayout.setupWithViewPager(mViewPager);
+                if (mList.size() == 0){
+                    Toast.makeText(MainActivity.this, "快去订阅标签", Toast.LENGTH_SHORT).show();
+                }
             }
         }
     }

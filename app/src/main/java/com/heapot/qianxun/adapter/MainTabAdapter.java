@@ -5,11 +5,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.blankj.utilcode.utils.TimeUtils;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.bean.MainListBean;
 import com.heapot.qianxun.helper.OnRecyclerViewItemClickListener;
+import com.heapot.qianxun.util.CommonUtil;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +46,14 @@ public class MainTabAdapter extends RecyclerView.Adapter<MainTabAdapter.MainTabV
 
     @Override
     public void onBindViewHolder(MainTabViewHolder holder, int position) {
-        holder.textView.setText(mList.get(position).getTitle());
+        String title = mList.get(position).getTitle();
+        String time = mList.get(position).getCreate_time();
+        String image = mList.get(position).getImages();
+        holder.mTitle.setText(title);
+        holder.mTime.setText("发布时间："+ CommonUtil.getDateTime(time));
+        if (position ==1){
+            holder.imageView.setVisibility(View.GONE);
+        }
         holder.itemView.setTag(position);
     }
 
@@ -67,10 +78,14 @@ public class MainTabAdapter extends RecyclerView.Adapter<MainTabAdapter.MainTabV
     }
 
     public static class MainTabViewHolder extends RecyclerView.ViewHolder{
-        private TextView textView;
+        private TextView mTitle,mTime;
+        private ImageView imageView;
         public MainTabViewHolder(View itemView) {
             super(itemView);
-            textView = (TextView) itemView.findViewById(R.id.item_text);
+            mTitle = (TextView) itemView.findViewById(R.id.txt_main_list_title);
+            mTime = (TextView) itemView.findViewById(R.id.txt_main_list_time);
+            imageView = (ImageView) itemView.findViewById(R.id.iv_main_list_image);
+
         }
     }
 }
