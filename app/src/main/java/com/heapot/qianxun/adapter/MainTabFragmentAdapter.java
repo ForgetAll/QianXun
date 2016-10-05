@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
 import android.view.ViewGroup;
@@ -22,7 +23,7 @@ import java.util.List;
  * 主页tab创建Fragment适配器
  *
  */
-public class MainTabFragmentAdapter extends FragmentPagerAdapter {
+public class MainTabFragmentAdapter extends FragmentStatePagerAdapter {
     private List<SubBean> mList = new ArrayList<>();
     private Context mContext;
 

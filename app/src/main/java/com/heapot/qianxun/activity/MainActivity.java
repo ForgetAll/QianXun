@@ -123,7 +123,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         mPageAdapter = new MainTabFragmentAdapter(getSupportFragmentManager(), this, mList);
         mViewPager.setAdapter(mPageAdapter);
-        mPageAdapter.notifyDataSetChanged();
         mTabLayout.setupWithViewPager(mViewPager);
         if (mList.size() == 0){
             Toast.makeText(MainActivity.this, "快去订阅标签", Toast.LENGTH_SHORT).show();
