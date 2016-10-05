@@ -83,7 +83,9 @@ public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         mView = inflater.inflate(R.layout.layout_list,container,false);
         initView();
         initEvent();
+        Logger.d("OnCreate-");
         return mView;
+
     }
 
     /**
@@ -93,13 +95,10 @@ public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         recyclerView = (RecyclerView) mView.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false));
         recyclerView.setHasFixedSize(true);
-
         swipeRefreshLayout = (SwipeRefreshLayout) mView.findViewById(R.id.srl_main_fragment);
     }
     private void initEvent(){
-        list.clear();
         loadData();
-
         adapter = new MainTabAdapter(getContext(),list);
         //添加点击事件
         adapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
@@ -123,6 +122,7 @@ public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefre
      * 模拟数据
      */
     private void loadData(){
+        Logger.d("LoadData");
         String id = mId;
         if (mId != null ){
             getListWithTags(id);
@@ -141,6 +141,7 @@ public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     }
     //获取指定标签对应的列表
     private void getListWithTags(String id){
+        Logger.d(id);
         String url = ConstantsBean.GET_LIST_WITH_TAG+"catalogId=" +id+"&page="+pageNum+"&pagesize="+pageSize;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.GET, url, null,
@@ -149,7 +150,7 @@ public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                     public void onResponse(JSONObject response) {
                         MainListBean mainListBean = (MainListBean) JsonUtil.fromJson(String.valueOf(response),MainListBean.class);
                         list.addAll(mainListBean.getContent());
-                        Logger.d("获取到集合的大小"+list.size());
+                        Logger.d("请求数据,获取到集合的大小"+list.size());
                         recyclerView.setAdapter(adapter);
                         adapter.notifyDataSetChanged();
                     }
