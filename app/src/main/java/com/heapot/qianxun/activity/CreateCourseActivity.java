@@ -2,6 +2,7 @@ package com.heapot.qianxun.activity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,12 +13,13 @@ import com.heapot.qianxun.R;
  */
 public class CreateCourseActivity extends BaseActivity implements View.OnClickListener {
     private TextView tv_back, tv_complete, tv_classTitle, tv_classContent, tv_classChoose;
-    private ImageView iv_class, iv_begin,iv_end,iv_number,iv_describe,iv_describeChoose;
+    private ImageView iv_class, iv_begin,iv_end,iv_number,iv_describe,iv_describeChoose,iv_image;
     private TextView tv_beginTitle, tv_beginContent, tv_beginChoose;
     private TextView tv_endTitle,tv_endContent,tv_endChoose;
     private TextView tv_numberTitle,tv_numberContent,tv_numberChoose;
     private TextView tv_describeTitle,tv_describeContent;
     private TextView tv_more;
+    private EditText et_title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +33,10 @@ public class CreateCourseActivity extends BaseActivity implements View.OnClickLi
         tv_complete = (TextView) findViewById(R.id.tv_complete);
         tv_back.setOnClickListener(this);
         tv_complete.setOnClickListener(this);
+
+        iv_image=(ImageView)  findViewById(R.id.iv_image);
+        et_title = (EditText) findViewById(R.id.et_title);
+        iv_image.setOnClickListener(this);
 
         iv_class = (ImageView) findViewById(R.id.iv_class);
         tv_classTitle = (TextView) findViewById(R.id.tv_classTitle);

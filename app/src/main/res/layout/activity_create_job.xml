@@ -57,6 +57,7 @@
                     android:src="@drawable/bye" />
 
                 <EditText
+                    android:id="@+id/et_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -66,39 +67,40 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/rl_company"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
                 android:background="#ffffff">
 
                 <ImageView
-                    android:id="@+id/iv_class"
+                    android:id="@+id/iv_company"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_margin="12dp"
                     android:src="@drawable/imagetest" />
 
                 <TextView
-                    android:id="@+id/tv_classTitle"
+                    android:id="@+id/tv_companyTitle"
                     android:layout_width="match_parent"
                     android:layout_height="22dp"
                     android:layout_marginTop="12dp"
-                    android:layout_toRightOf="@+id/iv_class"
+                    android:layout_toRightOf="@+id/iv_company"
                     android:text="请选择招聘单位"
                     android:textSize="18sp" />
 
                 <TextView
-                    android:id="@+id/tv_classContent"
+                    android:id="@+id/tv_companyContent"
                     android:layout_width="match_parent"
                     android:layout_height="18dp"
-                    android:layout_below="@+id/tv_classTitle"
+                    android:layout_below="@+id/tv_companyTitle"
                     android:layout_marginBottom="12dp"
-                    android:layout_toRightOf="@+id/iv_class"
+                    android:layout_toRightOf="@+id/iv_company"
                     android:text="职位将发布在选择的公司之下"
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/tv_classChoose"
+                    android:id="@+id/tv_companyChoose"
                     android:layout_marginRight="12dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -155,39 +157,40 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/rl_job"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
                 android:background="#ffffff">
 
                 <ImageView
-                    android:id="@+id/iv_end"
+                    android:id="@+id/iv_job"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_margin="12dp"
                     android:src="@drawable/imagetest" />
 
                 <TextView
-                    android:id="@+id/tv_endTitle"
+                    android:id="@+id/tv_jobTitle"
                     android:layout_width="match_parent"
                     android:layout_height="22dp"
                     android:layout_marginTop="12dp"
-                    android:layout_toRightOf="@+id/iv_end"
+                    android:layout_toRightOf="@+id/iv_job"
                     android:text="请选择职位的大类"
                     android:textSize="18sp" />
 
                 <TextView
-                    android:id="@+id/tv_endContent"
+                    android:id="@+id/tv_jobContent"
                     android:layout_width="match_parent"
                     android:layout_height="18dp"
-                    android:layout_below="@+id/tv_endTitle"
+                    android:layout_below="@+id/tv_jobTitle"
                     android:layout_marginBottom="12dp"
-                    android:layout_toRightOf="@+id/iv_end"
+                    android:layout_toRightOf="@+id/iv_job"
                     android:text="职位根据选择出现在不同的模块之下"
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/tv_endChoose"
+                    android:id="@+id/tv_jobChoose"
                     android:layout_marginRight="12dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -197,48 +200,50 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/rl_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
                 android:background="#ffffff">
 
                 <ImageView
-                    android:id="@+id/iv_number"
+                    android:id="@+id/iv_detail"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_margin="12dp"
                     android:src="@drawable/imagetest" />
 
                 <TextView
-                    android:id="@+id/tv_numberTitle"
+                    android:id="@+id/tv_detailTitle"
                     android:layout_width="match_parent"
                     android:layout_height="22dp"
                     android:layout_marginTop="12dp"
-                    android:layout_toRightOf="@+id/iv_number"
+                    android:layout_toRightOf="@+id/iv_detail"
                     android:text="请设定详细职位"
                     android:textSize="18sp" />
 
                 <TextView
-                    android:id="@+id/tv_numberContent"
+                    android:id="@+id/tv_detailContent"
                     android:layout_width="match_parent"
                     android:layout_height="18dp"
-                    android:layout_below="@+id/tv_numberTitle"
+                    android:layout_below="@+id/tv_detailTitle"
                     android:layout_marginBottom="12dp"
-                    android:layout_toRightOf="@+id/iv_number"
+                    android:layout_toRightOf="@+id/iv_detail"
                     android:text="辅助精确搜索"
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/tv_numberChoose"
+                    android:id="@+id/tv_detailChoose"
                     android:layout_marginRight="12dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_marginTop="12dp"
-                    android:text="2000" />
+                    android:text="可多选" />
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/rl_describe"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
