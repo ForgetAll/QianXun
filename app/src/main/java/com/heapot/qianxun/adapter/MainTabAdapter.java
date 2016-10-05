@@ -8,8 +8,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.heapot.qianxun.R;
+import com.heapot.qianxun.bean.MainListBean;
 import com.heapot.qianxun.helper.OnRecyclerViewItemClickListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,11 +22,11 @@ import java.util.List;
 public class MainTabAdapter extends RecyclerView.Adapter<MainTabAdapter.MainTabViewHolder> implements View.OnClickListener {
 
     private Context context;
-    private List<String> mList;
+    private List<MainListBean.ContentBean> mList = new ArrayList<>();
     private LayoutInflater inflater;
     private OnRecyclerViewItemClickListener mListener =null;
 
-    public MainTabAdapter(Context context, List<String> mList) {
+    public MainTabAdapter(Context context, List<MainListBean.ContentBean> mList) {
         this.context = context;
         this.mList = mList;
         inflater = LayoutInflater.from(context);
@@ -40,13 +42,13 @@ public class MainTabAdapter extends RecyclerView.Adapter<MainTabAdapter.MainTabV
 
     @Override
     public void onBindViewHolder(MainTabViewHolder holder, int position) {
-        holder.textView.setText(mList.get(position).toString());
+        holder.textView.setText(mList.get(position).getTitle());
         holder.itemView.setTag(position);
     }
 
     @Override
     public int getItemCount() {
-        return mList.size();
+        return mList==null?0:mList.size();
     }
 
     @Override

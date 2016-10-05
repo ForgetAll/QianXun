@@ -66,6 +66,8 @@ public class ConstantsBean {
     public  static  final  String UPLOAD="http://114.215.252.158/qiniu/upload.php";
     //版本更新
     public  static  final  String UPDATE_VERSION="http://114.215.252.158/qianxun_article/index/apk_version/get_version.api.php";
+    //获取指定标签下的列表
+    public static final  String GET_LIST_WITH_TAG = "http://114.215.252.158/qianxun_article/index/article/view_tag_article.api.php?";
 
 
 
