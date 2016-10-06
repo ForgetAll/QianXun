@@ -1,8 +1,6 @@
 package com.heapot.qianxun.fragment;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,32 +10,25 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.activity.ArticleActivity;
-import com.heapot.qianxun.activity.Subscription;
 import com.heapot.qianxun.adapter.MainTabAdapter;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.bean.MainListBean;
 import com.heapot.qianxun.helper.OnRecyclerViewItemClickListener;
-import com.heapot.qianxun.util.CommonUtil;
 import com.heapot.qianxun.util.JsonUtil;
 import com.orhanobut.logger.Logger;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -51,9 +42,9 @@ public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     public static final String ID = "PAGE_ID";
     private int mPage;
     private String mId;//记录当前页面对应标签的id
-    private int pageNum = 1;//记录加载第几页的书
-    private int pageSize = 6;//记录每页加载数据的大小
-    private int maxPageNum = 1;//网络请求获取到最大页码进行限制
+    private int pageIndex = 1;//记录加载第几页的书
+    private int pageSize = 3;//记录每页加载数据的大小
+    private int maxPageIndex = 1;//网络请求获取到最大页码进行限制
     View mView;
     private Integer[] colorArray = {android.R.color.holo_green_light,android.R.color.holo_blue_light,android.R.color.holo_purple,android.R.color.holo_orange_light};
 
@@ -104,11 +95,16 @@ public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     private void initEvent(){
 
         loadData();
-
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(linearLayoutManager);
-        adapter = new MainTabAdapter(getContext(),list);
+        adapter = new MainTabAdapter(getContext());
+        if (adapter.isShowFooter()){
+            adapter.isShowFooter(false);
+        }
+        adapter.setList(list);
         swipeRefreshLayout.setColorSchemeResources(colorArray[0],colorArray[1],colorArray[2],colorArray[3]);
+
+
         adapter.setOnItemClickListener(onClickListener);
         swipeRefreshLayout.setOnRefreshListener(this);
         recyclerView.addOnScrollListener(onScrollListener);
@@ -129,32 +125,40 @@ public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     public void onRefresh() {
         if (!isRefresh){
             swipeRefreshLayout.setRefreshing(false);
-            pageNum = 1;//重置页面为第一页
+            pageIndex = 1;//重置页面为第一页
             list.clear();//清空list数据，放便重新赋值
             loadData();
+            adapter.isShowFooter(false);
+            adapter.notifyDataSetChanged();
             Toast.makeText(getContext(), "已刷新", Toast.LENGTH_SHORT).show();
         }
     }
     //获取指定标签对应的列表
     private void getListWithTags(String id){
         Logger.d(id);
-        String url = ConstantsBean.GET_LIST_WITH_TAG+"catalogId=" +id+"&page="+pageNum+"&pagesize="+pageSize;
+        String url = ConstantsBean.GET_LIST_WITH_TAG+"catalogId=" +id+"&page="+ pageIndex +"&pagesize="+pageSize;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         MainListBean mainListBean = (MainListBean) JsonUtil.fromJson(String.valueOf(response),MainListBean.class);
+                        maxPageIndex =mainListBean.getTotal_page();
                         list.addAll(mainListBean.getContent());
                         Logger.d("请求数据,获取到集合的大小"+list.size());
+                        if (mainListBean.getContent().size()==0){
+                            adapter.isShowFooter(false);
+                        }
+                        adapter.setList(list);
                         recyclerView.setAdapter(adapter);
-                        adapter.notifyDataSetChanged();
+
+
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        Logger.d("未知错误");
                     }
                 }
         );
@@ -179,11 +183,28 @@ public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
             super.onScrollStateChanged(recyclerView, newState);
-//            if (newState == recyclerView.SCROLL_STATE_IDLE
-//                    && lastVisibleItem +1 == adapter.getItemCount()
-//                    && adapter.isShowFooter()){
-//                //加载更多数据
-//            }
+            if (lastVisibleItem == adapter.getItemCount()-1){
+                adapter.isShowFooter(true);
+                adapter.notifyDataSetChanged();
+            }
+            if (newState == recyclerView.SCROLL_STATE_IDLE
+                    && lastVisibleItem +1 == adapter.getItemCount()
+                    && adapter.isShowFooter()){
+                //加载更多数据,不清空数据
+                pageIndex++;
+                if (pageIndex <= maxPageIndex) {
+                    loadData();
+                    adapter.isShowFooter(false);
+                    adapter.notifyDataSetChanged();//这里不能使用setList
+
+                    recyclerView.setAdapter(adapter);
+                }else {
+                    Toast.makeText(getContext(), "没有更多数据了", Toast.LENGTH_SHORT).show();
+                    adapter.isShowFooter(false);
+                    adapter.notifyDataSetChanged();
+                }
+
+            }
 
         }
 

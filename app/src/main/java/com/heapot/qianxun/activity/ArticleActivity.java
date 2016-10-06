@@ -47,7 +47,8 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
     private static final int MSG_HIDE_INPUT = 1;//隐藏输入框
     private static final int MSG_UPDATE = 3;//更新引用
     private static final int MSG_COMMENT = 4;
-    private String mId;
+    private String articleId = "";
+    private String refId = "";
     private TextView quote_txt,sendMess;
     private LinearLayout input_layout,quote_layout;
     private ImageView clearQuote;
@@ -70,12 +71,25 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
                         input_layout.setVisibility(View.VISIBLE);
 
                     }
-                    String quoteStr = msg.getData().getString("quote");
-                    if (quoteStr != null) {
+                    String data = msg.getData().getString("quote");
+
+                    if (data != null) {
                         if (quote_layout.getVisibility() == View.GONE) {
                             quote_layout.setVisibility(View.VISIBLE);
                         }
-                        quote_txt.setText(quoteStr);
+                        String content = "";
+                        String id = "";
+                        try {
+                            JSONObject jsonObject = new JSONObject(data);
+                            JSONObject inputData = jsonObject.getJSONObject("inputData");
+                            content = inputData.getString("refContent");
+                            id = inputData.getString("refId");
+                            Logger.d("id--->"+id+",content--->"+content);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        refId = id;
+                        quote_txt.setText(content);
                     }
                     input_comment.setFocusable(true);
                     break;
@@ -113,7 +127,7 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
         //获取当前页面id
         Intent intent = getIntent();
         String id = intent.getExtras().getString("id");
-        mId = id;
+        articleId = id;
         String url = "http://sijiache.heapot.com/Tabs/userPage/article/" + "?articleId=" + id + "&device=android";
         final String url2 = "http://sijiache.heapot.com/Tabs/editer/test/111.html";
         //初始化webView
@@ -162,14 +176,15 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
     /**
      * 更新引用
      *
-     * @param id 引用评论id
+     * @param data 引用评论id
      */
     @JavascriptInterface
-    public void updateQuote(String id) {
+    public void updateQuote(String data) {
+        Logger.json(data);
         Message message = new Message();
         message.what = MSG_UPDATE;
         Bundle bundle = new Bundle();
-        bundle.putString("quote", id);
+        bundle.putString("quote", data);
         message.setData(bundle);
         handler.sendMessage(message);
     }
@@ -195,30 +210,29 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
         //postComment(data)
         switch (v.getId()) {
             case R.id.txt_send_mess:
-
                 String content = input_comment.getText().toString();
-                String quote = quote_txt.getText().toString();
                 if (content != null && !content.equals("")) {
                     Toast.makeText(ArticleActivity.this, "评论发送中", Toast.LENGTH_SHORT).show();
-                    postComment(content,mId,quote);
+                    postComment(content, articleId);
                 } else {
                     Toast.makeText(ArticleActivity.this, "输入不能为空", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.iv_clear_quote:
                 quote_txt.setText("");
+                refId = "";
                 quote_layout.setVisibility(View.GONE);
                 break;
         }
     }
 
-    private void postComment(String content, String article, final String quoteId){
+    private void postComment(String content, String article){
         String url = ConstantsBean.BASE_PATH+ConstantsBean.ADD_COMMENT;
         String body;
-        if (quoteId == null || quoteId.equals("")){
+        if (refId.equals("")){
             body = "{\"articleId\":\""+article+"\",\"content\":\""+content+"\"}";
         }else {
-            body = "{\"refId\":"+quoteId+"\"articleId\":\""+article+"\",\"content\":\""+content+"\"}";
+            body = "{\"refId\":"+refId+"\",\"articleId\":\""+article+"\",\"content\":\""+content+"\"}";
         }
         JSONObject json = null;
         try {
@@ -238,8 +252,8 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
                             if (status.equals("success")){
                                 //发送成功
                                 input_comment.setText("");//清空数据
-//                                input_comment.setFocusable(false);
                                 quote_txt.setText("");
+                                refId = "";
                                 quote_layout.setVisibility(View.GONE);
                                 //刷新评论
                                 webView.loadUrl("javascript:fillComment()");
@@ -268,6 +282,5 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
         CustomApplication.getRequestQueue().add(jsonObjectRequest);
 
     }
-
 
 }
