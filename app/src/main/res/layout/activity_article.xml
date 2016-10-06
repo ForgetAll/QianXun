@@ -15,9 +15,18 @@
         android:id="@+id/ll_quote"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:background="#cccccc"
+        android:paddingLeft="13dp"
+        android:paddingRight="13dp"
+        android:paddingTop="13dp"
+        android:background="#fff"
+        android:elevation="5dp"
         android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/iv_clear_quote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="6dp"
+            android:src="@mipmap/ic_clear_ref"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -34,14 +43,11 @@
             android:maxLines="1"
             android:ellipsize="end"
             android:textSize="10dp"/>
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_clear_ref"/>
 
     </LinearLayout>
 
     <LinearLayout
+        android:background="#fff"
         android:id="@+id/ll_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -52,17 +58,26 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:padding="13dp"
             android:hint="发表评论"
+            android:background="#0000"
             android:textColorHint="#ccc"
             android:inputType="text"
-            android:maxLines="2"/>
-        <ImageView
-            android:id="@+id/iv_send_message"
+            android:singleLine="false"
+            android:maxLines="3"
+            android:lines="3"
+            />
+        <TextView
+            android:id="@+id/txt_send_mess"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginRight="5dp"
-            android:src="@mipmap/ic_send_comment"/>
+            android:background="@color/myGreen"
+            android:padding="6dp"
+            android:layout_marginRight="13dp"
+            android:elevation="1dp"
+            android:text="发送"
+            android:textSize="16sp"
+            android:textColor="@color/color_first"/>
     </LinearLayout>
 
 </LinearLayout>

@@ -4,13 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.InputType;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -49,31 +48,34 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
     private static final int MSG_UPDATE = 3;//更新引用
     private static final int MSG_COMMENT = 4;
     private String mId;
-    private TextView quoteId;
-    private ImageView sendMess;
-    private LinearLayout input;
+    private TextView quote_txt,sendMess;
+    private LinearLayout input_layout,quote_layout;
+    private ImageView clearQuote;
     //测试输入法的显示与隐藏
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case MSG_SHOW_INPUT:
-                    input.setVisibility(View.VISIBLE);
+                    input_layout.setVisibility(View.VISIBLE);
                     break;
                 case MSG_HIDE_INPUT:
-                    input.setVisibility(View.GONE);
+                    if (quote_txt.getText().toString().equals("") && input_comment.getText().toString().equals("")) {
+                        input_layout.setVisibility(View.GONE);
+                        quote_layout.setVisibility(View.GONE);
+                    }
                     break;
                 case MSG_UPDATE:
-                    if (input.getVisibility() == View.GONE){
-                        input.setVisibility(View.VISIBLE);
+                    if (input_layout.getVisibility() == View.GONE){
+                        input_layout.setVisibility(View.VISIBLE);
 
                     }
                     String quoteStr = msg.getData().getString("quote");
                     if (quoteStr != null) {
-                        if (quoteId.getVisibility() == View.GONE) {
-                            quoteId.setVisibility(View.VISIBLE);
+                        if (quote_layout.getVisibility() == View.GONE) {
+                            quote_layout.setVisibility(View.VISIBLE);
                         }
-                        quoteId.setText(quoteStr);
+                        quote_txt.setText(quoteStr);
                     }
                     input_comment.setFocusable(true);
                     break;
@@ -93,16 +95,21 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
     private void initView() {
         webView = (WebView) findViewById(R.id.wv_articles);
         input_comment = (EditText) findViewById(R.id.edt_article_input);
-        quoteId = (TextView) findViewById(R.id.txt_articles_quote);
-        sendMess = (ImageView) findViewById(R.id.iv_send_message);
-        input = (LinearLayout) findViewById(R.id.ll_input);
-        input.setVisibility(View.GONE);
+        quote_txt = (TextView) findViewById(R.id.txt_articles_quote);
+        input_layout = (LinearLayout) findViewById(R.id.ll_input);
+        sendMess = (TextView) findViewById(R.id.txt_send_mess);
+        input_layout.setVisibility(View.GONE);
+        input_comment.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+        quote_layout = (LinearLayout) findViewById(R.id.ll_quote);
+        quote_layout.setVisibility(View.GONE);
+        clearQuote = (ImageView) findViewById(R.id.iv_clear_quote);
 
     }
 
     private void initEvent() {
         //发送信息注册点击事件
         sendMess.setOnClickListener(this);
+        clearQuote.setOnClickListener(this);
         //获取当前页面id
         Intent intent = getIntent();
         String id = intent.getExtras().getString("id");
@@ -187,10 +194,10 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
     public void onClick(View v) {
         //postComment(data)
         switch (v.getId()) {
-            case R.id.iv_send_message:
+            case R.id.txt_send_mess:
 
                 String content = input_comment.getText().toString();
-                String quote = quoteId.getText().toString();
+                String quote = quote_txt.getText().toString();
                 if (content != null && !content.equals("")) {
                     Toast.makeText(ArticleActivity.this, "评论发送中", Toast.LENGTH_SHORT).show();
                     postComment(content,mId,quote);
@@ -198,10 +205,14 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
                     Toast.makeText(ArticleActivity.this, "输入不能为空", Toast.LENGTH_SHORT).show();
                 }
                 break;
+            case R.id.iv_clear_quote:
+                quote_txt.setText("");
+                quote_layout.setVisibility(View.GONE);
+                break;
         }
     }
 
-    private void postComment(String content,String article,String quoteId){
+    private void postComment(String content, String article, final String quoteId){
         String url = ConstantsBean.BASE_PATH+ConstantsBean.ADD_COMMENT;
         String body;
         if (quoteId == null || quoteId.equals("")){
@@ -227,7 +238,13 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
                             if (status.equals("success")){
                                 //发送成功
                                 input_comment.setText("");//清空数据
-                                input_comment.setFocusable(false);
+//                                input_comment.setFocusable(false);
+                                quote_txt.setText("");
+                                quote_layout.setVisibility(View.GONE);
+                                //刷新评论
+                                webView.loadUrl("javascript:fillComment()");
+                            }else {
+                                Toast.makeText(ArticleActivity.this, "评论失败", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
