@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -92,10 +91,9 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         Object object = getLocalInfo(ConstantsBean.MY_USER_INFO);
         if (object != null) {
             MyUserBean myUserBean = (MyUserBean) object;
-            if (PreferenceUtil.getString(ConstantsBean.userAutograph)!=null){
+            if (PreferenceUtil.getString(ConstantsBean.userAutograph) != null) {
                 mQuote.setText(PreferenceUtil.getString(ConstantsBean.userAutograph));
-            }
-           else if (myUserBean.getContent().getDescription() != null) {
+            } else if (myUserBean.getContent().getDescription() != null) {
                 mQuote.setText(myUserBean.getContent().getDescription());
                 PreferenceUtil.putString(ConstantsBean.userAutograph, mQuote.toString());
             } else {
@@ -103,17 +101,17 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
                 PreferenceUtil.putString(ConstantsBean.userAutograph, "请设置签名");
             }
             String nickName = myUserBean.getContent().getNickname();
-            if (nickName!=null){
+            if (nickName != null) {
                 mName.setText(nickName);
                 PreferenceUtil.putString(ConstantsBean.nickName, nickName);
-            }else {
+            } else {
                 mName.setText("请设置昵称");
                 PreferenceUtil.putString(ConstantsBean.nickName, "请设置昵称");
             }
-            if (myUserBean.getContent().getIcon()!=null){
-                CommonUtil.loadImage(mIcon,myUserBean.getContent().getIcon(),R.drawable.imagetest);
-                PreferenceUtil.putString(ConstantsBean.userImage,myUserBean.getContent().getIcon());
-            }else {
+            if (myUserBean.getContent().getIcon() != null) {
+                CommonUtil.loadImage(mIcon, myUserBean.getContent().getIcon(), R.drawable.imagetest);
+                PreferenceUtil.putString(ConstantsBean.userImage, myUserBean.getContent().getIcon());
+            } else {
                 mIcon.setImageResource(R.drawable.imagetest);
             }
         } else {
@@ -132,12 +130,15 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        Logger.d(response);
                         try {
                             String status = response.getString("status");
                             if (status.equals("success")) {
                                 MyUserBean myUserBean = (MyUserBean) JsonUtil.fromJson(String.valueOf(response), MyUserBean.class);
                                 SerializableUtils.setSerializable(getContext(), ConstantsBean.MY_USER_INFO, myUserBean);
-
+                                PreferenceUtil.putString(ConstantsBean.nickName, myUserBean.getContent().getNickname());
+                                PreferenceUtil.putString(ConstantsBean.userAutograph, myUserBean.getContent().getDescription());
+                                PreferenceUtil.putString(ConstantsBean.userImage, myUserBean.getContent().getIcon());
 
                             } else {
                                 Toast.makeText(getContext(), response.getString("message"), Toast.LENGTH_SHORT).show();

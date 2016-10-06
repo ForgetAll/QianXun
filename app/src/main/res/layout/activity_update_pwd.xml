@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/backgroundtest">
+    android:background="#F7F7F7">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -41,7 +41,7 @@
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_marginTop="20dp"
-        android:background="@android:color/white"
+        android:background="#FFFFFF"
         android:drawableLeft="@mipmap/person_alter"
         android:drawablePadding="10dp"
         android:paddingLeft="10dp"
@@ -53,7 +53,7 @@
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_marginTop="20dp"
-        android:background="@android:color/white"
+        android:background="#FFFFFF"
         android:drawableLeft="@mipmap/person_alter"
         android:drawablePadding="10dp"
         android:paddingLeft="10dp"
@@ -65,7 +65,7 @@
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_marginTop="20dp"
-        android:background="@android:color/white"
+        android:background="#FFFFFF"
         android:drawableLeft="@mipmap/person_alter"
         android:drawablePadding="10dp"
         android:paddingLeft="10dp"

@@ -34,6 +34,8 @@ public class PersonInfoAlterActivity extends BaseActivity implements View.OnClic
 
     protected void initView() {
         mInfo = (EditText) findViewById(R.id.et_info);
+        String info=getIntent().getStringExtra(ConstantsBean.INFO);
+        mInfo.setText(info);
       mComplete=(TextView)  findViewById(R.id.tv_complete);
         mBack=(TextView)  findViewById(R.id.tv_back);
         mComplete.setOnClickListener(this);

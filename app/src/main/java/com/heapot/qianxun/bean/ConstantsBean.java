@@ -6,7 +6,7 @@ import android.os.Environment;
  * Created by 15859 on 2016/9/3.
  */
 public class ConstantsBean {
-    //基本路径-已改
+    //基本路径
     public static final String BASE_PATH = "https://qinxi1992.xicp.net/";
 
     public static final String CONFIG_NAME = "config";
@@ -50,25 +50,23 @@ public class ConstantsBean {
     //根据分类取消订阅
     public static final String CANCEL_SUBSCRIPTION = "user/subscribe/catalog?catalogId=";
     //获取用户个人信息
-    public   static final String PERSONAL_INFO="user/i";
+    public static final String PERSONAL_INFO = "user/i";
     //个人发表的内容
-    public  static  final  String PERSONAL_ARTICLE="user/detail";
+    public static final String PERSONAL_ARTICLE = "user/detail";
+    //全文检索 GET: /articles/search?searchStr={searchStr}
+    public static final String ARTICLES_SEARCH = "/articles/search?searchStr=";
     //修改个人信息put
-    public  static  final  String PERSONAL_FIX="user/i";
+    public static final String PERSONAL_FIX = "user/i";
     //验证原密码
-    public  static  final  String CHECK_PWD="/user/checkPwd?oldPassword=";
+    public static final String CHECK_PWD = "/user/checkPwd?oldPassword=";
     //修改密码
-    public  static  final  String UPDATE_PWD="/user/updatePwd?oldPassword=";
+    public static final String UPDATE_PWD = "/user/updatePwd?oldPassword=";
     //文件上传接口
-    public  static  final  String UPLOAD="http://114.215.252.158/qiniu/upload.php";
+    public static final String UPLOAD = "http://114.215.252.158/qiniu/upload.php";
     //版本更新
-    public  static  final  String UPDATE_VERSION="http://114.215.252.158/qianxun_article/index/apk_version/get_version.api.php";
+    public static final String UPDATE_VERSION = "http://114.215.252.158/qianxun_article/index/apk_version/get_version.api.php";
     //获取指定标签下的列表
-    public static final  String GET_LIST_WITH_TAG = "http://114.215.252.158/qianxun_article/index/article/view_tag_article.api.php?";
-
-
-
-
+    public static final String GET_LIST_WITH_TAG = "http://114.215.252.158/qianxun_article/index/article/view_tag_article.api.php?";
 
 
     /*
@@ -78,14 +76,14 @@ public class ConstantsBean {
     public static final String USER_PHONE = "phone";
     public static final String USER_PASS = "password";
     public static final String USER_ID = "id";
-    public static final String salt="salt";
-    public static final String email="email";
-    public static final String loginTime="createTime";
+    public static final String salt = "salt";
+    public static final String email = "email";
+    public static final String loginTime = "createTime";
     public static final String userImage = "icon";
     public static final String name = "name";
     public static final String nickName = "nickname";
-    public static final String showname="showname";
-    public static String INFO="info";
+    public static final String showname = "showname";
+    public static String INFO = "info";
     //签名目前未定
     public static final String userAutograph = "description";
 
