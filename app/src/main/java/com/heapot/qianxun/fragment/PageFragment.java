@@ -104,8 +104,9 @@ public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         adapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-//                Intent intent = new Intent(getActivity(), ArticleActivity.class);
-//                startActivity(intent);
+                Intent intent = new Intent(getActivity(), ArticleActivity.class);
+                intent.putExtra("id",list.get(position).getId());
+                startActivity(intent);
             }
         });
 

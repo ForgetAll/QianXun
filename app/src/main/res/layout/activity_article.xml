@@ -3,20 +3,45 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <include layout="@layout/create_tool_bar"></include>
     <!--文章详情页面-->
-    <Button
-        android:id="@+id/btn_test"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Click"/>
     <WebView
         android:id="@+id/wv_articles"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
     </WebView>
-    <EditText
-        android:id="@+id/edt_article_input"
+    <TextView
+        android:id="@+id/txt_articles_quote"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:background="#cccccc"
+        android:padding="4dp"
+        android:maxLines="1"
+        android:visibility="gone"
+        android:ellipsize="end"
+        android:textSize="10dp"/>
+    <LinearLayout
+        android:id="@+id/ll_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <EditText
+            android:id="@+id/edt_article_input"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="发表评论"
+            android:textColorHint="#ccc"
+            android:inputType="text"
+            android:maxLines="2"/>
+        <ImageView
+            android:id="@+id/iv_send_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="5dp"
+            android:src="@mipmap/ic_send_comment"/>
+    </LinearLayout>
+
 </LinearLayout>
