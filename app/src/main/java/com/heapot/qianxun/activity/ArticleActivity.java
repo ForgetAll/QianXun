@@ -17,12 +17,22 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.blankj.utilcode.utils.NetworkUtils;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.application.CustomApplication;
+import com.heapot.qianxun.bean.ConstantsBean;
 import com.orhanobut.logger.Logger;
 
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Karl on 2016/9/24.
@@ -38,6 +48,7 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
     private static final int MSG_HIDE_INPUT = 1;//隐藏输入框
     private static final int MSG_UPDATE = 3;//更新引用
     private static final int MSG_COMMENT = 4;
+    private String mId;
     private TextView quoteId;
     private ImageView sendMess;
     private LinearLayout input;
@@ -53,9 +64,9 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
                     input.setVisibility(View.GONE);
                     break;
                 case MSG_UPDATE:
+                    if (input.getVisibility() == View.GONE){
+                        input.setVisibility(View.VISIBLE);
 
-                    if (input_comment.getVisibility() == View.GONE) {
-                        input_comment.setVisibility(View.VISIBLE);
                     }
                     String quoteStr = msg.getData().getString("quote");
                     if (quoteStr != null) {
@@ -95,6 +106,7 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
         //获取当前页面id
         Intent intent = getIntent();
         String id = intent.getExtras().getString("id");
+        mId = id;
         String url = "http://sijiache.heapot.com/Tabs/userPage/article/" + "?articleId=" + id + "&device=android";
         final String url2 = "http://sijiache.heapot.com/Tabs/editer/test/111.html";
         //初始化webView
@@ -177,23 +189,67 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
         switch (v.getId()) {
             case R.id.iv_send_message:
 
-                String getComment = input_comment.getText().toString();
+                String content = input_comment.getText().toString();
                 String quote = quoteId.getText().toString();
-                if (getComment != null && !getComment.equals("")) {
+                if (content != null && !content.equals("")) {
                     Toast.makeText(ArticleActivity.this, "评论发送中", Toast.LENGTH_SHORT).show();
-                    String data;
-                    if (quote != null && !quote.equals("")) {
-                        data = "\"{" + "\'token\':\'" + CustomApplication.TOKEN + "\',\'refId\':" + quote + "\',\'commentContent\':\'" + getComment + "\'}\"";
-                    } else {
-                        data = "\"{" + "\'token\':\'" + CustomApplication.TOKEN + "\',\'commentContent\':\'" + getComment + "\'}\"";
-
-                    }
-                    webView.loadUrl("javascript:postComment(" + data + ")");//调用Js方法发表评论
+                    postComment(content,mId,quote);
                 } else {
                     Toast.makeText(ArticleActivity.this, "输入不能为空", Toast.LENGTH_SHORT).show();
                 }
                 break;
         }
+    }
+
+    private void postComment(String content,String article,String quoteId){
+        String url = ConstantsBean.BASE_PATH+ConstantsBean.ADD_COMMENT;
+        String body;
+        if (quoteId == null || quoteId.equals("")){
+            body = "{\"articleId\":\""+article+"\",\"content\":\""+content+"\"}";
+        }else {
+            body = "{\"refId\":"+quoteId+"\"articleId\":\""+article+"\",\"content\":\""+content+"\"}";
+        }
+        JSONObject json = null;
+        try {
+            json = new JSONObject(body);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Logger.json(String.valueOf(json));
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.POST, url, json,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Logger.json(String.valueOf(response));
+                        try {
+                            String status = response.getString("status");
+                            if (status.equals("success")){
+                                //发送成功
+                                input_comment.setText("");//清空数据
+                                input_comment.setFocusable(false);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }
+        ){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> map = new HashMap<>();
+                map.put(ConstantsBean.KEY_TOKEN,CustomApplication.TOKEN);
+                return map;
+            }
+        };
+        CustomApplication.getRequestQueue().add(jsonObjectRequest);
+
     }
 
 

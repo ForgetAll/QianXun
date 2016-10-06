@@ -1,6 +1,8 @@
 package com.heapot.qianxun.fragment;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -53,11 +55,13 @@ public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     private int pageSize = 6;//记录每页加载数据的大小
     private int maxPageNum = 1;//网络请求获取到最大页码进行限制
     View mView;
+    private Integer[] colorArray = {android.R.color.holo_green_light,android.R.color.holo_blue_light,android.R.color.holo_purple,android.R.color.holo_orange_light};
 
     private SwipeRefreshLayout swipeRefreshLayout;
     private boolean isRefresh = false;
 
     private RecyclerView recyclerView;
+    private LinearLayoutManager linearLayoutManager;
     private MainTabAdapter adapter;
     private List<MainListBean.ContentBean> list = new ArrayList<>();
 
@@ -94,29 +98,21 @@ public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     private void initView(){
         recyclerView = (RecyclerView) mView.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false));
-        recyclerView.setHasFixedSize(true);
         swipeRefreshLayout = (SwipeRefreshLayout) mView.findViewById(R.id.srl_main_fragment);
+        linearLayoutManager = new LinearLayoutManager(getContext());
     }
     private void initEvent(){
-        loadData();
-        adapter = new MainTabAdapter(getContext(),list);
-        //添加点击事件
-        adapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                Intent intent = new Intent(getActivity(), ArticleActivity.class);
-                intent.putExtra("id",list.get(position).getId());
-                startActivity(intent);
-            }
-        });
 
+        loadData();
+
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        adapter = new MainTabAdapter(getContext(),list);
+        swipeRefreshLayout.setColorSchemeResources(colorArray[0],colorArray[1],colorArray[2],colorArray[3]);
+        adapter.setOnItemClickListener(onClickListener);
         swipeRefreshLayout.setOnRefreshListener(this);
-        swipeRefreshLayout.setColorSchemeResources(
-                android.R.color.holo_green_light,
-                android.R.color.holo_blue_light,
-                android.R.color.holo_purple,
-                android.R.color.holo_orange_light
-        );
+        recyclerView.addOnScrollListener(onScrollListener);
+
     }
     /**
      * 模拟数据
@@ -164,4 +160,37 @@ public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         );
         CustomApplication.getRequestQueue().add(jsonObjectRequest);
     }
+    /**
+     * 点击事件
+     */
+    private OnRecyclerViewItemClickListener onClickListener = new OnRecyclerViewItemClickListener() {
+        @Override
+        public void onItemClick(View view, int position) {
+            Intent intent = new Intent(getActivity(), ArticleActivity.class);
+            intent.putExtra("id",list.get(position).getId());
+            startActivity(intent);
+        }
+    };
+    /**
+     *上拉加载
+     */
+    private RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {
+        private int lastVisibleItem;
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            super.onScrollStateChanged(recyclerView, newState);
+//            if (newState == recyclerView.SCROLL_STATE_IDLE
+//                    && lastVisibleItem +1 == adapter.getItemCount()
+//                    && adapter.isShowFooter()){
+//                //加载更多数据
+//            }
+
+        }
+
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+            lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
+        }
+    };
 }
