@@ -15,11 +15,8 @@ public class ConstantsBean {
     public static final int CARMA_RESULT_CODE = 101;
     public static final String HEAD_IMAGE_PATH = Environment.getExternalStorageDirectory() + "/headImage.jpg";
 
-    //关于我们
-    public static final String ABOUT_US = "http://122.114.85.104:8080/images/classes/res/html/about.html";
+    //下载地址常量
     public static final String APP_UEL = "appUrl";
-    public static final String TITLE = "title";
-    public static final String POSITION = "position";
     /**
      * url地址
      */

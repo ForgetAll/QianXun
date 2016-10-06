@@ -26,6 +26,7 @@
 
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/tv_fans"
                 android:layout_marginLeft="15dp"
                 android:layout_width="200dp"

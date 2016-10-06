@@ -7,19 +7,32 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.activity.ArticleActivity;
 import com.heapot.qianxun.adapter.PersonalTabAdapter;
+import com.heapot.qianxun.application.CustomApplication;
+import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.helper.OnRecyclerViewItemClickListener;
 import com.orhanobut.logger.Logger;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by 李大总管 on 2016/10/2.
@@ -97,6 +110,39 @@ public class PersonalPageFragment extends Fragment implements SwipeRefreshLayout
         for (int i = 0; i < 20; i++) {
             list.add("Tab #"+mPage+" Item #"+i);
         }
+        String url= ConstantsBean.BASE_PATH+ConstantsBean.PERSONAL_ARTICLE;
+        JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.e("个人发表的内容",response.toString());
+                try {
+                    String status=response.getString("status");
+                    String content=response.getString("content");
+                    if (status.equals("success")){
+                        if (content!=null){
+
+                        }else {
+                            Toast.makeText(getContext(),"您还没有发表任何内容",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put(ConstantsBean.KEY_TOKEN, CustomApplication.TOKEN);
+                return headers;
+            }
+        };
+        CustomApplication.getRequestQueue().add(jsonObjectRequest);
     }
 
     @Override

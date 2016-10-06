@@ -11,8 +11,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.NotificationCompat;
 
 import com.heapot.qianxun.R;
-import com.heapot.qianxun.bean.AppBean;
 import com.heapot.qianxun.bean.ConstantsBean;
+import com.heapot.qianxun.bean.UpdateResultBean;
 import com.heapot.qianxun.util.LogUtils;
 import com.heapot.qianxun.util.PackageUtils;
 import com.koushikdutta.async.future.FutureCallback;
@@ -55,7 +55,7 @@ public class UpdateService extends Service {
      */
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        AppBean bean = (AppBean) intent.getSerializableExtra(ConstantsBean.APP_UEL);
+        UpdateResultBean.ContentBean bean= (UpdateResultBean.ContentBean) intent.getSerializableExtra(ConstantsBean.APP_UEL);
         final NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
         builder.setSmallIcon(R.mipmap.ic_launcher);
         builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
