@@ -22,8 +22,6 @@ import com.heapot.qianxun.R;
 import com.heapot.qianxun.helper.RecordSQLiteOpenHelper;
 import com.heapot.qianxun.popupwindow.SearchListView;
 
-import java.util.Date;
-
 /**
  * Created by 15859 on 2016/9/12.
  */
@@ -120,10 +118,6 @@ if (s.toString().trim().length()==0){
     }
 
     private void getData() {
-// 插入数据，便于测试，否则第一次进入没有数据怎么测试呀？
-        Date date = new Date();
-        long time = date.getTime();
-        insertData("Leo" + time);
         // 第一次进入查询所有的历史记录
         queryData("");
     }

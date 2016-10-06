@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.heapot.qianxun.R;
@@ -46,12 +45,9 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
     private ImageView mHead;
     private TextView mNick;
     private TextView mAutograph;
-    private RelativeLayout rl_sex;
     private int requestCode;
     private String nick;
     private String autograph;
-    private RelativeLayout mBottomSet;
-    private TextView mCarmaView, mPhotoView;
     private Handler handler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
@@ -107,12 +103,6 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
         mAutograph = (TextView) findViewById(R.id.tv_autograph);
         findViewById(R.id.rl_autograph).setOnClickListener(this);
         findViewById(R.id.rl_nick).setOnClickListener(this);
-        mPhotoView = (TextView) findViewById(R.id.tv_girl);
-        mPhotoView.setOnClickListener(this);
-        mCarmaView = (TextView) findViewById(R.id.tv_boy);
-        mCarmaView.setOnClickListener(this);
-        mBottomSet = (RelativeLayout) findViewById(R.id.rl_bottomSet);
-        mBottomSet.setOnClickListener(this);
         mHead.setOnClickListener(this);
         mBack.setOnClickListener(this);
     }

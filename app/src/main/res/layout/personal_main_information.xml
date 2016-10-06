@@ -2,19 +2,18 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/backgroundtest"
+    android:background="#F7F7F7"
     android:fitsSystemWindows="true">
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/backgroundtest"
         android:orientation="vertical"
         android:fitsSystemWindows="true">
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:id="@+id/rl_title"
-            android:background="#f4c600">
+            android:background="#0000ff">
             <TextView
                 android:id="@+id/tv_back"
                 android:layout_width="wrap_content"
@@ -33,7 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="90dp"
             android:layout_marginTop="10dp"
-            android:background="@android:color/white">
+            android:background="#ffffff">
 
             <TextView
                 style="@style/TV_Left"
@@ -59,37 +58,9 @@
                 android:src="@drawable/arrow_right_ee" />
         </RelativeLayout>
         <RelativeLayout
-            android:id="@+id/rl_autograph"
-            style="@style/PersonLayout"
-            android:layout_marginTop="10dp">
-
-            <TextView
-                style="@style/TV_Left"
-                android:text="签名" />
-
-            <TextView
-                android:id="@+id/tv_autograph"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
-                android:layout_toLeftOf="@id/iv_arrow"
-                android:text="我的个性就是你的属性"
-                android:textSize="16sp" />
-
-            <ImageView
-                android:id="@id/iv_arrow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
-                android:src="@drawable/arrow_right_ee" />
-        </RelativeLayout>
-        <RelativeLayout
             android:id="@+id/rl_nick"
             style="@style/PersonLayout"
-            android:layout_marginTop="1dp">
+            android:layout_marginTop="10dp">
 
             <TextView
                 style="@style/TV_Left"
@@ -114,6 +85,35 @@
                 android:layout_marginRight="10dp"
                 android:src="@drawable/arrow_right_ee" />
         </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/rl_autograph"
+            style="@style/PersonLayout"
+            android:layout_marginTop="2dp">
+
+            <TextView
+                style="@style/TV_Left"
+                android:text="签名" />
+
+            <TextView
+                android:id="@+id/tv_autograph"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@id/iv_arrow"
+                android:text="我的个性就是你的属性"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@id/iv_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/arrow_right_ee" />
+        </RelativeLayout>
+
 
 
 
