@@ -1,11 +1,15 @@
 package com.heapot.qianxun.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -39,6 +43,10 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
     private ImageView mBanner, mHeadUrl, mClose;
     private TextView mFans, mName, mSign;
     private int pt;
+    //本地广播尝试
+    private IntentFilter intentFilter;
+    private RefreshReceiver refreshReceiver;
+    private LocalBroadcastManager localBroadcastManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +56,7 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
         initView();
         initEvent();
         initData();
+
     }
 
     private void initView() {
@@ -68,8 +77,25 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
         mSign.setOnClickListener(this);
         mClose.setOnClickListener(this);
         mList = new ArrayList<>();
+
     }
 
+    @Override
+    protected void onRestart() {
+        localReceiver();
+        super.onRestart();
+    }
+
+    /**
+     * 本地广播接收
+     */
+    private void localReceiver(){
+        localBroadcastManager = LocalBroadcastManager.getInstance(this);//获取实例
+        intentFilter = new IntentFilter();
+        intentFilter.addAction("com.karl.refresh");
+        refreshReceiver = new RefreshReceiver();
+        localBroadcastManager.registerReceiver(refreshReceiver,intentFilter);
+    }
     private void initEvent() {
         //状态栏
         mToolBar.setTitle("");
@@ -182,5 +208,29 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void onPageScrollStateChanged(int state) {
 
+    }
+    /**
+     * 广播接收器
+     */
+    class RefreshReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int personalStatus = intent.getExtras().getInt("personalStatus");
+            Object object=   SerializableUtils.getSerializable(activity,ConstantsBean.MY_USER_INFO);
+            MyUserBean userBean= (MyUserBean) object;
+            switch (personalStatus){
+                case 0://无更新,不需要操作
+                    break;
+                case 1:
+                    CommonUtil.loadImage(mHeadUrl,userBean.getContent().getIcon(), R.drawable.imagetest);
+                    break;
+                case 2:
+                    mName.setText(userBean.getContent().getNickname());
+                    break;
+                case 3:
+                    mSign.setText(userBean.getContent().getDescription());
+                    break;
+            }
+        }
     }
 }

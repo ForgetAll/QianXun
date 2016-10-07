@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -50,6 +51,7 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
     private int requestCode;
     private String nick;
     private String autograph;
+    private int personalStatus = 0;
     private Handler handler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
@@ -113,7 +115,7 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
         MyUserBean myUserBean = (MyUserBean) object;
         if (myUserBean.getContent().getDescription() != null) {
             mAutograph.setText(myUserBean.getContent().getDescription());
-        }  else {
+        } else {
             mAutograph.setText("请设置签名");
         }
         String nickName = myUserBean.getContent().getNickname();
@@ -133,9 +135,11 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
     private Object getLocalInfo(String fileName) {
         return SerializableUtils.getSerializable(activity, fileName);
     }
+
     //点击事件
     @Override
     public void onClick(View v) {
+        sendBroadcast();
         switch (v.getId()) {
             //返回
             case R.id.tv_back:
@@ -159,6 +163,32 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
         }
     }
 
+    private void sendBroadcast() {
+        //发送广播并关闭页面
+        MyUserBean.ContentBean userBean = new MyUserBean.ContentBean();
+        Intent intent = new Intent("com.personal.change");
+        intent.putExtra("personalStatus",personalStatus);
+        switch (personalStatus){
+            case 0://没有更新不需要处理
+                break;
+            case 1:
+                intent.putExtra("ionChange",userBean.getIcon() );
+                personalStatus=0;
+                break;
+            case 2:
+                intent.putExtra("nameChange", userBean.getNickname());
+                personalStatus=0;
+                break;
+            case 3:
+                intent.putExtra("postList", userBean.getDescription());
+                personalStatus=0;
+                break;
+        }
+        LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(this);
+        localBroadcastManager.sendBroadcast(intent);//发送本地广播
+        PersonalInforActivity.this.finish();
+    }
+
     //修改头像
     private void setHeadImage() {
         PhotoCarmaWindow bottomPopup = new PhotoCarmaWindow(PersonalInforActivity.this);
@@ -172,37 +202,35 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
      * @param info 具体信息
      */
     private void updateUserInfo(final String key, final String info) {
-
         MyUserBean.ContentBean userBean = new MyUserBean.ContentBean();
-        userBean.setId(userId);
         userBean.setPhone(PreferenceUtil.getString(ConstantsBean.USER_PHONE));
         switch (requestCode) {
             //昵称
             case 201:
                 userBean.setNickname(info);
-                SerializableUtils.setSerializable(activity, ConstantsBean.MY_USER_INFO,userBean);
+                SerializableUtils.setSerializable(activity, ConstantsBean.MY_USER_INFO, userBean);
                 PreferenceUtil.putString(key, info);
-                userBean.setNickname(info);
+                personalStatus = 2;
                 break;
             //签名
             case 202:
-                userBean.setNickname(info);
-                SerializableUtils.setSerializable(activity, ConstantsBean.MY_USER_INFO,userBean);
-                PreferenceUtil.putString(key, info);
                 userBean.setDescription(info);
+                SerializableUtils.setSerializable(activity, ConstantsBean.MY_USER_INFO, userBean);
+                PreferenceUtil.putString(key, info);
+                personalStatus = 3;
                 break;
             //头像
             case 203:
-                userBean.setNickname(info);
-                SerializableUtils.setSerializable(activity, ConstantsBean.MY_USER_INFO,userBean);
-                PreferenceUtil.putString(key, info);
                 userBean.setIcon(info);
+                SerializableUtils.setSerializable(activity, ConstantsBean.MY_USER_INFO, userBean);
+                PreferenceUtil.putString(key, info);
+                personalStatus = 1;
                 break;
 
         }
-        String  body = "{\"name\":\""+PreferenceUtil.getString(ConstantsBean.name)+"\",\"nikename\":\""+PreferenceUtil.getString(ConstantsBean.nickName)+"\",\"icon\":\""+PreferenceUtil.getString(ConstantsBean.userImage)+"\",\"description\":\""+PreferenceUtil.getString(ConstantsBean.userAutograph)+"\"}";
-     // String  body = "{\"name\":\""+userBean.getName()+"\",\"nikename\":\""+userBean.getNickname()+"\",\"icon\":\""+userBean.getIcon()+"\",\"description\":\""+userBean.getDescription()+"\"}";
-       // String data = JsonUtil.toJson(userBean);
+        String body = "{\"name\":\"" + PreferenceUtil.getString(ConstantsBean.name) + "\",\"nikename\":\"" + PreferenceUtil.getString(ConstantsBean.nickName) + "\",\"icon\":\"" + PreferenceUtil.getString(ConstantsBean.userImage) + "\",\"description\":\"" + PreferenceUtil.getString(ConstantsBean.userAutograph) + "\"}";
+        // String  body = "{\"name\":\""+userBean.getName()+"\",\"nikename\":\""+userBean.getNickname()+"\",\"icon\":\""+userBean.getIcon()+"\",\"description\":\""+userBean.getDescription()+"\"}";
+        // String data = JsonUtil.toJson(userBean);
         //发送数据
         JSONObject json = null;
         try {
@@ -210,8 +238,8 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Log.e("上传的个人信息数据",body);
-        String url=ConstantsBean.BASE_PATH + ConstantsBean.PERSONAL_FIX;
+        Log.e("上传的个人信息数据", body);
+        String url = ConstantsBean.BASE_PATH + ConstantsBean.PERSONAL_FIX;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.PUT, url, json,
                 new Response.Listener<JSONObject>() {
@@ -220,7 +248,7 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
                         Logger.json(String.valueOf(response));
                         try {
                             String status = response.getString("status");
-                            if (status.equals("success")){
+                            if (status.equals("success")) {
                                 //发送成功
                                 switch (requestCode) {
                                     //昵称
@@ -238,8 +266,8 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
                                         break;
 
                                 }
-                            }else {
-                                Toast.makeText(PersonalInforActivity.this, "评论失败", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(PersonalInforActivity.this, "修改失败", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -252,11 +280,11 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
 
                     }
                 }
-        ){
+        ) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> map = new HashMap<>();
-                map.put(ConstantsBean.KEY_TOKEN,CustomApplication.TOKEN);
+                map.put(ConstantsBean.KEY_TOKEN, CustomApplication.TOKEN);
                 return map;
             }
         };
