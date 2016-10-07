@@ -5,6 +5,31 @@
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
     android:background="@color/myGreen">
-
-
+    <ImageView
+        android:id="@+id/iv_btn_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:src="@mipmap/ic_back_white"/>
+    <TextView
+        android:id="@+id/txt_title"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:padding="10dp"
+        android:gravity="center_vertical"
+        android:textColor="#fff"
+        android:textSize="20sp"
+        android:text="Title"/>
+    <TextView
+        android:id="@+id/txt_btn_function"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:visibility="invisible"
+        android:padding="10dp"
+        android:gravity="center"
+        android:textColor="#fff"
+        android:textSize="20sp"
+        android:text="保存"/>
 </LinearLayout>

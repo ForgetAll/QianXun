@@ -9,6 +9,7 @@
         android:padding="13dp"
         android:orientation="vertical">
         <EditText
+            android:id="@+id/edt_create_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#0000"
