@@ -41,6 +41,10 @@ import java.util.Map;
 /**
  * Created by Karl on 2016/8/20.
  * 自定义侧滑菜单布局：
+ * desc:
+ *      存数据：SerializableUtils.setSerializable(getContext(), ConstantsBean.MY_USER_INFO, myUserBean);
+ *      取数据：SerializableUtils.getSerializable(getContext(), fileName)  这里我封装成了一种方法getLocalInfo(String fileName)
+ *
  */
 public class MenuFragment extends Fragment implements View.OnClickListener {
     private ImageView mIcon;
