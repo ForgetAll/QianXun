@@ -41,6 +41,11 @@ import java.util.Map;
 /**
  * Created by Karl on 2016/8/20.
  * 自定义侧滑菜单布局：
+ * <p>
+ * <p>
+ * desc:
+ * 存数据：SerializableUtils.setSerializable(getContext(), ConstantsBean.MY_USER_INFO, myUserBean);
+ * 取数据：SerializableUtils.getSerializable(getContext(), fileName)  这里我封装成了一种方法getLocalInfo(String fileName)
  */
 public class MenuFragment extends Fragment implements View.OnClickListener {
     private ImageView mIcon;
@@ -91,26 +96,19 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         Object object = getLocalInfo(ConstantsBean.MY_USER_INFO);
         if (object != null) {
             MyUserBean myUserBean = (MyUserBean) object;
-            if (PreferenceUtil.getString(ConstantsBean.userAutograph) != null) {
-                mQuote.setText(PreferenceUtil.getString(ConstantsBean.userAutograph));
-            } else if (myUserBean.getContent().getDescription() != null) {
+            if (myUserBean.getContent().getDescription() != null) {
                 mQuote.setText(myUserBean.getContent().getDescription());
-                PreferenceUtil.putString(ConstantsBean.userAutograph, mQuote.toString());
             } else {
                 mQuote.setText("请设置签名");
-                PreferenceUtil.putString(ConstantsBean.userAutograph, "请设置签名");
             }
             String nickName = myUserBean.getContent().getNickname();
             if (nickName != null) {
                 mName.setText(nickName);
-                PreferenceUtil.putString(ConstantsBean.nickName, nickName);
             } else {
                 mName.setText("请设置昵称");
-                PreferenceUtil.putString(ConstantsBean.nickName, "请设置昵称");
             }
             if (myUserBean.getContent().getIcon() != null) {
                 CommonUtil.loadImage(mIcon, myUserBean.getContent().getIcon(), R.drawable.imagetest);
-                PreferenceUtil.putString(ConstantsBean.userImage, myUserBean.getContent().getIcon());
             } else {
                 mIcon.setImageResource(R.drawable.imagetest);
             }
@@ -139,6 +137,22 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
                                 PreferenceUtil.putString(ConstantsBean.nickName, myUserBean.getContent().getNickname());
                                 PreferenceUtil.putString(ConstantsBean.userAutograph, myUserBean.getContent().getDescription());
                                 PreferenceUtil.putString(ConstantsBean.userImage, myUserBean.getContent().getIcon());
+                                if (myUserBean.getContent().getDescription() != null) {
+                                    mQuote.setText(myUserBean.getContent().getDescription());
+                                } else {
+                                    mQuote.setText("请设置签名");
+                                }
+                                String nickName = myUserBean.getContent().getNickname();
+                                if (nickName != null) {
+                                    mName.setText(nickName);
+                                } else {
+                                    mName.setText("请设置昵称");
+                                }
+                                if (myUserBean.getContent().getIcon() != null) {
+                                    CommonUtil.loadImage(mIcon, myUserBean.getContent().getIcon(), R.drawable.imagetest);
+                                } else {
+                                    mIcon.setImageResource(R.drawable.imagetest);
+                                }
 
                             } else {
                                 Toast.makeText(getContext(), response.getString("message"), Toast.LENGTH_SHORT).show();

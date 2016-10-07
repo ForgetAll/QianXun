@@ -12,24 +12,30 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.bean.MyUserBean;
+import com.heapot.qianxun.helper.SerializableUtils;
 import com.heapot.qianxun.util.CommonUtil;
 import com.heapot.qianxun.util.FileUploadTask;
-import com.heapot.qianxun.util.JsonUtil;
 import com.heapot.qianxun.util.PreferenceUtil;
-import com.heapot.qianxun.util.ToastUtil;
 import com.heapot.qianxun.widget.PhotoCarmaWindow;
-import com.koushikdutta.async.future.FutureCallback;
-import com.koushikdutta.ion.Ion;
+import com.orhanobut.logger.Logger;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by 15859 on 2016/8/29.
@@ -103,27 +109,30 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
     }
 
     private void initEvent() {
-        nick = PreferenceUtil.getString(ConstantsBean.nickName);
-        if (nick != null) {
-            mNick.setText(nick);
+        Object object = getLocalInfo(ConstantsBean.MY_USER_INFO);
+        MyUserBean myUserBean = (MyUserBean) object;
+        if (myUserBean.getContent().getDescription() != null) {
+            mAutograph.setText(myUserBean.getContent().getDescription());
+        }  else {
+            mAutograph.setText("请设置签名");
+        }
+        String nickName = myUserBean.getContent().getNickname();
+        if (nickName != null) {
+            mNick.setText(nickName);
         } else {
             mNick.setText("请设置昵称");
         }
-        autograph = PreferenceUtil.getString(ConstantsBean.userAutograph);
-        mNick.setText(nick);
-        mAutograph.setText(autograph);
-        Log.e("名字",nick);
-        Log.e("签名",autograph);
-        String imagePath = PreferenceUtil.getString(ConstantsBean.userImage);
-        if (imagePath != null) {
-            CommonUtil.loadImage(mHead, imagePath, R.mipmap.imagetest);
+        if (myUserBean.getContent().getIcon() != null) {
+            CommonUtil.loadImage(mHead, myUserBean.getContent().getIcon(), R.drawable.imagetest);
         } else {
             mHead.setImageResource(R.drawable.imagetest);
         }
 
     }
 
-
+    private Object getLocalInfo(String fileName) {
+        return SerializableUtils.getSerializable(activity, fileName);
+    }
     //点击事件
     @Override
     public void onClick(View v) {
@@ -171,51 +180,87 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
             //昵称
             case 201:
                 userBean.setNickname(info);
+                SerializableUtils.setSerializable(activity, ConstantsBean.MY_USER_INFO,userBean);
+                PreferenceUtil.putString(key, info);
+                userBean.setNickname(info);
                 break;
             //签名
             case 202:
+                userBean.setNickname(info);
+                SerializableUtils.setSerializable(activity, ConstantsBean.MY_USER_INFO,userBean);
+                PreferenceUtil.putString(key, info);
                 userBean.setDescription(info);
                 break;
             //头像
             case 203:
+                userBean.setNickname(info);
+                SerializableUtils.setSerializable(activity, ConstantsBean.MY_USER_INFO,userBean);
+                PreferenceUtil.putString(key, info);
                 userBean.setIcon(info);
                 break;
 
         }
-        String data = JsonUtil.toJson(userBean);
+        String  body = "{\"name\":\""+PreferenceUtil.getString(ConstantsBean.name)+"\",\"nikename\":\""+PreferenceUtil.getString(ConstantsBean.nickName)+"\",\"icon\":\""+PreferenceUtil.getString(ConstantsBean.userImage)+"\",\"description\":\""+PreferenceUtil.getString(ConstantsBean.userAutograph)+"\"}";
+     // String  body = "{\"name\":\""+userBean.getName()+"\",\"nikename\":\""+userBean.getNickname()+"\",\"icon\":\""+userBean.getIcon()+"\",\"description\":\""+userBean.getDescription()+"\"}";
+       // String data = JsonUtil.toJson(userBean);
         //发送数据
-        Ion.with(this).load(ConstantsBean.BASE_PATH + ConstantsBean.PERSONAL_FIX )
-                .setHeader(ConstantsBean.KEY_TOKEN, CustomApplication.TOKEN)
-                .setStringBody(data).asString().setCallback(new FutureCallback<String>() {
-            @Override
-            public void onCompleted(Exception e, String result) {
-                if (!TextUtils.isEmpty(result)) {
-                    if (result.contains("success")) {
-                        switch (requestCode) {
-                            //昵称
-                            case 201:
-                                PreferenceUtil.putString(key, info);
-                                mNick.setText(info);
-                                break;
-                            //签名
-                            case 202:
-                                PreferenceUtil.putString(key, info);
-                                mAutograph.setText(info);
-                                //头像
-                            case 203:
-                                PreferenceUtil.putString(key, info);
-                                break;
+        JSONObject json = null;
+        try {
+            json = new JSONObject(body);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Log.e("上传的个人信息数据",body);
+        String url=ConstantsBean.BASE_PATH + ConstantsBean.PERSONAL_FIX;
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.PUT, url, json,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Logger.json(String.valueOf(response));
+                        try {
+                            String status = response.getString("status");
+                            if (status.equals("success")){
+                                //发送成功
+                                switch (requestCode) {
+                                    //昵称
+                                    case 201:
+                                        PreferenceUtil.putString(key, info);
+                                        mNick.setText(info);
+                                        break;
+                                    //签名
+                                    case 202:
+                                        PreferenceUtil.putString(key, info);
+                                        mAutograph.setText(info);
+                                        //头像
+                                    case 203:
+                                        PreferenceUtil.putString(key, info);
+                                        break;
 
+                                }
+                            }else {
+                                Toast.makeText(PersonalInforActivity.this, "评论失败", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-                        ToastUtil.show("信息修改成功");
-                    } else {
-                        ToastUtil.show("信息修改失败");
                     }
-                } else {
-                    ToastUtil.show("信息修改失败");
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
                 }
+        ){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> map = new HashMap<>();
+                map.put(ConstantsBean.KEY_TOKEN,CustomApplication.TOKEN);
+                return map;
             }
-        });
+        };
+        CustomApplication.getRequestQueue().add(jsonObjectRequest);
     }
 
     //上传头像

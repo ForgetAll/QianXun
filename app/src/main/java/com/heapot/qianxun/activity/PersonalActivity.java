@@ -8,7 +8,6 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -19,8 +18,9 @@ import android.widget.TextView;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.adapter.PersonalPageAdapter;
 import com.heapot.qianxun.bean.ConstantsBean;
+import com.heapot.qianxun.bean.MyUserBean;
+import com.heapot.qianxun.helper.SerializableUtils;
 import com.heapot.qianxun.util.CommonUtil;
-import com.heapot.qianxun.util.PreferenceUtil;
 import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
@@ -77,19 +77,25 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void initData() {
-       String nick = PreferenceUtil.getString(ConstantsBean.nickName);
-        if (nick!=null){
-            mName.setText(nick);
-        }else {
-            mName.setText("请设置昵称");
-        }
-        String autograph = PreferenceUtil.getString(ConstantsBean.userAutograph);
-        mSign.setText(autograph);
-        if (!TextUtils.isEmpty(PreferenceUtil.getString(ConstantsBean.userImage))) {
-            CommonUtil.loadImage(mHeadUrl, PreferenceUtil.getString(ConstantsBean.userImage), R.drawable.imagetest);
-        } else {
-            mHeadUrl.setImageResource(R.drawable.imagetest);
-        }
+        Object object = getLocalInfo(ConstantsBean.MY_USER_INFO);
+            MyUserBean myUserBean = (MyUserBean) object;
+            if (myUserBean.getContent().getDescription() != null) {
+                mSign.setText(myUserBean.getContent().getDescription());
+            }  else {
+                mSign.setText("请设置签名");
+            }
+            String nickName = myUserBean.getContent().getNickname();
+            if (nickName != null) {
+                mName.setText(nickName);
+            } else {
+                mName.setText("请设置昵称");
+            }
+            if (myUserBean.getContent().getIcon() != null) {
+                CommonUtil.loadImage(mHeadUrl, myUserBean.getContent().getIcon(), R.drawable.imagetest);
+            } else {
+                mHeadUrl.setImageResource(R.drawable.imagetest);
+            }
+
         //Glide.with(activity).load("http://odxpoei6h.bkt.clouddn.com/qianxun57f1fb7f9a56e.jpeg").into(mHeadUrl);
         Logger.d(mSign);
         Logger.d(mHeadUrl);
@@ -99,6 +105,9 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
         }
         initTab();
 
+    }
+    private Object getLocalInfo(String fileName) {
+        return SerializableUtils.getSerializable(activity, fileName);
     }
 
     private void initTab() {
