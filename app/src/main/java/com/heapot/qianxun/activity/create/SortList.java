@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.activity.BaseActivity;
+import com.heapot.qianxun.adapter.SortAdapter;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.bean.MyUserBean;
@@ -30,14 +32,16 @@ import java.util.List;
  * desc：创建项目的时候选择分类
  *
  */
-public class SortList extends BaseActivity implements View.OnClickListener {
+public class SortList extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
     private ImageView back;
     private TextView title;
     private ListView listView;
     private List<TagsBean.ContentBean> list = new ArrayList<>();
     private List<TagsBean.ContentBean> tagList = new ArrayList<>();//这里tagList的意思是对应的二级标题
+    private SortAdapter adapter;
     int current = 0;
     String pid;
+    private Intent intent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,12 +53,12 @@ public class SortList extends BaseActivity implements View.OnClickListener {
         title = (TextView) findViewById(R.id.txt_title);
         back = (ImageView) findViewById(R.id.iv_btn_back);
         listView = (ListView) findViewById(R.id.lv_sort_list);
-
+        listView.setDividerHeight(1);
         //一些初始化设置
         title.setText("选择分类");
         back.setOnClickListener(this);
 
-        Intent intent = getIntent();
+        intent = getIntent();
         current = intent.getExtras().getInt("create_status");//根据current判断当前是创建文章还是别的
         switch (current){
             case 0:
@@ -72,6 +76,9 @@ public class SortList extends BaseActivity implements View.OnClickListener {
     }
     private void initEvent(){
         loadData();
+        adapter = new SortAdapter(this,tagList);
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(this);
     }
 
     /**
@@ -96,7 +103,7 @@ public class SortList extends BaseActivity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.iv_back:
+            case R.id.iv_btn_back:
                 this.finish();//直接返回
                 break;
 
@@ -104,4 +111,12 @@ public class SortList extends BaseActivity implements View.OnClickListener {
     }
 
 
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        //选中id返回上一个页面
+        intent.putExtra("TagName",tagList.get(position).getName());
+        intent.putExtra("TagId",tagList.get(position).getId());
+        setResult(1,intent);
+        this.finish();
+    }
 }

@@ -27,7 +27,7 @@ public class SortAdapter extends BaseAdapter{
 
     @Override
     public int getCount() {
-        return mList.size();
+        return mList==null?0:mList.size();
     }
 
     @Override
@@ -47,9 +47,11 @@ public class SortAdapter extends BaseAdapter{
             holder = new SortViewHolder();
             convertView = LayoutInflater.from(context).inflate(R.layout.layout_sort_item,parent,false);
             holder.textView = (TextView) convertView.findViewById(R.id.txt_tags_item);
+            convertView.setTag(holder);
         }else {
-
+            holder = (SortViewHolder) convertView.getTag();
         }
+        holder.textView.setText(mList.get(position).getName());
         return convertView;
     }
     public class SortViewHolder{

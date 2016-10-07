@@ -145,5 +145,15 @@ public class CreateArticleActivity extends BaseActivity implements View.OnClickL
         return json;
     }
 
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 0 && resultCode == 1){
+            String name = data.getExtras().getString("TagName");
+            String id = data.getExtras().getString("TagId");
+            catalogId = id;
+            mChooseSub.setText(name);
+        }else {
+            mChooseSub.setText("选择分类失败");
+        }
+    }
 }
