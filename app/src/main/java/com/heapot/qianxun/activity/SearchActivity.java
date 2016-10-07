@@ -14,25 +14,43 @@ import android.widget.BaseAdapter;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.blankj.utilcode.utils.NetworkUtils;
 import com.heapot.qianxun.R;
+import com.heapot.qianxun.adapter.SearchArticleAdapter;
+import com.heapot.qianxun.application.CustomApplication;
+import com.heapot.qianxun.bean.ConstantsBean;
+import com.heapot.qianxun.bean.SearchBean;
 import com.heapot.qianxun.helper.RecordSQLiteOpenHelper;
 import com.heapot.qianxun.popupwindow.SearchListView;
+import com.heapot.qianxun.util.JsonUtil;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.List;
 
 /**
  * Created by 15859 on 2016/9/12.
  */
-public class SearchActivity extends BaseActivity implements View.OnClickListener{
+public class SearchActivity extends BaseActivity implements View.OnClickListener {
     private EditText et_search;
     private TextView tv_tip, tv_clear;
     private SearchListView listView;
-    private ImageView mBack,mClearSearch;
+    private ImageView mBack, mClearSearch;
     private RecordSQLiteOpenHelper helper = new RecordSQLiteOpenHelper(this);
     private SQLiteDatabase db;
     private BaseAdapter adapter;
+   private List<SearchBean.ContentBean.RowsBean> rowsBeen;
+    private ListView lv_search;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +68,10 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         et_search = (EditText) findViewById(R.id.et_search);
         tv_tip = (TextView) findViewById(R.id.tv_tip);
         listView = (com.heapot.qianxun.popupwindow.SearchListView) findViewById(R.id.listView);
+       lv_search=(ListView) findViewById(R.id.lv_search);
         tv_clear = (TextView) findViewById(R.id.tv_clear);
         mBack = (ImageView) findViewById(R.id.iv_back);
-        mClearSearch=(ImageView)findViewById(R.id.iv_clearSearch);
+        mClearSearch = (ImageView) findViewById(R.id.iv_clearSearch);
         mClearSearch.setOnClickListener(this);
         mBack.setOnClickListener(this);
         tv_clear.setOnClickListener(this);
@@ -86,19 +105,30 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                listView.setVisibility(View.GONE);
+                lv_search.setVisibility(View.VISIBLE);
+                String searchStr = et_search.getText().toString().trim();
+                boolean isAvailable = NetworkUtils.isAvailable(SearchActivity.this);
+                if (isAvailable) {
+                    searchArticle(searchStr);
+                } else {
+                    Toast.makeText(activity, "请检查网络连接", Toast.LENGTH_SHORT).show();
+                }
 
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-if (s.toString().trim().length()==0){
-    tv_tip.setText("搜索历史");
-    mClearSearch.setVisibility(View.GONE);
-}else{
-    tv_tip.setText("搜索结果");
-    mClearSearch.setVisibility(View.VISIBLE);
-}
-                String temName=et_search.getText().toString();
+                if (s.toString().trim().length() == 0) {
+                    listView.setVisibility(View.VISIBLE);
+                    lv_search.setVisibility(View.GONE);
+                    tv_tip.setText("搜索历史");
+                    mClearSearch.setVisibility(View.GONE);
+                } else {
+                    tv_tip.setText("搜索结果");
+                    mClearSearch.setVisibility(View.VISIBLE);
+                }
+                String temName = et_search.getText().toString();
                 // 根据tempName去模糊查询数据库中有没有数据
                 queryData(temName);
 
@@ -107,12 +137,20 @@ if (s.toString().trim().length()==0){
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                 //把item的字传到输入框
+                //把item的字传到输入框
                 TextView textView = (TextView) view.findViewById(android.R.id.text1);
-                String name=textView.getText().toString();
+                String name = textView.getText().toString();
                 et_search.setText(name);
                 //跳转事件，待解决
+                listView.setVisibility(View.GONE);
+                lv_search.setVisibility(View.VISIBLE);
                 Toast.makeText(SearchActivity.this, name, Toast.LENGTH_SHORT).show();
+            }
+        });
+        lv_search.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+               String articleId=     rowsBeen.get(position).getId();
             }
         });
     }
@@ -171,7 +209,30 @@ if (s.toString().trim().length()==0){
 
     }
 
+    private void searchArticle(String searchStr) {
+        String url = ConstantsBean.BASE_PATH + ConstantsBean.ARTICLES_SEARCH + searchStr;
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    if (response.getString("status").equals("success")) {
+                        SearchBean searchBean = (SearchBean) JsonUtil.fromJson(String.valueOf(response), SearchBean.class);
+                        List<SearchBean.ContentBean.RowsBean> rowsBeen=searchBean.getContent().getRows();
+                       SearchArticleAdapter articleAdapter=new SearchArticleAdapter(SearchActivity.this,rowsBeen);
+                        lv_search.setAdapter(articleAdapter);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
 
+            }
+        });
+        CustomApplication.getRequestQueue().add(jsonObjectRequest);
+    }
 
     //检查数据库中是否有该条数据
     private boolean hasData(String tempName) {

@@ -2,9 +2,7 @@ package com.heapot.qianxun.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -12,8 +10,6 @@ import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -88,7 +84,6 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.personal_main_information);
-        setTransparentBar();
         initView();
         initEvent();
 
@@ -117,6 +112,8 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
         autograph = PreferenceUtil.getString(ConstantsBean.userAutograph);
         mNick.setText(nick);
         mAutograph.setText(autograph);
+        Log.e("名字",nick);
+        Log.e("签名",autograph);
         String imagePath = PreferenceUtil.getString(ConstantsBean.userImage);
         if (imagePath != null) {
             CommonUtil.loadImage(mHead, imagePath, R.mipmap.imagetest);
@@ -126,20 +123,6 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
 
     }
 
-    //toolbar
-    private void setTransparentBar() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = getWindow();
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
-                    | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(Color.TRANSPARENT);
-            window.setNavigationBarColor(Color.TRANSPARENT);
-        }
-    }
 
     //点击事件
     @Override
