@@ -218,18 +218,16 @@ public class CreateArticleActivity extends BaseActivity implements View.OnClickL
                     cropImage(uri1);
                     break;
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+            }
+        }
+
         if (requestCode == 0 && resultCode == 1){
-            String name = data.getExtras().getString("TagName");
-            String id = data.getExtras().getString("TagId");
+            String name = intent.getExtras().getString("TagName");
+            String id = intent.getExtras().getString("TagId");
             catalogId = id;
             mChooseSub.setText(name);
         }else {
             mChooseSub.setText("选择分类失败");
-        }
-    }
-            }
         }
     }
     //裁剪图片
@@ -257,4 +255,5 @@ public class CreateArticleActivity extends BaseActivity implements View.OnClickL
         FileUploadTask task = new FileUploadTask(this, handler, file);
         task.execute(ConstantsBean.UPLOAD);
     }
+
 }
