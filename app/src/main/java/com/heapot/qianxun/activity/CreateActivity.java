@@ -45,7 +45,7 @@ public class CreateActivity extends BaseActivity {
     }
     private void initEvent(){
         initData();
-        createGridView.setAdapter(adapter);
+
         //设置点击事件
         adapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
             @Override
@@ -77,6 +77,7 @@ public class CreateActivity extends BaseActivity {
         list.add("创建招聘");
         list.add("创建课程");
         adapter = new CreateAdapter(this,list);
+        createGridView.setAdapter(adapter);
     }
 
 }
