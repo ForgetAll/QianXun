@@ -69,9 +69,11 @@ public class FindPassActivity extends BaseActivity implements View.OnClickListen
                 break;
             case R.id.txt_find_send_message:
                 sendMess();
+                message.setFocusable(true);
                 break;
             case R.id.txt_find_reset:
                 phone.setText("");
+                message.setText("");
                 break;
             case R.id.txt_find_reset_pass:
                 password.setText("");
@@ -135,9 +137,9 @@ public class FindPassActivity extends BaseActivity implements View.OnClickListen
             Toast.makeText(FindPassActivity.this, "所有项不能为空", Toast.LENGTH_SHORT).show();
         }else {
             String url = ConstantsBean.BASE_PATH+ConstantsBean.RESET_PASSWORD+
-                    "phone="+postPhone+
-                    "newPassword="+postPassword+
-                    "token="+postMessage;
+                    "?phone="+postPhone+
+                    "&newPassword="+postPassword+
+                    "&token="+postMessage;
             postResetPass(url);
         }
     }

@@ -79,6 +79,8 @@
         <activity android:name=".activity.SystemUserHelpActivity"></activity>
         <!--修改密码-->
         <activity android:name=".activity.SystemChangePassword"></activity>
+        <!--找回密码-->
+        <activity android:name=".activity.FindPassActivity"></activity>
     </application>
 
 </manifest>

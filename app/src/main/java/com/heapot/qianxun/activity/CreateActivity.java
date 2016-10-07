@@ -79,8 +79,4 @@ public class CreateActivity extends BaseActivity {
         adapter = new CreateAdapter(this,list);
     }
 
-
-
-
-
 }
