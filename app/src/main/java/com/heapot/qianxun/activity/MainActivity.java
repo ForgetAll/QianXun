@@ -233,8 +233,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
     public void refreshData(){
         initData();
-        mViewPager.setAdapter(mPageAdapter);
         mPageAdapter.notifyDataSetChanged();
+        mViewPager.setAdapter(mPageAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
         if (mList.size() == 0){
             Toast.makeText(MainActivity.this, "快去订阅标签", Toast.LENGTH_SHORT).show();

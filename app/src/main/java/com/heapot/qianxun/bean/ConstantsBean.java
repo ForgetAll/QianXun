@@ -49,6 +49,8 @@ public class ConstantsBean {
     public static final String POST_SUBSCRIPTION = "user/subscribe/catalog?catalogId=";
     //根据分类取消订阅
     public static final String CANCEL_SUBSCRIPTION = "user/subscribe/catalog?catalogId=";
+    //根据文章ID获取文章详情GET: /articles/{articlesId}
+    public static final String ARTICLE_DETAIL = "/articles/";
     //获取用户个人信息
     public static final String PERSONAL_INFO = "user/i";
     //个人发表的内容
@@ -67,6 +69,13 @@ public class ConstantsBean {
     public static final String UPDATE_VERSION = "http://114.215.252.158/qianxun_article/index/apk_version/get_version.api.php";
     //获取指定标签下的列表
     public static final String GET_LIST_WITH_TAG = "http://114.215.252.158/qianxun_article/index/article/view_tag_article.api.php?";
+    //添加评论
+    public static final String ADD_COMMENT = "comments";
+
+
+
+
+
 
 
     /*

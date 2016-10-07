@@ -14,6 +14,7 @@ import java.util.List;
 
 /**
  * Created by 15859 on 2016/10/6.
+ * 搜索之后的List适配器
  */
 public class SearchArticleAdapter extends BaseAdapter {
     private LayoutInflater inflater;
