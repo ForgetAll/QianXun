@@ -22,8 +22,8 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="368dp"
+                android:layout_height="236dp"
                 android:padding="10dp"
                 android:text="编辑区"/>
         </LinearLayout>
