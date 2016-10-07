@@ -1,10 +1,13 @@
 package com.heapot.qianxun.adapter;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
+import com.heapot.qianxun.R;
 import com.heapot.qianxun.bean.TagsBean;
 
 import java.util.ArrayList;
@@ -39,7 +42,17 @@ public class SortAdapter extends BaseAdapter{
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        return null;
-    }
+        SortViewHolder holder;
+        if (convertView == null){
+            holder = new SortViewHolder();
+            convertView = LayoutInflater.from(context).inflate(R.layout.layout_sort_item,parent,false);
+            holder.textView = (TextView) convertView.findViewById(R.id.txt_tags_item);
+        }else {
 
+        }
+        return convertView;
+    }
+    public class SortViewHolder{
+        TextView textView;
+    }
 }
