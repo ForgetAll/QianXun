@@ -71,6 +71,8 @@ public class ConstantsBean {
     public static final String GET_LIST_WITH_TAG = "http://114.215.252.158/qianxun_article/index/article/view_tag_article.api.php?";
     //添加评论
     public static final String ADD_COMMENT = "comments";
+    //创建文章
+    public static final String CREATE_ARTICLES = "articles";
 
 
 

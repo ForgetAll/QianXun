@@ -7,15 +7,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <Button
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/iv_btn_close"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="close"/>
+            android:layout_margin="15dp"
+            android:layout_gravity="end"
+            android:src="@mipmap/ic_lcose"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:padding="10dp"
             android:gravity="center"
             android:text="创建项目"
             android:textSize="20sp"/>

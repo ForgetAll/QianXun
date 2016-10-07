@@ -11,51 +11,20 @@
         <include layout="@layout/create_tool_bar"></include>
         <!--创建文章图片和标题-->
         <include layout="@layout/create_image_and_title"></include>
-
-    </LinearLayout>
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/create_article_header">
-        <LinearLayout
+        <TextView
+            android:id="@+id/txt_choose_sub"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="368dp"
-                android:layout_height="236dp"
-                android:padding="10dp"
-                android:text="编辑区"/>
-        </LinearLayout>
-    </ScrollView>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal">
-        <Button
-            android:id="@+id/btn_text_size"
-            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="字号"/>
-        <Button
-            android:id="@+id/btn_text_left"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="居左"/>
-        <Button
-            android:id="@+id/btn_text_list"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="列表"/>
-        <Button
-            android:id="@+id/btn_text_image"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="添加图片"/>
+            android:gravity="center_vertical"
+            android:drawableRight="@mipmap/ic_go_light"
+            android:elevation="1dp"
+            android:text="文章分类"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:paddingLeft="13dp"
+            android:paddingRight="13dp"
+            android:textSize="16sp"
+            android:textColor="#9e9d9d"/>
     </LinearLayout>
+    <include layout="@layout/layout_edit"></include>
 </RelativeLayout>

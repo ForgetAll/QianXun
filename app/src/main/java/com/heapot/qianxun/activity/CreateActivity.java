@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.adapter.CreateAdapter;
@@ -19,11 +20,12 @@ import java.util.List;
  * description： 创建项目页面
  *
  */
-public class CreateActivity extends BaseActivity {
+public class CreateActivity extends BaseActivity implements View.OnClickListener {
     private RecyclerView createGridView;
     private GridLayoutManager gridLayoutManager;
     private CreateAdapter adapter;
     private List<String> list = new ArrayList<>();
+    private ImageView close;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +35,8 @@ public class CreateActivity extends BaseActivity {
     }
     private void initView(){
         createGridView = (RecyclerView) findViewById(R.id.rv_create);
+        close = (ImageView) findViewById(R.id.iv_btn_close);
+        close.setOnClickListener(this);
         //禁用RecyclerView的滑动事件，配合ScrollView
         gridLayoutManager = new GridLayoutManager(this,3){
             @Override
@@ -45,7 +49,7 @@ public class CreateActivity extends BaseActivity {
     }
     private void initEvent(){
         initData();
-        createGridView.setAdapter(adapter);
+
         //设置点击事件
         adapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
             @Override
@@ -77,6 +81,12 @@ public class CreateActivity extends BaseActivity {
         list.add("创建招聘");
         list.add("创建课程");
         adapter = new CreateAdapter(this,list);
+        createGridView.setAdapter(adapter);
     }
 
+    @Override
+    public void onClick(View v) {
+        //关闭当前页面
+        this.finish();
+    }
 }

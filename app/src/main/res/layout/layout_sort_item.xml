@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/txt_tags_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:drawableLeft="@mipmap/ic_sub"
+    android:gravity="center"
+    android:paddingTop="13dp"
+    android:paddingBottom="13dp"
+    android:paddingRight="40dp"
+    android:paddingLeft="13dp"
+    android:textSize="18sp"
+    android:text="分类标签">
+
+</TextView>

@@ -5,17 +5,20 @@
     android:layout_height="120dp"
     android:padding="20dp"
     android:background="#E8EDEC">
-    <TextView
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:background="#95b4f7"
-        android:gravity="center"
-        android:text="占位"/>
+    <ImageView
+        android:id="@+id/iv_create_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:src="@mipmap/ic_default_image"/>
     <EditText
+        android:id="@+id/edt_create_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_marginLeft="20dp"
+        android:padding="5dp"
+        android:background="#0000"
+        android:layout_marginLeft="10dp"
         android:maxLines="2"
         android:hint="请输入标题"/>
 </LinearLayout>
