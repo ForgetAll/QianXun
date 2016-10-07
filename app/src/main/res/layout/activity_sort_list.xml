@@ -8,6 +8,7 @@
         android:id="@+id/lv_sort_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="#ccc">
+        android:divider="#ccc"
+        android:dividerHeight="1dp">
     </ListView>
 </LinearLayout>

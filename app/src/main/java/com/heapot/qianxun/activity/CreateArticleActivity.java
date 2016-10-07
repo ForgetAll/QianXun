@@ -123,6 +123,7 @@ public class CreateArticleActivity extends BaseActivity implements View.OnClickL
         }
     }
     private void postArticle(){
+        Toast.makeText(CreateArticleActivity.this, ""+CustomApplication.TOKEN, Toast.LENGTH_SHORT).show();
         String url = ConstantsBean.BASE_PATH+ConstantsBean.CREATE_ARTICLES;
         JSONObject request = getBody();
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
@@ -134,7 +135,8 @@ public class CreateArticleActivity extends BaseActivity implements View.OnClickL
                             String status = response.getString("status");
                             if (status.equals("success")){
                                 //提交成功要进行如下操作
-                                //1、关闭当前页面
+                                CreateArticleActivity.this.finish();
+                                Toast.makeText(CreateArticleActivity.this, "创建成功", Toast.LENGTH_SHORT).show();
 
                             }else {
                                 Toast.makeText(CreateArticleActivity.this, "错误原因："+response.getString("message"), Toast.LENGTH_SHORT).show();
@@ -155,7 +157,8 @@ public class CreateArticleActivity extends BaseActivity implements View.OnClickL
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String,String> headers = new HashMap<>();
                 headers.put(ConstantsBean.KEY_TOKEN,CustomApplication.TOKEN);
-                return super.getHeaders();
+
+                return headers;
             }
         };
         CustomApplication.getRequestQueue().add(jsonObjectRequest);
@@ -215,6 +218,17 @@ public class CreateArticleActivity extends BaseActivity implements View.OnClickL
                     cropImage(uri1);
                     break;
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 0 && resultCode == 1){
+            String name = data.getExtras().getString("TagName");
+            String id = data.getExtras().getString("TagId");
+            catalogId = id;
+            mChooseSub.setText(name);
+        }else {
+            mChooseSub.setText("选择分类失败");
+        }
+    }
             }
         }
     }

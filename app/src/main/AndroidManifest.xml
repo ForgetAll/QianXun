@@ -81,6 +81,8 @@
         <activity android:name=".activity.SystemChangePassword"></activity>
         <!--找回密码-->
         <activity android:name=".activity.FindPassActivity"></activity>
+        <!--文章分类-->
+        <activity android:name=".activity.create.SortList"></activity>
     </application>
 
 </manifest>
