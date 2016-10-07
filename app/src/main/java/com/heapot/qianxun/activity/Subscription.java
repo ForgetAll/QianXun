@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,8 +51,8 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
     private String pid = CustomApplication.PAGE_ARTICLES_ID;
     List<String> postIdList = new ArrayList<>();//实时记录要提交的数据
     List<String> deleteIdList = new ArrayList<>();//实时记录要删除的数据
-    //加入跳转按钮
-    private TextView btnToMain;
+    //加入关闭按钮
+    private ImageView btnToMain;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +64,7 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
     private void initView(){
         sub = (RecyclerView) findViewById(R.id.rv_drag);
         tags = (RecyclerView) findViewById(R.id.rv_content);
-        btnToMain = (TextView) findViewById(R.id.btn_close_subscription);
+        btnToMain = (ImageView) findViewById(R.id.btn_close_subscription);
 
     }
     private void initEvent(){
