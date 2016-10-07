@@ -3,17 +3,12 @@ package com.heapot.qianxun.adapter;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
 import android.view.ViewGroup;
 
 import com.heapot.qianxun.bean.SubBean;
-import com.heapot.qianxun.bean.SubscribedBean;
-import com.heapot.qianxun.fragment.MenuFragment;
 import com.heapot.qianxun.fragment.PageFragment;
-import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
