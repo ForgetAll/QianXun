@@ -129,8 +129,7 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
 
         rl_company = (RelativeLayout) findViewById(R.id.rl_company);
         iv_company = (ImageView) findViewById(R.id.iv_company);
-        tv_company1Title = (TextView) findViewById(R.id.tv_company1Title);
-        tv_company1Content = (TextView) findViewById(R.id.tv_company1Content);
+
         tv_companyChoose = (TextView) findViewById(R.id.tv_companyChoose);
         rl_company.setOnClickListener(this);
 
@@ -199,8 +198,6 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
                 } else {
                     ll_list.setVisibility(View.VISIBLE);
                 }
-                break;
-            case R.id.rl_job:
                 break;
             case R.id.rl_detail:
 
