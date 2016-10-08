@@ -10,6 +10,9 @@ import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,6 +23,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.blankj.utilcode.utils.NetworkUtils;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.activity.create.SortList;
 import com.heapot.qianxun.application.CustomApplication;
@@ -43,7 +47,10 @@ import java.util.Map;
 public class CreateArticleActivity extends BaseActivity implements View.OnClickListener {
     private TextView mToolBarTitle,mToolBarSave,mChooseSub;
     private ImageView mBack,mIcon;
-    private EditText mTitle,mContent;
+//    private EditText mTitle,mContent;
+    private WebView webView;
+    private WebSettings webSettings;
+    private EditText mTitle;
     private String images = "",catalogId = "";
     private Handler handler = new Handler(new Handler.Callback() {
         @Override
@@ -83,7 +90,9 @@ public class CreateArticleActivity extends BaseActivity implements View.OnClickL
         mIcon = (ImageView) findViewById(R.id.iv_create_icon);
         mTitle = (EditText) findViewById(R.id.edt_create_title);
         mChooseSub = (TextView) findViewById(R.id.txt_choose_sub);
-        mContent = (EditText) findViewById(R.id.edt_create_content);
+        webView = (WebView) findViewById(R.id.wv_content);
+//        mContent = (EditText) findViewById(R.id.edt_create_content);
+
         //显示，默认隐藏的保存按钮隐藏
         mToolBarSave.setVisibility(View.VISIBLE);
         //设置ToolBar标题
@@ -94,6 +103,24 @@ public class CreateArticleActivity extends BaseActivity implements View.OnClickL
         //选择标签事件监听
         mChooseSub.setOnClickListener(this);
         mBack.setOnClickListener(this);
+        initSettings();//初始化webView
+    }
+
+    private void initSettings(){
+        String url = "http://192.168.31.236/Tabs/editer/artical/?d?device=android";
+        webSettings = webView.getSettings();
+        boolean isConnected = NetworkUtils.isAvailable(this);
+        if (isConnected) {
+            webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
+        } else {
+            webSettings.setCacheMode(webSettings.LOAD_CACHE_ONLY);
+
+        }
+        webSettings.setJavaScriptEnabled(true);
+        webView.addJavascriptInterface(this,"android");
+        webView.loadUrl(url);
+        webView.setWebChromeClient(new WebChromeClient() {
+        });
     }
 
     @Override
@@ -167,17 +194,17 @@ public class CreateArticleActivity extends BaseActivity implements View.OnClickL
     private JSONObject getBody(){
         //title和content还有catalogId是必须的，所以提交之前一定要进行判断
         String title = mTitle.getText().toString();
-        String content = mContent.getText().toString();
+//        String content = mContent.getText().toString();
         String data = "";
-        if (title.equals("") || content.equals("") || catalogId.equals("")){
-            Toast.makeText(CreateArticleActivity.this, "标题/内容/文章分类不能为空", Toast.LENGTH_SHORT).show();
-        }else {
-            if (images.equals("") || images == null){
-                data = "{\"title\":\""+title+"\",\"content\":\""+content+"\",\"catalogId\":\""+catalogId+"\"}";
-            }else {
-                data = "{\"images\":\""+images+"\",\"title\":\""+title+"\",\"content\":\""+content+"\",\"catalogId\":\""+catalogId+"\"}";
-            }
-        }
+//        if (title.equals("") || content.equals("") || catalogId.equals("")){
+//            Toast.makeText(CreateArticleActivity.this, "标题/内容/文章分类不能为空", Toast.LENGTH_SHORT).show();
+//        }else {
+//            if (images.equals("") || images == null){
+//                data = "{\"title\":\""+title+"\",\"content\":\""+content+"\",\"catalogId\":\""+catalogId+"\"}";
+//            }else {
+//                data = "{\"images\":\""+images+"\",\"title\":\""+title+"\",\"content\":\""+content+"\",\"catalogId\":\""+catalogId+"\"}";
+//            }
+//        }
 
         JSONObject json = null;
         try {

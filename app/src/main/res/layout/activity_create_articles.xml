@@ -17,7 +17,6 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:drawableRight="@mipmap/ic_go_light"
-            android:elevation="1dp"
             android:text="文章分类"
             android:paddingTop="6dp"
             android:paddingBottom="6dp"
@@ -25,6 +24,17 @@
             android:paddingRight="13dp"
             android:textSize="16sp"
             android:textColor="#9e9d9d"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#ccc"/>
     </LinearLayout>
-    <include layout="@layout/layout_edit"></include>
+    <WebView
+        android:id="@+id/wv_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/create_article_header">
+
+    </WebView>
+    <!--<include layout="@layout/layout_edit"></include>-->
 </RelativeLayout>
