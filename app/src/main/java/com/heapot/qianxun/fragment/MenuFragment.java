@@ -97,13 +97,8 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         mHeader.setOnClickListener(this);
         mHelp.setOnClickListener(this);
         initData();
-
-    }
-
-    @Override
-    public void onResume() {
+        //注册本地广播
         localReceiver();
-        super.onResume();
     }
 
     /**
@@ -112,7 +107,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
     private void localReceiver(){
         localBroadcastManager = LocalBroadcastManager.getInstance(getContext());//获取实例
         intentFilter = new IntentFilter();
-        intentFilter.addAction("com.karl.refresh");
+        intentFilter.addAction("com.personal.change");
         refreshReceiver = new RefreshReceiver();
         localBroadcastManager.registerReceiver(refreshReceiver,intentFilter);
     }
@@ -266,19 +261,13 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         @Override
         public void onReceive(Context context, Intent intent) {
             int personalStatus = intent.getExtras().getInt("personalStatus");
-         Object object=   SerializableUtils.getSerializable(getContext(),ConstantsBean.MY_USER_INFO);
-           MyUserBean userBean= (MyUserBean) object;
             switch (personalStatus){
                 case 0://无更新,不需要操作
                     break;
                 case 1:
-                    CommonUtil.loadImage(mIcon,userBean.getContent().getIcon(), R.drawable.imagetest);
-                    break;
-                case 2:
-                    mName.setText(userBean.getContent().getNickname());
-                    break;
-                case 3:
-                    mQuote.setText(userBean.getContent().getDescription());
+                    CommonUtil.loadImage(mIcon, PreferenceUtil.getString(ConstantsBean.userImage), R.drawable.imagetest);
+                    mName.setText(PreferenceUtil.getString(ConstantsBean.nickName));
+                    mQuote.setText(PreferenceUtil.getString(ConstantsBean.userAutograph));
                     break;
             }
         }
