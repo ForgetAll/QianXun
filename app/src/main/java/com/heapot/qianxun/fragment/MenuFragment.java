@@ -109,17 +109,18 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
     /**
      * 本地广播接收
      */
-    private void localReceiver(){
+    private void localReceiver() {
         localBroadcastManager = LocalBroadcastManager.getInstance(getContext());//获取实例
         intentFilter = new IntentFilter();
         intentFilter.addAction("com.personal.change");
         refreshReceiver = new RefreshPersonalReceiver();
-        localBroadcastManager.registerReceiver(refreshReceiver,intentFilter);
+        localBroadcastManager.registerReceiver(refreshReceiver, intentFilter);
     }
+
     private void initData() {
         Object object = getLocalInfo(ConstantsBean.MY_USER_INFO);
         if (object != null) {
-            MyUserBean.ContentBean myUserBean  = (MyUserBean.ContentBean) object;
+            MyUserBean.ContentBean myUserBean = (MyUserBean.ContentBean) object;
             if (myUserBean.getDescription() != null) {
                 mQuote.setText(myUserBean.getDescription());
             } else {
@@ -157,7 +158,8 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
                             String status = response.getString("status");
                             if (status.equals("success")) {
                                 MyUserBean myUserBean = (MyUserBean) JsonUtil.fromJson(String.valueOf(response), MyUserBean.class);
-                                SerializableUtils.setSerializable(getContext(), ConstantsBean.MY_USER_INFO, myUserBean);
+                                MyUserBean.ContentBean userBean = myUserBean.getContent();
+                                SerializableUtils.setSerializable(getContext(), ConstantsBean.MY_USER_INFO, userBean);
                                 PreferenceUtil.putString(ConstantsBean.nickName, myUserBean.getContent().getNickname());
                                 PreferenceUtil.putString(ConstantsBean.userAutograph, myUserBean.getContent().getDescription());
                                 PreferenceUtil.putString(ConstantsBean.userImage, myUserBean.getContent().getIcon());
@@ -267,13 +269,13 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         @Override
         public void onReceive(Context context, Intent intent) {
             int personalStatus = intent.getExtras().getInt("personalStatus");
-            switch (personalStatus){
+            switch (personalStatus) {
                 case 0://无更新,不需要操作
                     break;
                 case 1:
                     Object object = SerializableUtils.getSerializable(getContext(), ConstantsBean.MY_USER_INFO);
                     if (object != null) {
-                        MyUserBean.ContentBean  myUserBean = (MyUserBean.ContentBean) object;
+                        MyUserBean.ContentBean myUserBean = (MyUserBean.ContentBean) object;
                         CommonUtil.loadImage(mIcon, myUserBean.getIcon(), R.drawable.imagetest);
                         mName.setText(myUserBean.getNickname());
                         mQuote.setText(myUserBean.getDescription());
