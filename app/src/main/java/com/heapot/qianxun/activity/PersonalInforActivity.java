@@ -108,6 +108,7 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
         findViewById(R.id.rl_nick).setOnClickListener(this);
         mHead.setOnClickListener(this);
         mBack.setOnClickListener(this);
+        sendBroadcast();
     }
 
     private void initEvent() {
@@ -139,7 +140,6 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
     //点击事件
     @Override
     public void onClick(View v) {
-        sendBroadcast();
         switch (v.getId()) {
             //返回
             case R.id.tv_back:
@@ -164,29 +164,18 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
     }
 
     private void sendBroadcast() {
-        //发送广播并关闭页面
-        MyUserBean.ContentBean userBean = new MyUserBean.ContentBean();
+        //发送广播
         Intent intent = new Intent("com.personal.change");
         intent.putExtra("personalStatus",personalStatus);
         switch (personalStatus){
             case 0://没有更新不需要处理
                 break;
             case 1:
-                intent.putExtra("ionChange",userBean.getIcon() );
-                personalStatus=0;
-                break;
-            case 2:
-                intent.putExtra("nameChange", userBean.getNickname());
-                personalStatus=0;
-                break;
-            case 3:
-                intent.putExtra("postList", userBean.getDescription());
                 personalStatus=0;
                 break;
         }
         LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(this);
         localBroadcastManager.sendBroadcast(intent);//发送本地广播
-        PersonalInforActivity.this.finish();
     }
 
     //修改头像
@@ -210,14 +199,14 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
                 userBean.setNickname(info);
                 SerializableUtils.setSerializable(activity, ConstantsBean.MY_USER_INFO, userBean);
                 PreferenceUtil.putString(key, info);
-                personalStatus = 2;
+                personalStatus = 1;
                 break;
             //签名
             case 202:
                 userBean.setDescription(info);
                 SerializableUtils.setSerializable(activity, ConstantsBean.MY_USER_INFO, userBean);
                 PreferenceUtil.putString(key, info);
-                personalStatus = 3;
+                personalStatus = 1;
                 break;
             //头像
             case 203:

@@ -25,6 +25,7 @@ import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.bean.MyUserBean;
 import com.heapot.qianxun.helper.SerializableUtils;
 import com.heapot.qianxun.util.CommonUtil;
+import com.heapot.qianxun.util.PreferenceUtil;
 import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
@@ -92,7 +93,7 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
     private void localReceiver(){
         localBroadcastManager = LocalBroadcastManager.getInstance(this);//获取实例
         intentFilter = new IntentFilter();
-        intentFilter.addAction("com.karl.refresh");
+        intentFilter.addAction("com.personal.change");
         refreshReceiver = new RefreshReceiver();
         localBroadcastManager.registerReceiver(refreshReceiver,intentFilter);
     }
@@ -103,6 +104,7 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void initData() {
+        //从本地获取数据
         Object object = getLocalInfo(ConstantsBean.MY_USER_INFO);
             MyUserBean myUserBean = (MyUserBean) object;
             if (myUserBean.getContent().getDescription() != null) {
@@ -122,7 +124,6 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
                 mHeadUrl.setImageResource(R.drawable.imagetest);
             }
 
-        //Glide.with(activity).load("http://odxpoei6h.bkt.clouddn.com/qianxun57f1fb7f9a56e.jpeg").into(mHeadUrl);
         Logger.d(mSign);
         Logger.d(mHeadUrl);
 
@@ -216,19 +217,13 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
         @Override
         public void onReceive(Context context, Intent intent) {
             int personalStatus = intent.getExtras().getInt("personalStatus");
-            Object object=   SerializableUtils.getSerializable(activity,ConstantsBean.MY_USER_INFO);
-            MyUserBean userBean= (MyUserBean) object;
             switch (personalStatus){
                 case 0://无更新,不需要操作
                     break;
                 case 1:
-                    CommonUtil.loadImage(mHeadUrl,userBean.getContent().getIcon(), R.drawable.imagetest);
-                    break;
-                case 2:
-                    mName.setText(userBean.getContent().getNickname());
-                    break;
-                case 3:
-                    mSign.setText(userBean.getContent().getDescription());
+                    CommonUtil.loadImage(mHeadUrl, PreferenceUtil.getString(ConstantsBean.userImage), R.drawable.imagetest);
+                    mName.setText(PreferenceUtil.getString(ConstantsBean.nickName));
+                    mSign.setText(PreferenceUtil.getString(ConstantsBean.userAutograph));
                     break;
             }
         }

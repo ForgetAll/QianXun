@@ -12,11 +12,10 @@ import com.heapot.qianxun.bean.ConstantsBean;
 /**
  * Created by 15859 on 2016/9/3.
  * 修改名字签名界面
- *
  */
 public class PersonInfoAlterActivity extends BaseActivity implements View.OnClickListener {
     private EditText mInfo;
-    private TextView mComplete,mBack;
+    private TextView mComplete, mBack;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -31,13 +30,12 @@ public class PersonInfoAlterActivity extends BaseActivity implements View.OnClic
     }
 
 
-
     protected void initView() {
         mInfo = (EditText) findViewById(R.id.et_info);
-        String info=getIntent().getStringExtra(ConstantsBean.INFO);
+        String info = getIntent().getStringExtra(ConstantsBean.INFO);
         mInfo.setText(info);
-      mComplete=(TextView)  findViewById(R.id.tv_complete);
-        mBack=(TextView)  findViewById(R.id.tv_back);
+        mComplete = (TextView) findViewById(R.id.tv_complete);
+        mBack = (TextView) findViewById(R.id.tv_back);
         mComplete.setOnClickListener(this);
         mBack.setOnClickListener(this);
 
@@ -49,23 +47,11 @@ public class PersonInfoAlterActivity extends BaseActivity implements View.OnClic
 
 
     protected void setData() {
-        /*backClick();
-        setLeftTextView("信息修改");
-        setRightTextView("完成").setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String info = etInfo.getText().toString();
-                Intent intent = new Intent();
-                intent.putExtra(ConstantsBean.INFO, info);
-                setResult(RESULT_OK, intent);
-                finish();
-            }
-        });*/
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.tv_back:
                 finish();
                 break;
