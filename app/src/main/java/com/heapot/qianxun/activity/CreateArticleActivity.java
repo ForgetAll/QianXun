@@ -1,8 +1,10 @@
 package com.heapot.qianxun.activity;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -10,6 +12,12 @@ import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.webkit.JavascriptInterface;
+import android.webkit.ValueCallback;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,6 +28,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.blankj.utilcode.utils.NetworkUtils;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.activity.create.SortList;
 import com.heapot.qianxun.application.CustomApplication;
@@ -27,6 +36,7 @@ import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.util.CommonUtil;
 import com.heapot.qianxun.util.FileUploadTask;
 import com.heapot.qianxun.widget.PhotoCarmaWindow;
+import com.orhanobut.logger.Logger;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -41,34 +51,20 @@ import java.util.Map;
  *
  */
 public class CreateArticleActivity extends BaseActivity implements View.OnClickListener {
-    private TextView mToolBarTitle,mToolBarSave,mChooseSub;
-    private ImageView mBack,mIcon;
-    private EditText mTitle,mContent;
+    private TextView mToolBarTitle,mToolBarSave;
+    private ImageView mBack;
+    private WebView webView;
+    private WebSettings webSettings;
     private String images = "",catalogId = "";
-    private Handler handler = new Handler(new Handler.Callback() {
+    private Handler handler = new Handler(){
         @Override
-        public boolean handleMessage(Message msg) {
-            String result = (String) msg.obj;
-            if (!TextUtils.isEmpty(result)) {
-                JSONObject jsonObject = null;
-                try {
-                    jsonObject = new JSONObject(result);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                if (jsonObject.optString("return_code").equals("success")) {
-                    try {
-                        JSONObject content = jsonObject.getJSONObject("content");
-                        images = content.getString("url");
-                        Log.e("这是上传头像返回的路径", images);
-                        CommonUtil.loadImage(mIcon, images + "", R.mipmap.ic_default_image);
-                    } catch (JSONException e) {
-                    }
-                }
+        public void handleMessage(Message msg) {
+            if (msg.what ==1){
+                String url =  msg.getData().getString("value");
+                Logger.d(url);
             }
-            return false;
         }
-    });
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,10 +76,8 @@ public class CreateArticleActivity extends BaseActivity implements View.OnClickL
         mToolBarTitle = (TextView) findViewById(R.id.txt_title);
         mToolBarSave = (TextView) findViewById(R.id.txt_btn_function);
         mBack = (ImageView) findViewById(R.id.iv_btn_back);
-        mIcon = (ImageView) findViewById(R.id.iv_create_icon);
-        mTitle = (EditText) findViewById(R.id.edt_create_title);
-        mChooseSub = (TextView) findViewById(R.id.txt_choose_sub);
-        mContent = (EditText) findViewById(R.id.edt_create_content);
+        webView = (WebView) findViewById(R.id.wv_content);
+
         //显示，默认隐藏的保存按钮隐藏
         mToolBarSave.setVisibility(View.VISIBLE);
         //设置ToolBar标题
@@ -92,26 +86,46 @@ public class CreateArticleActivity extends BaseActivity implements View.OnClickL
         mToolBarSave.setOnClickListener(this);
         mToolBarSave.setText("提交");
         //选择标签事件监听
-        mChooseSub.setOnClickListener(this);
         mBack.setOnClickListener(this);
+        initSettings();//初始化webView
+    }
+
+    private void initSettings(){
+        String url = "http://192.168.31.236/Tabs/editer/artical/?d?device=android";
+        webSettings = webView.getSettings();
+        boolean isConnected = NetworkUtils.isAvailable(this);
+        if (isConnected) {
+            webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
+        } else {
+            webSettings.setCacheMode(webSettings.LOAD_CACHE_ONLY);
+
+        }
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setDefaultTextEncodingName("utf-8");
+        webView.addJavascriptInterface(new InJavaScriptLocalObj(),"android");
+        webView.setWebChromeClient(new WebChromeClient() {});
+        webView.loadUrl(url);
+
+    }
+
+    final class InJavaScriptLocalObj{
+        @JavascriptInterface
+        public void showSource(String html){
+            Logger.d("html------>"+html);
+        }
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.txt_btn_function:
-                postArticle();
+                evaluateJavaScript(webView);
+//                postArticle();
                 break;
             case R.id.iv_create_icon:
                 //弹窗选择图片
                 PhotoCarmaWindow bottomPopup = new PhotoCarmaWindow(CreateArticleActivity.this);
                 bottomPopup.showPopupWindow();
-                break;
-            case R.id.txt_choose_sub:
-                //这里传递一个数据，告诉选择标签的页面，从文章招聘课程中选择相应的数据进行加载
-                Intent article = new Intent(CreateArticleActivity.this, SortList.class);
-                article.putExtra("create_status",0);
-                startActivityForResult(article,0);
                 break;
             case R.id.iv_btn_back:
                 CreateArticleActivity.this.finish();
@@ -166,18 +180,17 @@ public class CreateArticleActivity extends BaseActivity implements View.OnClickL
      */
     private JSONObject getBody(){
         //title和content还有catalogId是必须的，所以提交之前一定要进行判断
-        String title = mTitle.getText().toString();
-        String content = mContent.getText().toString();
+//        String content = mContent.getText().toString();
         String data = "";
-        if (title.equals("") || content.equals("") || catalogId.equals("")){
-            Toast.makeText(CreateArticleActivity.this, "标题/内容/文章分类不能为空", Toast.LENGTH_SHORT).show();
-        }else {
-            if (images.equals("") || images == null){
-                data = "{\"title\":\""+title+"\",\"content\":\""+content+"\",\"catalogId\":\""+catalogId+"\"}";
-            }else {
-                data = "{\"images\":\""+images+"\",\"title\":\""+title+"\",\"content\":\""+content+"\",\"catalogId\":\""+catalogId+"\"}";
-            }
-        }
+//        if (title.equals("") || content.equals("") || catalogId.equals("")){
+//            Toast.makeText(CreateArticleActivity.this, "标题/内容/文章分类不能为空", Toast.LENGTH_SHORT).show();
+//        }else {
+//            if (images.equals("") || images == null){
+//                data = "{\"title\":\""+title+"\",\"content\":\""+content+"\",\"catalogId\":\""+catalogId+"\"}";
+//            }else {
+//                data = "{\"images\":\""+images+"\",\"title\":\""+title+"\",\"content\":\""+content+"\",\"catalogId\":\""+catalogId+"\"}";
+//            }
+//        }
 
         JSONObject json = null;
         try {
@@ -186,6 +199,32 @@ public class CreateArticleActivity extends BaseActivity implements View.OnClickL
             e.printStackTrace();
         }
         return json;
+    }
+
+    /**
+     *  webView调用JS方法，返回参数
+     *
+     * @param webView
+     */
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    private void evaluateJavaScript(WebView webView){
+        for (int i = 1; i < 6; i++) {
+            webView.evaluateJavascript("getContent("+i+")", new ValueCallback<String>() {
+                @Override
+                public void onReceiveValue(String value) {
+                    Message message = new Message();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("value",value);
+                    message.setData(bundle);
+                    message.what = 1;
+                    handler.handleMessage(message);
+
+                }
+            });
+        }
+
+
+
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
@@ -215,16 +254,6 @@ public class CreateArticleActivity extends BaseActivity implements View.OnClickL
                     break;
 
             }
-        }
-
-        if (requestCode == 0 && resultCode == 1){
-            String name = intent.getExtras().getString("TagName");
-            String id = intent.getExtras().getString("TagId");
-            catalogId = id;
-            mChooseSub.setText(name);
-        }else {
-            mChooseSub.setText("选择分类失败");
-            mChooseSub.setTextColor(getResources().getColor(android.R.color.holo_red_light));
         }
     }
     //裁剪图片

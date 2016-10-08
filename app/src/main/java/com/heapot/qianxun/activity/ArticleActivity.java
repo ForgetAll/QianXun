@@ -129,7 +129,7 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
         String id = intent.getExtras().getString("id");
         articleId = id;
         String url = "http://sijiache.heapot.com/Tabs/userPage/article/" + "?articleId=" + id + "&device=android";
-        final String url2 = "http://sijiache.heapot.com/Tabs/editer/test/111.html";
+//        final String url2 = "http://sijiache.heapot.com/Tabs/editer/test/111.html";
         //初始化webView
         initSettings();
         webView.loadUrl(url);
