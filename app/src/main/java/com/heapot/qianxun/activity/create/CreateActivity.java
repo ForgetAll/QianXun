@@ -20,6 +20,7 @@ import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.bean.UserOrgBean;
 import com.heapot.qianxun.helper.OnRecyclerViewItemClickListener;
+import com.heapot.qianxun.helper.SerializableUtils;
 import com.heapot.qianxun.util.JsonUtil;
 import com.orhanobut.logger.Logger;
 
@@ -115,10 +116,12 @@ public class CreateActivity extends BaseActivity implements View.OnClickListener
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        Logger.json(String.valueOf(response));
                         try {
                             String status = response.getString("status");
                             if (status.equals("success")){
                                 UserOrgBean userOrgBean = (UserOrgBean) JsonUtil.fromJson(String.valueOf(response),UserOrgBean.class);
+                                SerializableUtils.setSerializable(CreateActivity.this,ConstantsBean.USER_ORG_LIST,userOrgBean);
                                 orgList.addAll(userOrgBean.getContent());
                                 Logger.d("orgList------->"+orgList.size());
                                 initData(orgList.size());
