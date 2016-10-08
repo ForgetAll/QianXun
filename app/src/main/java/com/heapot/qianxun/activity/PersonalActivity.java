@@ -25,7 +25,6 @@ import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.bean.MyUserBean;
 import com.heapot.qianxun.helper.SerializableUtils;
 import com.heapot.qianxun.util.CommonUtil;
-import com.heapot.qianxun.util.PreferenceUtil;
 import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
@@ -46,7 +45,7 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
     private int pt;
     //本地广播尝试
     private IntentFilter intentFilter;
-    private RefreshReceiver refreshReceiver;
+    private RefreshPersonReceiver refreshReceiver;
     private LocalBroadcastManager localBroadcastManager;
 
     @Override
@@ -81,11 +80,6 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
         localReceiver();
     }
 
-    @Override
-    protected void onResume() {
-        localReceiver();
-        super.onResume();
-    }
 
     /**
      * 本地广播接收
@@ -94,7 +88,7 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
         localBroadcastManager = LocalBroadcastManager.getInstance(this);//获取实例
         intentFilter = new IntentFilter();
         intentFilter.addAction("com.personal.change");
-        refreshReceiver = new RefreshReceiver();
+        refreshReceiver = new RefreshPersonReceiver();
         localBroadcastManager.registerReceiver(refreshReceiver,intentFilter);
     }
     private void initEvent() {
@@ -106,20 +100,20 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
     private void initData() {
         //从本地获取数据
         Object object = getLocalInfo(ConstantsBean.MY_USER_INFO);
-            MyUserBean myUserBean = (MyUserBean) object;
-            if (myUserBean.getContent().getDescription() != null) {
-                mSign.setText(myUserBean.getContent().getDescription());
+            MyUserBean.ContentBean myUserBean = (MyUserBean.ContentBean) object;
+            if (myUserBean.getDescription() != null) {
+                mSign.setText(myUserBean.getDescription());
             }  else {
                 mSign.setText("请设置签名");
             }
-            String nickName = myUserBean.getContent().getNickname();
+            String nickName = myUserBean.getNickname();
             if (nickName != null) {
                 mName.setText(nickName);
             } else {
                 mName.setText("请设置昵称");
             }
-            if (myUserBean.getContent().getIcon() != null) {
-                CommonUtil.loadImage(mHeadUrl, myUserBean.getContent().getIcon(), R.drawable.imagetest);
+            if (myUserBean.getIcon() != null) {
+                CommonUtil.loadImage(mHeadUrl, myUserBean.getIcon(), R.drawable.imagetest);
             } else {
                 mHeadUrl.setImageResource(R.drawable.imagetest);
             }
@@ -210,10 +204,15 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
     public void onPageScrollStateChanged(int state) {
 
     }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        localBroadcastManager.unregisterReceiver(refreshReceiver);
+    }
     /**
      * 广播接收器
      */
-    class RefreshReceiver extends BroadcastReceiver {
+    class RefreshPersonReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
             int personalStatus = intent.getExtras().getInt("personalStatus");
@@ -221,9 +220,13 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
                 case 0://无更新,不需要操作
                     break;
                 case 1:
-                    CommonUtil.loadImage(mHeadUrl, PreferenceUtil.getString(ConstantsBean.userImage), R.drawable.imagetest);
-                    mName.setText(PreferenceUtil.getString(ConstantsBean.nickName));
-                    mSign.setText(PreferenceUtil.getString(ConstantsBean.userAutograph));
+                    Object object = SerializableUtils.getSerializable(activity, ConstantsBean.MY_USER_INFO);
+                    if (object != null) {
+                        MyUserBean.ContentBean  myUserBean = (MyUserBean.ContentBean) object;
+                        CommonUtil.loadImage(mHeadUrl, myUserBean.getIcon(), R.drawable.imagetest);
+                        mName.setText(myUserBean.getNickname());
+                        mSign.setText(myUserBean.getDescription());
+                    }
                     break;
             }
         }

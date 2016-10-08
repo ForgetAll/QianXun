@@ -49,7 +49,7 @@ import java.util.Map;
  * <p>
  * desc:
  * 存数据：SerializableUtils.setSerializable(getContext(), ConstantsBean.MY_USER_INFO, myUserBean);
- * 取数据：SerializableUtils.getSerializable(getContext(), fileName)  这里我封装成了一种方法getLocalInfo(String fileName)
+ * 取数据：SerializableUtils.getSerializable(getContext(),ConstantsBean.MY_USER_INFO)
  */
 public class MenuFragment extends Fragment implements View.OnClickListener {
     private ImageView mIcon;
@@ -59,7 +59,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
     private Activity mActivity;
     //本地广播尝试
     private IntentFilter intentFilter;
-    private RefreshReceiver refreshReceiver;
+    private RefreshPersonalReceiver refreshReceiver;
     private LocalBroadcastManager localBroadcastManager;
 
 //    private List<MyUserBean.ContentBean> mList = new ArrayList<>();
@@ -97,6 +97,11 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         mHeader.setOnClickListener(this);
         mHelp.setOnClickListener(this);
         initData();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         //注册本地广播
         localReceiver();
     }
@@ -108,26 +113,26 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         localBroadcastManager = LocalBroadcastManager.getInstance(getContext());//获取实例
         intentFilter = new IntentFilter();
         intentFilter.addAction("com.personal.change");
-        refreshReceiver = new RefreshReceiver();
+        refreshReceiver = new RefreshPersonalReceiver();
         localBroadcastManager.registerReceiver(refreshReceiver,intentFilter);
     }
     private void initData() {
         Object object = getLocalInfo(ConstantsBean.MY_USER_INFO);
         if (object != null) {
-            MyUserBean myUserBean = (MyUserBean) object;
-            if (myUserBean.getContent().getDescription() != null) {
-                mQuote.setText(myUserBean.getContent().getDescription());
+            MyUserBean.ContentBean myUserBean  = (MyUserBean.ContentBean) object;
+            if (myUserBean.getDescription() != null) {
+                mQuote.setText(myUserBean.getDescription());
             } else {
                 mQuote.setText("请设置签名");
             }
-            String nickName = myUserBean.getContent().getNickname();
+            String nickName = myUserBean.getNickname();
             if (nickName != null) {
                 mName.setText(nickName);
             } else {
                 mName.setText("请设置昵称");
             }
-            if (myUserBean.getContent().getIcon() != null) {
-                CommonUtil.loadImage(mIcon, myUserBean.getContent().getIcon(), R.drawable.imagetest);
+            if (myUserBean.getIcon() != null) {
+                CommonUtil.loadImage(mIcon, myUserBean.getIcon(), R.drawable.imagetest);
             } else {
                 mIcon.setImageResource(R.drawable.imagetest);
             }
@@ -251,13 +256,14 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        localBroadcastManager.unregisterReceiver(refreshReceiver);
         mActivity = null;
     }
 
     /**
      * 广播接收器
      */
-    class RefreshReceiver extends BroadcastReceiver {
+    class RefreshPersonalReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
             int personalStatus = intent.getExtras().getInt("personalStatus");
@@ -265,9 +271,13 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
                 case 0://无更新,不需要操作
                     break;
                 case 1:
-                    CommonUtil.loadImage(mIcon, PreferenceUtil.getString(ConstantsBean.userImage), R.drawable.imagetest);
-                    mName.setText(PreferenceUtil.getString(ConstantsBean.nickName));
-                    mQuote.setText(PreferenceUtil.getString(ConstantsBean.userAutograph));
+                    Object object = SerializableUtils.getSerializable(getContext(), ConstantsBean.MY_USER_INFO);
+                    if (object != null) {
+                        MyUserBean.ContentBean  myUserBean = (MyUserBean.ContentBean) object;
+                        CommonUtil.loadImage(mIcon, myUserBean.getIcon(), R.drawable.imagetest);
+                        mName.setText(myUserBean.getNickname());
+                        mQuote.setText(myUserBean.getDescription());
+                    }
                     break;
             }
         }

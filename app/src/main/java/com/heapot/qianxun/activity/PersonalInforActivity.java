@@ -220,7 +220,6 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
         }
         String body = "{\"name\":\"" + PreferenceUtil.getString(ConstantsBean.name) + "\",\"nikename\":\"" + PreferenceUtil.getString(ConstantsBean.nickName) + "\",\"icon\":\"" + PreferenceUtil.getString(ConstantsBean.userImage) + "\",\"description\":\"" + PreferenceUtil.getString(ConstantsBean.userAutograph) + "\"}";
         // String  body = "{\"name\":\""+userBean.getName()+"\",\"nikename\":\""+userBean.getNickname()+"\",\"icon\":\""+userBean.getIcon()+"\",\"description\":\""+userBean.getDescription()+"\"}";
-        // String data = JsonUtil.toJson(userBean);
         //发送数据
         JSONObject json = null;
         try {
