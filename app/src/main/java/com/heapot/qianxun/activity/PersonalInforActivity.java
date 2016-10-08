@@ -220,11 +220,7 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
                 break;
             //头像
             case 203:
-                userBean.setIcon(info);
                 Log.e("..........上传之后的头像",info);
-                SerializableUtils.setSerializable(activity, ConstantsBean.MY_USER_INFO, userBean);
-                PreferenceUtil.putString(key, info);
-                personalStatus = 1;
                 break;
 
         }
