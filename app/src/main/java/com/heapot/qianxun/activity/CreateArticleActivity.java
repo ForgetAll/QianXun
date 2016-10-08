@@ -224,6 +224,7 @@ public class CreateArticleActivity extends BaseActivity implements View.OnClickL
             mChooseSub.setText(name);
         }else {
             mChooseSub.setText("选择分类失败");
+            mChooseSub.setTextColor(getResources().getColor(android.R.color.holo_red_light));
         }
     }
     //裁剪图片
