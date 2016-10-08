@@ -44,35 +44,27 @@ public class CreateArticleActivity extends BaseActivity implements View.OnClickL
     private TextView mToolBarTitle,mToolBarSave,mChooseSub;
     private ImageView mBack,mIcon;
     private EditText mTitle,mContent;
-    private String images,catalogId = "";
+    private String images = "",catalogId = "";
     private Handler handler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
-            String resutlt = (String) msg.obj;
-            if (!TextUtils.isEmpty(resutlt)) {
+            String result = (String) msg.obj;
+            if (!TextUtils.isEmpty(result)) {
                 JSONObject jsonObject = null;
                 try {
-                    jsonObject = new JSONObject(resutlt);
+                    jsonObject = new JSONObject(result);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 if (jsonObject.optString("return_code").equals("success")) {
                     try {
                         JSONObject content = jsonObject.getJSONObject("content");
-                        String images = content.getString("url");
+                        images = content.getString("url");
                         Log.e("这是上传头像返回的路径", images);
-                        CommonUtil.loadImage(mIcon, images + "", R.mipmap.imagetest);
+                        CommonUtil.loadImage(mIcon, images + "", R.mipmap.ic_default_image);
                     } catch (JSONException e) {
                     }
                 }
-                /*{
-                "content": {
-                    "code": "yes",
-                            "tip": "上传成功",
-                            "url": "http://odxpoei6h.bkt.clouddn.com/qianxun57ee46f0873f2.jpg"
-                },
-                "return_code": "success"
-            }*/
             }
             return false;
         }
@@ -101,6 +93,7 @@ public class CreateArticleActivity extends BaseActivity implements View.OnClickL
         mToolBarSave.setText("提交");
         //选择标签事件监听
         mChooseSub.setOnClickListener(this);
+        mBack.setOnClickListener(this);
     }
 
     @Override
@@ -110,15 +103,18 @@ public class CreateArticleActivity extends BaseActivity implements View.OnClickL
                 postArticle();
                 break;
             case R.id.iv_create_icon:
+                //弹窗选择图片
                 PhotoCarmaWindow bottomPopup = new PhotoCarmaWindow(CreateArticleActivity.this);
                 bottomPopup.showPopupWindow();
-                images = "";//返回链接
                 break;
             case R.id.txt_choose_sub:
                 //这里传递一个数据，告诉选择标签的页面，从文章招聘课程中选择相应的数据进行加载
                 Intent article = new Intent(CreateArticleActivity.this, SortList.class);
                 article.putExtra("create_status",0);
                 startActivityForResult(article,0);
+                break;
+            case R.id.iv_btn_back:
+                CreateArticleActivity.this.finish();
                 break;
         }
     }
