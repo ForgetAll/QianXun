@@ -73,7 +73,10 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
                         Log.e("上传头像返回的数据", path);
                         //Glide.with(activity).load(path).into(mHead);
                         CommonUtil.loadImage(mHead, path + "", R.mipmap.imagetest);
-                        updateUserInfo(ConstantsBean.userImage, path);
+                        userBean.setIcon(path);
+                        personalStatus = 1;
+                        SerializableUtils.setSerializable(activity, ConstantsBean.MY_USER_INFO, userBean);
+                        updateUserInfo(ConstantsBean.userImage, path.toString());
                     } catch (JSONException e) {
                     }
                 }
@@ -218,6 +221,7 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
             //头像
             case 203:
                 userBean.setIcon(info);
+                Log.e("..........上传之后的头像",info);
                 SerializableUtils.setSerializable(activity, ConstantsBean.MY_USER_INFO, userBean);
                 PreferenceUtil.putString(key, info);
                 personalStatus = 1;
@@ -244,6 +248,7 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
                         try {
                             String status = response.getString("status");
                             if (status.equals("success")) {
+
                                 sendBroadcast();
                                 //发送成功
                                 switch (requestCode) {

@@ -16,6 +16,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.heapot.qianxun.application.CustomApplication;
 
 import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
@@ -119,7 +120,7 @@ public class CommonUtil {
 
     //加载图片
     public static void loadImage(final ImageView imageView, String path, int defaultImage) {
-        Glide.with(context).load(path).placeholder(defaultImage).error(defaultImage).diskCacheStrategy(DiskCacheStrategy.ALL)
+        Glide.with(CustomApplication.getContext()).load(path).placeholder(defaultImage).error(defaultImage).diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(new SimpleTarget<GlideDrawable>() {
                     @Override
                     public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {

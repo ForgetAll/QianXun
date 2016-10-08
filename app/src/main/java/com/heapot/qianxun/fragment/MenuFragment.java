@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -134,6 +135,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
             }
             if (myUserBean.getIcon() != null) {
                 CommonUtil.loadImage(mIcon, myUserBean.getIcon(), R.drawable.imagetest);
+                Log.e("网上获取图片",myUserBean.getIcon());
             } else {
                 mIcon.setImageResource(R.drawable.imagetest);
             }
@@ -163,19 +165,21 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
                                 PreferenceUtil.putString(ConstantsBean.nickName, myUserBean.getContent().getNickname());
                                 PreferenceUtil.putString(ConstantsBean.userAutograph, myUserBean.getContent().getDescription());
                                 PreferenceUtil.putString(ConstantsBean.userImage, myUserBean.getContent().getIcon());
-                                if (myUserBean.getContent().getDescription() != null) {
-                                    mQuote.setText(myUserBean.getContent().getDescription());
+                                if (userBean.getDescription() != null) {
+                                    mQuote.setText(userBean.getDescription());
                                 } else {
                                     mQuote.setText("请设置签名");
                                 }
-                                String nickName = myUserBean.getContent().getNickname();
+                                String nickName = userBean.getNickname();
                                 if (nickName != null) {
                                     mName.setText(nickName);
+                                    Log.e("网上获取图片fgsgbtehgte",nickName);
                                 } else {
                                     mName.setText("请设置昵称");
                                 }
-                                if (myUserBean.getContent().getIcon() != null) {
-                                    CommonUtil.loadImage(mIcon, myUserBean.getContent().getIcon(), R.drawable.imagetest);
+                                if (userBean.getIcon() != null) {
+                                   CommonUtil.loadImage(mIcon, userBean.getIcon(), R.drawable.imagetest);
+                                    Log.e("网上获取图片fgsgbtehgte",userBean.getIcon());
                                 } else {
                                     mIcon.setImageResource(R.drawable.imagetest);
                                 }
