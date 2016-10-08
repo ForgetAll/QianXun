@@ -34,15 +34,15 @@ public class SplashActivity extends BaseActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash);
         imageView = (ImageView) findViewById(R.id.iv_start);
+
         final ScaleAnimation scaleAnimation =
-                new ScaleAnimation(1.0f, 1.2f, 1.0f, 1.2f,Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF,0.5f);
+                new ScaleAnimation(1.0f, 1.0f, 1.0f, 1.0f,Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF,0.5f);
         scaleAnimation.setFillAfter(true);
         scaleAnimation.setDuration(4000);
         scaleAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-                imageView.setImageResource(R.drawable.splash);
-
+                imageView.setImageResource(R.mipmap.ic_start);
             }
 
             @Override
