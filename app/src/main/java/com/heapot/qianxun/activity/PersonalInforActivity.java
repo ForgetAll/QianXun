@@ -108,7 +108,7 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
         findViewById(R.id.rl_nick).setOnClickListener(this);
         mHead.setOnClickListener(this);
         mBack.setOnClickListener(this);
-        sendBroadcast();
+
     }
 
     private void initEvent() {
@@ -162,6 +162,7 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
 
         }
     }
+
 
     private void sendBroadcast() {
         //发送广播
@@ -238,6 +239,7 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
                         try {
                             String status = response.getString("status");
                             if (status.equals("success")) {
+                                sendBroadcast();
                                 //发送成功
                                 switch (requestCode) {
                                     //昵称

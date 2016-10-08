@@ -78,13 +78,13 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
         mSign.setOnClickListener(this);
         mClose.setOnClickListener(this);
         mList = new ArrayList<>();
-
+        localReceiver();
     }
 
     @Override
-    protected void onRestart() {
+    protected void onResume() {
         localReceiver();
-        super.onRestart();
+        super.onResume();
     }
 
     /**
