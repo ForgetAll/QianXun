@@ -55,13 +55,20 @@ public class CreateArticleActivity extends BaseActivity implements View.OnClickL
     private WebSettings webSettings;
     private String images = "",catalogId = "";
     private static final int GET_ARTICLE_CONTENT = 1;
+    private static final int GET_ARTICLE_IMAGES = 2;
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
-            if (msg.what == GET_ARTICLE_CONTENT){
-                String json =  msg.getData().getString("content");
-                Logger.d(json);
+            int n = msg.what;
+            switch (n){
+                case GET_ARTICLE_CONTENT:
+                    String json =  msg.getData().getString("content");
+                    break;
+                case GET_ARTICLE_IMAGES:
+                    //调用上传图片的方法,返回链接以后，调用webView方法去告诉JS
+//                    webView.loadUrl("javascript:XXX");
 
+                    break;
             }
         }
     };
@@ -91,27 +98,19 @@ public class CreateArticleActivity extends BaseActivity implements View.OnClickL
     }
 
     private void initSettings(){
-        String url = "http://192.168.31.236/Tabs/editer/artical/?d?device=android&author="+CustomApplication.NICK_NAME+"&tab=article";
+        String url = "http://192.168.31.236/Tabs/editer/artical/?d?device=android&author="+CustomApplication.NICK_NAME+"&type=article";
         webSettings = webView.getSettings();
         boolean isConnected = NetworkUtils.isAvailable(this);
         if (isConnected) {
             webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         } else {
             webSettings.setCacheMode(webSettings.LOAD_CACHE_ONLY);
-
         }
         webSettings.setJavaScriptEnabled(true);
         webSettings.setDefaultTextEncodingName("utf-8");
         webView.addJavascriptInterface(this,"android");
         webView.setWebChromeClient(new WebChromeClient() {});
         webView.loadUrl(url);
-        webView.setWebViewClient(new WebViewClient(){
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(view, url);
-                view.loadUrl("javascript:setAuthor("+CustomApplication.NICK_NAME+")");
-            }
-        });
 
     }
 
@@ -129,6 +128,15 @@ public class CreateArticleActivity extends BaseActivity implements View.OnClickL
         handler.sendMessage(message);
 
     }
+
+    /**
+     * 当需要添加图片的时候JS调用该方法
+     */
+    public void setImages(){
+        handler.sendEmptyMessage(GET_ARTICLE_IMAGES);
+    }
+
+
     @Override
     public void onClick(View v) {
         switch (v.getId()){
