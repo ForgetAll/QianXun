@@ -161,12 +161,12 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
             //名字
             case R.id.rl_nick:
                 requestCode = 201;
-                jumpAlterActivity(nick);
+                jumpAlterActivity(mNick.getText().toString().trim());
                 break;
             //签名
             case R.id.rl_autograph:
                 requestCode = 202;
-                jumpAlterActivity(autograph);
+                jumpAlterActivity(mAutograph.getText().toString().trim());
                 break;
 
         }

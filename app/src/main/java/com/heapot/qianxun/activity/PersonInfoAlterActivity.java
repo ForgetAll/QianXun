@@ -2,10 +2,10 @@ package com.heapot.qianxun.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.bean.ConstantsBean;
@@ -17,7 +17,6 @@ import com.heapot.qianxun.bean.ConstantsBean;
 public class PersonInfoAlterActivity extends BaseActivity implements View.OnClickListener {
     private EditText mInfo;
     private TextView mComplete, mBack;
-    private int personalStatus = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,31 +57,18 @@ public class PersonInfoAlterActivity extends BaseActivity implements View.OnClic
                 finish();
                 break;
             case R.id.tv_complete:
-               // personalStatus=1;
-                String info = mInfo.getText().toString();
-                Intent intent = new Intent();
-                intent.putExtra(ConstantsBean.INFO, info);
-                setResult(RESULT_OK, intent);
-               // sendBroadcast();
-                finish();
+                String info = mInfo.getText().toString().trim();
+                if (!info.isEmpty()){
+                    Intent intent = new Intent();
+                    intent.putExtra(ConstantsBean.INFO, info);
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }else {
+                    Toast.makeText(PersonInfoAlterActivity.this,"输入内容不能为空",Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
 
     }
 
-    private void sendBroadcast() {
-        //发送广播
-        Intent intent = new Intent("com.personal.change");
-        intent.putExtra("personalStatus",personalStatus);
-        switch (personalStatus){
-            case 0://没有更新不需要处理
-                break;
-            case 1:
-                personalStatus=0;
-                break;
-        }
-        LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(this);
-        localBroadcastManager.sendBroadcast(intent);//发送本地广播
-       PersonInfoAlterActivity.this.finish();
-    }
 }
