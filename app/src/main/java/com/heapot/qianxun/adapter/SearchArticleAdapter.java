@@ -19,21 +19,21 @@ import java.util.List;
 public class SearchArticleAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private Context context;
-    private List<SearchBean.ContentBean.RowsBean> rowsBeen;
+    private List<SearchBean.ContentBean.RowsBean> rowsList;
 
-    public SearchArticleAdapter(Context context, List<SearchBean.ContentBean.RowsBean> rowsBeen) {
+    public SearchArticleAdapter(Context context, List<SearchBean.ContentBean.RowsBean> rowsList) {
         this.context = context;
-        this.rowsBeen = rowsBeen;
+        this.rowsList = rowsList;
     }
 
     @Override
     public int getCount() {
-        return rowsBeen.size();
+        return rowsList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return rowsBeen.get(position);
+        return rowsList.get(position);
     }
 
     @Override
@@ -45,14 +45,14 @@ public class SearchArticleAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder = null;
         if (convertView == null) {
-            viewHolder=new ViewHolder();
+            viewHolder = new ViewHolder();
             convertView = inflater.inflate(R.layout.search_list_item, null);
-         viewHolder.tv_searchItem= (TextView) convertView.findViewById(R.id.tv_searchItem);
+            viewHolder.tv_searchItem = (TextView) convertView.findViewById(R.id.tv_searchItem);
             convertView.setTag(viewHolder);
         } else {
-    viewHolder= (ViewHolder) convertView.getTag();
+            viewHolder = (ViewHolder) convertView.getTag();
         }
-        SearchBean.ContentBean.RowsBean bean=rowsBeen.get(position);
+        SearchBean.ContentBean.RowsBean bean = rowsList.get(position);
         bean.getId();
         viewHolder.tv_searchItem.setText(bean.getHighlightTitle());
         return convertView;

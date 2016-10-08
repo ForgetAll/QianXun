@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -36,6 +37,7 @@ import com.heapot.qianxun.util.JsonUtil;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -49,8 +51,8 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     private RecordSQLiteOpenHelper helper = new RecordSQLiteOpenHelper(this);
     private SQLiteDatabase db;
     private BaseAdapter adapter;
-   private List<SearchBean.ContentBean.RowsBean> rowsBeen;
     private ListView lv_search;
+    private List<SearchBean.ContentBean.RowsBean> rowsList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +70,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         et_search = (EditText) findViewById(R.id.et_search);
         tv_tip = (TextView) findViewById(R.id.tv_tip);
         listView = (com.heapot.qianxun.popupwindow.SearchListView) findViewById(R.id.listView);
-       lv_search=(ListView) findViewById(R.id.lv_search);
+        lv_search = (ListView) findViewById(R.id.lv_search);
         tv_clear = (TextView) findViewById(R.id.tv_clear);
         mBack = (ImageView) findViewById(R.id.iv_back);
         mClearSearch = (ImageView) findViewById(R.id.iv_clearSearch);
@@ -100,7 +102,8 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         et_search.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
+                lv_search.setVisibility(View.GONE);
+                listView.setVisibility(View.VISIBLE);
             }
 
             @Override
@@ -127,6 +130,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                 } else {
                     tv_tip.setText("搜索结果");
                     mClearSearch.setVisibility(View.VISIBLE);
+                    searchArticle(s.toString().trim());
                 }
                 String temName = et_search.getText().toString();
                 // 根据tempName去模糊查询数据库中有没有数据
@@ -141,6 +145,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                 TextView textView = (TextView) view.findViewById(android.R.id.text1);
                 String name = textView.getText().toString();
                 et_search.setText(name);
+                searchArticle(name);
                 //跳转事件，待解决
                 listView.setVisibility(View.GONE);
                 lv_search.setVisibility(View.VISIBLE);
@@ -150,7 +155,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         lv_search.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-               String articleId=     rowsBeen.get(position).getId();
+                String articleId = rowsList.get(position).getId();
             }
         });
     }
@@ -217,8 +222,9 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                 try {
                     if (response.getString("status").equals("success")) {
                         SearchBean searchBean = (SearchBean) JsonUtil.fromJson(String.valueOf(response), SearchBean.class);
-                        List<SearchBean.ContentBean.RowsBean> rowsBeen=searchBean.getContent().getRows();
-                       SearchArticleAdapter articleAdapter=new SearchArticleAdapter(SearchActivity.this,rowsBeen);
+                         rowsList =searchBean.getContent().getRows();
+                        Log.e("搜索的结果是：", String.valueOf(rowsList.size()));
+                        SearchArticleAdapter articleAdapter = new SearchArticleAdapter(activity, rowsList);
                         lv_search.setAdapter(articleAdapter);
                     }
                 } catch (JSONException e) {

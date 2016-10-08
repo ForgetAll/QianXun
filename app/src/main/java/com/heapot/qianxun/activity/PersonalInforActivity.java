@@ -161,12 +161,12 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
             //名字
             case R.id.rl_nick:
                 requestCode = 201;
-                jumpAlterActivity(nick);
+                jumpAlterActivity(mNick.getText().toString().trim());
                 break;
             //签名
             case R.id.rl_autograph:
                 requestCode = 202;
-                jumpAlterActivity(autograph);
+                jumpAlterActivity(mAutograph.getText().toString().trim());
                 break;
 
         }
@@ -220,11 +220,7 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
                 break;
             //头像
             case 203:
-                userBean.setIcon(info);
                 Log.e("..........上传之后的头像",info);
-                SerializableUtils.setSerializable(activity, ConstantsBean.MY_USER_INFO, userBean);
-                PreferenceUtil.putString(key, info);
-                personalStatus = 1;
                 break;
 
         }

@@ -74,7 +74,16 @@ public class SystemChangePassword extends BaseActivity implements View.OnClickLi
                 //验证新密码
                 String onePwd = mOneNewPwd.getText().toString();
                 String twoPwd = mTwoNewPwd.getText().toString();
-                update(onePwd, twoPwd);
+                if (!onePwd.isEmpty()){
+                    if (!twoPwd.isEmpty()){
+                        update(onePwd, twoPwd);
+                    }else {
+                        Toast.makeText(SystemChangePassword.this,"密码不能为空",Toast.LENGTH_SHORT).show();
+                    }
+                }else {
+                    Toast.makeText(SystemChangePassword.this,"密码不能为空",Toast.LENGTH_SHORT).show();
+                }
+
                 break;
         }
     }
