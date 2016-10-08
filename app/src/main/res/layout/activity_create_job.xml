@@ -109,11 +109,11 @@
                     android:text="两个已选" />
             </RelativeLayout>
 
-<ListView
-    android:id="@+id/lv_jobList"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-</ListView>
+            <ListView
+                android:id="@+id/lv_jobList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </ListView>
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

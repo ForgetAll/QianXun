@@ -173,6 +173,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
                                 String nickName = userBean.getNickname();
                                 if (nickName != null) {
                                     mName.setText(nickName);
+                                    CustomApplication.NICK_NAME = nickName;
                                     Log.e("网上获取图片fgsgbtehgte",nickName);
                                 } else {
                                     mName.setText("请设置昵称");

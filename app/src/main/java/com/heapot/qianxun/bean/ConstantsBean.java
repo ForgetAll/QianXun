@@ -73,6 +73,8 @@ public class ConstantsBean {
     public static final String ADD_COMMENT = "comments";
     //创建文章
     public static final String CREATE_ARTICLES = "articles";
+    //查询员工所属公司
+    public static final String QUERY_UER_ORG = "user/org";
 
 
 
