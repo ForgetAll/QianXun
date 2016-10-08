@@ -1,23 +1,19 @@
 package com.heapot.qianxun.activity.create;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
-import android.text.Html;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.webkit.JavascriptInterface;
-import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,7 +30,6 @@ import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.util.FileUploadTask;
 import com.heapot.qianxun.widget.PhotoCarmaWindow;
-import com.orhanobut.logger.Logger;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -72,6 +67,32 @@ public class CreateArticleActivity extends BaseActivity implements View.OnClickL
             }
         }
     };
+    private Handler handlerImage = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            String resutlt = (String) msg.obj;
+            if (!TextUtils.isEmpty(resutlt)) {
+                JSONObject jsonObject = null;
+                try {
+                    jsonObject = new JSONObject(resutlt);
+                    Log.e("jsonObject", String.valueOf(jsonObject));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                if (jsonObject.optString("return_code").equals("success")) {
+                    try {
+                        JSONObject content = jsonObject.getJSONObject("content");
+                        images = content.getString("url");
+                        Log.e("上传头像返回的数据", images);
+                    } catch (JSONException e) {
+                    }
+                }
+            }
+            return false;
+        }
+    });
+    private ImageView mCreateIon;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,8 +103,10 @@ public class CreateArticleActivity extends BaseActivity implements View.OnClickL
     private void initView(){
         mToolBarTitle = (TextView) findViewById(R.id.txt_title);
         mToolBarSave = (TextView) findViewById(R.id.txt_btn_function);
+     // mCreateIon=(ImageView)  findViewById(R.id.iv_create_icon);
         mBack = (ImageView) findViewById(R.id.iv_btn_back);
         webView = (WebView) findViewById(R.id.wv_content);
+      //  mCreateIon.setOnClickListener(this);
 
         //显示，默认隐藏的保存按钮隐藏
         mToolBarSave.setVisibility(View.VISIBLE);
@@ -276,7 +299,7 @@ public class CreateArticleActivity extends BaseActivity implements View.OnClickL
     }
     //上传头像
     private void uploadImageFile(File file) {
-        FileUploadTask task = new FileUploadTask(this, handler, file);
+        FileUploadTask task = new FileUploadTask(this, handlerImage, file);
         task.execute(ConstantsBean.UPLOAD);
     }
 
