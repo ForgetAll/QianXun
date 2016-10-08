@@ -128,7 +128,7 @@ public class CreateArticleActivity extends BaseActivity implements View.OnClickL
     }
 
     @JavascriptInterface
-    public void setHtml(Html html){
+    public void setHtml(String html){
         Logger.d(html);
     }
 

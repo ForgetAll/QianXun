@@ -43,7 +43,7 @@
         <!--搜索界面-->
         <activity android:name=".activity.SearchActivity"></activity>
         <!--创建文章、简历页面-->
-        <activity android:name=".activity.CreateActivity"></activity>
+        <activity android:name=".activity.create.CreateActivity"></activity>
         <!--Login-->
         <activity android:name=".activity.LoginActivity"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden"></activity>

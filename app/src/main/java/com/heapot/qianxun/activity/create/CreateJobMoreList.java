@@ -12,6 +12,6 @@ public class CreateJobMoreList extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-setContentView(R.layout.create_job_more_list);
+        setContentView(R.layout.create_job_more_list);
     }
 }
