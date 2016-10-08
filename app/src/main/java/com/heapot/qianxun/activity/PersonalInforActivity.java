@@ -108,7 +108,7 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
         findViewById(R.id.rl_nick).setOnClickListener(this);
         mHead.setOnClickListener(this);
         mBack.setOnClickListener(this);
-        sendBroadcast();
+
     }
 
     private void initEvent() {
@@ -162,6 +162,7 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
 
         }
     }
+
 
     private void sendBroadcast() {
         //发送广播
@@ -219,7 +220,6 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
         }
         String body = "{\"name\":\"" + PreferenceUtil.getString(ConstantsBean.name) + "\",\"nikename\":\"" + PreferenceUtil.getString(ConstantsBean.nickName) + "\",\"icon\":\"" + PreferenceUtil.getString(ConstantsBean.userImage) + "\",\"description\":\"" + PreferenceUtil.getString(ConstantsBean.userAutograph) + "\"}";
         // String  body = "{\"name\":\""+userBean.getName()+"\",\"nikename\":\""+userBean.getNickname()+"\",\"icon\":\""+userBean.getIcon()+"\",\"description\":\""+userBean.getDescription()+"\"}";
-        // String data = JsonUtil.toJson(userBean);
         //发送数据
         JSONObject json = null;
         try {
@@ -238,6 +238,7 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
                         try {
                             String status = response.getString("status");
                             if (status.equals("success")) {
+                                sendBroadcast();
                                 //发送成功
                                 switch (requestCode) {
                                     //昵称
