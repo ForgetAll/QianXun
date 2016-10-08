@@ -17,6 +17,7 @@ public class CustomApplication extends Application {
     public static Context context;
 
     public static String TOKEN = "";
+    public static String NICK_NAME ="";
 
     private static String CURRENT_PAGE = ConstantsBean.PAGE_SCIENCE;
 

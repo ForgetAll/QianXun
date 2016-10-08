@@ -17,6 +17,7 @@ import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -53,12 +54,14 @@ public class CreateArticleActivity extends BaseActivity implements View.OnClickL
     private WebView webView;
     private WebSettings webSettings;
     private String images = "",catalogId = "";
+    private static final int GET_ARTICLE_CONTENT = 1;
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
-            if (msg.what ==1){
-                String url =  msg.getData().getString("value");
-                Logger.d(url);
+            if (msg.what == GET_ARTICLE_CONTENT){
+                String json =  msg.getData().getString("content");
+                Logger.d(json);
+
             }
         }
     };
@@ -88,7 +91,7 @@ public class CreateArticleActivity extends BaseActivity implements View.OnClickL
     }
 
     private void initSettings(){
-        String url = "http://192.168.31.236/Tabs/editer/artical/?d?device=android";
+        String url = "http://192.168.31.236/Tabs/editer/artical/?d?device=android&author="+CustomApplication.NICK_NAME+"&tab=article";
         webSettings = webView.getSettings();
         boolean isConnected = NetworkUtils.isAvailable(this);
         if (isConnected) {
@@ -102,42 +105,36 @@ public class CreateArticleActivity extends BaseActivity implements View.OnClickL
         webView.addJavascriptInterface(this,"android");
         webView.setWebChromeClient(new WebChromeClient() {});
         webView.loadUrl(url);
+        webView.setWebViewClient(new WebViewClient(){
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                view.loadUrl("javascript:setAuthor("+CustomApplication.NICK_NAME+")");
+            }
+        });
 
     }
+
     /**
-     *  webView调用JS方法，返回参数
-     *
-     * @param webView
+     * 接收编辑区所有数据
+     * @param json
      */
-    @TargetApi(Build.VERSION_CODES.KITKAT)
-    private void evaluateJavaScript(WebView webView){
-        for (int i = 1; i < 6; i++) {
-            webView.evaluateJavascript("getContent("+i+")", new ValueCallback<String>() {
-                @Override
-                public void onReceiveValue(String value) {
-                    Message message = new Message();
-                    Bundle bundle = new Bundle();
-                    bundle.putString("value",value);
-                    message.setData(bundle);
-                    message.what = 1;
-                    handler.handleMessage(message);
-
-                }
-            });
-        }
-    }
-
     @JavascriptInterface
-    public void setHtml(String html){
-        Logger.d(html);
-    }
+    public void setHtml(String json){
+        Message message = new Message();
+        Bundle bundle = new Bundle();
+        bundle.putString("content",json);
+        message.setData(bundle);
+        message.what = GET_ARTICLE_CONTENT;
+        handler.sendMessage(message);
 
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()){
+            //保存按钮
             case R.id.txt_btn_function:
-//                evaluateJavaScript(webView);
-//                postArticle();
+                webView.loadUrl("javascript:getContent()");//通知js返回数据
                 break;
             case R.id.iv_create_icon:
                 //弹窗选择图片
