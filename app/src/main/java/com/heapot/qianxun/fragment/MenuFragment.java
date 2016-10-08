@@ -1,10 +1,14 @@
 package com.heapot.qianxun.fragment;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,6 +57,10 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
     private LinearLayout mHeader;
     private View mMenuView;
     private Activity mActivity;
+    //本地广播尝试
+    private IntentFilter intentFilter;
+    private RefreshReceiver refreshReceiver;
+    private LocalBroadcastManager localBroadcastManager;
 
 //    private List<MyUserBean.ContentBean> mList = new ArrayList<>();
 
@@ -92,6 +100,22 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
 
     }
 
+    @Override
+    public void onResume() {
+        localReceiver();
+        super.onResume();
+    }
+
+    /**
+     * 本地广播接收
+     */
+    private void localReceiver(){
+        localBroadcastManager = LocalBroadcastManager.getInstance(getContext());//获取实例
+        intentFilter = new IntentFilter();
+        intentFilter.addAction("com.karl.refresh");
+        refreshReceiver = new RefreshReceiver();
+        localBroadcastManager.registerReceiver(refreshReceiver,intentFilter);
+    }
     private void initData() {
         Object object = getLocalInfo(ConstantsBean.MY_USER_INFO);
         if (object != null) {
@@ -233,5 +257,30 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
     public void onDestroy() {
         super.onDestroy();
         mActivity = null;
+    }
+
+    /**
+     * 广播接收器
+     */
+    class RefreshReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int personalStatus = intent.getExtras().getInt("personalStatus");
+         Object object=   SerializableUtils.getSerializable(getContext(),ConstantsBean.MY_USER_INFO);
+           MyUserBean userBean= (MyUserBean) object;
+            switch (personalStatus){
+                case 0://无更新,不需要操作
+                    break;
+                case 1:
+                    CommonUtil.loadImage(mIcon,userBean.getContent().getIcon(), R.drawable.imagetest);
+                    break;
+                case 2:
+                    mName.setText(userBean.getContent().getNickname());
+                    break;
+                case 3:
+                    mQuote.setText(userBean.getContent().getDescription());
+                    break;
+            }
+        }
     }
 }

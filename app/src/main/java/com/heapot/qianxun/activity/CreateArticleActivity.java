@@ -1,7 +1,14 @@
 package com.heapot.qianxun.activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.provider.MediaStore;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -12,16 +19,19 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.HttpStack;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.activity.create.SortList;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
+import com.heapot.qianxun.util.CommonUtil;
+import com.heapot.qianxun.util.FileUploadTask;
+import com.heapot.qianxun.widget.PhotoCarmaWindow;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,7 +44,39 @@ public class CreateArticleActivity extends BaseActivity implements View.OnClickL
     private TextView mToolBarTitle,mToolBarSave,mChooseSub;
     private ImageView mBack,mIcon;
     private EditText mTitle,mContent;
-    private String images = "",catalogId = "";
+    private String images,catalogId = "";
+    private Handler handler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            String resutlt = (String) msg.obj;
+            if (!TextUtils.isEmpty(resutlt)) {
+                JSONObject jsonObject = null;
+                try {
+                    jsonObject = new JSONObject(resutlt);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                if (jsonObject.optString("return_code").equals("success")) {
+                    try {
+                        JSONObject content = jsonObject.getJSONObject("content");
+                        String images = content.getString("url");
+                        Log.e("这是上传头像返回的路径", images);
+                        CommonUtil.loadImage(mIcon, images + "", R.mipmap.imagetest);
+                    } catch (JSONException e) {
+                    }
+                }
+                /*{
+                "content": {
+                    "code": "yes",
+                            "tip": "上传成功",
+                            "url": "http://odxpoei6h.bkt.clouddn.com/qianxun57ee46f0873f2.jpg"
+                },
+                "return_code": "success"
+            }*/
+            }
+            return false;
+        }
+    });
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +110,8 @@ public class CreateArticleActivity extends BaseActivity implements View.OnClickL
                 postArticle();
                 break;
             case R.id.iv_create_icon:
+                PhotoCarmaWindow bottomPopup = new PhotoCarmaWindow(CreateArticleActivity.this);
+                bottomPopup.showPopupWindow();
                 images = "";//返回链接
                 break;
             case R.id.txt_choose_sub:
@@ -147,16 +191,69 @@ public class CreateArticleActivity extends BaseActivity implements View.OnClickL
         }
         return json;
     }
-
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        //先判断返回结果码
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                //相机请求码
+                case ConstantsBean.CARMA_RESULT_CODE:
+                    Uri uri = Uri.fromFile(new File(ConstantsBean.HEAD_IMAGE_PATH));
+                    cropImage(uri);
+                    //yasuo(uri);
+                    break;
+                //裁剪完成
+                case 102:
+                    //上传图片
+                    File file = new File(ConstantsBean.HEAD_IMAGE_PATH);
+                    if (file.exists()) {
+                        Log.e("file", file.getAbsolutePath());
+                    }
+                    uploadImageFile(file);
+                    break;
+                //相册返回
+                case 103:
+                    Uri uri1 = intent.getData();
+                    cropImage(uri1);
+                    break;
+
+            }
+        }
+
         if (requestCode == 0 && resultCode == 1){
-            String name = data.getExtras().getString("TagName");
-            String id = data.getExtras().getString("TagId");
+            String name = intent.getExtras().getString("TagName");
+            String id = intent.getExtras().getString("TagId");
             catalogId = id;
             mChooseSub.setText(name);
         }else {
             mChooseSub.setText("选择分类失败");
         }
     }
+    //裁剪图片
+    private void cropImage(Uri uri) {
+        Uri outuri = Uri.fromFile(new File(ConstantsBean.HEAD_IMAGE_PATH));
+        if (uri == null) {
+            Log.e("uri:", uri + "");
+        }
+        Intent intent = new Intent("com.android.camera.action.CROP");
+        intent.setDataAndType(uri, "image/*");
+        intent.putExtra("crop", "true");
+        intent.putExtra("aspectX", 1);
+        intent.putExtra("aspectY", 1);
+        intent.putExtra("outputX", 90);
+        intent.putExtra("outputY", 90);
+        intent.putExtra("scale", true);
+        intent.putExtra("return-data", false);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, outuri);
+        intent.putExtra("scale", true);
+        intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+        startActivityForResult(intent, 102);
+    }
+    //上传头像
+    private void uploadImageFile(File file) {
+        FileUploadTask task = new FileUploadTask(this, handler, file);
+        task.execute(ConstantsBean.UPLOAD);
+    }
+
 }
