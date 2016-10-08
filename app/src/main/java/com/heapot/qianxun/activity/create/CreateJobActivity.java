@@ -1,5 +1,7 @@
 package com.heapot.qianxun.activity.create;
 
+import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -9,15 +11,24 @@ import android.os.Message;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.activity.BaseActivity;
 import com.heapot.qianxun.bean.ConstantsBean;
+import com.heapot.qianxun.bean.UserOrgBean;
+import com.heapot.qianxun.helper.SerializableUtils;
 import com.heapot.qianxun.util.CommonUtil;
 import com.heapot.qianxun.util.FileUploadTask;
 import com.heapot.qianxun.widget.PhotoCarmaWindow;
@@ -26,6 +37,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by 15859 on 2016/10/5.
@@ -40,7 +55,13 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
     private TextView tv_describeTitle, tv_describeContent;
     private RelativeLayout rl_company, rl_job, rl_detail, rl_describe;
     private int requestCode;
-    private int size;
+    private int number;
+    Button show;
+    ListView lv;
+    List<UserOrgBean.ContentBean> persons = new ArrayList<UserOrgBean.ContentBean>();
+    Context mContext;
+    MyListAdapter adapter;
+    List<Integer> listItemID = new ArrayList<Integer>();
     private Handler handler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
@@ -75,15 +96,28 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
             return false;
         }
     });
+    private ListView lv_jobList;
+    private LinearLayout ll_list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_job);
         findView();
+        getData();
+        initPersonData();
+    }
+
+    private void getData() {
+        Object company = SerializableUtils.getSerializable(activity, ConstantsBean.USER_ORG_LIST);
+        persons.addAll((Collection<? extends UserOrgBean.ContentBean>) company);
     }
 
     private void findView() {
+        ll_list = (LinearLayout) findViewById(R.id.ll_list);
+        mContext = getApplicationContext();
+        show = (Button) findViewById(R.id.show);
+        lv = (ListView) findViewById(R.id.lvperson);
         tv_back = (TextView) findViewById(R.id.tv_back);
         tv_complete = (TextView) findViewById(R.id.tv_complete);
         tv_back.setOnClickListener(this);
@@ -107,6 +141,41 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
         tv_describeContent = (TextView) findViewById(R.id.tv_describeContent);
         iv_describeChoose = (ImageView) findViewById(R.id.iv_describeChoose);
         rl_describe.setOnClickListener(this);
+
+
+
+        adapter = new MyListAdapter(persons);
+        lv.setAdapter(adapter);
+        show.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                listItemID.clear();
+                for (int i = 0; i < adapter.mChecked.size(); i++) {
+                    if (adapter.mChecked.get(i)) {
+                        listItemID.add(i);
+                    }
+                }
+                number = listItemID.size();
+
+                if (listItemID.size() == 0) {
+                    AlertDialog.Builder builder1 = new AlertDialog.Builder(CreateJobActivity.this);
+                    builder1.setMessage("没有选中任何记录");
+                    builder1.show();
+                } else {
+                    StringBuilder sb = new StringBuilder();
+
+                    for (int i = 0; i < listItemID.size(); i++) {
+                        sb.append("ItemID=" + listItemID.get(i) + " . ");
+                    }
+                    AlertDialog.Builder builder2 = new AlertDialog.Builder(CreateJobActivity.this);
+                    builder2.setMessage(sb.toString());
+                    builder2.show();
+                }
+            }
+        });
+
     }
 
     @Override
@@ -124,10 +193,11 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
                 break;
 
             case R.id.rl_company:
-                if (size >= 2) {
-
+                if (persons.size() > 2) {
+                    Intent more = new Intent(activity, CreateJobMoreList.class);
+                    startActivity(more);
                 } else {
-
+                    ll_list.setVisibility(View.VISIBLE);
                 }
                 break;
             case R.id.rl_job:
@@ -138,6 +208,7 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
             case R.id.rl_describe:
                 break;
         }
+
     }
 
     @Override
@@ -197,4 +268,98 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
         FileUploadTask task = new FileUploadTask(this, handler, file);
         task.execute(ConstantsBean.UPLOAD);
     }
+
+
+    /**
+     * 模拟数据
+     */
+    private void initPersonData() {
+        UserOrgBean.ContentBean mPerson;
+        for (int i = 1; i <= 12; i++) {
+            mPerson = new UserOrgBean.ContentBean();
+            mPerson.setOrgId("Andy" + i);
+            mPerson.setUserId("GuangZhou" + i);
+            persons.add(mPerson);
+        }
+    }
+
+    //自定义ListView适配器
+    class MyListAdapter extends BaseAdapter {
+        List<Boolean> mChecked;
+        List<UserOrgBean.ContentBean> listPerson;
+        HashMap<Integer, View> map = new HashMap<Integer, View>();
+
+        public MyListAdapter(List<UserOrgBean.ContentBean> list) {
+            listPerson = new ArrayList<UserOrgBean.ContentBean>();
+            listPerson = list;
+
+            mChecked = new ArrayList<Boolean>();
+            for (int i = 0; i < list.size(); i++) {
+                mChecked.add(false);
+            }
+        }
+
+        @Override
+        public int getCount() {
+            return listPerson.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return listPerson.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View view;
+            ViewHolder holder = null;
+
+            if (map.get(position) == null) {
+                Log.e("MainActivity", "position1 = " + position);
+
+                LayoutInflater mInflater = (LayoutInflater) mContext
+                        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                view = mInflater.inflate(R.layout.create_job_list_item, null);
+                holder = new ViewHolder();
+                holder.selected = (CheckBox) view.findViewById(R.id.list_select);
+                holder.name = (TextView) view.findViewById(R.id.list_name);
+                holder.address = (TextView) view.findViewById(R.id.list_address);
+                final int p = position;
+                map.put(position, view);
+                holder.selected.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        CheckBox cb = (CheckBox) v;
+                        mChecked.set(p, cb.isChecked());
+                    }
+                });
+                view.setTag(holder);
+            } else {
+                Log.e("MainActivity", "position2 = " + position);
+                view = map.get(position);
+                holder = (ViewHolder) view.getTag();
+            }
+
+            holder.selected.setChecked(mChecked.get(position));
+            holder.name.setText(listPerson.get(position).getOrgId());
+            holder.address.setText(listPerson.get(position).getUserId());
+
+            return view;
+        }
+
+    }
+
+    static class ViewHolder {
+        CheckBox selected;
+        TextView name;
+        TextView address;
+    }
+
+
 }

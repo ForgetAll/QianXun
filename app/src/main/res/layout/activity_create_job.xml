@@ -108,14 +108,22 @@
                     android:layout_marginTop="12dp"
                     android:text="两个已选" />
             </RelativeLayout>
-
-            <ListView
-                android:id="@+id/lv_jobList"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            </ListView>
-
-
+            <LinearLayout
+                android:id="@+id/ll_list"
+                android:visibility="gone"
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+                <Button
+                    android:id="@+id/show"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Show"/>
+                <ListView
+                    android:id="@+id/lvperson"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"/>
+            </LinearLayout>
 
             <RelativeLayout
                 android:id="@+id/rl_detail"

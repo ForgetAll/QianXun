@@ -17,13 +17,14 @@ import java.util.List;
  * 搜索之后的List适配器
  */
 public class SearchArticleAdapter extends BaseAdapter {
-    private LayoutInflater inflater;
+    private LayoutInflater mInflater;
     private Context context;
     private List<SearchBean.ContentBean.RowsBean> rowsList;
 
     public SearchArticleAdapter(Context context, List<SearchBean.ContentBean.RowsBean> rowsList) {
         this.context = context;
         this.rowsList = rowsList;
+        mInflater = LayoutInflater.from(context);
     }
 
     @Override
@@ -46,7 +47,7 @@ public class SearchArticleAdapter extends BaseAdapter {
         ViewHolder viewHolder = null;
         if (convertView == null) {
             viewHolder = new ViewHolder();
-            convertView = inflater.inflate(R.layout.search_list_item, null);
+            convertView = mInflater.inflate(R.layout.search_list_item, null);
             viewHolder.tv_searchItem = (TextView) convertView.findViewById(R.id.tv_searchItem);
             convertView.setTag(viewHolder);
         } else {
