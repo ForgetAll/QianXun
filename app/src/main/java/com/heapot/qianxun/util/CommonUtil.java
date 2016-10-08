@@ -19,7 +19,6 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.heapot.qianxun.application.CustomApplication;
 
 import java.security.MessageDigest;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
