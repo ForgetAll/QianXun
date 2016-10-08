@@ -1,4 +1,4 @@
-package com.heapot.qianxun.activity;
+package com.heapot.qianxun.activity.create;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.heapot.qianxun.R;
+import com.heapot.qianxun.activity.BaseActivity;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.util.CommonUtil;
 import com.heapot.qianxun.util.FileUploadTask;

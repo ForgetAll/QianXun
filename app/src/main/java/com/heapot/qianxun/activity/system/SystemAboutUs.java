@@ -1,10 +1,11 @@
-package com.heapot.qianxun.activity;
+package com.heapot.qianxun.activity.system;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
 import com.heapot.qianxun.R;
+import com.heapot.qianxun.activity.BaseActivity;
 
 /**
  * Created by 15859 on 2016/9/27.

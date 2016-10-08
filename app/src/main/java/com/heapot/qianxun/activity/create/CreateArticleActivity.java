@@ -1,4 +1,4 @@
-package com.heapot.qianxun.activity;
+package com.heapot.qianxun.activity.create;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
@@ -9,7 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
-import android.text.TextUtils;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.webkit.JavascriptInterface;
@@ -17,8 +17,6 @@ import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,10 +28,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.blankj.utilcode.utils.NetworkUtils;
 import com.heapot.qianxun.R;
-import com.heapot.qianxun.activity.create.SortList;
+import com.heapot.qianxun.activity.BaseActivity;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
-import com.heapot.qianxun.util.CommonUtil;
 import com.heapot.qianxun.util.FileUploadTask;
 import com.heapot.qianxun.widget.PhotoCarmaWindow;
 import com.orhanobut.logger.Logger;
@@ -102,24 +99,44 @@ public class CreateArticleActivity extends BaseActivity implements View.OnClickL
         }
         webSettings.setJavaScriptEnabled(true);
         webSettings.setDefaultTextEncodingName("utf-8");
-        webView.addJavascriptInterface(new InJavaScriptLocalObj(),"android");
+        webView.addJavascriptInterface(this,"android");
         webView.setWebChromeClient(new WebChromeClient() {});
         webView.loadUrl(url);
 
     }
+    /**
+     *  webView调用JS方法，返回参数
+     *
+     * @param webView
+     */
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    private void evaluateJavaScript(WebView webView){
+        for (int i = 1; i < 6; i++) {
+            webView.evaluateJavascript("getContent("+i+")", new ValueCallback<String>() {
+                @Override
+                public void onReceiveValue(String value) {
+                    Message message = new Message();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("value",value);
+                    message.setData(bundle);
+                    message.what = 1;
+                    handler.handleMessage(message);
 
-    final class InJavaScriptLocalObj{
-        @JavascriptInterface
-        public void showSource(String html){
-            Logger.d("html------>"+html);
+                }
+            });
         }
+    }
+
+    @JavascriptInterface
+    public void setHtml(Html html){
+        Logger.d(html);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.txt_btn_function:
-                evaluateJavaScript(webView);
+//                evaluateJavaScript(webView);
 //                postArticle();
                 break;
             case R.id.iv_create_icon:
@@ -201,31 +218,7 @@ public class CreateArticleActivity extends BaseActivity implements View.OnClickL
         return json;
     }
 
-    /**
-     *  webView调用JS方法，返回参数
-     *
-     * @param webView
-     */
-    @TargetApi(Build.VERSION_CODES.KITKAT)
-    private void evaluateJavaScript(WebView webView){
-        for (int i = 1; i < 6; i++) {
-            webView.evaluateJavascript("getContent("+i+")", new ValueCallback<String>() {
-                @Override
-                public void onReceiveValue(String value) {
-                    Message message = new Message();
-                    Bundle bundle = new Bundle();
-                    bundle.putString("value",value);
-                    message.setData(bundle);
-                    message.what = 1;
-                    handler.handleMessage(message);
 
-                }
-            });
-        }
-
-
-
-    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);

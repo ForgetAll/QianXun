@@ -1,4 +1,4 @@
-package com.heapot.qianxun.activity;
+package com.heapot.qianxun.activity.system;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.heapot.qianxun.R;
+import com.heapot.qianxun.activity.BaseActivity;
 import com.heapot.qianxun.util.ActivityUtil;
 
 /**

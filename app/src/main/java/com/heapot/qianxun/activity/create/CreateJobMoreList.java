@@ -1,8 +1,9 @@
-package com.heapot.qianxun.activity;
+package com.heapot.qianxun.activity.create;
 
 import android.os.Bundle;
 
 import com.heapot.qianxun.R;
+import com.heapot.qianxun.activity.BaseActivity;
 
 /**
  * Created by 15859 on 2016/10/5.
