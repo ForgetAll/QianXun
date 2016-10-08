@@ -100,19 +100,6 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
         tv_companyChoose = (TextView) findViewById(R.id.tv_companyChoose);
         rl_company.setOnClickListener(this);
 
-        rl_job = (RelativeLayout) findViewById(R.id.rl_job);
-        iv_job = (ImageView) findViewById(R.id.iv_job);
-        tv_jobTitle = (TextView) findViewById(R.id.tv_jobTitle);
-        tv_jobContent = (TextView) findViewById(R.id.tv_jobContent);
-        tv_jobChoose = (TextView) findViewById(R.id.tv_jobChoose);
-        rl_job.setOnClickListener(this);
-
-        rl_detail = (RelativeLayout) findViewById(R.id.rl_detail);
-        iv_detail = (ImageView) findViewById(R.id.iv_detail);
-        tv_detailTitle = (TextView) findViewById(R.id.tv_detailTitle);
-        tv_detailContent = (TextView) findViewById(R.id.tv_detailContent);
-        tv_detailChoose = (TextView) findViewById(R.id.tv_detailChoose);
-        rl_detail.setOnClickListener(this);
 
         rl_describe = (RelativeLayout) findViewById(R.id.rl_describe);
         iv_describe = (ImageView) findViewById(R.id.iv_describe);
