@@ -46,7 +46,7 @@
         <activity android:name=".activity.create.CreateActivity"></activity>
         <!--Login-->
         <activity android:name=".activity.LoginActivity"
-            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"></activity>
+            ></activity>
         <!--设置界面-->
         <activity android:name=".activity.system.SystemSettingActivity"></activity>
         <!--帮助界面-->

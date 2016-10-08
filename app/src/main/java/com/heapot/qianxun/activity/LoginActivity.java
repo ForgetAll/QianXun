@@ -2,11 +2,16 @@ package com.heapot.qianxun.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,8 +46,16 @@ import java.util.Map;
  */
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
     private EditText edt_name, edt_pass;
-    private TextView removeData, showPass, reset, register, mLook;
+    private TextView reset, register;
+    private ImageView removeData, showPass;
     private Button login;
+    private ScrollView mScrollView;
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            mScrollView.scrollTo(0,mScrollView.getHeight());
+        }
+    };
 
     private static boolean isShowPass = false;
     private List<SubscribedBean.ContentBean.RowsBean> subList = new ArrayList<>();
@@ -60,12 +73,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         edt_name = (EditText) findViewById(R.id.edt_login_phone);
         edt_pass = (EditText) findViewById(R.id.edt_login_password);
 
-        removeData = (TextView) findViewById(R.id.txt_remove_data);
-        showPass = (TextView) findViewById(R.id.txt_show_pass);
+        removeData = (ImageView) findViewById(R.id.txt_remove_data);
+        showPass = (ImageView) findViewById(R.id.txt_show_pass);
         login = (Button) findViewById(R.id.btn_login);
         register = (TextView) findViewById(R.id.txt_login_to_register);
         reset = (TextView) findViewById(R.id.txt_reset_password);
-        mLook = (TextView) findViewById(R.id.tv_look);
+        mScrollView = (ScrollView) findViewById(R.id.sl_login);
 
     }
 
@@ -75,7 +88,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         login.setOnClickListener(this);
         register.setOnClickListener(this);
         reset.setOnClickListener(this);
-        mLook.setOnClickListener(this);
+        showLoginBtn();
     }
 
     /**
@@ -164,11 +177,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 if (isShowPass) {
                     //明文显示密码
                     edt_pass.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                    showPass.setText("隐藏密码");
+                    showPass.setImageResource(R.mipmap.ic_show_pasword);
                 } else {
                     //密文显示密码
                     edt_pass.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                    showPass.setText("显示密码");
+                    showPass.setImageResource(R.mipmap.ic_hide_password);
                 }
                 isShowPass = !isShowPass;
                 edt_pass.postInvalidate();
@@ -187,10 +200,26 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 Intent intentForgetPass = new Intent(LoginActivity.this, FindPassActivity.class);
                 startActivity(intentForgetPass);
                 break;
-           /* case R.id.tv_look:
-                Intent look=new Intent(LoginActivity.this,MainActivity.class);
-                startActivity(look);
-                break;*/
         }
     }
+    /**
+     * 当输入得到焦点的时候，ScrollView指向底部,避免遮挡Login
+     */
+    private void showLoginBtn(){
+        edt_name.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                handler.sendEmptyMessage(1);
+                return false;
+            }
+        });
+        edt_pass.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                handler.sendEmptyMessage(1);
+                return false;
+            }
+        });
+    }
+
 }
