@@ -107,7 +107,6 @@ public class SystemSettingActivity extends BaseActivity implements View.OnClickL
                 ActivityCollector.finishAll();
                 Intent intent = new Intent(SystemSettingActivity.this, LoginActivity.class);
                 startActivity(intent);
-                SerializableUtils.deleteSerializable(this, ConstantsBean.TAG_FILE_NAME);
                 break;
         }
     }

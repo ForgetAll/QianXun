@@ -118,8 +118,10 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
                 mHeadUrl.setImageResource(R.drawable.imagetest);
             }
 
-        Logger.d(mSign);
-        Logger.d(mHeadUrl);
+//        Logger.d(mSign);
+//        Logger.d(mHeadUrl);
+
+
 
         for (int i = 0; i < 1; i++) {
             mList.add("Tab-" + i);
