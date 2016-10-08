@@ -1,4 +1,4 @@
-package com.heapot.qianxun.activity;
+package com.heapot.qianxun.activity.system;
 
 
 import android.content.Intent;
@@ -10,10 +10,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.heapot.qianxun.R;
+import com.heapot.qianxun.activity.BaseActivity;
+import com.heapot.qianxun.activity.LoginActivity;
 import com.heapot.qianxun.application.ActivityCollector;
 import com.heapot.qianxun.application.CustomApplication;
-import com.heapot.qianxun.bean.ConstantsBean;
-import com.heapot.qianxun.helper.SerializableUtils;
 import com.heapot.qianxun.util.ClearCacheTask;
 import com.heapot.qianxun.util.FileSizeUtil;
 import com.heapot.qianxun.util.PackageUtils;

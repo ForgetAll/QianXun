@@ -8,6 +8,9 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.heapot.qianxun.R;
+import com.heapot.qianxun.activity.create.CreateArticleActivity;
+import com.heapot.qianxun.activity.create.CreateCourseActivity;
+import com.heapot.qianxun.activity.create.CreateJobActivity;
 import com.heapot.qianxun.adapter.CreateAdapter;
 import com.heapot.qianxun.helper.OnRecyclerViewItemClickListener;
 import com.orhanobut.logger.Logger;

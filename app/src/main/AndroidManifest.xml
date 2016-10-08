@@ -48,9 +48,9 @@
         <activity android:name=".activity.LoginActivity"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden"></activity>
         <!--设置界面-->
-        <activity android:name=".activity.SystemSettingActivity"></activity>
+        <activity android:name=".activity.system.SystemSettingActivity"></activity>
         <!--帮助界面-->
-        <activity android:name=".activity.SystemHelpActivity"></activity>
+        <activity android:name=".activity.system.SystemHelpActivity"></activity>
         <!--注册界面-->
         <activity android:name=".activity.RegisterActivity"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden"></activity>
@@ -58,13 +58,13 @@
         <activity android:name=".activity.BaseActivity"></activity>
         <!--创建文章，软键盘设置-->
         <activity
-            android:name=".activity.CreateArticleActivity"
+            android:name=".activity.create.CreateArticleActivity"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden"></activity>
         <!--创建课程-->
-        <activity android:name=".activity.CreateCourseActivity"
+        <activity android:name=".activity.create.CreateCourseActivity"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden"></activity>
         <!--创建工作招聘-->
-        <activity android:name=".activity.CreateJobActivity"
+        <activity android:name=".activity.create.CreateJobActivity"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden"></activity>
         <!--自动更新服务-->
         <service android:name=".service.UpdateService"></service>
@@ -74,11 +74,11 @@
         <!--管理员登陆页面-->
         <activity android:name=".activity.AdminLoginActivity"></activity>
         <!--关于我们-->
-        <activity android:name=".activity.SystemAboutUs"></activity>
+        <activity android:name=".activity.system.SystemAboutUs"></activity>
         <!--用户使用帮助-->
-        <activity android:name=".activity.SystemUserHelpActivity"></activity>
+        <activity android:name=".activity.system.SystemUserHelpActivity"></activity>
         <!--修改密码-->
-        <activity android:name=".activity.SystemChangePassword"></activity>
+        <activity android:name=".activity.system.SystemChangePassword"></activity>
         <!--找回密码-->
         <activity android:name=".activity.FindPassActivity"></activity>
         <!--文章分类-->
