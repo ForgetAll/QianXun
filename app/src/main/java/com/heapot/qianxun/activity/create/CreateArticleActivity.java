@@ -30,6 +30,7 @@ import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.util.FileUploadTask;
 import com.heapot.qianxun.widget.PhotoCarmaWindow;
+import com.orhanobut.logger.Logger;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -48,7 +49,7 @@ public class CreateArticleActivity extends BaseActivity implements View.OnClickL
     private ImageView mBack;
     private WebView webView;
     private WebSettings webSettings;
-    private String images = "",catalogId = "";
+    private String images = "",catalogId = "",content="",token = "";
     private static final int GET_ARTICLE_CONTENT = 1;
     private static final int GET_ARTICLE_IMAGES = 2;
     private Handler handler = new Handler(){
@@ -60,21 +61,22 @@ public class CreateArticleActivity extends BaseActivity implements View.OnClickL
                     String json =  msg.getData().getString("content");
                     break;
                 case GET_ARTICLE_IMAGES:
-                    //调用上传图片的方法,返回链接以后，调用webView方法去告诉JS
-//                    webView.loadUrl("javascript:XXX");
-
+                    token =  msg.getData().getString("token");
+                    Logger.d(token);
+                    PhotoCarmaWindow bottomPopup = new PhotoCarmaWindow(CreateArticleActivity.this);
+                    bottomPopup.showPopupWindow();
                     break;
             }
         }
     };
-    private Handler handlerImage = new Handler(new Handler.Callback() {
+    Handler handlerImage = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
-            String resutlt = (String) msg.obj;
-            if (!TextUtils.isEmpty(resutlt)) {
+            String result = (String) msg.obj;
+            if (!TextUtils.isEmpty(result)) {
                 JSONObject jsonObject = null;
                 try {
-                    jsonObject = new JSONObject(resutlt);
+                    jsonObject = new JSONObject(result);
                     Log.e("jsonObject", String.valueOf(jsonObject));
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -83,7 +85,8 @@ public class CreateArticleActivity extends BaseActivity implements View.OnClickL
                     try {
                         JSONObject content = jsonObject.getJSONObject("content");
                         images = content.getString("url");
-                        Log.e("上传头像返回的数据", images);
+                        webView.loadUrl("javascript:imgReady(\""+token+"\",\""+images+"\")");
+                        Logger.d("Images:"+images+",Token:"+token);
                     } catch (JSONException e) {
                     }
                 }
@@ -91,7 +94,6 @@ public class CreateArticleActivity extends BaseActivity implements View.OnClickL
             return false;
         }
     });
-    private ImageView mCreateIon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,8 +157,15 @@ public class CreateArticleActivity extends BaseActivity implements View.OnClickL
     /**
      * 当需要添加图片的时候JS调用该方法
      */
-    public void setImages(){
-        handler.sendEmptyMessage(GET_ARTICLE_IMAGES);
+    @JavascriptInterface
+    public void setImages(String token){
+        Message message = new Message();
+        Bundle bundle = new Bundle();
+        bundle.putString("token",token);
+        message.setData(bundle);
+        message.what = GET_ARTICLE_IMAGES;
+        handler.sendMessage(message);
+
     }
 
 
@@ -166,11 +175,6 @@ public class CreateArticleActivity extends BaseActivity implements View.OnClickL
             //保存按钮
             case R.id.txt_btn_function:
                 webView.loadUrl("javascript:getContent()");//通知js返回数据
-                break;
-            case R.id.iv_create_icon:
-                //弹窗选择图片
-                PhotoCarmaWindow bottomPopup = new PhotoCarmaWindow(CreateArticleActivity.this);
-                bottomPopup.showPopupWindow();
                 break;
             case R.id.iv_btn_back:
                 CreateArticleActivity.this.finish();
@@ -192,7 +196,6 @@ public class CreateArticleActivity extends BaseActivity implements View.OnClickL
                                 //提交成功要进行如下操作
                                 CreateArticleActivity.this.finish();
                                 Toast.makeText(CreateArticleActivity.this, "创建成功", Toast.LENGTH_SHORT).show();
-
                             }else {
                                 Toast.makeText(CreateArticleActivity.this, "错误原因："+response.getString("message"), Toast.LENGTH_SHORT).show();
                             }

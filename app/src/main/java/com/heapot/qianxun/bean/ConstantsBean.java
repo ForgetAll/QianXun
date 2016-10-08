@@ -108,6 +108,7 @@ public class ConstantsBean {
     public static final String TAG_FILE_NAME = "Subscription";//存储所有标签的文件名
     public static final String SUB_FILE_NAME = "Subscribed";//存储所有标签的文件名
     public static final String MY_USER_INFO = "userInfo";//本地个人信息文件名
+    public static final String USER_ORG_LIST = "UserOrg";//用户所属公司列表
 
 
 }
