@@ -9,12 +9,14 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
@@ -51,7 +53,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     private RecordSQLiteOpenHelper helper = new RecordSQLiteOpenHelper(this);
     private SQLiteDatabase db;
     private BaseAdapter adapter;
-    private ListView lv_search;
+    private SearchListView lv_search;
     private List<SearchBean.ContentBean.RowsBean> rowsList = new ArrayList<>();
 
     @Override
@@ -70,7 +72,8 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         et_search = (EditText) findViewById(R.id.et_search);
         tv_tip = (TextView) findViewById(R.id.tv_tip);
         listView = (com.heapot.qianxun.popupwindow.SearchListView) findViewById(R.id.listView);
-        lv_search = (ListView) findViewById(R.id.lv_search);
+        lv_search = (com.heapot.qianxun.popupwindow.SearchListView) findViewById(R.id.lv_search);
+        setListViewHeightBasedOnChildren(lv_search);
         tv_clear = (TextView) findViewById(R.id.tv_clear);
         mBack = (ImageView) findViewById(R.id.iv_back);
         mClearSearch = (ImageView) findViewById(R.id.iv_clearSearch);
@@ -103,12 +106,14 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 lv_search.setVisibility(View.GONE);
+                tv_clear.setVisibility(View.VISIBLE);
                 listView.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 listView.setVisibility(View.GONE);
+                tv_clear.setVisibility(View.GONE);
                 lv_search.setVisibility(View.VISIBLE);
                 String searchStr = et_search.getText().toString().trim();
                 boolean isAvailable = NetworkUtils.isAvailable(SearchActivity.this);
@@ -126,9 +131,11 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                     listView.setVisibility(View.VISIBLE);
                     lv_search.setVisibility(View.GONE);
                     tv_tip.setText("搜索历史");
+                    tv_clear.setVisibility(View.VISIBLE);
                     mClearSearch.setVisibility(View.GONE);
                 } else {
                     tv_tip.setText("搜索结果");
+                    tv_clear.setVisibility(View.GONE);
                     mClearSearch.setVisibility(View.VISIBLE);
                     searchArticle(s.toString().trim());
                 }
@@ -149,6 +156,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                 //跳转事件，待解决
                 listView.setVisibility(View.GONE);
                 lv_search.setVisibility(View.VISIBLE);
+                tv_clear.setVisibility(View.GONE);
                 Toast.makeText(SearchActivity.this, name, Toast.LENGTH_SHORT).show();
             }
         });
@@ -246,5 +254,28 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                 "select id as _id,name from records where name =?", new String[]{tempName});
         //判断是否有下一个
         return cursor.moveToNext();
+    }
+    /**
+     * scrollview嵌套listview显示不全解决
+     *
+     * @param listView
+     */
+    public static void setListViewHeightBasedOnChildren(ListView listView) {
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null) {
+            return;
+        }
+
+        int totalHeight = 0;
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            View listItem = listAdapter.getView(i, null, listView);
+            listItem.measure(0, 0);
+            totalHeight += listItem.getMeasuredHeight();
+        }
+
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight
+                + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        listView.setLayoutParams(params);
     }
 }

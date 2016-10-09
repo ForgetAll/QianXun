@@ -1,7 +1,7 @@
 package com.heapot.qianxun.activity.create;
 
-import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,12 +30,13 @@ import java.util.List;
  */
 public class CreateJobMoreList extends BaseActivity {
     private int number;
-    Button show;
+    Button btn_sure;
     ListView lv;
-    List<UserOrgBean.ContentBean> persons = new ArrayList<UserOrgBean.ContentBean>();
+    List<UserOrgBean.ContentBean> compony = new ArrayList<UserOrgBean.ContentBean>();
     Context mContext;
     MyListAdapter adapter;
     List<Integer> listItemID = new ArrayList<Integer>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,58 +44,51 @@ public class CreateJobMoreList extends BaseActivity {
         getData();
         findView();
     }
+
     private void getData() {
         Object company = SerializableUtils.getSerializable(activity, ConstantsBean.USER_ORG_LIST);
-        persons.addAll((Collection<? extends UserOrgBean.ContentBean>) company);
+        compony.addAll((Collection<? extends UserOrgBean.ContentBean>) company);
     }
+
     private void findView() {
         mContext = getApplicationContext();
-        show = (Button)findViewById(R.id.show);
-        lv = (ListView)findViewById(R.id.lvperson);
-        adapter = new MyListAdapter(persons);
+        btn_sure = (Button) findViewById(R.id.btn_sure);
+        lv = (ListView) findViewById(R.id.lvperson);
+        adapter = new MyListAdapter(compony);
         lv.setAdapter(adapter);
-        show.setOnClickListener(new View.OnClickListener() {
+        btn_sure.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
+                                    @Override
+                                    public void onClick(View v) {
 
-                listItemID.clear();
-                for(int i=0;i<adapter.mChecked.size();i++){
-                    if(adapter.mChecked.get(i)){
-                        listItemID.add(i);
-                    }
-                }
-                number=   listItemID.size();
+                                        listItemID.clear();
+                                        for (int i = 0; i < adapter.mChecked.size(); i++) {
+                                            if (adapter.mChecked.get(i)) {
+                                                listItemID.add(i);
+                                            }
+                                        }
+                                        number = listItemID.size();
+                                        Intent intent = new Intent(CreateJobMoreList.this, CreateJobActivity.class);
+                                        intent.putExtra("number", number);
+                                        finish();
 
-                if(listItemID.size()==0){
-                    AlertDialog.Builder builder1 = new AlertDialog.Builder(CreateJobMoreList.this);
-                    builder1.setMessage("没有选中任何记录");
-                    builder1.show();
-                }else{
-                    StringBuilder sb = new StringBuilder();
-
-                    for(int i=0;i<listItemID.size();i++){
-                        sb.append("ItemID="+listItemID.get(i)+" . ");
-                    }
-                    AlertDialog.Builder builder2 = new AlertDialog.Builder(CreateJobMoreList.this);
-                    builder2.setMessage(sb.toString());
-                    builder2.show();
-                }
-            }
-        });
+                                    }
+                                }
+        );
     }
+
     //自定义ListView适配器
     class MyListAdapter extends BaseAdapter {
         List<Boolean> mChecked;
         List<UserOrgBean.ContentBean> listPerson;
-        HashMap<Integer,View> map = new HashMap<Integer,View>();
+        HashMap<Integer, View> map = new HashMap<Integer, View>();
 
-        public MyListAdapter(List<UserOrgBean.ContentBean> list){
+        public MyListAdapter(List<UserOrgBean.ContentBean> list) {
             listPerson = new ArrayList<UserOrgBean.ContentBean>();
             listPerson = list;
 
             mChecked = new ArrayList<Boolean>();
-            for(int i=0;i<list.size();i++){
+            for (int i = 0; i < list.size(); i++) {
                 mChecked.add(false);
             }
         }
@@ -120,30 +114,30 @@ public class CreateJobMoreList extends BaseActivity {
             ViewHolder holder = null;
 
             if (map.get(position) == null) {
-                Log.e("MainActivity","position1 = "+position);
+                Log.e("MainActivity", "position1 = " + position);
 
                 LayoutInflater mInflater = (LayoutInflater) mContext
                         .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 view = mInflater.inflate(R.layout.create_job_list_item, null);
                 holder = new ViewHolder();
-                holder.selected = (CheckBox)view.findViewById(R.id.list_select);
-                holder.name = (TextView)view.findViewById(R.id.list_name);
-                holder.address = (TextView)view.findViewById(R.id.list_address);
+                holder.selected = (CheckBox) view.findViewById(R.id.list_select);
+                holder.name = (TextView) view.findViewById(R.id.list_name);
+                holder.address = (TextView) view.findViewById(R.id.list_address);
                 final int p = position;
                 map.put(position, view);
                 holder.selected.setOnClickListener(new View.OnClickListener() {
 
                     @Override
                     public void onClick(View v) {
-                        CheckBox cb = (CheckBox)v;
+                        CheckBox cb = (CheckBox) v;
                         mChecked.set(p, cb.isChecked());
                     }
                 });
                 view.setTag(holder);
-            }else{
-                Log.e("MainActivity","position2 = "+position);
+            } else {
+                Log.e("MainActivity", "position2 = " + position);
                 view = map.get(position);
-                holder = (ViewHolder)view.getTag();
+                holder = (ViewHolder) view.getTag();
             }
 
             holder.selected.setChecked(mChecked.get(position));
@@ -155,7 +149,7 @@ public class CreateJobMoreList extends BaseActivity {
 
     }
 
-    static class ViewHolder{
+    static class ViewHolder {
         CheckBox selected;
         TextView name;
         TextView address;

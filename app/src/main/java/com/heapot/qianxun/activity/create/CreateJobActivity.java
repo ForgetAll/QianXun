@@ -1,6 +1,5 @@
 package com.heapot.qianxun.activity.create;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -56,7 +55,7 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
     private RelativeLayout rl_company, rl_job, rl_detail, rl_describe;
     private int requestCode;
     private int number;
-    Button show;
+    Button btn_sure;
     ListView lv;
     List<UserOrgBean.ContentBean> persons = new ArrayList<UserOrgBean.ContentBean>();
     Context mContext;
@@ -116,7 +115,7 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
     private void findView() {
         ll_list = (LinearLayout) findViewById(R.id.ll_list);
         mContext = getApplicationContext();
-        show = (Button) findViewById(R.id.show);
+        btn_sure = (Button) findViewById(R.id.btn_sure);
         lv = (ListView) findViewById(R.id.lvperson);
         tv_back = (TextView) findViewById(R.id.tv_back);
         tv_complete = (TextView) findViewById(R.id.tv_complete);
@@ -145,7 +144,7 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
 
         adapter = new MyListAdapter(persons);
         lv.setAdapter(adapter);
-        show.setOnClickListener(new View.OnClickListener() {
+        btn_sure.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -157,21 +156,6 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
                     }
                 }
                 number = listItemID.size();
-
-                if (listItemID.size() == 0) {
-                    AlertDialog.Builder builder1 = new AlertDialog.Builder(CreateJobActivity.this);
-                    builder1.setMessage("没有选中任何记录");
-                    builder1.show();
-                } else {
-                    StringBuilder sb = new StringBuilder();
-
-                    for (int i = 0; i < listItemID.size(); i++) {
-                        sb.append("ItemID=" + listItemID.get(i) + " . ");
-                    }
-                    AlertDialog.Builder builder2 = new AlertDialog.Builder(CreateJobActivity.this);
-                    builder2.setMessage(sb.toString());
-                    builder2.show();
-                }
             }
         });
 
@@ -194,7 +178,7 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
             case R.id.rl_company:
                 if (persons.size() > 2) {
                     Intent more = new Intent(activity, CreateJobMoreList.class);
-                    startActivity(more);
+                    startActivityForResult(more,104);
                 } else {
                     ll_list.setVisibility(View.VISIBLE);
                 }
@@ -233,6 +217,10 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
                 case 103:
                     Uri uri1 = intent.getData();
                     cropImage(uri1);
+                    break;
+                case 104:
+                    int companyNumber=getIntent().getIntExtra("number",0);
+                    tv_companyChoose.setText(companyNumber);
                     break;
 
             }
