@@ -104,7 +104,6 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
         setContentView(R.layout.activity_create_job);
         findView();
         getData();
-        initPersonData();
     }
 
     private void getData() {
@@ -156,6 +155,7 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
                     }
                 }
                 number = listItemID.size();
+                tv_companyChoose.setText(number);
             }
         });
 
@@ -255,18 +255,6 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
     }
 
 
-    /**
-     * 模拟数据
-     */
-    private void initPersonData() {
-        UserOrgBean.ContentBean mPerson;
-        for (int i = 1; i <= 12; i++) {
-            mPerson = new UserOrgBean.ContentBean();
-            mPerson.setOrgId("Andy" + i);
-            mPerson.setUserId("GuangZhou" + i);
-            persons.add(mPerson);
-        }
-    }
 
     //自定义ListView适配器
     class MyListAdapter extends BaseAdapter {
