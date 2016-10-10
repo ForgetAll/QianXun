@@ -124,6 +124,56 @@
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"/>
             </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginLeft="30dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:text="最高薪资："
+                    android:textSize="16sp"
+                    android:gravity="center" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textSize="16sp"
+                    android:maxLength="20"
+                    android:hint="请输入最高薪资"
+                    android:background="@null"
+                    android:gravity="center_vertical"
+                    android:id="@+id/et_max" />
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginLeft="30dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:text="最低薪资："
+                    android:textSize="16sp"
+                    android:gravity="center" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textSize="16sp"
+                    android:maxLength="20"
+                    android:hint="请输入最低薪资"
+                    android:background="@null"
+                    android:gravity="center_vertical"
+                    android:id="@+id/et_min" />
+            </LinearLayout>
 
             <RelativeLayout
                 android:id="@+id/rl_detail"

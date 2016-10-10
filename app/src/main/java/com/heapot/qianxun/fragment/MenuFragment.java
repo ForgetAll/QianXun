@@ -163,6 +163,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
                                 MyUserBean myUserBean = (MyUserBean) JsonUtil.fromJson(String.valueOf(response), MyUserBean.class);
                                 MyUserBean.ContentBean userBean = myUserBean.getContent();
                                 SerializableUtils.setSerializable(getContext(), ConstantsBean.MY_USER_INFO, userBean);
+                               PreferenceUtil.putString(ConstantsBean.USER_PHONE,myUserBean.getContent().getPhone());
                                 PreferenceUtil.putString(ConstantsBean.nickName, myUserBean.getContent().getNickname());
                                 PreferenceUtil.putString(ConstantsBean.userAutograph, myUserBean.getContent().getDescription());
                                 PreferenceUtil.putString(ConstantsBean.userImage, myUserBean.getContent().getIcon());

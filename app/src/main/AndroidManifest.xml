@@ -83,6 +83,10 @@
         <activity android:name=".activity.FindPassActivity"></activity>
         <!--文章分类-->
         <activity android:name=".activity.create.SortList"></activity>
+        <!--创建工作描述-->
+       <activity android:name=".activity.create.CreateJobDescribe"></activity>
+        <!--更多公司选择-->
+        <activity android:name=".activity.create.CreateJobMoreList"></activity>
     </application>
 
 </manifest>

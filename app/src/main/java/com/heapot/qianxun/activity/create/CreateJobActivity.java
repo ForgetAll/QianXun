@@ -26,11 +26,17 @@ import android.widget.TextView;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.activity.BaseActivity;
 import com.heapot.qianxun.bean.ConstantsBean;
+import com.heapot.qianxun.bean.CreateJobBean;
 import com.heapot.qianxun.bean.UserOrgBean;
 import com.heapot.qianxun.helper.SerializableUtils;
 import com.heapot.qianxun.util.CommonUtil;
 import com.heapot.qianxun.util.FileUploadTask;
+import com.heapot.qianxun.util.JsonUtil;
+import com.heapot.qianxun.util.PreferenceUtil;
+import com.heapot.qianxun.util.ToastUtil;
 import com.heapot.qianxun.widget.PhotoCarmaWindow;
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -55,6 +61,7 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
     private RelativeLayout rl_company, rl_job, rl_detail, rl_describe;
     private int requestCode;
     private int number;
+    private CreateJobBean createJobBean;
     Button btn_sure;
     ListView lv;
     List<UserOrgBean.ContentBean> persons = new ArrayList<UserOrgBean.ContentBean>();
@@ -97,6 +104,7 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
     });
     private ListView lv_jobList;
     private LinearLayout ll_list;
+    private EditText et_min, et_max;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,6 +129,7 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
         tv_back.setOnClickListener(this);
         tv_complete.setOnClickListener(this);
 
+
         iv_image = (ImageView) findViewById(R.id.iv_image);
         et_title = (EditText) findViewById(R.id.et_title);
         iv_image.setOnClickListener(this);
@@ -131,6 +140,9 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
         tv_companyChoose = (TextView) findViewById(R.id.tv_companyChoose);
         rl_company.setOnClickListener(this);
 
+        et_min = (EditText) findViewById(R.id.et_min);
+        et_max = (EditText) findViewById(R.id.et_max);
+
 
         rl_describe = (RelativeLayout) findViewById(R.id.rl_describe);
         iv_describe = (ImageView) findViewById(R.id.iv_describe);
@@ -138,7 +150,6 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
         tv_describeContent = (TextView) findViewById(R.id.tv_describeContent);
         iv_describeChoose = (ImageView) findViewById(R.id.iv_describeChoose);
         rl_describe.setOnClickListener(this);
-
 
 
         adapter = new MyListAdapter(persons);
@@ -168,7 +179,7 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
                 finish();
                 break;
             case R.id.tv_complete:
-
+                sendData();
                 break;
             case R.id.iv_image:
                 PhotoCarmaWindow bottomPopup = new PhotoCarmaWindow(CreateJobActivity.this);
@@ -178,7 +189,7 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
             case R.id.rl_company:
                 if (persons.size() > 2) {
                     Intent more = new Intent(activity, CreateJobMoreList.class);
-                    startActivityForResult(more,104);
+                    startActivityForResult(more, 104);
                 } else {
                     ll_list.setVisibility(View.VISIBLE);
                 }
@@ -187,8 +198,44 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
 
                 break;
             case R.id.rl_describe:
+                Intent intent = new Intent(CreateJobActivity.this, CreateJobDescribe.class);
+                startActivityForResult(intent, 105);
                 break;
         }
+
+    }
+
+    private void sendData() {
+        int min = (int) et_min.getTag();
+        createJobBean.setMinSalary(min);
+        int max = (int) et_max.getTag();
+        createJobBean.setMaxSalary(max);
+        createJobBean.setCatalogId("");
+        createJobBean.setCode("");
+        String describe = tv_describeContent.getText().toString().trim();
+        createJobBean.setDescription(describe);
+        createJobBean.setEmail("");
+        createJobBean.setName(PreferenceUtil.getString(ConstantsBean.nickName));
+        createJobBean.setPhone(PreferenceUtil.getString(ConstantsBean.USER_PHONE));
+        createJobBean.setNum(number);
+
+        String data = JsonUtil.toJson(createJobBean);
+       //发送数据
+        Ion.with(this).load(ConstantsBean.BASE_PATH + ConstantsBean.CREATE_JOB).setStringBody(data).asString().setCallback(new FutureCallback<String>() {
+            @Override
+            public void onCompleted(Exception e, String result) {
+                if (!TextUtils.isEmpty(result)) {
+                    if (result.contains("200")) {
+
+                        ToastUtil.show("信息修改成功");
+                    } else {
+                        ToastUtil.show("信息修改失败");
+                    }
+                } else {
+                    ToastUtil.show("信息修改失败");
+                }
+            }
+        });
 
     }
 
@@ -219,8 +266,12 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
                     cropImage(uri1);
                     break;
                 case 104:
-                    int companyNumber=getIntent().getIntExtra("number",0);
+                    int companyNumber = getIntent().getIntExtra("number", 0);
                     tv_companyChoose.setText(companyNumber);
+                    break;
+                case 105:
+                    String describe = getIntent().getStringExtra("describe");
+                    tv_describeContent.setText(describe);
                     break;
 
             }
@@ -253,7 +304,6 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
         FileUploadTask task = new FileUploadTask(this, handler, file);
         task.execute(ConstantsBean.UPLOAD);
     }
-
 
 
     //自定义ListView适配器
