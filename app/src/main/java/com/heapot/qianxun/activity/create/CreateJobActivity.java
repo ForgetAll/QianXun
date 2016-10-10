@@ -25,6 +25,7 @@ import android.widget.TextView;
 
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.activity.BaseActivity;
+import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.bean.CreateJobBean;
 import com.heapot.qianxun.bean.UserOrgBean;
@@ -221,7 +222,7 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
 
         String data = JsonUtil.toJson(createJobBean);
        //发送数据
-        Ion.with(this).load(ConstantsBean.BASE_PATH + ConstantsBean.CREATE_JOB).setStringBody(data).asString().setCallback(new FutureCallback<String>() {
+        Ion.with(this).load(ConstantsBean.BASE_PATH + ConstantsBean.CREATE_JOB).setHeader(ConstantsBean.KEY_TOKEN, CustomApplication.TOKEN).setStringBody(data).asString().setCallback(new FutureCallback<String>() {
             @Override
             public void onCompleted(Exception e, String result) {
                 if (!TextUtils.isEmpty(result)) {
