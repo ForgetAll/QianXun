@@ -14,6 +14,7 @@ import com.heapot.qianxun.activity.BaseActivity;
 
 /**
  * Created by Karl on 2016/10/8.
+ *
  */
 public class CreateJobEditActivity extends BaseActivity{
     private TextView mToolBarTitle,mSave;
@@ -33,6 +34,7 @@ public class CreateJobEditActivity extends BaseActivity{
         mBack = (ImageView) findViewById(R.id.iv_btn_back);
         mSave.setVisibility(View.VISIBLE);
         webView = (WebView) findViewById(R.id.wv_edit_job);
+        mToolBarTitle.setText("职位详情");
         initEvent();
     }
 
