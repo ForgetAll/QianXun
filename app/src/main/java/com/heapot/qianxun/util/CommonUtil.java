@@ -263,4 +263,5 @@ public class CommonUtil {
         int height2 = outMetrics.heightPixels;
         return height2;
     }
+
 }

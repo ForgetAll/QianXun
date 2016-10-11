@@ -167,6 +167,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
                                 PreferenceUtil.putString(ConstantsBean.nickName, myUserBean.getContent().getNickname());
                                 PreferenceUtil.putString(ConstantsBean.userAutograph, myUserBean.getContent().getDescription());
                                 PreferenceUtil.putString(ConstantsBean.userImage, myUserBean.getContent().getIcon());
+                                PreferenceUtil.putString(ConstantsBean.USER_ID,myUserBean.getContent().getId());
                                 if (userBean.getDescription() != null) {
                                     mQuote.setText(userBean.getDescription());
                                 } else {

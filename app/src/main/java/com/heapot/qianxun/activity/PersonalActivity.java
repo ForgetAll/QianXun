@@ -1,15 +1,11 @@
 package com.heapot.qianxun.activity;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -43,10 +39,6 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
     private ImageView mBanner, mHeadUrl, mClose;
     private TextView mFans, mName, mSign;
     private int pt;
-    //本地广播尝试
-    private IntentFilter intentFilter;
-    private RefreshPersonReceiver refreshReceiver;
-    private LocalBroadcastManager localBroadcastManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +48,6 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
         initView();
         initEvent();
         initData();
-
     }
 
     private void initView() {
@@ -77,20 +68,8 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
         mSign.setOnClickListener(this);
         mClose.setOnClickListener(this);
         mList = new ArrayList<>();
-        localReceiver();
     }
 
-
-    /**
-     * 本地广播接收
-     */
-    private void localReceiver(){
-        localBroadcastManager = LocalBroadcastManager.getInstance(this);//获取实例
-        intentFilter = new IntentFilter();
-        intentFilter.addAction("com.personal.change");
-        refreshReceiver = new RefreshPersonReceiver();
-        localBroadcastManager.registerReceiver(refreshReceiver,intentFilter);
-    }
     private void initEvent() {
         //状态栏
         mToolBar.setTitle("");
@@ -98,30 +77,28 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void initData() {
-        //从本地获取数据
         Object object = getLocalInfo(ConstantsBean.MY_USER_INFO);
-            MyUserBean.ContentBean myUserBean = (MyUserBean.ContentBean) object;
-            if (myUserBean.getDescription() != null) {
-                mSign.setText(myUserBean.getDescription());
-            }  else {
-                mSign.setText("请设置签名");
-            }
-            String nickName = myUserBean.getNickname();
-            if (nickName != null) {
-                mName.setText(nickName);
-            } else {
-                mName.setText("请设置昵称");
-            }
-            if (myUserBean.getIcon() != null) {
-                CommonUtil.loadImage(mHeadUrl, myUserBean.getIcon(), R.drawable.imagetest);
-            } else {
-                mHeadUrl.setImageResource(R.drawable.imagetest);
-            }
+        MyUserBean myUserBean = (MyUserBean) object;
+        if (myUserBean.getContent().getDescription() != null) {
+            mSign.setText(myUserBean.getContent().getDescription());
+        }  else {
+            mSign.setText("请设置签名");
+        }
+        String nickName = myUserBean.getContent().getNickname();
+        if (nickName != null) {
+            mName.setText(nickName);
+        } else {
+            mName.setText("请设置昵称");
+        }
+        if (myUserBean.getContent().getIcon() != null) {
+            CommonUtil.loadImage(mHeadUrl, myUserBean.getContent().getIcon(), R.drawable.imagetest);
+        } else {
+            mHeadUrl.setImageResource(R.drawable.imagetest);
+        }
 
-//        Logger.d(mSign);
-//        Logger.d(mHeadUrl);
-
-
+        //Glide.with(activity).load("http://odxpoei6h.bkt.clouddn.com/qianxun57f1fb7f9a56e.jpeg").into(mHeadUrl);
+        Logger.d(mSign);
+        Logger.d(mHeadUrl);
 
         for (int i = 0; i < 1; i++) {
             mList.add("Tab-" + i);
@@ -205,32 +182,5 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void onPageScrollStateChanged(int state) {
 
-    }
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        localBroadcastManager.unregisterReceiver(refreshReceiver);
-    }
-    /**
-     * 广播接收器
-     */
-    class RefreshPersonReceiver extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            int personalStatus = intent.getExtras().getInt("personalStatus");
-            switch (personalStatus){
-                case 0://无更新,不需要操作
-                    break;
-                case 1:
-                    Object object = SerializableUtils.getSerializable(activity, ConstantsBean.MY_USER_INFO);
-                    if (object != null) {
-                        MyUserBean.ContentBean  myUserBean = (MyUserBean.ContentBean) object;
-                        CommonUtil.loadImage(mHeadUrl, myUserBean.getIcon(), R.drawable.imagetest);
-                        mName.setText(myUserBean.getNickname());
-                        mSign.setText(myUserBean.getDescription());
-                    }
-                    break;
-            }
-        }
     }
 }

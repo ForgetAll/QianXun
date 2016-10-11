@@ -1,17 +1,14 @@
 package com.heapot.qianxun.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.AdapterView;
+import android.widget.ListView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -19,12 +16,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.heapot.qianxun.R;
-import com.heapot.qianxun.activity.ArticleActivity;
-import com.heapot.qianxun.adapter.PersonalTabAdapter;
+import com.heapot.qianxun.adapter.PersonalArticleAdapter;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
-import com.heapot.qianxun.helper.OnRecyclerViewItemClickListener;
-import com.orhanobut.logger.Logger;
+import com.heapot.qianxun.bean.MyPersonalArticle;
+import com.heapot.qianxun.helper.SerializableUtils;
+import com.heapot.qianxun.util.JsonUtil;
+import com.heapot.qianxun.util.PreferenceUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,17 +35,38 @@ import java.util.Map;
 /**
  * Created by 李大总管 on 2016/10/2.
  */
-public class PersonalPageFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class PersonalPageFragment extends Fragment {
     public static final String PAGE = "PAGE";
     private int mPage;
     private String mId;
+    PersonalArticleAdapter  adapter;
     View mView;
+    private ListView ll_listView;
+    private List<MyPersonalArticle.ContentBean.RowsBean> articleList = new ArrayList<>();
 
-    private RecyclerView recyclerView;
-    private PersonalTabAdapter personalTabAdapter;
-    private List<String> list = new ArrayList<>();
-    private SwipeRefreshLayout swipeRefreshLayout;
-    private boolean isRefresh = false;
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        loadData();
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        mView = inflater.inflate(R.layout.activity_personal_page_list, container, false);
+       ll_listView=(ListView) mView.findViewById(R.id.ll_listView);
+       adapter=new PersonalArticleAdapter(CustomApplication.getContext(),articleList);
+       ll_listView.setAdapter(adapter);
+        ll_listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String id1=articleList.get(position).getId();
+            }
+        });
+         return mView;
+
+
+    }
 
 
     public static PageFragment newInstance(int page) {
@@ -58,72 +77,24 @@ public class PersonalPageFragment extends Fragment implements SwipeRefreshLayout
         return pageFragment;
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mPage = getArguments().getInt(PAGE);
-    }
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.layout_list,container,false);
-        Logger.d("当前页面是 #"+mPage+"，Id是："+mId);
-        initView();
-        initEvent();
-        return mView;
-    }
-
-    private void initView(){
-        recyclerView = (RecyclerView) mView.findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false));
-        recyclerView.setHasFixedSize(true);
-        swipeRefreshLayout = (SwipeRefreshLayout) mView.findViewById(R.id.srl_main_fragment);
-
-    }
-    private void initEvent(){
-        //adapter = new MainTabAdapter(getContext(),list);
-        personalTabAdapter=new PersonalTabAdapter(getContext(),list);
-        loadData();
-        recyclerView.setAdapter(personalTabAdapter);
-        //添加点击事件
-        personalTabAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                Toast.makeText(getContext(), "点击了", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getActivity(), ArticleActivity.class);
-                startActivity(intent);
-            }
-        });
-        swipeRefreshLayout.setOnRefreshListener(this);
-        swipeRefreshLayout.setColorSchemeResources(
-                android.R.color.holo_green_light,
-                android.R.color.holo_blue_light,
-                android.R.color.holo_purple,
-                android.R.color.holo_orange_light
-        );
-    }
     /**
-     * 模拟数据
+     * 数据
      */
     private void loadData(){
-        for (int i = 0; i < 20; i++) {
-            list.add("Tab #"+mPage+" Item #"+i);
-        }
-        String url= ConstantsBean.BASE_PATH+ConstantsBean.PERSONAL_ARTICLE;
+        String url= ConstantsBean.BASE_PATH+"/articles?userId="+ PreferenceUtil.getString(ConstantsBean.USER_ID);
         JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 Log.e("个人发表的内容",response.toString());
                 try {
                     String status=response.getString("status");
-                    String content=response.getString("content");
                     if (status.equals("success")){
-                        if (content!=null){
+                        MyPersonalArticle myPersonalArticle = (MyPersonalArticle) JsonUtil.fromJson(String.valueOf(response), MyPersonalArticle.class);
+                     articleList=  myPersonalArticle.getContent().getRows();
+                        MyPersonalArticle.ContentBean articleBean=myPersonalArticle.getContent();
+                        SerializableUtils.setSerializable(getContext(), ConstantsBean.MY_USER_INFO, articleBean);
 
-                        }else {
-                            Toast.makeText(getContext(),"您还没有发表任何内容",Toast.LENGTH_SHORT).show();
-                        }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -145,10 +116,4 @@ public class PersonalPageFragment extends Fragment implements SwipeRefreshLayout
         CustomApplication.getRequestQueue().add(jsonObjectRequest);
     }
 
-    @Override
-    public void onRefresh() {
-        if (!isRefresh){
-            swipeRefreshLayout.setRefreshing(false);
-        }
-    }
 }
