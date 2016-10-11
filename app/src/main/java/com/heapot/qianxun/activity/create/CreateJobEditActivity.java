@@ -35,8 +35,8 @@ public class CreateJobEditActivity extends BaseActivity implements View.OnClickL
                 String content= msg.getData().getString("content");
                 Logger.d(content);
                 //获取到数据
-                intent.putExtra("","");
-                setResult(1,intent);
+//                intent.putExtra("","");
+//                setResult(1,intent);
             }
         }
     };
@@ -58,7 +58,7 @@ public class CreateJobEditActivity extends BaseActivity implements View.OnClickL
         mSave.setOnClickListener(this);
         mBack.setOnClickListener(this);
         initEvent();
-        intent = getIntent();
+//        intent = getIntent();
     }
 
     private void initEvent(){

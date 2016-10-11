@@ -89,6 +89,8 @@
         <activity android:name=".activity.create.CreateJobMoreList"></activity>
         <!--工作详情-->
         <activity android:name=".activity.JobActivity"></activity>
+        <!---->
+        <activity android:name=".activity.create.CreateJobEditActivity"></activity>
     </application>
 
 </manifest>

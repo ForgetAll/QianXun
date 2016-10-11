@@ -92,7 +92,7 @@ public class CreateActivity extends BaseActivity implements View.OnClickListener
                         startActivity(intent);
                         break;
                     case 1:
-                        Intent job= new Intent(CreateActivity.this,CreateJobActivity.class);
+                        Intent job= new Intent(CreateActivity.this,CreateJobEditActivity.class);
                         startActivity(job);
                         break;
                     case 2:
