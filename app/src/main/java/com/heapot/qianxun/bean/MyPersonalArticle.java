@@ -6,19 +6,18 @@ import java.util.List;
  * Created by 15859 on 2016/10/11.
  */
 public class MyPersonalArticle {
-
     /**
      * status : success
      * message :
-     * content : {"total":4,"hasNext":false,"rows":[{"id":"57ee3d6d11058a3b20ee968a","title":"MVP开发之路","subtitle":null,"images":null,"summary":null,"hits":5,"catalog":{"pid":"f3b8d91b8f9c4a03a4a06a5678e79872","name":"新闻","code":"news","left":2,"right":5,"creatorId":"6e07bc2797fb44e488e9b88fec42199e","catalog":{"name":"文章","code":"articles","left":1,"right":6,"creatorId":"3312cfb5794742dc8b9f98544fdb6854","id":"f3b8d91b8f9c4a03a4a06a5678e79872","createTime":1475220231708,"status":{"index":1,"name":"正常"}},"id":"704d54f44d7845f8a30322c9923a0d19","createTime":1473675919136,"status":{"index":1,"name":"正常"}}},{"id":"57f7739c11058a3b967e6555","title":" 我的第一篇","subtitle":null,"images":null,"summary":null,"hits":12,"catalog":{"pid":"f3b8d91b8f9c4a03a4a06a5678e79872","name":"金融","code":"tech","left":26,"right":27,"description":"资本论","creatorId":"3312cfb5794742dc8b9f98544fdb6854","catalog":{"name":"文章","code":"articles","left":1,"right":94,"creatorId":"3312cfb5794742dc8b9f98544fdb6854","id":"f3b8d91b8f9c4a03a4a06a5678e79872","createTime":1475220231708,"status":{"index":1,"name":"正常"}},"id":"85e9c09ec6c740c9852f441e3fbbd272","createTime":1475656563140,"status":{"index":1,"name":"正常"}}},{"id":"57f9e94211058a4c1f819332","title":"咯兔子","subtitle":null,"images":null,"summary":null,"hits":1,"catalog":{"pid":"f3b8d91b8f9c4a03a4a06a5678e79872","name":"贸易","code":"tech","left":32,"right":33,"description":"没有我卖不出去的","creatorId":"3312cfb5794742dc8b9f98544fdb6854","catalog":{"name":"文章","code":"articles","left":1,"right":94,"creatorId":"3312cfb5794742dc8b9f98544fdb6854","id":"f3b8d91b8f9c4a03a4a06a5678e79872","createTime":1475220231708,"status":{"index":1,"name":"正常"}},"id":"fcb62ebe26a74fa4b5f028ad4924d04d","createTime":1475656747994,"status":{"index":1,"name":"正常"}}},{"id":"57f9e94311058a4c1f819333","title":"咯兔子","subtitle":null,"images":null,"summary":null,"hits":1,"catalog":{"pid":"f3b8d91b8f9c4a03a4a06a5678e79872","name":"贸易","code":"tech","left":32,"right":33,"description":"没有我卖不出去的","creatorId":"3312cfb5794742dc8b9f98544fdb6854","catalog":{"name":"文章","code":"articles","left":1,"right":94,"creatorId":"3312cfb5794742dc8b9f98544fdb6854","id":"f3b8d91b8f9c4a03a4a06a5678e79872","createTime":1475220231708,"status":{"index":1,"name":"正常"}},"id":"fcb62ebe26a74fa4b5f028ad4924d04d","createTime":1475656747994,"status":{"index":1,"name":"正常"}}}],"hasPre":false}
+     * content : {"total":3,"hasNext":false,"rows":[{"id":"57fc9a4a11058a799eb30233","title":"嗨","subtitle":null,"images":null,"summary":null,"hits":1,"catalog":{"pid":"f3b8d91b8f9c4a03a4a06a5678e79872","name":"法律","code":"tech","left":38,"right":39,"description":"我就是红线","creatorId":"3312cfb5794742dc8b9f98544fdb6854","catalog":{"name":"文章","code":"articles","left":1,"right":94,"creatorId":"3312cfb5794742dc8b9f98544fdb6854","id":"f3b8d91b8f9c4a03a4a06a5678e79872","createTime":1475220231708,"status":{"index":1,"name":"正常"}},"id":"c8bbd11d9ccf46a787930ea12c3843e0","createTime":1475656967680,"status":{"index":1,"name":"正常"}}},{"id":"57fc9a4b11058a799eb30234","title":"嗨","subtitle":null,"images":null,"summary":null,"hits":1,"catalog":{"pid":"f3b8d91b8f9c4a03a4a06a5678e79872","name":"法律","code":"tech","left":38,"right":39,"description":"我就是红线","creatorId":"3312cfb5794742dc8b9f98544fdb6854","catalog":{"name":"文章","code":"articles","left":1,"right":94,"creatorId":"3312cfb5794742dc8b9f98544fdb6854","id":"f3b8d91b8f9c4a03a4a06a5678e79872","createTime":1475220231708,"status":{"index":1,"name":"正常"}},"id":"c8bbd11d9ccf46a787930ea12c3843e0","createTime":1475656967680,"status":{"index":1,"name":"正常"}}},{"id":"57fcadf911058a799eb30235","title":"嗨","subtitle":null,"images":"http://odxpoei6h.bkt.clouddn.com/qianxun57fcadee2865f.jpg","summary":null,"hits":1,"catalog":{"pid":"f3b8d91b8f9c4a03a4a06a5678e79872","name":"体育","code":"tech","left":36,"right":37,"description":"其实我头脑也很发达","creatorId":"3312cfb5794742dc8b9f98544fdb6854","catalog":{"name":"文章","code":"articles","left":1,"right":94,"creatorId":"3312cfb5794742dc8b9f98544fdb6854","id":"f3b8d91b8f9c4a03a4a06a5678e79872","createTime":1475220231708,"status":{"index":1,"name":"正常"}},"id":"c5295a8998884d9f89035d28652d9444","createTime":1475656851190,"status":{"index":1,"name":"正常"}}}],"hasPre":false}
      */
 
     private String status;
     private String message;
     /**
-     * total : 4
+     * total : 3
      * hasNext : false
-     * rows : [{"id":"57ee3d6d11058a3b20ee968a","title":"MVP开发之路","subtitle":null,"images":null,"summary":null,"hits":5,"catalog":{"pid":"f3b8d91b8f9c4a03a4a06a5678e79872","name":"新闻","code":"news","left":2,"right":5,"creatorId":"6e07bc2797fb44e488e9b88fec42199e","catalog":{"name":"文章","code":"articles","left":1,"right":6,"creatorId":"3312cfb5794742dc8b9f98544fdb6854","id":"f3b8d91b8f9c4a03a4a06a5678e79872","createTime":1475220231708,"status":{"index":1,"name":"正常"}},"id":"704d54f44d7845f8a30322c9923a0d19","createTime":1473675919136,"status":{"index":1,"name":"正常"}}},{"id":"57f7739c11058a3b967e6555","title":" 我的第一篇","subtitle":null,"images":null,"summary":null,"hits":12,"catalog":{"pid":"f3b8d91b8f9c4a03a4a06a5678e79872","name":"金融","code":"tech","left":26,"right":27,"description":"资本论","creatorId":"3312cfb5794742dc8b9f98544fdb6854","catalog":{"name":"文章","code":"articles","left":1,"right":94,"creatorId":"3312cfb5794742dc8b9f98544fdb6854","id":"f3b8d91b8f9c4a03a4a06a5678e79872","createTime":1475220231708,"status":{"index":1,"name":"正常"}},"id":"85e9c09ec6c740c9852f441e3fbbd272","createTime":1475656563140,"status":{"index":1,"name":"正常"}}},{"id":"57f9e94211058a4c1f819332","title":"咯兔子","subtitle":null,"images":null,"summary":null,"hits":1,"catalog":{"pid":"f3b8d91b8f9c4a03a4a06a5678e79872","name":"贸易","code":"tech","left":32,"right":33,"description":"没有我卖不出去的","creatorId":"3312cfb5794742dc8b9f98544fdb6854","catalog":{"name":"文章","code":"articles","left":1,"right":94,"creatorId":"3312cfb5794742dc8b9f98544fdb6854","id":"f3b8d91b8f9c4a03a4a06a5678e79872","createTime":1475220231708,"status":{"index":1,"name":"正常"}},"id":"fcb62ebe26a74fa4b5f028ad4924d04d","createTime":1475656747994,"status":{"index":1,"name":"正常"}}},{"id":"57f9e94311058a4c1f819333","title":"咯兔子","subtitle":null,"images":null,"summary":null,"hits":1,"catalog":{"pid":"f3b8d91b8f9c4a03a4a06a5678e79872","name":"贸易","code":"tech","left":32,"right":33,"description":"没有我卖不出去的","creatorId":"3312cfb5794742dc8b9f98544fdb6854","catalog":{"name":"文章","code":"articles","left":1,"right":94,"creatorId":"3312cfb5794742dc8b9f98544fdb6854","id":"f3b8d91b8f9c4a03a4a06a5678e79872","createTime":1475220231708,"status":{"index":1,"name":"正常"}},"id":"fcb62ebe26a74fa4b5f028ad4924d04d","createTime":1475656747994,"status":{"index":1,"name":"正常"}}}]
+     * rows : [{"id":"57fc9a4a11058a799eb30233","title":"嗨","subtitle":null,"images":null,"summary":null,"hits":1,"catalog":{"pid":"f3b8d91b8f9c4a03a4a06a5678e79872","name":"法律","code":"tech","left":38,"right":39,"description":"我就是红线","creatorId":"3312cfb5794742dc8b9f98544fdb6854","catalog":{"name":"文章","code":"articles","left":1,"right":94,"creatorId":"3312cfb5794742dc8b9f98544fdb6854","id":"f3b8d91b8f9c4a03a4a06a5678e79872","createTime":1475220231708,"status":{"index":1,"name":"正常"}},"id":"c8bbd11d9ccf46a787930ea12c3843e0","createTime":1475656967680,"status":{"index":1,"name":"正常"}}},{"id":"57fc9a4b11058a799eb30234","title":"嗨","subtitle":null,"images":null,"summary":null,"hits":1,"catalog":{"pid":"f3b8d91b8f9c4a03a4a06a5678e79872","name":"法律","code":"tech","left":38,"right":39,"description":"我就是红线","creatorId":"3312cfb5794742dc8b9f98544fdb6854","catalog":{"name":"文章","code":"articles","left":1,"right":94,"creatorId":"3312cfb5794742dc8b9f98544fdb6854","id":"f3b8d91b8f9c4a03a4a06a5678e79872","createTime":1475220231708,"status":{"index":1,"name":"正常"}},"id":"c8bbd11d9ccf46a787930ea12c3843e0","createTime":1475656967680,"status":{"index":1,"name":"正常"}}},{"id":"57fcadf911058a799eb30235","title":"嗨","subtitle":null,"images":"http://odxpoei6h.bkt.clouddn.com/qianxun57fcadee2865f.jpg","summary":null,"hits":1,"catalog":{"pid":"f3b8d91b8f9c4a03a4a06a5678e79872","name":"体育","code":"tech","left":36,"right":37,"description":"其实我头脑也很发达","creatorId":"3312cfb5794742dc8b9f98544fdb6854","catalog":{"name":"文章","code":"articles","left":1,"right":94,"creatorId":"3312cfb5794742dc8b9f98544fdb6854","id":"f3b8d91b8f9c4a03a4a06a5678e79872","createTime":1475220231708,"status":{"index":1,"name":"正常"}},"id":"c5295a8998884d9f89035d28652d9444","createTime":1475656851190,"status":{"index":1,"name":"正常"}}}]
      * hasPre : false
      */
 
@@ -53,13 +52,13 @@ public class MyPersonalArticle {
         private boolean hasNext;
         private boolean hasPre;
         /**
-         * id : 57ee3d6d11058a3b20ee968a
-         * title : MVP开发之路
+         * id : 57fc9a4a11058a799eb30233
+         * title : 嗨
          * subtitle : null
          * images : null
          * summary : null
-         * hits : 5
-         * catalog : {"pid":"f3b8d91b8f9c4a03a4a06a5678e79872","name":"新闻","code":"news","left":2,"right":5,"creatorId":"6e07bc2797fb44e488e9b88fec42199e","catalog":{"name":"文章","code":"articles","left":1,"right":6,"creatorId":"3312cfb5794742dc8b9f98544fdb6854","id":"f3b8d91b8f9c4a03a4a06a5678e79872","createTime":1475220231708,"status":{"index":1,"name":"正常"}},"id":"704d54f44d7845f8a30322c9923a0d19","createTime":1473675919136,"status":{"index":1,"name":"正常"}}
+         * hits : 1
+         * catalog : {"pid":"f3b8d91b8f9c4a03a4a06a5678e79872","name":"法律","code":"tech","left":38,"right":39,"description":"我就是红线","creatorId":"3312cfb5794742dc8b9f98544fdb6854","catalog":{"name":"文章","code":"articles","left":1,"right":94,"creatorId":"3312cfb5794742dc8b9f98544fdb6854","id":"f3b8d91b8f9c4a03a4a06a5678e79872","createTime":1475220231708,"status":{"index":1,"name":"正常"}},"id":"c8bbd11d9ccf46a787930ea12c3843e0","createTime":1475656967680,"status":{"index":1,"name":"正常"}}
          */
 
         private List<RowsBean> rows;
@@ -105,14 +104,15 @@ public class MyPersonalArticle {
             private int hits;
             /**
              * pid : f3b8d91b8f9c4a03a4a06a5678e79872
-             * name : 新闻
-             * code : news
-             * left : 2
-             * right : 5
-             * creatorId : 6e07bc2797fb44e488e9b88fec42199e
-             * catalog : {"name":"文章","code":"articles","left":1,"right":6,"creatorId":"3312cfb5794742dc8b9f98544fdb6854","id":"f3b8d91b8f9c4a03a4a06a5678e79872","createTime":1475220231708,"status":{"index":1,"name":"正常"}}
-             * id : 704d54f44d7845f8a30322c9923a0d19
-             * createTime : 1473675919136
+             * name : 法律
+             * code : tech
+             * left : 38
+             * right : 39
+             * description : 我就是红线
+             * creatorId : 3312cfb5794742dc8b9f98544fdb6854
+             * catalog : {"name":"文章","code":"articles","left":1,"right":94,"creatorId":"3312cfb5794742dc8b9f98544fdb6854","id":"f3b8d91b8f9c4a03a4a06a5678e79872","createTime":1475220231708,"status":{"index":1,"name":"正常"}}
+             * id : c8bbd11d9ccf46a787930ea12c3843e0
+             * createTime : 1475656967680
              * status : {"index":1,"name":"正常"}
              */
 
@@ -180,19 +180,20 @@ public class MyPersonalArticle {
                 private String code;
                 private int left;
                 private int right;
+                private String description;
                 private String creatorId;
                 /**
                  * name : 文章
                  * code : articles
                  * left : 1
-                 * right : 6
+                 * right : 94
                  * creatorId : 3312cfb5794742dc8b9f98544fdb6854
                  * id : f3b8d91b8f9c4a03a4a06a5678e79872
                  * createTime : 1475220231708
                  * status : {"index":1,"name":"正常"}
                  */
 
-                private CatalogBean catalog;
+                private com.heapot.qianxun.bean.CatalogBean catalog;
                 private String id;
                 private long createTime;
                 /**
@@ -242,6 +243,14 @@ public class MyPersonalArticle {
                     this.right = right;
                 }
 
+                public String getDescription() {
+                    return description;
+                }
+
+                public void setDescription(String description) {
+                    this.description = description;
+                }
+
                 public String getCreatorId() {
                     return creatorId;
                 }
@@ -250,11 +259,11 @@ public class MyPersonalArticle {
                     this.creatorId = creatorId;
                 }
 
-                public CatalogBean getCatalog() {
+                public com.heapot.qianxun.bean.CatalogBean getCatalog() {
                     return catalog;
                 }
 
-                public void setCatalog(CatalogBean catalog) {
+                public void setCatalog(com.heapot.qianxun.bean.CatalogBean catalog) {
                     this.catalog = catalog;
                 }
 
@@ -281,6 +290,7 @@ public class MyPersonalArticle {
                 public void setStatus(StatusBean status) {
                     this.status = status;
                 }
+
 
                 public static class StatusBean {
                     private int index;

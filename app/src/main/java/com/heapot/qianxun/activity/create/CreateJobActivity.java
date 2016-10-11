@@ -112,7 +112,7 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_job);
         findView();
-        getData();
+        //getData();
     }
 
     private void getData() {
@@ -188,12 +188,12 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
                 break;
 
             case R.id.rl_company:
-                if (persons.size() > 2) {
+                /*if (persons.size() > 2) {
                     Intent more = new Intent(activity, CreateJobMoreList.class);
                     startActivityForResult(more, 104);
                 } else {
                     ll_list.setVisibility(View.VISIBLE);
-                }
+                }*/
                 break;
             case R.id.rl_detail:
 
@@ -226,14 +226,14 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
             @Override
             public void onCompleted(Exception e, String result) {
                 if (!TextUtils.isEmpty(result)) {
-                    if (result.contains("200")) {
+                    if (result.contains("success")) {
 
-                        ToastUtil.show("信息修改成功");
+                        ToastUtil.show("发表成功");
                     } else {
-                        ToastUtil.show("信息修改失败");
+                        ToastUtil.show("发表失败");
                     }
                 } else {
-                    ToastUtil.show("信息修改失败");
+                    ToastUtil.show("发表失败");
                 }
             }
         });

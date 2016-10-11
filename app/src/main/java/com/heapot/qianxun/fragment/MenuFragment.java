@@ -46,8 +46,8 @@ import java.util.Map;
 /**
  * Created by Karl on 2016/8/20.
  * 自定义侧滑菜单布局：
- * <p>
- * <p>
+ * <p/>
+ * <p/>
  * desc:
  * 存数据：SerializableUtils.setSerializable(getContext(), ConstantsBean.MY_USER_INFO, myUserBean);
  * 取数据：SerializableUtils.getSerializable(getContext(),ConstantsBean.MY_USER_INFO)
@@ -136,7 +136,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
             }
             if (myUserBean.getIcon() != null) {
                 CommonUtil.loadImage(mIcon, myUserBean.getIcon(), R.drawable.imagetest);
-                Log.e("网上获取图片",myUserBean.getIcon());
+                Log.e("网上获取图片", myUserBean.getIcon());
             } else {
                 mIcon.setImageResource(R.drawable.imagetest);
             }
@@ -163,11 +163,11 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
                                 MyUserBean myUserBean = (MyUserBean) JsonUtil.fromJson(String.valueOf(response), MyUserBean.class);
                                 MyUserBean.ContentBean userBean = myUserBean.getContent();
                                 SerializableUtils.setSerializable(getContext(), ConstantsBean.MY_USER_INFO, userBean);
-                               PreferenceUtil.putString(ConstantsBean.USER_PHONE,myUserBean.getContent().getPhone());
+                                PreferenceUtil.putString(ConstantsBean.USER_PHONE, myUserBean.getContent().getPhone());
                                 PreferenceUtil.putString(ConstantsBean.nickName, myUserBean.getContent().getNickname());
                                 PreferenceUtil.putString(ConstantsBean.userAutograph, myUserBean.getContent().getDescription());
                                 PreferenceUtil.putString(ConstantsBean.userImage, myUserBean.getContent().getIcon());
-                                PreferenceUtil.putString(ConstantsBean.USER_ID,myUserBean.getContent().getId());
+                                PreferenceUtil.putString(ConstantsBean.USER_ID, myUserBean.getContent().getId());
                                 if (userBean.getDescription() != null) {
                                     mQuote.setText(userBean.getDescription());
                                 } else {
@@ -177,13 +177,13 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
                                 if (nickName != null) {
                                     mName.setText(nickName);
                                     CustomApplication.NICK_NAME = nickName;
-                                    Log.e("网上获取图片fgsgbtehgte",nickName);
+                                    Log.e("网上获取图片fgsgbtehgte", nickName);
                                 } else {
                                     mName.setText("请设置昵称");
                                 }
                                 if (userBean.getIcon() != null) {
-                                   CommonUtil.loadImage(mIcon, userBean.getIcon(), R.drawable.imagetest);
-                                    Log.e("网上获取图片fgsgbtehgte",userBean.getIcon());
+                                    CommonUtil.loadImage(mIcon, userBean.getIcon(), R.drawable.imagetest);
+                                    Log.e("网上获取图片fgsgbtehgte", userBean.getIcon());
                                 } else {
                                     mIcon.setImageResource(R.drawable.imagetest);
                                 }

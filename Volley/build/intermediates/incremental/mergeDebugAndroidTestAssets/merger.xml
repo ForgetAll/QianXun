@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="debug"><source path="D:\work\QianXun\Volley\build\intermediates\bundles\debug\assets"/></dataSet><dataSet config="main"><source path="D:\work\QianXun\Volley\src\androidTest\assets"/><source path="D:\work\QianXun\Volley\build\generated\assets\shaders\androidTest\debug"/></dataSet></merger>
+<merger version="3"><dataSet config="debug"><source path="G:\zpgittwo\QianXun\Volley\build\intermediates\bundles\debug\assets"/></dataSet><dataSet config="main"><source path="G:\zpgittwo\QianXun\Volley\src\androidTest\assets"/><source path="G:\zpgittwo\QianXun\Volley\build\generated\assets\shaders\androidTest\debug"/></dataSet></merger>
