@@ -2,6 +2,8 @@ package com.heapot.qianxun.bean;
 
 import android.os.Environment;
 
+import com.heapot.qianxun.application.CustomApplication;
+
 /**
  * Created by 15859 on 2016/9/3.
  */
@@ -77,6 +79,13 @@ public class ConstantsBean {
     public static final String CREATE_JOB = "jobs";
     //查询员工所属公司
     public static final String QUERY_UER_ORG = "user/org";
+
+
+    //创建文章WEbView的URL
+    public static final String WEB_CREATE_ARTICLE_EDIT = "http://sijiache.heapot.com/Tabs/editer/artical/?f?device=android&author="+ CustomApplication.NICK_NAME+"&type=article";
+    //创建招聘URL
+    public static final String WEB_CREATE_JOB_EDIT = "http://sijiache.heapot.com/Tabs/editer/artical/?f?device=android&type=job";
+
 
 
 

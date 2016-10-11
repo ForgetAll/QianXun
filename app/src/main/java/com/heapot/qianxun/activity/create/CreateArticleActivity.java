@@ -18,15 +18,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.blankj.utilcode.utils.NetworkUtils;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.activity.BaseActivity;
-import com.heapot.qianxun.application.CustomApplication;
+import com.heapot.qianxun.application.CreateActivityCollector;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.util.FileUploadTask;
 import com.heapot.qianxun.widget.PhotoCarmaWindow;
@@ -36,8 +31,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by Karl on 2016/9/22.
@@ -49,7 +42,7 @@ public class CreateArticleActivity extends BaseActivity implements View.OnClickL
     private ImageView mBack;
     private WebView webView;
     private WebSettings webSettings;
-    private String images = "",catalogId = "",content="",token = "";
+    private String images = "",title = "",content="",token = "";
     private static final int GET_ARTICLE_CONTENT = 1;
     private static final int GET_ARTICLE_IMAGES = 2;
     private Handler handler = new Handler(){
@@ -59,6 +52,32 @@ public class CreateArticleActivity extends BaseActivity implements View.OnClickL
             switch (n){
                 case GET_ARTICLE_CONTENT:
                     String json =  msg.getData().getString("content");
+                    Logger.d(json);
+                    try {
+                        JSONObject jsonObject = new JSONObject(json);
+                        images = jsonObject.getString("articleImg");
+                        Logger.d(images);
+                        content = jsonObject.getString("content");
+                        title = jsonObject.getString("title");
+                        String body = "";
+                        if (title.equals("") || content.equals("")){
+                            Toast.makeText(CreateArticleActivity.this, "标题/内容不能为空", Toast.LENGTH_SHORT).show();
+                        }else {
+                            Intent intent = new Intent(CreateArticleActivity.this,SortList.class);
+                            body = "{\"title\":\"" + title + "\",\"content\":\"" + content + "\"";
+                            intent.putExtra("article",body);
+                            if (images.equals("")) {
+                                intent.putExtra("status",0);
+                            }else {
+                                intent.putExtra("status",1);
+                                intent.putExtra("images",images);
+                            }
+                            startActivity(intent);
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case GET_ARTICLE_IMAGES:
                     token =  msg.getData().getString("token");
@@ -99,16 +118,17 @@ public class CreateArticleActivity extends BaseActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_articles);
+        CreateActivityCollector.addActivity(this);
         initView();
 
     }
     private void initView(){
         mToolBarTitle = (TextView) findViewById(R.id.txt_title);
         mToolBarSave = (TextView) findViewById(R.id.txt_btn_function);
-     // mCreateIon=(ImageView)  findViewById(R.id.iv_create_icon);
+        // mCreateIon=(ImageView)  findViewById(R.id.iv_create_icon);
         mBack = (ImageView) findViewById(R.id.iv_btn_back);
         webView = (WebView) findViewById(R.id.wv_content);
-      //  mCreateIon.setOnClickListener(this);
+        //  mCreateIon.setOnClickListener(this);
 
         //显示，默认隐藏的保存按钮隐藏
         mToolBarSave.setVisibility(View.VISIBLE);
@@ -116,14 +136,14 @@ public class CreateArticleActivity extends BaseActivity implements View.OnClickL
         mToolBarTitle.setText("创建文章");
         //设置保存按钮的监听事件
         mToolBarSave.setOnClickListener(this);
-        mToolBarSave.setText("提交");
+        mToolBarSave.setText("下一步");
         //选择标签事件监听
         mBack.setOnClickListener(this);
         initSettings();//初始化webView
     }
 
     private void initSettings(){
-        String url = "http://192.168.31.236/Tabs/editer/artical/?d?device=android&author="+CustomApplication.NICK_NAME+"&type=article";
+
         webSettings = webView.getSettings();
         boolean isConnected = NetworkUtils.isAvailable(this);
         if (isConnected) {
@@ -135,7 +155,7 @@ public class CreateArticleActivity extends BaseActivity implements View.OnClickL
         webSettings.setDefaultTextEncodingName("utf-8");
         webView.addJavascriptInterface(this,"android");
         webView.setWebChromeClient(new WebChromeClient() {});
-        webView.loadUrl(url);
+        webView.loadUrl(ConstantsBean.WEB_CREATE_ARTICLE_EDIT);
 
     }
 
@@ -145,6 +165,8 @@ public class CreateArticleActivity extends BaseActivity implements View.OnClickL
      */
     @JavascriptInterface
     public void setHtml(String json){
+        Logger.d("json--->"+json);
+
         Message message = new Message();
         Bundle bundle = new Bundle();
         bundle.putString("content",json);
@@ -174,80 +196,14 @@ public class CreateArticleActivity extends BaseActivity implements View.OnClickL
         switch (v.getId()){
             //保存按钮
             case R.id.txt_btn_function:
-                webView.loadUrl("javascript:getContent()");//通知js返回数据
+                webView.loadUrl("javascript:appGetContent()");//通知js返回数据
                 break;
             case R.id.iv_btn_back:
                 CreateArticleActivity.this.finish();
                 break;
         }
     }
-    private void postArticle(){
-        Toast.makeText(CreateArticleActivity.this, ""+CustomApplication.TOKEN, Toast.LENGTH_SHORT).show();
-        String url = ConstantsBean.BASE_PATH+ConstantsBean.CREATE_ARTICLES;
-        JSONObject request = getBody();
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                Request.Method.POST, url, request,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            String status = response.getString("status");
-                            if (status.equals("success")){
-                                //提交成功要进行如下操作
-                                CreateArticleActivity.this.finish();
-                                Toast.makeText(CreateArticleActivity.this, "创建成功", Toast.LENGTH_SHORT).show();
-                            }else {
-                                Toast.makeText(CreateArticleActivity.this, "错误原因："+response.getString("message"), Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
 
-                    }
-                }
-        ){
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String,String> headers = new HashMap<>();
-                headers.put(ConstantsBean.KEY_TOKEN,CustomApplication.TOKEN);
-
-                return headers;
-            }
-        };
-        CustomApplication.getRequestQueue().add(jsonObjectRequest);
-    }
-
-    /**
-     *抽取要提交的数据
-     * @return 返回body数据
-     */
-    private JSONObject getBody(){
-        //title和content还有catalogId是必须的，所以提交之前一定要进行判断
-//        String content = mContent.getText().toString();
-        String data = "";
-//        if (title.equals("") || content.equals("") || catalogId.equals("")){
-//            Toast.makeText(CreateArticleActivity.this, "标题/内容/文章分类不能为空", Toast.LENGTH_SHORT).show();
-//        }else {
-//            if (images.equals("") || images == null){
-//                data = "{\"title\":\""+title+"\",\"content\":\""+content+"\",\"catalogId\":\""+catalogId+"\"}";
-//            }else {
-//                data = "{\"images\":\""+images+"\",\"title\":\""+title+"\",\"content\":\""+content+"\",\"catalogId\":\""+catalogId+"\"}";
-//            }
-//        }
-
-        JSONObject json = null;
-        try {
-            json = new JSONObject(data);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return json;
-    }
 
 
     @Override
@@ -306,4 +262,10 @@ public class CreateArticleActivity extends BaseActivity implements View.OnClickL
         task.execute(ConstantsBean.UPLOAD);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        webView.clearCache(true);
+        CreateActivityCollector.removeActivity(this);
+    }
 }

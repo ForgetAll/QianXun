@@ -3,29 +3,36 @@ package com.heapot.qianxun.activity.create;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.heapot.qianxun.R;
+import com.heapot.qianxun.activity.ArticleActivity;
 import com.heapot.qianxun.activity.BaseActivity;
 import com.heapot.qianxun.adapter.SortAdapter;
+import com.heapot.qianxun.application.CreateActivityCollector;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
-import com.heapot.qianxun.bean.MyUserBean;
-import com.heapot.qianxun.bean.SubBean;
-import com.heapot.qianxun.bean.SubscribedBean;
 import com.heapot.qianxun.bean.TagsBean;
 import com.heapot.qianxun.helper.SerializableUtils;
+import com.orhanobut.logger.Logger;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Karl on 2016/10/7.
@@ -39,13 +46,16 @@ public class SortList extends BaseActivity implements View.OnClickListener, Adap
     private List<TagsBean.ContentBean> list = new ArrayList<>();
     private List<TagsBean.ContentBean> tagList = new ArrayList<>();//这里tagList的意思是对应的二级标题
     private SortAdapter adapter;
-    int current = 0;
-    String pid;
+    private String request = "";
+    private String imageUrl = "";
+    private int n = 0;
+    String pid = CustomApplication.PAGE_ARTICLES_ID;
     private Intent intent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sort_list);
+        CreateActivityCollector.addActivity(this);
         initView();
         initEvent();
     }
@@ -59,19 +69,15 @@ public class SortList extends BaseActivity implements View.OnClickListener, Adap
         back.setOnClickListener(this);
 
         intent = getIntent();
-        current = intent.getExtras().getInt("create_status");//根据current判断当前是创建文章还是别的
-        switch (current){
-            case 0:
-                pid = CustomApplication.PAGE_ARTICLES_ID;
-                break;
-            case 1:
-                break;
-            case 2:
-                break;
-            default:
-                pid = CustomApplication.PAGE_ARTICLES_ID;
-                break;
+        n = intent.getExtras().getInt("status");
+        request = intent.getExtras().getString("article");
+        if (n==1){
+
+            imageUrl = intent.getExtras().getString("images");
+            request = request+",\"images\":\""+imageUrl+"\"";
         }
+
+        Logger.d(""+request);
 
     }
     private void initEvent(){
@@ -113,10 +119,70 @@ public class SortList extends BaseActivity implements View.OnClickListener, Adap
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        //选中id返回上一个页面
-        intent.putExtra("TagName",tagList.get(position).getName());
-        intent.putExtra("TagId",tagList.get(position).getId());
-        setResult(1,intent);
-        this.finish();
+
+        request = request +",\"catalogId\":\""+tagList.get(position).getId()+"\"}";
+        Logger.d(request);
+        postArticle(request);
+
+
+    }
+
+    private void postArticle(String jsonRequest){
+        String url = ConstantsBean.BASE_PATH+ConstantsBean.CREATE_ARTICLES;
+        JSONObject json = getBody(jsonRequest);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.POST, url, json,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            String status = response.getString("status");
+                            if (status.equals("success")){
+                                JSONObject content = response.getJSONObject("content");
+                                String id = content.getString("id");
+                                Intent intent = new Intent(SortList.this,ArticleActivity.class);
+                                intent.putExtra("id",id);
+                                startActivity(intent);
+                                CreateActivityCollector.finishAll();
+                            }else {
+                                Toast.makeText(SortList.this, ""+response.getString("message"), Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }
+        ){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> headers = new HashMap<>();
+                headers.put(ConstantsBean.KEY_TOKEN,CustomApplication.TOKEN);
+                return headers;
+            }
+        };
+        CustomApplication.getRequestQueue().add(jsonObjectRequest);
+    }
+
+    private JSONObject getBody(String str){
+        //title和content还有catalogId是必须的，所以提交之前一定要进行判断
+
+        JSONObject json = null;
+        try {
+            json = new JSONObject(str);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return json;
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        CreateActivityCollector.removeActivity(this);
     }
 }
