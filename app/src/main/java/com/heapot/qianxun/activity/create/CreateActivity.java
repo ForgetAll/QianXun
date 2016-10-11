@@ -6,6 +6,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -15,6 +16,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.activity.BaseActivity;
 import com.heapot.qianxun.adapter.CreateAdapter;
+import com.heapot.qianxun.application.CreateActivityCollector;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.bean.UserOrgBean;
@@ -47,6 +49,7 @@ public class CreateActivity extends BaseActivity implements View.OnClickListener
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create);
+        CreateActivityCollector.addActivity(this);
         initView();
     }
     private void initView(){
@@ -105,6 +108,7 @@ public class CreateActivity extends BaseActivity implements View.OnClickListener
     public void onClick(View v) {
         //关闭当前页面
         this.finish();
+        CreateActivityCollector.removeActivity(this);
     }
 
 
@@ -125,6 +129,7 @@ public class CreateActivity extends BaseActivity implements View.OnClickListener
                                 Logger.d("orgList------->"+orgList.size());
                                 initData(orgList.size());
                             }else {
+                                Toast.makeText(CreateActivity.this, ""+response.getString("message"), Toast.LENGTH_SHORT).show();
 
                             }
                         } catch (JSONException e) {
@@ -147,5 +152,11 @@ public class CreateActivity extends BaseActivity implements View.OnClickListener
             }
         };
         CustomApplication.getRequestQueue().add(jsonObjectRequest);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        CreateActivityCollector.removeActivity(this);
     }
 }
