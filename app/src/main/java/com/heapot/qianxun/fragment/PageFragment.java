@@ -18,6 +18,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.activity.ArticleActivity;
+import com.heapot.qianxun.activity.JobActivity;
 import com.heapot.qianxun.adapter.MainTabAdapter;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
@@ -30,6 +31,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.heapot.qianxun.bean.ConstantsBean.PAGE_SCIENCE;
 
 /**
  * Created by Karl on 2016/8/25.
@@ -170,9 +173,22 @@ public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     private OnRecyclerViewItemClickListener onClickListener = new OnRecyclerViewItemClickListener() {
         @Override
         public void onItemClick(View view, int position) {
-            Intent intent = new Intent(getActivity(), ArticleActivity.class);
-            intent.putExtra("id",list.get(position).getId());
-            startActivity(intent);
+            switch (CustomApplication.getCurrentPageName()){
+                case "PAGE_SCIENCE":
+                    Intent intent = new Intent(getActivity(), ArticleActivity.class);
+                    intent.putExtra("id",list.get(position).getId());
+                    startActivity(intent);
+                    break;
+                case "PAGE_RECRUIT":
+                    Intent job = new Intent(getActivity(), JobActivity.class);
+                    job.putExtra("id",list.get(position).getId());
+                    startActivity(job);
+                    break;
+                case "PAGE_TRAIN":
+                    break;
+
+            }
+
         }
     };
     /**
