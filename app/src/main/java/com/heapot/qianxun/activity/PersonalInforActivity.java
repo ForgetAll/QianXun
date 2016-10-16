@@ -76,7 +76,8 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
                         userBean.setIcon(path);
                         personalStatus = 1;
                         SerializableUtils.setSerializable(activity, ConstantsBean.MY_USER_INFO, userBean);
-                        updateUserInfo();
+                        String body3 = "{\"icon\":\"" +userBean.getIcon() + "\"}";
+                        updateUserInfo(body3);
                     } catch (JSONException e) {
                     }
                 }
@@ -200,10 +201,9 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
      *
      *
      */
-    private void updateUserInfo() {
+    private void updateUserInfo(String body) {
         Log.e("新建的内容", String.valueOf(userBean));
-        String body = "{\"name\":\"" + userBean.getName() + "\",\"nikename\":\"" + userBean.getNickname() + "\",\"icon\":\"" +userBean.getIcon() + "\",\"description\":\"" + userBean.getDescription() + "\"}";
-        // String  body = "{\"name\":\""+userBean.getName()+"\",\"nikename\":\""+userBean.getNickname()+"\",\"icon\":\""+userBean.getIcon()+"\",\"description\":\""+userBean.getDescription()+"\"}";
+      // String body = "{\"name\":\"" + userBean.getName() + "\",\"nickname\":\"" + userBean.getNickname() + "\",\"icon\":\"" +userBean.getIcon() + "\",\"description\":\"" + userBean.getDescription() + "\"}";
         //发送数据
         JSONObject json = null;
         try {
@@ -218,6 +218,7 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        Log.e("上传后返回的数据：response",response.toString());
                         Logger.json(String.valueOf(response));
                         try {
                             String status = response.getString("status");
@@ -320,7 +321,9 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
                     SerializableUtils.setSerializable(activity, ConstantsBean.MY_USER_INFO, userBean);
                     PreferenceUtil.putString(ConstantsBean.nickName, nick);
                     personalStatus = 1;
-                    updateUserInfo();
+                    String body4 = "{\"nickname\":\"" + userBean.getNickname() + "\"}";
+                    Log.e("修改后的名字",body4);
+                    updateUserInfo(body4);
                     break;
                 //修改签名
                 case 202:
@@ -330,7 +333,8 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
                     SerializableUtils.setSerializable(activity, ConstantsBean.MY_USER_INFO, userBean);
                     PreferenceUtil.putString(ConstantsBean.userAutograph, autograph);
                     personalStatus = 1;
-                    updateUserInfo();
+                    String body2 = "{\"description\":\"" + userBean.getDescription() + "\"}";
+                    updateUserInfo(body2);
                     break;
             }
         }

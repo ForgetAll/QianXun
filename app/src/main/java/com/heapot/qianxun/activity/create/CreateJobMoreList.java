@@ -12,17 +12,28 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.activity.BaseActivity;
+import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.bean.UserOrgBean;
-import com.heapot.qianxun.helper.SerializableUtils;
+import com.heapot.qianxun.util.JsonUtil;
+import com.orhanobut.logger.Logger;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by 15859 on 2016/10/5.
@@ -32,10 +43,11 @@ public class CreateJobMoreList extends BaseActivity {
     private int number;
     Button btn_sure;
     ListView lv;
-    List<UserOrgBean.ContentBean> compony = new ArrayList<UserOrgBean.ContentBean>();
+    private List<UserOrgBean.ContentBean> orgList  = new ArrayList<UserOrgBean.ContentBean>();
     Context mContext;
     MyListAdapter adapter;
     List<Integer> listItemID = new ArrayList<Integer>();
+    private TextView tv_complete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,17 +58,56 @@ public class CreateJobMoreList extends BaseActivity {
     }
 
     private void getData() {
-        Object company = SerializableUtils.getSerializable(activity, ConstantsBean.USER_ORG_LIST);
-        compony.addAll((Collection<? extends UserOrgBean.ContentBean>) company);
+        //获取数据
+
+            String url = ConstantsBean.BASE_PATH+ConstantsBean.QUERY_UER_ORG;
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                    Request.Method.GET, url, null,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            Logger.json(String.valueOf(response));
+                            Log.e("所有的Json数据：",response.toString());
+                            try {
+                                String status = response.getString("status");
+                                if (status.equals("success")){
+                                    UserOrgBean userOrgBean = (UserOrgBean) JsonUtil.fromJson(String.valueOf(response),UserOrgBean.class);
+                                    //SerializableUtils.setSerializable(CreateActivity.this,ConstantsBean.USER_ORG_LIST,userOrgBean);
+                                    orgList.addAll(userOrgBean.getContent());
+                                    Logger.d("orgst------->"+orgList.size());
+                                }else {
+                                    Toast.makeText(CreateJobMoreList.this, ""+response.getString("message"), Toast.LENGTH_SHORT).show();
+
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
+                        }
+                    }
+            ){
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String,String> headers = new HashMap<>();
+                    headers.put(ConstantsBean.KEY_TOKEN, CustomApplication.TOKEN);
+                    return headers;
+                }
+            };
+            CustomApplication.getRequestQueue().add(jsonObjectRequest);
     }
 
     private void findView() {
         mContext = getApplicationContext();
-        btn_sure = (Button) findViewById(R.id.btn_sure);
+        tv_complete=(TextView) findViewById(R.id.tv_complete);
         lv = (ListView) findViewById(R.id.lvperson);
-        adapter = new MyListAdapter(compony);
+        adapter = new MyListAdapter(orgList);
         lv.setAdapter(adapter);
-        btn_sure.setOnClickListener(new View.OnClickListener() {
+        tv_complete.setOnClickListener(new View.OnClickListener() {
 
                                     @Override
                                     public void onClick(View v) {
@@ -80,27 +131,27 @@ public class CreateJobMoreList extends BaseActivity {
     //自定义ListView适配器
     class MyListAdapter extends BaseAdapter {
         List<Boolean> mChecked;
-        List<UserOrgBean.ContentBean> listPerson;
+        List<UserOrgBean.ContentBean> orgList;
         HashMap<Integer, View> map = new HashMap<Integer, View>();
 
-        public MyListAdapter(List<UserOrgBean.ContentBean> list) {
-            listPerson = new ArrayList<UserOrgBean.ContentBean>();
-            listPerson = list;
+        public MyListAdapter(List<UserOrgBean.ContentBean> orgList) {
+            orgList = new ArrayList<UserOrgBean.ContentBean>();
+           this.orgList = orgList;
 
             mChecked = new ArrayList<Boolean>();
-            for (int i = 0; i < list.size(); i++) {
+            for (int i = 0; i < orgList.size(); i++) {
                 mChecked.add(false);
             }
         }
 
         @Override
         public int getCount() {
-            return listPerson.size();
+            return orgList.size();
         }
 
         @Override
         public Object getItem(int position) {
-            return listPerson.get(position);
+            return orgList.get(position);
         }
 
         @Override
@@ -141,8 +192,8 @@ public class CreateJobMoreList extends BaseActivity {
             }
 
             holder.selected.setChecked(mChecked.get(position));
-            holder.name.setText(listPerson.get(position).getOrgId());
-            holder.address.setText(listPerson.get(position).getUserId());
+            holder.name.setText(orgList.get(position).getOrgId());
+            holder.address.setText(orgList.get(position).getUserId());
 
             return view;
         }

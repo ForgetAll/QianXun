@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -120,6 +121,7 @@ public class CreateActivity extends BaseActivity implements View.OnClickListener
                     @Override
                     public void onResponse(JSONObject response) {
                         Logger.json(String.valueOf(response));
+                        Log.e("所有的Json数据：",response.toString());
                         try {
                             String status = response.getString("status");
                             if (status.equals("success")){

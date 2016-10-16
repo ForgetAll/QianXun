@@ -10,26 +10,27 @@ import android.os.Message;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.bumptech.glide.Glide;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.activity.BaseActivity;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.bean.CreateJobBean;
 import com.heapot.qianxun.bean.UserOrgBean;
-import com.heapot.qianxun.helper.SerializableUtils;
 import com.heapot.qianxun.util.CommonUtil;
 import com.heapot.qianxun.util.FileUploadTask;
 import com.heapot.qianxun.util.JsonUtil;
@@ -38,15 +39,16 @@ import com.heapot.qianxun.util.ToastUtil;
 import com.heapot.qianxun.widget.PhotoCarmaWindow;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
+import com.orhanobut.logger.Logger;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by 15859 on 2016/10/5.
@@ -54,21 +56,16 @@ import java.util.List;
  */
 public class CreateJobActivity extends BaseActivity implements View.OnClickListener {
     private TextView tv_back, tv_complete, tv_company1Title, tv_company1Content, tv_companyChoose;
-    private ImageView iv_image, iv_company, iv_job, iv_detail, iv_describe, iv_describeChoose;
+    private ImageView iv_image, iv_company,  iv_detail, iv_describe, iv_describeChoose;
     private EditText et_title;
-    private TextView tv_jobTitle, tv_jobContent, tv_jobChoose;
     private TextView tv_detailTitle, tv_detailContent, tv_detailChoose;
     private TextView tv_describeTitle, tv_describeContent;
-    private RelativeLayout rl_company, rl_job, rl_detail, rl_describe;
+    private RelativeLayout rl_company, rl_detail, rl_describe;
     private int requestCode;
-    private int number;
+    private int number=1;
     private CreateJobBean createJobBean;
-    Button btn_sure;
-    ListView lv;
-    List<UserOrgBean.ContentBean> persons = new ArrayList<UserOrgBean.ContentBean>();
+    private List<UserOrgBean.ContentBean> orgList  = new ArrayList<UserOrgBean.ContentBean>();
     Context mContext;
-    MyListAdapter adapter;
-    List<Integer> listItemID = new ArrayList<Integer>();
     private Handler handler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
@@ -106,25 +103,23 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
     private ListView lv_jobList;
     private LinearLayout ll_list;
     private EditText et_min, et_max;
+    private ImageView iv_max,iv_min;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_job);
-        findView();
-        //getData();
+        testData();
+      findView();
+
     }
 
-    private void getData() {
-        Object company = SerializableUtils.getSerializable(activity, ConstantsBean.USER_ORG_LIST);
-        persons.addAll((Collection<? extends UserOrgBean.ContentBean>) company);
-    }
+
+
 
     private void findView() {
         ll_list = (LinearLayout) findViewById(R.id.ll_list);
         mContext = getApplicationContext();
-        btn_sure = (Button) findViewById(R.id.btn_sure);
-        lv = (ListView) findViewById(R.id.lvperson);
         tv_back = (TextView) findViewById(R.id.tv_back);
         tv_complete = (TextView) findViewById(R.id.tv_complete);
         tv_back.setOnClickListener(this);
@@ -141,8 +136,16 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
         tv_companyChoose = (TextView) findViewById(R.id.tv_companyChoose);
         rl_company.setOnClickListener(this);
 
-        et_min = (EditText) findViewById(R.id.et_min);
-        et_max = (EditText) findViewById(R.id.et_max);
+        et_min = (EditText) findViewById(R.id.tv_minTitle);
+        iv_max=(ImageView)findViewById(R.id.iv_max);
+        iv_min=(ImageView)findViewById(R.id.iv_min);
+        et_max = (EditText) findViewById(R.id.tv_maxTitle);
+Glide.with(activity).load(PreferenceUtil.getString(ConstantsBean.userImage)).error(R.mipmap.imagetest).into(iv_company);
+
+        rl_detail=(RelativeLayout) findViewById(R.id.rl_detail);
+        iv_detail=(ImageView)  findViewById(R.id.iv_detail);
+        tv_detailTitle=(TextView)  findViewById(R.id.tv_detailTitle);
+        rl_detail.setOnClickListener(this);
 
 
         rl_describe = (RelativeLayout) findViewById(R.id.rl_describe);
@@ -151,25 +154,6 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
         tv_describeContent = (TextView) findViewById(R.id.tv_describeContent);
         iv_describeChoose = (ImageView) findViewById(R.id.iv_describeChoose);
         rl_describe.setOnClickListener(this);
-
-
-        adapter = new MyListAdapter(persons);
-        lv.setAdapter(adapter);
-        btn_sure.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                listItemID.clear();
-                for (int i = 0; i < adapter.mChecked.size(); i++) {
-                    if (adapter.mChecked.get(i)) {
-                        listItemID.add(i);
-                    }
-                }
-                number = listItemID.size();
-                tv_companyChoose.setText(number);
-            }
-        });
 
     }
 
@@ -188,19 +172,14 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
                 break;
 
             case R.id.rl_company:
-                /*if (persons.size() > 2) {
-                    Intent more = new Intent(activity, CreateJobMoreList.class);
-                    startActivityForResult(more, 104);
-                } else {
-                    ll_list.setVisibility(View.VISIBLE);
-                }*/
                 break;
             case R.id.rl_detail:
-
+Intent type=new Intent(CreateJobActivity.this,CreateJobTypeActivity.class);
                 break;
             case R.id.rl_describe:
+                requestCode=105;
                 Intent intent = new Intent(CreateJobActivity.this, CreateJobDescribe.class);
-                startActivityForResult(intent, 105);
+                startActivityForResult(intent, requestCode);
                 break;
         }
 
@@ -213,10 +192,10 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
         createJobBean.setMaxSalary(max);
         createJobBean.setCatalogId("");
         createJobBean.setCode("");
-        String describe = tv_describeContent.getText().toString().trim();
+        String describe = tv_describeTitle.getText().toString().trim();
         createJobBean.setDescription(describe);
         createJobBean.setEmail("");
-        createJobBean.setName(PreferenceUtil.getString(ConstantsBean.nickName));
+        createJobBean.setName(PreferenceUtil.getString("name"));
         createJobBean.setPhone(PreferenceUtil.getString(ConstantsBean.USER_PHONE));
         createJobBean.setNum(number);
 
@@ -267,12 +246,11 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
                     cropImage(uri1);
                     break;
                 case 104:
-                    int companyNumber = getIntent().getIntExtra("number", 0);
-                    tv_companyChoose.setText(companyNumber);
                     break;
                 case 105:
-                    String describe = getIntent().getStringExtra("describe");
-                    tv_describeContent.setText(describe);
+                    String  describe =intent.getStringExtra("describe");
+                    Log.e("describe",describe);
+                    tv_describeTitle.setText(describe);
                     break;
 
             }
@@ -306,84 +284,49 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
         task.execute(ConstantsBean.UPLOAD);
     }
 
+    //获取数据
 
-    //自定义ListView适配器
-    class MyListAdapter extends BaseAdapter {
-        List<Boolean> mChecked;
-        List<UserOrgBean.ContentBean> listPerson;
-        HashMap<Integer, View> map = new HashMap<Integer, View>();
-
-        public MyListAdapter(List<UserOrgBean.ContentBean> list) {
-            listPerson = new ArrayList<UserOrgBean.ContentBean>();
-            listPerson = list;
-
-            mChecked = new ArrayList<Boolean>();
-            for (int i = 0; i < list.size(); i++) {
-                mChecked.add(false);
-            }
-        }
-
-        @Override
-        public int getCount() {
-            return listPerson.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return listPerson.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            View view;
-            ViewHolder holder = null;
-
-            if (map.get(position) == null) {
-                Log.e("MainActivity", "position1 = " + position);
-
-                LayoutInflater mInflater = (LayoutInflater) mContext
-                        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                view = mInflater.inflate(R.layout.create_job_list_item, null);
-                holder = new ViewHolder();
-                holder.selected = (CheckBox) view.findViewById(R.id.list_select);
-                holder.name = (TextView) view.findViewById(R.id.list_name);
-                holder.address = (TextView) view.findViewById(R.id.list_address);
-                final int p = position;
-                map.put(position, view);
-                holder.selected.setOnClickListener(new View.OnClickListener() {
-
+    private void testData() {
+        String url = ConstantsBean.BASE_PATH+ConstantsBean.QUERY_UER_ORG;
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
                     @Override
-                    public void onClick(View v) {
-                        CheckBox cb = (CheckBox) v;
-                        mChecked.set(p, cb.isChecked());
+                    public void onResponse(JSONObject response) {
+                        Logger.json(String.valueOf(response));
+                        Log.e("所有的Json数据：",response.toString());
+                        try {
+                            String status = response.getString("status");
+                            if (status.equals("success")){
+                                UserOrgBean userOrgBean = (UserOrgBean) JsonUtil.fromJson(String.valueOf(response),UserOrgBean.class);
+                                //SerializableUtils.setSerializable(CreateActivity.this,ConstantsBean.USER_ORG_LIST,userOrgBean);
+                                orgList.addAll(userOrgBean.getContent());
+                                //根据ID查询公司名字
+                                orgList.get(0).getOrgId();
+                                Logger.d("orgst------->"+orgList.size());
+                            }else {
+                                Toast.makeText(CreateJobActivity.this, ""+response.getString("message"), Toast.LENGTH_SHORT).show();
+
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
-                });
-                view.setTag(holder);
-            } else {
-                Log.e("MainActivity", "position2 = " + position);
-                view = map.get(position);
-                holder = (ViewHolder) view.getTag();
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }
+        ){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> headers = new HashMap<>();
+                headers.put(ConstantsBean.KEY_TOKEN, CustomApplication.TOKEN);
+                return headers;
             }
-
-            holder.selected.setChecked(mChecked.get(position));
-            holder.name.setText(listPerson.get(position).getOrgId());
-            holder.address.setText(listPerson.get(position).getUserId());
-
-            return view;
-        }
-
+        };
+        CustomApplication.getRequestQueue().add(jsonObjectRequest);
     }
-
-    static class ViewHolder {
-        CheckBox selected;
-        TextView name;
-        TextView address;
-    }
-
-
 }

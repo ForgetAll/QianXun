@@ -84,7 +84,8 @@
         <!--文章分类-->
         <activity android:name=".activity.create.SortList"></activity>
         <!--创建工作描述-->
-       <activity android:name=".activity.create.CreateJobDescribe"></activity>
+       <activity android:name=".activity.create.CreateJobDescribe"
+           android:windowSoftInputMode="adjustResize|stateAlwaysHidden" ></activity>
         <!--更多公司选择-->
         <activity android:name=".activity.create.CreateJobMoreList"></activity>
         <!--工作详情-->

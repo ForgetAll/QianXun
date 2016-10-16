@@ -1,11 +1,12 @@
 package com.heapot.qianxun.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Karl on 2016/10/8.
  */
-public class UserOrgBean {
+public class UserOrgBean  implements Serializable{
 
     /**
      * status : success
@@ -49,7 +50,7 @@ public class UserOrgBean {
         this.content = content;
     }
 
-    public static class ContentBean {
+    public static class ContentBean implements Serializable{
         private String userId;
         private String orgId;
         private String id;
@@ -101,7 +102,7 @@ public class UserOrgBean {
             this.status = status;
         }
 
-        public static class StatusBean {
+        public static class StatusBean implements Serializable{
             private int index;
             private String name;
 

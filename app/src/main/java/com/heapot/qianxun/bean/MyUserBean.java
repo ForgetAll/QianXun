@@ -1,9 +1,5 @@
 package com.heapot.qianxun.bean;
 
-import com.heapot.qianxun.helper.SerializableUtils;
-
-import java.io.Serializable;
-
 import java.io.Serializable;
 
 /**
