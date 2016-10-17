@@ -22,7 +22,7 @@ import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.bean.UserOrgBean;
 import com.heapot.qianxun.helper.OnRecyclerViewItemClickListener;
-import com.heapot.qianxun.helper.SerializableUtils;
+import com.heapot.qianxun.util.SerializableUtils;
 import com.heapot.qianxun.util.JsonUtil;
 import com.orhanobut.logger.Logger;
 

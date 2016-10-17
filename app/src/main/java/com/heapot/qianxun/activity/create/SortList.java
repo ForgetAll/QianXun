@@ -22,7 +22,7 @@ import com.heapot.qianxun.application.CreateActivityCollector;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.bean.TagsBean;
-import com.heapot.qianxun.helper.SerializableUtils;
+import com.heapot.qianxun.util.SerializableUtils;
 import com.orhanobut.logger.Logger;
 
 import org.json.JSONException;

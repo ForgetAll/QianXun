@@ -24,23 +24,12 @@ public class BaseActivity extends AppCompatActivity {
         activity=this;
         Logger.d(getClass().getSimpleName());
         ActivityCollector.addActivity(this);
-//        //监听网络广播
-//        getNetwork();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-//        unregisterReceiver(networkChangeReceiver);
         ActivityCollector.removeActivity(this);
     }
-    /**
-     * 实时监测网络
-     */
-//    private void getNetwork(){
-//        intentFilter = new IntentFilter();
-//        intentFilter.addAction("android.net.conn.CONNECTION_CHANGE");
-//        networkChangeReceiver = new NetworkChangeReceiver();
-//        registerReceiver(networkChangeReceiver,intentFilter);
-//    }
+
 }

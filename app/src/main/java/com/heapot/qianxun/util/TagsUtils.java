@@ -25,7 +25,7 @@ import java.util.Map;
 /**
  * Created by Karl on 2016/10/4.
  */
-public class SubUtils {
+public class TagsUtils {
     public static void postSub(Context context,String id){
         String url = ConstantsBean.BASE_PATH+ConstantsBean.POST_SUBSCRIPTION+id;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(

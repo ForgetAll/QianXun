@@ -42,4 +42,9 @@ dependencies {
     compile 'com.android.support:support-v4:23.4.0'
     //Volley架包
     compile project(':Volley')
+    //动态权限
+    compile 'pub.devrel:easypermissions:0.2.0'
+    //okhttp
+    compile 'com.squareup.okhttp3:okhttp:3.4.1'
+    compile 'com.zhy:okhttputils:2.6.2'
 }

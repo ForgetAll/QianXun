@@ -9,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.heapot.qianxun.R;
@@ -21,7 +20,7 @@ import com.heapot.qianxun.bean.SubBean;
 import com.heapot.qianxun.bean.TagsBean;
 import com.heapot.qianxun.helper.ItemTouchHelperCallback;
 import com.heapot.qianxun.helper.OnRecyclerViewItemClickListener;
-import com.heapot.qianxun.helper.SerializableUtils;
+import com.heapot.qianxun.util.SerializableUtils;
 import com.orhanobut.logger.Logger;
 
 import java.io.Serializable;

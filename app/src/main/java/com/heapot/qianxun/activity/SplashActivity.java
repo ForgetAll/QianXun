@@ -1,7 +1,14 @@
 package com.heapot.qianxun.activity;
 
+import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.provider.Settings;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
@@ -22,11 +29,17 @@ import com.heapot.qianxun.util.PreferenceUtil;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
+
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.AppSettingsDialog;
+import pub.devrel.easypermissions.EasyPermissions;
+
 /**
  * Created by Karl on 2016/9/19.
  * 应用启动引导页
  */
-public class SplashActivity extends BaseActivity {
+public class SplashActivity extends BaseActivity implements EasyPermissions.PermissionCallbacks{
     private ImageView imageView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +60,8 @@ public class SplashActivity extends BaseActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                startActivity();
+                //这个最好在onResume里面去执行，这里考虑到还要有执行动画的时间所以放在这里执行
+                methodRequestPermission();
             }
 
             @Override
@@ -109,7 +123,9 @@ public class SplashActivity extends BaseActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(SplashActivity.this, "发生未知错误", Toast.LENGTH_SHORT).show();
+                        if (NetworkUtils.isAvailable(SplashActivity.this)){
+                            Toast.makeText(SplashActivity.this, "网络连接不可用", Toast.LENGTH_SHORT).show();
+                        }
                         intentToActivity();
                     }
                 }
@@ -119,12 +135,86 @@ public class SplashActivity extends BaseActivity {
     }
 
     /**
-     * 动态选择跳转事件
+     * 选择跳转事件
      */
     private void intentToActivity(){
         Intent intent;
         intent = new Intent(SplashActivity.this,LoginActivity.class);
         startActivity(intent);
         SplashActivity.this.finish();
+    }
+
+    @AfterPermissionGranted(ConstantsBean.PERMISSION_CODE)
+    private void methodRequestPermission(){
+        String[] perms = {Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.CAMERA};
+        if (EasyPermissions.hasPermissions(this,perms)){
+            //已授权，直接进入当前页面,直接后台静默登陆或者别的操作
+            startActivity();
+
+        }else {
+            //未授权，请求授权
+            EasyPermissions.requestPermissions(this,ConstantsBean.PERMISSION_NAME,ConstantsBean.PERMISSION_CODE,perms);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        //该方法的目的是截断系统自带的弹窗
+        EasyPermissions.onRequestPermissionsResult(requestCode,permissions,grantResults,this);
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, List<String> perms) {
+        //授权成功，进行下一步操作，后台登陆或者别的操作
+        Toast.makeText(this, "授权成功", Toast.LENGTH_SHORT).show();
+        startActivity();
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, List<String> perms) {
+        //授权失败，提示用户
+        if (EasyPermissions.somePermissionPermanentlyDenied(this,perms)){
+            new AppSettingsDialog.Builder(this,"拍照/读写是该应用必需的权限，如果不设置会导致不能正常使用，是否前往设置中心进行设置")
+                    .setTitle("申请动态权限")
+                    .setPositiveButton("前往设置")
+                    .setNegativeButton("取消并退出", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            SplashActivity.this.finish();
+                        }
+                    })
+                    .setRequestCode(ConstantsBean.PERMISSION_CODE)
+                    .build()
+                    .show();
+//            AlertDialog.Builder builder = new AlertDialog.Builder(SplashActivity.this);
+//            builder.setTitle("权限申请说明");
+//            builder.setMessage("拍照/读写是该应用必须的权限，请前往设置中心设置");
+//            builder.setNegativeButton("取消并退出", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    finish();
+//                }
+//            });
+//            builder.setPositiveButton("好的，前往设置", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+//                    startActivityForResult(intent,ConstantsBean.PERMISSION_CODE);
+//                }
+//            });
+//            builder.show();
+
+        }
+
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ConstantsBean.PERMISSION_CODE){
+            methodRequestPermission();//再次判断
+        }
     }
 }

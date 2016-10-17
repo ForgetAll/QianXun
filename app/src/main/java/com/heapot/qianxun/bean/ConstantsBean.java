@@ -6,6 +6,8 @@ import com.heapot.qianxun.application.CustomApplication;
 
 /**
  * Created by 15859 on 2016/9/3.
+ *
+ *
  */
 public class ConstantsBean {
     //基本路径
@@ -115,11 +117,26 @@ public class ConstantsBean {
     public static final String PAGE_RECRUIT = "PAGE_RECRUIT";
     public static final String PAGE_TRAIN = "PAGE_TRAIN";
 
-    //标签订阅本地文件名
+    //本地存储文件名
     public static final String TAG_FILE_NAME = "Subscription";//存储所有标签的文件名
     public static final String SUB_FILE_NAME = "Subscribed";//存储所有标签的文件名
     public static final String MY_USER_INFO = "userInfo";//本地个人信息文件名
     public static final String USER_ORG_LIST = "UserOrg";//用户所属公司列表
+
+    //所有标签文件名
+    public static final String ARTICLES_TAGS = "ARTICLES_TAGS";//存储所有文章标签
+    public static final String JOBS_TAGS = "JOBS_TAGS";//存储所有招聘标签
+    public static final String TRAIN_TAGS = "TRAIN_TAGS";//存储所有培训标签
+    //已订阅标签文件名
+    public static final String USER_ARTICLES_TAG = "USER_ARTICLES_TAG";//已订阅文章标签
+    public static final String USER_JOBS_TAG = "USER_JOBS_TAG";//已订阅招聘标签
+    public static final String USER_TRAINS_TAG = "USER_TRAINS_TAG";//已订阅培训标签
+
+
+    //请求动态权限
+    public static final int PERMISSION_CODE = 100;
+    public static final String PERMISSION_NAME = "PERMISSION_CAMERA_AND_STORAGE";
+
 
 
 }

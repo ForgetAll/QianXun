@@ -2,7 +2,6 @@ package com.heapot.qianxun.util;
 
 import android.content.Context;
 import android.content.Intent;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -15,7 +14,6 @@ import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.bean.SubscribedBean;
 import com.heapot.qianxun.bean.TagsBean;
-import com.heapot.qianxun.helper.SerializableUtils;
 import com.orhanobut.logger.Logger;
 
 import org.json.JSONException;
