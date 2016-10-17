@@ -51,7 +51,7 @@ public class SplashActivity extends BaseActivity implements EasyPermissions.Perm
         final ScaleAnimation scaleAnimation =
                 new ScaleAnimation(1.0f, 1.0f, 1.0f, 1.0f,Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF,0.5f);
         scaleAnimation.setFillAfter(true);
-        scaleAnimation.setDuration(4000);
+        scaleAnimation.setDuration(3000);
         scaleAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {

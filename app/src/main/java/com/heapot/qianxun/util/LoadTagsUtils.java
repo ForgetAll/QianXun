@@ -68,7 +68,6 @@ public class LoadTagsUtils {
                                     }
                                 }
                                 Logger.d("所有数据List："+tagsList.size()+"，获取到的主页id下标集合POSList："+posList.size());
-//                                getSubTags(context,token);
                                 Intent intent = new Intent(context,MainActivity.class);
                                 context.startActivity(intent);
                                 ActivityCollector.finishAll();
@@ -94,50 +93,5 @@ public class LoadTagsUtils {
         };
         CustomApplication.getRequestQueue().add(jsonObjectRequest);
     }
-    /**
-     * 加载已订阅标签，存入本地
-     * @param token token
-     */
-    public static void getSubTags(final Context context, final String token){
-        String url = ConstantsBean.BASE_PATH+ConstantsBean.GET_SUBSCRIBED;
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                Request.Method.GET, url, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            String status = response.getString("status");
-                            if (status.equals("success")){
-                                //获取列表成功，加载列表
-                                SubscribedBean subBean = (SubscribedBean) JsonUtil.fromJson(String.valueOf(response),SubscribedBean.class);
-                                subList.addAll(subBean.getContent().getRows());
-                                SerializableUtils.setSerializable(context,ConstantsBean.SUB_FILE_NAME,subList);
-                                Intent intent = new Intent(context,MainActivity.class);
-                                context.startActivity(intent);
-                                ActivityCollector.finishAll();
-
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                }
-        ){
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> map = new HashMap<>();
-                map.put(ConstantsBean.KEY_TOKEN,token);
-                return map;
-            }
-        };
-        CustomApplication.getRequestQueue().add(jsonObjectRequest);
-    }
-
 
 }
