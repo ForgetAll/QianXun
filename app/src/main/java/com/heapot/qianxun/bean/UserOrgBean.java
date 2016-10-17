@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Created by Karl on 2016/10/8.
  */
-public class UserOrgBean implements Serializable{
+public class UserOrgBean  implements Serializable{
 
     /**
      * status : success

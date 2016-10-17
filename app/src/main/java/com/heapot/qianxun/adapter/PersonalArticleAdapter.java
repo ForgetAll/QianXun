@@ -1,6 +1,7 @@
 package com.heapot.qianxun.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,9 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.heapot.qianxun.R;
-import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.MyPersonalArticle;
 
 import java.util.List;
@@ -18,16 +17,16 @@ import java.util.List;
 /**
  * Created by 15859 on 2016/10/11.
  */
-public class PersonalArticleAdapter extends BaseAdapter{
+public class PersonalArticleAdapter extends BaseAdapter {
     Context context;
     List<MyPersonalArticle.ContentBean.RowsBean> articleList;
     private LayoutInflater mInflater;
+
     public PersonalArticleAdapter(Context context, List<MyPersonalArticle.ContentBean.RowsBean> articleList) {
-        this.context=context;
-        this.articleList=articleList;
+        this.context = context;
+        this.articleList = articleList;
         mInflater = LayoutInflater.from(context);
     }
-
 
 
     @Override
@@ -58,10 +57,10 @@ public class PersonalArticleAdapter extends BaseAdapter{
             viewHolder = (ViewHolder) convertView.getTag();
         }
         MyPersonalArticle.ContentBean.RowsBean bean = articleList.get(position);
-        bean.getId();
         viewHolder.txt_main_list_title.setText(bean.getTitle());
-        String path=bean.getImages();
-        Glide.with(CustomApplication.getContext()).load(path).into(viewHolder.iv_main_list_image);
+        Log.e("",bean.getTitle()+bean.getSummary());
+        String path = bean.getImages();
+          //Glide.with(CustomApplication.getContext()).load(path).into(viewHolder.iv_main_list_image);
         return convertView;
     }
 

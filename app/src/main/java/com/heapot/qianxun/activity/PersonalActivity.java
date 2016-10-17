@@ -1,11 +1,15 @@
 package com.heapot.qianxun.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -39,6 +43,10 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
     private ImageView mBanner, mHeadUrl, mClose;
     private TextView mFans, mName, mSign;
     private int pt;
+    //本地广播尝试
+    private IntentFilter intentFilter;
+    private RefreshPersonalInfoReceiver refreshReceiver;
+    private LocalBroadcastManager localBroadcastManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,23 +83,39 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
         mToolBar.setTitle("");
         setSupportActionBar(mToolBar);
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        //注册本地广播
+        localReceiver();
+    }
 
+    /**
+     * 本地广播接收
+     */
+    private void localReceiver() {
+        localBroadcastManager = LocalBroadcastManager.getInstance(activity);//获取实例
+        intentFilter = new IntentFilter();
+        intentFilter.addAction("com.personal.change");
+        refreshReceiver = new RefreshPersonalInfoReceiver();
+        localBroadcastManager.registerReceiver(refreshReceiver, intentFilter);
+    }
     private void initData() {
         Object object = getLocalInfo(ConstantsBean.MY_USER_INFO);
-        MyUserBean myUserBean = (MyUserBean) object;
-        if (myUserBean.getContent().getDescription() != null) {
-            mSign.setText(myUserBean.getContent().getDescription());
+        MyUserBean.ContentBean myUserBean = (MyUserBean.ContentBean) object;
+        if (myUserBean.getDescription() != null) {
+            mSign.setText(myUserBean.getDescription());
         }  else {
             mSign.setText("请设置签名");
         }
-        String nickName = myUserBean.getContent().getNickname();
+        String nickName = myUserBean.getNickname();
         if (nickName != null) {
             mName.setText(nickName);
         } else {
             mName.setText("请设置昵称");
         }
-        if (myUserBean.getContent().getIcon() != null) {
-            CommonUtil.loadImage(mHeadUrl, myUserBean.getContent().getIcon(), R.drawable.imagetest);
+        if (myUserBean.getIcon() != null) {
+            CommonUtil.loadImage(mHeadUrl, myUserBean.getIcon(), R.drawable.imagetest);
         } else {
             mHeadUrl.setImageResource(R.drawable.imagetest);
         }
@@ -182,5 +206,37 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void onPageScrollStateChanged(int state) {
 
+    }
+
+    /**
+     * 回收Activity
+     */
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        localBroadcastManager.unregisterReceiver(refreshReceiver);
+    }
+
+    /**
+     * 广播接收器
+     */
+    class RefreshPersonalInfoReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int personalStatus = intent.getExtras().getInt("personalStatus");
+            switch (personalStatus) {
+                case 0://无更新,不需要操作
+                    break;
+                case 1:
+                    Object object = SerializableUtils.getSerializable(activity, ConstantsBean.MY_USER_INFO);
+                    if (object != null) {
+                        MyUserBean.ContentBean myUserBean = (MyUserBean.ContentBean) object;
+                        CommonUtil.loadImage(mHeadUrl, myUserBean.getIcon(), R.drawable.imagetest);
+                        mName.setText(myUserBean.getNickname());
+                        mSign.setText(myUserBean.getDescription());
+                    }
+                    break;
+            }
+        }
     }
 }

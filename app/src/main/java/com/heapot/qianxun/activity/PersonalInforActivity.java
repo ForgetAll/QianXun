@@ -72,11 +72,12 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
                         String path = content.getString("url");
                         Log.e("上传头像返回的数据", path);
                         //Glide.with(activity).load(path).into(mHead);
-                        CommonUtil.loadImage(mHead, path + "", R.mipmap.imagetest);
+                        CommonUtil.loadImage(mHead, path, R.mipmap.imagetest);
                         userBean.setIcon(path);
                         personalStatus = 1;
                         SerializableUtils.setSerializable(activity, ConstantsBean.MY_USER_INFO, userBean);
-                        updateUserInfo(ConstantsBean.userImage, path.toString());
+                        String body3 = "{\"icon\":\"" +userBean.getIcon() + "\"}";
+                        updateUserInfo(body3);
                     } catch (JSONException e) {
                     }
                 }
@@ -92,6 +93,7 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
             return false;
         }
     });
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -197,35 +199,11 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
     /**
      * 更新用户信息
      *
-     * @param key  更新的字段
-     * @param info 具体信息
+     *
      */
-    private void updateUserInfo(final String key, final String info) {
+    private void updateUserInfo(String body) {
         Log.e("新建的内容", String.valueOf(userBean));
-        userBean.setPhone(PreferenceUtil.getString(ConstantsBean.USER_PHONE));
-        switch (requestCode) {
-            //昵称
-            case 201:
-                userBean.setNickname(info);
-                SerializableUtils.setSerializable(activity, ConstantsBean.MY_USER_INFO, userBean);
-                PreferenceUtil.putString(key, info);
-                personalStatus = 1;
-                break;
-            //签名
-            case 202:
-                userBean.setDescription(info);
-                SerializableUtils.setSerializable(activity, ConstantsBean.MY_USER_INFO, userBean);
-                PreferenceUtil.putString(key, info);
-                personalStatus = 1;
-                break;
-            //头像
-            case 203:
-                Log.e("..........上传之后的头像",info);
-                break;
-
-        }
-        String body = "{\"name\":\"" + userBean.getName() + "\",\"nikename\":\"" + userBean.getNickname() + "\",\"icon\":\"" +userBean.getIcon() + "\",\"description\":\"" + userBean.getDescription() + "\"}";
-        // String  body = "{\"name\":\""+userBean.getName()+"\",\"nikename\":\""+userBean.getNickname()+"\",\"icon\":\""+userBean.getIcon()+"\",\"description\":\""+userBean.getDescription()+"\"}";
+      // String body = "{\"name\":\"" + userBean.getName() + "\",\"nickname\":\"" + userBean.getNickname() + "\",\"icon\":\"" +userBean.getIcon() + "\",\"description\":\"" + userBean.getDescription() + "\"}";
         //发送数据
         JSONObject json = null;
         try {
@@ -240,6 +218,7 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        Log.e("上传后返回的数据：response",response.toString());
                         Logger.json(String.valueOf(response));
                         try {
                             String status = response.getString("status");
@@ -247,22 +226,7 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
 
                                 sendBroadcast();
                                 //发送成功
-                                switch (requestCode) {
-                                    //昵称
-                                    case 201:
-                                        PreferenceUtil.putString(key, info);
-                                        mNick.setText(info);
-                                        break;
-                                    //签名
-                                    case 202:
-                                        PreferenceUtil.putString(key, info);
-                                        mAutograph.setText(info);
-                                        //头像
-                                    case 203:
-                                        PreferenceUtil.putString(key, info);
-                                        break;
 
-                                }
                             } else {
                                 Toast.makeText(PersonalInforActivity.this, "修改失败", Toast.LENGTH_SHORT).show();
                             }
@@ -352,12 +316,25 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
                 //修改昵称
                 case 201:
                     nick = intent.getStringExtra(ConstantsBean.INFO);
-                    updateUserInfo(ConstantsBean.nickName, nick);
+                    mNick.setText(nick);
+                    userBean.setNickname(nick);
+                    SerializableUtils.setSerializable(activity, ConstantsBean.MY_USER_INFO, userBean);
+                    PreferenceUtil.putString(ConstantsBean.nickName, nick);
+                    personalStatus = 1;
+                    String body4 = "{\"nickname\":\"" + userBean.getNickname() + "\"}";
+                    Log.e("修改后的名字",body4);
+                    updateUserInfo(body4);
                     break;
                 //修改签名
                 case 202:
                     autograph = intent.getStringExtra(ConstantsBean.INFO);
-                    updateUserInfo(ConstantsBean.userAutograph, autograph);
+                    mAutograph.setText(autograph);
+                    userBean.setDescription(autograph);
+                    SerializableUtils.setSerializable(activity, ConstantsBean.MY_USER_INFO, userBean);
+                    PreferenceUtil.putString(ConstantsBean.userAutograph, autograph);
+                    personalStatus = 1;
+                    String body2 = "{\"description\":\"" + userBean.getDescription() + "\"}";
+                    updateUserInfo(body2);
                     break;
             }
         }

@@ -1,24 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="#F7F7F7">
+
     <RelativeLayout
-        android:id="@+id/rl_title"
         android:layout_width="match_parent"
         android:layout_height="56dp"
+        android:id="@+id/rl_title"
         android:background="#2B6151">
 
         <TextView
             android:id="@+id/tv_back"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:drawableLeft="@drawable/ic_back"
+            android:drawableLeft="@mipmap/arrow_back_white"
             android:gravity="center_vertical"
-            android:maxLines="1"
             android:text="返回"
-            android:textColor="@android:color/white"
-            android:textSize="20sp" />
+            android:textColor="#ffffff"
+            android:maxLines="1"
+            android:textSize="18sp"
+            />
 
         <TextView
             android:id="@+id/tv_complete"
@@ -26,19 +29,20 @@
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:gravity="center"
-            android:paddingLeft="12dp"
-            android:paddingRight="12dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
             android:text="完成"
-            android:textColor="@android:color/white"
-            android:textSize="20sp" />
+            android:textColor="#ffffff"
+            android:textSize="18sp" />
     </RelativeLayout>
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
-        <ListView
-            android:id="@+id/lvperson"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"/>
-    </LinearLayout>
+
+    <EditText
+        android:id="@+id/et_info"
+        android:padding="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@android:color/white"
+        android:maxLength="20"
+       android:hint="请输入"/>
 </LinearLayout>
