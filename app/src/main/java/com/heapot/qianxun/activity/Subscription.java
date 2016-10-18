@@ -88,7 +88,7 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
         linearLayoutManager = new LinearLayoutManager(this){
             @Override
             public boolean canScrollVertically() {
-                return false;
+                return true;
             }
         };
         tags.setLayoutManager(linearLayoutManager);
