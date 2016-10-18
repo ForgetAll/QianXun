@@ -233,7 +233,7 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
         if (refId.equals("")){
             body = "{\"articleId\":\""+article+"\",\"content\":\""+content+"\"}";
         }else {
-            body = "{\"refId\":"+refId+"\",\"articleId\":\""+article+"\",\"content\":\""+content+"\"}";
+            body = "{\"refId\":\""+refId+"\",\"articleId\":\""+article+"\",\"content\":\""+content+"\"}";
         }
         JSONObject json = null;
         try {
