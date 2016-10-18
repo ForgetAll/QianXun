@@ -227,6 +227,7 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void postComment(String content, String article){
+        Toast.makeText(this, "提交评论", Toast.LENGTH_SHORT).show();
         String url = ConstantsBean.BASE_PATH+ConstantsBean.ADD_COMMENT;
         String body;
         if (refId.equals("")){
@@ -250,6 +251,7 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
                         try {
                             String status = response.getString("status");
                             if (status.equals("success")){
+                                Toast.makeText(ArticleActivity.this, "发送成功", Toast.LENGTH_SHORT).show();
                                 //发送成功
                                 input_comment.setText("");//清空数据
                                 quote_txt.setText("");
@@ -268,7 +270,7 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        Toast.makeText(ArticleActivity.this, "发送失败", Toast.LENGTH_SHORT).show();
                     }
                 }
         ){
