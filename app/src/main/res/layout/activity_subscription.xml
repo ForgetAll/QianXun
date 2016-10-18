@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.heapot.qianxun.helper.TagScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
@@ -55,12 +55,12 @@
             android:layout_marginBottom="10dp"
             android:text="尽情挑选"
             android:textSize="20sp"/>
-        <android.support.v7.widget.RecyclerView
+        <com.heapot.qianxun.helper.TagRecyclerView
             android:id="@+id/rv_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-        </android.support.v7.widget.RecyclerView>
+        </com.heapot.qianxun.helper.TagRecyclerView>
 
     </LinearLayout>
-</ScrollView>
+</com.heapot.qianxun.helper.TagScrollView>
