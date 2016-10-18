@@ -1,5 +1,6 @@
 package com.heapot.qianxun.activity;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
@@ -27,6 +28,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * Created by Karl on 2016/8/29.
@@ -335,6 +339,5 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
         }
         return status;
     }
-
 
 }
