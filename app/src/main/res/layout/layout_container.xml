@@ -13,7 +13,7 @@
         <android.support.design.widget.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:contentScrim="@android:color/holo_blue_light"
+            app:contentScrim="@color/myGreen"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
             <ImageView
                 android:id="@+id/iv_banner"
@@ -40,7 +40,8 @@
         android:id="@+id/fab_create"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_marginBottom="38dp"
+        android:layout_marginRight="10dp"
         android:src="@drawable/ic_add_24"
         android:elevation="5dp"
         app:backgroundTint="@color/fab_ripple"
