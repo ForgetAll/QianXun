@@ -92,6 +92,8 @@
         <activity android:name=".activity.create.CreateJobMoreList"></activity>
         <!--工作详情-->
         <activity android:name=".activity.JobActivity"></activity>
+        <!--工作类型-->
+        <activity android:name=".activity.create.CreateJobTypeActivity"></activity>
         <!---->
         <activity android:name=".activity.create.CreateJobEditActivity"></activity>
         <!--聊天Activity-->

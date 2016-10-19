@@ -32,7 +32,9 @@ public class CreateJobDescribe extends BaseActivity implements View.OnClickListe
 
 
     protected void initView() {
+        String describeTitle=getIntent().getStringExtra("describeTitle");
         mInfo = (EditText) findViewById(R.id.et_info);
+        mInfo.setText(describeTitle);
         mComplete = (TextView) findViewById(R.id.tv_complete);
         mBack = (TextView) findViewById(R.id.tv_back);
         mComplete.setOnClickListener(this);

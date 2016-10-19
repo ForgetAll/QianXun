@@ -83,6 +83,8 @@ public class ConstantsBean {
     public static final String CREATE_JOB = "jobs";
     //查询员工所属公司
     public static final String QUERY_UER_ORG = "user/org";
+    //工作类型的接口
+    public static final String CREATE_JOB_TYPE = "https://qinxi1992.xicp.net/catalogs/jobs";
 
 
     //创建文章WEbView的URL
@@ -127,6 +129,7 @@ public class ConstantsBean {
     public static final String SUB_FILE_NAME = "Subscribed";//存储所有标签的文件名
     public static final String MY_USER_INFO = "userInfo";//本地个人信息文件名
     public static final String USER_ORG_LIST = "UserOrg";//用户所属公司列表
+    public static final String USER_ORG_INFO = "OrgInfo";//用户所属公司详情
 
     //所有标签文件名
     public static final String ARTICLES_TAGS = "ARTICLES_TAGS";//存储所有文章标签

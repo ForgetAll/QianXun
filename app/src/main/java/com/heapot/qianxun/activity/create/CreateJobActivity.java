@@ -30,6 +30,7 @@ import com.heapot.qianxun.activity.BaseActivity;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.bean.CreateJobBean;
+import com.heapot.qianxun.bean.CreateJobResultBean;
 import com.heapot.qianxun.bean.UserOrgBean;
 import com.heapot.qianxun.util.CommonUtil;
 import com.heapot.qianxun.util.FileUploadTask;
@@ -56,16 +57,16 @@ import java.util.Map;
  */
 public class CreateJobActivity extends BaseActivity implements View.OnClickListener {
     private TextView tv_back, tv_complete, tv_company1Title, tv_company1Content, tv_companyChoose;
-    private ImageView iv_image, iv_company,  iv_detail, iv_describe, iv_describeChoose;
+    private ImageView iv_image, iv_company, iv_detail, iv_describe, iv_describeChoose;
     private EditText et_title;
     private TextView tv_detailTitle, tv_detailContent, tv_detailChoose;
     private TextView tv_describeTitle, tv_describeContent;
     private RelativeLayout rl_company, rl_detail, rl_describe;
     private int requestCode;
-    private int number=1;
-    private CreateJobBean createJobBean;
-    private List<UserOrgBean.ContentBean> orgList  = new ArrayList<UserOrgBean.ContentBean>();
+    private int number = 1;
     Context mContext;
+    private String path;
+    private List<UserOrgBean.ContentBean> orgList  = new ArrayList<>();
     private Handler handler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
@@ -81,21 +82,13 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
                 if (jsonObject.optString("return_code").equals("success")) {
                     try {
                         JSONObject content = jsonObject.getJSONObject("content");
-                        String path = content.getString("url");
+                        path = content.getString("url");
                         Log.e("这是上传头像返回的路径", path);
                         CommonUtil.loadImage(iv_image, path + "", R.mipmap.imagetest);
                         //Glide.with(CustomApplication.getContext()).load(path.toString()).into(iv_image);
                     } catch (JSONException e) {
                     }
                 }
-                /*{
-                "content": {
-                    "code": "yes",
-                            "tip": "上传成功",
-                            "url": "http://odxpoei6h.bkt.clouddn.com/qianxun57ee46f0873f2.jpg"
-                },
-                "return_code": "success"
-            }*/
             }
             return false;
         }
@@ -103,18 +96,21 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
     private ListView lv_jobList;
     private LinearLayout ll_list;
     private EditText et_min, et_max;
-    private ImageView iv_max,iv_min;
+    private ImageView iv_max, iv_min;
+    private String catalogId;
+    private String jobName;
+    private String describe;
+    private String title;
+    private TextView tv_companyTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_job);
         testData();
-      findView();
+        findView();
 
     }
-
-
 
 
     private void findView() {
@@ -132,20 +128,25 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
 
         rl_company = (RelativeLayout) findViewById(R.id.rl_company);
         iv_company = (ImageView) findViewById(R.id.iv_company);
-
+        Glide.with(activity).load(PreferenceUtil.getString(ConstantsBean.userImage)).error(R.mipmap.imagetest).into(iv_company);
+        tv_companyTitle = (TextView) findViewById(R.id.tv_companyTitle);
+        String orgName = PreferenceUtil.getString("orgName");
+        tv_companyTitle.setText(orgName);
         tv_companyChoose = (TextView) findViewById(R.id.tv_companyChoose);
         rl_company.setOnClickListener(this);
 
         et_min = (EditText) findViewById(R.id.tv_minTitle);
-        iv_max=(ImageView)findViewById(R.id.iv_max);
-        iv_min=(ImageView)findViewById(R.id.iv_min);
+        iv_max = (ImageView) findViewById(R.id.iv_max);
+        Glide.with(activity).load(PreferenceUtil.getString(ConstantsBean.userImage)).error(R.mipmap.imagetest).into(iv_max);
+        iv_min = (ImageView) findViewById(R.id.iv_min);
         et_max = (EditText) findViewById(R.id.tv_maxTitle);
-Glide.with(activity).load(PreferenceUtil.getString(ConstantsBean.userImage)).error(R.mipmap.imagetest).into(iv_company);
+        Glide.with(activity).load(PreferenceUtil.getString(ConstantsBean.userImage)).error(R.mipmap.imagetest).into(iv_min);
 
-        rl_detail=(RelativeLayout) findViewById(R.id.rl_detail);
-        iv_detail=(ImageView)  findViewById(R.id.iv_detail);
-        tv_detailTitle=(TextView)  findViewById(R.id.tv_detailTitle);
+        rl_detail = (RelativeLayout) findViewById(R.id.rl_detail);
+        iv_detail = (ImageView) findViewById(R.id.iv_detail);
+        tv_detailTitle = (TextView) findViewById(R.id.tv_detailTitle);
         rl_detail.setOnClickListener(this);
+        Glide.with(activity).load(PreferenceUtil.getString(ConstantsBean.userImage)).error(R.mipmap.imagetest).into(iv_detail);
 
 
         rl_describe = (RelativeLayout) findViewById(R.id.rl_describe);
@@ -153,6 +154,7 @@ Glide.with(activity).load(PreferenceUtil.getString(ConstantsBean.userImage)).err
         tv_describeTitle = (TextView) findViewById(R.id.tv_describeTitle);
         tv_describeContent = (TextView) findViewById(R.id.tv_describeContent);
         iv_describeChoose = (ImageView) findViewById(R.id.iv_describeChoose);
+        Glide.with(activity).load(PreferenceUtil.getString(ConstantsBean.userImage)).error(R.mipmap.imagetest).into(iv_describe);
         rl_describe.setOnClickListener(this);
 
     }
@@ -174,11 +176,15 @@ Glide.with(activity).load(PreferenceUtil.getString(ConstantsBean.userImage)).err
             case R.id.rl_company:
                 break;
             case R.id.rl_detail:
-Intent type=new Intent(CreateJobActivity.this,CreateJobTypeActivity.class);
+                requestCode = 106;
+                Intent type = new Intent(CreateJobActivity.this, CreateJobTypeActivity.class);
+                startActivityForResult(type, requestCode);
                 break;
             case R.id.rl_describe:
-                requestCode=105;
+                requestCode = 105;
+                String describeTitle= tv_describeTitle.getText().toString().trim();
                 Intent intent = new Intent(CreateJobActivity.this, CreateJobDescribe.class);
+                intent.putExtra("describeTitle",describeTitle);
                 startActivityForResult(intent, requestCode);
                 break;
         }
@@ -186,27 +192,34 @@ Intent type=new Intent(CreateJobActivity.this,CreateJobTypeActivity.class);
     }
 
     private void sendData() {
-        int min = (int) et_min.getTag();
-        createJobBean.setMinSalary(min);
-        int max = (int) et_max.getTag();
-        createJobBean.setMaxSalary(max);
-        createJobBean.setCatalogId("");
-        createJobBean.setCode("");
-        String describe = tv_describeTitle.getText().toString().trim();
+        CreateJobBean createJobBean = new CreateJobBean();
+        String min = et_min.getText().toString().trim();
+        createJobBean.setMinSalary(Integer.parseInt(min));
+        String max = et_max.getText().toString().trim();
+        createJobBean.setMaxSalary(Integer.parseInt(max));
+        createJobBean.setCatalogId(catalogId);
+        String orgCode = PreferenceUtil.getString("orgCode");
+        createJobBean.setCode(orgCode);
         createJobBean.setDescription(describe);
         createJobBean.setEmail("");
-        createJobBean.setName(PreferenceUtil.getString("name"));
+        title = et_title.getText().toString().trim();
+        createJobBean.setName(title);
         createJobBean.setPhone(PreferenceUtil.getString(ConstantsBean.USER_PHONE));
         createJobBean.setNum(number);
+        createJobBean.setImg(path);
 
         String data = JsonUtil.toJson(createJobBean);
-       //发送数据
-        Ion.with(this).load(ConstantsBean.BASE_PATH + ConstantsBean.CREATE_JOB).setHeader(ConstantsBean.KEY_TOKEN, CustomApplication.TOKEN).setStringBody(data).asString().setCallback(new FutureCallback<String>() {
+        Log.e("发送的数据：", data);
+        //发送数据
+        Ion.with(this).load(ConstantsBean.BASE_PATH + ConstantsBean.CREATE_JOB).setHeader(ConstantsBean.KEY_TOKEN, CustomApplication.TOKEN).setStringBody(data)
+                .as(CreateJobResultBean.class).setCallback(new FutureCallback<CreateJobResultBean>() {
             @Override
-            public void onCompleted(Exception e, String result) {
-                if (!TextUtils.isEmpty(result)) {
-                    if (result.contains("success")) {
-
+            public void onCompleted(Exception e, CreateJobResultBean result) {
+                Log.e("上传返回的数据", String.valueOf(result));
+                if (result != null) {
+                    String status = result.getStatus();
+                    if (status.equals("success")) {
+                        finish();
                         ToastUtil.show("发表成功");
                     } else {
                         ToastUtil.show("发表失败");
@@ -248,9 +261,14 @@ Intent type=new Intent(CreateJobActivity.this,CreateJobTypeActivity.class);
                 case 104:
                     break;
                 case 105:
-                    String  describe =intent.getStringExtra("describe");
-                    Log.e("describe",describe);
+                    describe = intent.getStringExtra("describe");
+                    Log.e("describe", describe);
                     tv_describeTitle.setText(describe);
+                    break;
+                case 106:
+                    catalogId = intent.getStringExtra("catalogId");
+                    jobName = intent.getStringExtra("jobName");
+                    tv_detailTitle.setText(jobName);
                     break;
 
             }

@@ -1,11 +1,12 @@
 package com.heapot.qianxun.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by 15859 on 2016/10/11.
  */
-public class MyPersonalArticle {
+public class MyPersonalArticle implements Serializable{
     /**
      * status : success
      * message :
@@ -47,7 +48,7 @@ public class MyPersonalArticle {
         this.content = content;
     }
 
-    public static class ContentBean {
+    public static class ContentBean implements Serializable{
         private int total;
         private boolean hasNext;
         private boolean hasPre;

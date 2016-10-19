@@ -1,9 +1,11 @@
 package com.heapot.qianxun.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by 15859 on 2016/10/10.
  */
-public class CreateJobBean {
+public class CreateJobBean implements Serializable{
 
     /**
      * name : {name}
@@ -14,6 +16,7 @@ public class CreateJobBean {
      * description :
      * phone :
      * email :
+     *img:
      * catalogId :
      */
 
@@ -25,6 +28,7 @@ public class CreateJobBean {
     private String description;
     private String phone;
     private String email;
+    private String img;
     private String catalogId;
 
     public String getName() {
@@ -97,5 +101,13 @@ public class CreateJobBean {
 
     public void setCatalogId(String catalogId) {
         this.catalogId = catalogId;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 }

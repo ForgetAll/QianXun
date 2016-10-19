@@ -172,10 +172,10 @@
                     android:layout_height="22dp"
                     android:layout_marginTop="12dp"
                     android:layout_toRightOf="@+id/iv_min"
-                  android:hint="请输入平均工资"
+                    android:hint="请输入平均工资"
                     android:textSize="18sp"
                     android:background="@null"
-                   android:inputType="number"/>
+                    android:inputType="number"/>
 
                 <TextView
                     android:id="@+id/tv_minContent"
@@ -277,7 +277,7 @@
                     android:layout_marginTop="12dp"
                     android:layout_toRightOf="@+id/iv_describe"
                     android:text="职位描述"
-                   android:maxLines="1"
+                    android:maxLines="1"
                     android:ellipsize="end"
                     android:textSize="18sp" />
 
