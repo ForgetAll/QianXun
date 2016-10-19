@@ -23,7 +23,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.heapot.qianxun.R;
+import com.heapot.qianxun.activity.chat.ConversationListActivity;
 import com.heapot.qianxun.activity.create.CreateActivity;
 import com.heapot.qianxun.adapter.MainTabFragmentAdapter;
 import com.heapot.qianxun.application.CustomApplication;
@@ -35,9 +41,17 @@ import com.heapot.qianxun.util.PreferenceUtil;
 import com.heapot.qianxun.util.TagsUtils;
 import com.orhanobut.logger.Logger;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
     private DrawerLayout mDrawerLayout;
@@ -93,13 +107,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         //注册本地广播
         localReceiver();
+        //开启融云服务器连接
+        getRongToken();
 
         //测试token
         Logger.d("打印本地token-->"+PreferenceUtil.getString("token")+"打印application中的token---》"+ CustomApplication.TOKEN);
     }
 
     private void initEvent() {
-
         initData();
         //状态栏和抽屉效果
         mToolBar.setTitle("");
@@ -189,8 +204,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             case R.id.iv_star:
                 break;
             case R.id.iv_notification:
-                Intent intentSearch = new Intent(this, NotificationActivity.class);
-                startActivity(intentSearch);
+                if (RongIM.getInstance() != null){
+                    RongIM.getInstance().startConversationList(MainActivity.this);
+                }
                 break;
             case R.id.iv_banner:
                 break;
@@ -233,6 +249,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
         }
     }
+
+    /**
+     * 刷新数据
+     */
     public void refreshData(){
         initData();
         mPageAdapter.notifyDataSetChanged();
@@ -346,4 +366,83 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             }
         }
     }
+    /**
+     *需要的时候进行融云服务器连接
+     */
+    /**
+     * 获取当前用户在融云的token
+     * @return 返回获取到的token
+     */
+    private String getRongToken(){
+        final String token = "";
+        String url = ConstantsBean.BASE_PATH+ConstantsBean.IM_TOKEN;
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            if (response.getString("status").equals("success")){
+                                //获取成功，取出来token
+                                String im_token = response.getString("content");
+                                Logger.d("拿到的IM-token----->"+im_token);
+                                conn(im_token);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }
+        ){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> headers = new HashMap<>();
+                headers.put(ConstantsBean.KEY_TOKEN, CustomApplication.TOKEN);
+                return headers;
+            }
+        };
+        CustomApplication.getRequestQueue().add(jsonObjectRequest);
+        return token;
+    }
+
+    /**
+     * 建立与融云服务器的连接
+     * @param token 连接所需token
+     */
+    private void conn(String token){
+        if (getApplicationInfo().packageName.equals(CustomApplication.getCurProcessName(getApplicationContext()))){
+            /**
+             * IMKit SDK调用第二步，建立与服务器的连接
+             */
+            RongIM.connect(token, new RongIMClient.ConnectCallback() {
+                @Override
+                public void onTokenIncorrect() {
+                    //Token错误，重新请求token
+//                    getRongToken();
+                    Logger.d("拿到的Token错误");
+                }
+
+                @Override
+                public void onSuccess(String s) {
+                    //连接融云成功
+                    Logger.d("IM-Success-------->UserId:"+s);
+//                    Intent intent = new Intent(MainActivity.this,ConversationListActivity.class);
+//                    startActivity(intent);
+
+                }
+
+                @Override
+                public void onError(RongIMClient.ErrorCode errorCode) {
+                    Logger.d("连接失败，错误码--------->"+errorCode);
+                }
+            });
+        }
+    }
+
 }
