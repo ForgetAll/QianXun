@@ -11,7 +11,9 @@ import com.heapot.qianxun.application.CustomApplication;
  */
 public class ConstantsBean {
     //基本路径
-    public static final String BASE_PATH = "http://qianxun.heapot.com/";
+//    public static final String BASE_PATH = "http://qianxun.heapot.com/";
+    public static final String BASE_PATH = "https://qinxi1992.xicp.net/";
+
 
     public static final String CONFIG_NAME = "config";
 
@@ -89,6 +91,9 @@ public class ConstantsBean {
     public static final String WEB_CREATE_ARTICLE_EDIT = "http://sijiache.heapot.com/Tabs/editer/artical/?f?device=android&author="+ CustomApplication.NICK_NAME+"&type=article";
     //创建招聘URL
     public static final String WEB_CREATE_JOB_EDIT = "http://sijiache.heapot.com/Tabs/editer/artical/?f?device=android&type=job";
+
+    //以下聊天相关
+    public static final String IM_TOKEN = "user/rongCloudToken";
 
 
 

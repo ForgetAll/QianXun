@@ -8,6 +8,8 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.heapot.qianxun.bean.ConstantsBean;
 
+import io.rong.imkit.RongIM;
+
 /**
  *Created by 15859 on 2016/9/4.
  * 全局配置应用
@@ -18,6 +20,7 @@ public class CustomApplication extends Application {
 
     public static String TOKEN = "";
     public static String NICK_NAME ="";
+    public static boolean isFirstConnIM = false;
 
     private static String CURRENT_PAGE = ConstantsBean.PAGE_SCIENCE;
 
@@ -40,6 +43,11 @@ public class CustomApplication extends Application {
 
         //初始化全局异常捕获
         CrashHandler.getInstance(context).init(context);
+        //初始化融云
+        if (getApplicationInfo().packageName.equals(getCurProcessName(getApplicationContext()))){
+            RongIM.init(this);
+        }
+
     }
 
     public static Context getContext() {

@@ -14,6 +14,8 @@ import java.util.List;
 
 /**
  * Created by Karl on 2016/8/29.
+ * desc: 消息通知页面
+ *
  */
 public class NotificationActivity extends BaseActivity implements View.OnClickListener {
     private ImageView mBack;

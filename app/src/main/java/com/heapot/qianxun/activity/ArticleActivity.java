@@ -33,11 +33,16 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.rong.imkit.RongIM;
+
 /**
  * Created by Karl on 2016/9/24.
  * 文章详情页面，
  */
 public class ArticleActivity extends BaseActivity implements View.OnClickListener {
+    private TextView mTitle;
+    private ImageView mBack;
+
     private WebView webView;
     private WebSettings webSettings;
     private boolean isConnected;//判断网络状态
@@ -46,7 +51,8 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
     private static final int MSG_SHOW_INPUT = 0;//显示输入框
     private static final int MSG_HIDE_INPUT = 1;//隐藏输入框
     private static final int MSG_UPDATE = 3;//更新引用
-    private static final int MSG_COMMENT = 4;
+    private static final int MSG_COMMENT = 4;//添加评论
+    private static final int MSG_TO_CHAT = 5;//跳转聊天
     private String articleId = "";
     private String refId = "";
     private TextView quote_txt,sendMess;
@@ -93,6 +99,15 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
                     }
                     input_comment.setFocusable(true);
                     break;
+                case MSG_TO_CHAT:
+
+                    String id = msg.getData().getString("id");
+                    String title = msg.getData().getString("title");
+                    Logger.d("传递------------>"+id);
+                    if (RongIM.getInstance() != null){
+                        RongIM.getInstance().startPrivateChat(ArticleActivity.this,id,title);
+                    }
+                    break;
             }
         }
     };
@@ -117,6 +132,9 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
         quote_layout = (LinearLayout) findViewById(R.id.ll_quote);
         quote_layout.setVisibility(View.GONE);
         clearQuote = (ImageView) findViewById(R.id.iv_clear_quote);
+        mTitle = (TextView) findViewById(R.id.txt_title);
+        mTitle.setText("文章详情");
+        mBack = (ImageView) findViewById(R.id.iv_btn_back);
 
     }
 
@@ -124,6 +142,7 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
         //发送信息注册点击事件
         sendMess.setOnClickListener(this);
         clearQuote.setOnClickListener(this);
+        mBack.setOnClickListener(this);
         //获取当前页面id
         Intent intent = getIntent();
         String id = intent.getExtras().getString("id");
@@ -173,6 +192,7 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
         handler.sendEmptyMessage(MSG_HIDE_INPUT);
     }
 
+
     /**
      * 更新引用
      *
@@ -187,6 +207,17 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
         bundle.putString("quote", data);
         message.setData(bundle);
         handler.sendMessage(message);
+    }
+    @JavascriptInterface
+    public void toChat(String id,String title){
+        Message message = new Message();
+        Bundle bundle = new Bundle();
+        bundle.putString("id",id);
+        bundle.putString("title",title);
+        message.setData(bundle);
+        message.what = MSG_TO_CHAT;
+        handler.sendMessage(message);
+
     }
 
     /**
@@ -222,6 +253,9 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
                 quote_txt.setText("");
                 refId = "";
                 quote_layout.setVisibility(View.GONE);
+                break;
+            case R.id.iv_btn_back:
+
                 break;
         }
     }
@@ -260,7 +294,7 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
                                 //刷新评论
                                 webView.loadUrl("javascript:fillComment()");
                             }else {
-                                Toast.makeText(ArticleActivity.this, "评论失败", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ArticleActivity.this, response.getString("message"), Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
