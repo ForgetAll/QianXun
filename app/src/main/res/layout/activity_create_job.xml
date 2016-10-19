@@ -62,6 +62,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/iv_image"
+                    android:maxLength="20"
                     android:background="@null"
                     android:hint="请在此处键入标题" />
             </RelativeLayout>
@@ -128,7 +129,7 @@
                     android:layout_height="22dp"
                     android:layout_marginTop="12dp"
                     android:layout_toRightOf="@+id/iv_max"
-                    android:hint="请输入最低工资"
+                    android:hint="请输入最高工资"
                     android:textSize="18sp"
                     android:background="@null"
                     android:inputType="number"/>
@@ -172,7 +173,7 @@
                     android:layout_height="22dp"
                     android:layout_marginTop="12dp"
                     android:layout_toRightOf="@+id/iv_min"
-                    android:hint="请输入平均工资"
+                    android:hint="请输入最低工资"
                     android:textSize="18sp"
                     android:background="@null"
                     android:inputType="number"/>

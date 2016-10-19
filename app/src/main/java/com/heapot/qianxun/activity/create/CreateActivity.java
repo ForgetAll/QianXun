@@ -180,6 +180,8 @@ public class CreateActivity extends BaseActivity implements View.OnClickListener
                                 PreferenceUtil.putString("orgName",orgName);
                                 String orgCode=orgInfoBean.getContent().getCode();
                                 PreferenceUtil.putString("orgCode",orgCode);
+                               String orgPhone= orgInfoBean.getContent().getPhone();
+                                PreferenceUtil.putString("orgPhone",orgPhone);
                             }else {
                                 Toast.makeText(CreateActivity.this, ""+response.getString("message"), Toast.LENGTH_SHORT).show();
 
