@@ -20,10 +20,12 @@ import com.heapot.qianxun.adapter.CreateAdapter;
 import com.heapot.qianxun.application.CreateActivityCollector;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
+import com.heapot.qianxun.bean.OrgInfoBean;
 import com.heapot.qianxun.bean.UserOrgBean;
 import com.heapot.qianxun.helper.OnRecyclerViewItemClickListener;
-import com.heapot.qianxun.util.SerializableUtils;
 import com.heapot.qianxun.util.JsonUtil;
+import com.heapot.qianxun.util.PreferenceUtil;
+import com.heapot.qianxun.util.SerializableUtils;
 import com.orhanobut.logger.Logger;
 
 import org.json.JSONException;
@@ -46,6 +48,8 @@ public class CreateActivity extends BaseActivity implements View.OnClickListener
     private List<String> list = new ArrayList<>();
     private List<UserOrgBean.ContentBean> orgList  = new ArrayList<>();
     private ImageView close;
+    private String orgId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,7 +97,7 @@ public class CreateActivity extends BaseActivity implements View.OnClickListener
                         startActivity(intent);
                         break;
                     case 1:
-                        Intent job= new Intent(CreateActivity.this,CreateJobEditActivity.class);
+                        Intent job= new Intent(CreateActivity.this,CreateJobActivity.class);
                         startActivity(job);
                         break;
                     case 2:
@@ -128,8 +132,54 @@ public class CreateActivity extends BaseActivity implements View.OnClickListener
                                 UserOrgBean userOrgBean = (UserOrgBean) JsonUtil.fromJson(String.valueOf(response),UserOrgBean.class);
                                 SerializableUtils.setSerializable(CreateActivity.this,ConstantsBean.USER_ORG_LIST,userOrgBean);
                                 orgList.addAll(userOrgBean.getContent());
+                                orgId=userOrgBean.getContent().get(0).getOrgId();
+                                getOrgInfo();
                                 Logger.d("orgList------->"+orgList.size());
                                 initData(orgList.size());
+                            }else {
+                                Toast.makeText(CreateActivity.this, ""+response.getString("message"), Toast.LENGTH_SHORT).show();
+
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }
+        ){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> headers = new HashMap<>();
+                headers.put(ConstantsBean.KEY_TOKEN, CustomApplication.TOKEN);
+                return headers;
+            }
+        };
+        CustomApplication.getRequestQueue().add(jsonObjectRequest);
+    }
+
+    private void getOrgInfo() {
+        String url = ConstantsBean.BASE_PATH+"/orgs/"+orgId;
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Logger.json(String.valueOf(response));
+                        Log.e("所有的Json数据：",response.toString());
+                        try {
+                            String status = response.getString("status");
+                            if (status.equals("success")){
+                                OrgInfoBean orgInfoBean = (OrgInfoBean) JsonUtil.fromJson(String.valueOf(response),OrgInfoBean.class);
+                                SerializableUtils.setSerializable(CreateActivity.this,ConstantsBean.USER_ORG_INFO,orgInfoBean);
+                                String orgName=orgInfoBean.getContent().getName();
+                                PreferenceUtil.putString("orgName",orgName);
+                                String orgCode=orgInfoBean.getContent().getCode();
+                                PreferenceUtil.putString("orgCode",orgCode);
                             }else {
                                 Toast.makeText(CreateActivity.this, ""+response.getString("message"), Toast.LENGTH_SHORT).show();
 
