@@ -55,13 +55,13 @@ import java.util.Map;
  */
 public class CreateJobActivity extends BaseActivity implements View.OnClickListener {
     private TextView tv_back, tv_complete, tv_company1Title, tv_company1Content, tv_companyChoose;
-    private ImageView iv_image, iv_company, iv_detail, iv_describe, iv_describeChoose;
-    private EditText et_title;
+    private ImageView iv_image, iv_company, iv_detail, iv_describe, iv_describeChoose, iv_sum;
+    private EditText et_title, et_sumTitle;
     private TextView tv_detailTitle, tv_detailContent, tv_detailChoose;
     private TextView tv_describeTitle, tv_describeContent;
     private RelativeLayout rl_company, rl_detail, rl_describe;
     private int requestCode;
-    private int number = 1;
+
     Context mContext;
     private String path;
     private List<UserOrgBean.ContentBean> orgList = new ArrayList<>();
@@ -104,6 +104,7 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
     private String min;
     private String max;
     private String describeTitle;
+    private String number;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,6 +150,10 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
         tv_detailTitle = (TextView) findViewById(R.id.tv_detailTitle);
         rl_detail.setOnClickListener(this);
         Glide.with(activity).load(PreferenceUtil.getString(ConstantsBean.userImage)).error(R.mipmap.imagetest).into(iv_detail);
+
+        iv_sum = (ImageView) findViewById(R.id.iv_sum);
+        et_sumTitle = (EditText) findViewById(R.id.tv_sumTitle);
+        Glide.with(activity).load(PreferenceUtil.getString(ConstantsBean.userImage)).error(R.mipmap.imagetest).into(iv_sum);
 
 
         rl_describe = (RelativeLayout) findViewById(R.id.rl_describe);
@@ -202,9 +207,10 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
     private void sendData() {
         CreateJobBean createJobBean = new CreateJobBean();
         min = et_min.getText().toString().trim();
-        createJobBean.setMinSalary(Integer.parseInt(min));
+        Log.e("最低工资", min);
+
         max = et_max.getText().toString().trim();
-        createJobBean.setMaxSalary(Integer.parseInt(max));
+
         createJobBean.setCatalogId(catalogId);
         String orgCode = PreferenceUtil.getString("orgCode");
         createJobBean.setCode(orgCode);
@@ -215,18 +221,30 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
         length = title.length();
         createJobBean.setName(title);
         createJobBean.setPhone(PreferenceUtil.getString("orgPhone"));
-        createJobBean.setNum(number);
-        createJobBean.setImg(path);
+        number = et_sumTitle.getText().toString().trim();
 
-        String data = JsonUtil.toJson(createJobBean);
-        Log.e("发送的数据：", data);
+        createJobBean.setImg(path);
+        if (number != null && min != null && max != null) {
+            createJobBean.setMinSalary(Integer.parseInt(min));
+            createJobBean.setMaxSalary(Integer.parseInt(max));
+            createJobBean.setNum(Integer.parseInt(number));
+            String data = JsonUtil.toJson(createJobBean);
+            Log.e("发送的数据：", data);
+            upData(data);
+        } else {
+            Toast.makeText(CreateJobActivity.this, "请检查输入的内容", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    private void upData(String data) {
         JSONObject json = null;
         try {
             json = new JSONObject(data);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        if (catalogId != null && title != null && length >= 2 && min != null && max != null && describe != null) {
+        if (catalogId != null && title != null && length >= 2 && describe != null) {
             String url = ConstantsBean.BASE_PATH + ConstantsBean.CREATE_JOB;
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                     Request.Method.POST, url, json,
@@ -241,6 +259,7 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
                                     CreateJobResultBean createJobResultBean = (CreateJobResultBean) JsonUtil.fromJson(String.valueOf(response), CreateJobResultBean.class);
                                     String newJobId = createJobResultBean.getContent().getId();
                                     Toast.makeText(activity, "发布成功", Toast.LENGTH_SHORT).show();
+                                    finish();
                                 } else {
                                     Toast.makeText(activity, response.getString("message"), Toast.LENGTH_SHORT).show();
                                     Logger.d(response.getString("message"));
@@ -269,6 +288,7 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
         } else {
             Toast.makeText(CreateJobActivity.this, "请检查输入的内容", Toast.LENGTH_SHORT).show();
         }
+
     }
 
     @Override

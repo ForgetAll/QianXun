@@ -26,6 +26,7 @@ import com.heapot.qianxun.helper.OnRecyclerViewItemClickListener;
 import com.heapot.qianxun.util.JsonUtil;
 import com.heapot.qianxun.util.PreferenceUtil;
 import com.heapot.qianxun.util.SerializableUtils;
+import com.heapot.qianxun.util.ToastUtil;
 import com.orhanobut.logger.Logger;
 
 import org.json.JSONException;
@@ -56,6 +57,7 @@ public class CreateActivity extends BaseActivity implements View.OnClickListener
         setContentView(R.layout.activity_create);
         CreateActivityCollector.addActivity(this);
         initView();
+        initData();
     }
     private void initView(){
         createGridView = (RecyclerView) findViewById(R.id.rv_create);
@@ -76,14 +78,12 @@ public class CreateActivity extends BaseActivity implements View.OnClickListener
     /**
      * 初始化数据
      */
-    private void initData(int n){
-        if (n > 0) {
+    private void initData(){
+
             list.add("创建文章");
             list.add("创建招聘");
             list.add("创建课程");
-        }else {
-            list.add("创建文章");
-        }
+
         adapter = new CreateAdapter(this,list);
         createGridView.setAdapter(adapter);
         //设置点击事件
@@ -97,12 +97,22 @@ public class CreateActivity extends BaseActivity implements View.OnClickListener
                         startActivity(intent);
                         break;
                     case 1:
-                        Intent job= new Intent(CreateActivity.this,CreateJobActivity.class);
-                        startActivity(job);
+                        if (orgList.size()>0){
+                            Intent job= new Intent(CreateActivity.this,CreateJobActivity.class);
+                            startActivity(job);
+                        }
+                       else {
+                            ToastUtil.show("请注册公司账号");
+                        }
                         break;
                     case 2:
+                        if (orgList.size()>0){
                         Intent course = new Intent(CreateActivity.this,CreateCourseActivity.class);
                         startActivity(course);
+                        }
+                        else {
+                            ToastUtil.show("请注册公司账号");
+                        }
                         break;
                 }
             }
@@ -135,7 +145,7 @@ public class CreateActivity extends BaseActivity implements View.OnClickListener
                                 orgId=userOrgBean.getContent().get(0).getOrgId();
                                 getOrgInfo();
                                 Logger.d("orgList------->"+orgList.size());
-                                initData(orgList.size());
+
                             }else {
                                 Toast.makeText(CreateActivity.this, ""+response.getString("message"), Toast.LENGTH_SHORT).show();
 

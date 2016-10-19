@@ -141,7 +141,7 @@
                     android:layout_below="@+id/tv_maxTitle"
                     android:layout_marginBottom="12dp"
                     android:layout_toRightOf="@+id/iv_max"
-                    android:text="职位将发布在选择的公司之下"
+                    android:text="公司能给出的最高工资"
                     android:textSize="14sp" />
 
                 <TextView
@@ -185,11 +185,55 @@
                     android:layout_below="@+id/tv_minTitle"
                     android:layout_marginBottom="12dp"
                     android:layout_toRightOf="@+id/iv_min"
-                    android:text="职位将发布在选择的公司之下"
+                    android:text="最低工资"
                     android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/tv_minChoose"
+                    android:layout_marginRight="12dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="12dp"
+                    android:text="可选" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/rl_sum"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:background="#ffffff">
+
+                <ImageView
+                    android:id="@+id/iv_sum"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="12dp"
+                    android:src="@drawable/imagetest" />
+
+                <EditText
+                    android:id="@+id/tv_sumTitle"
+                    android:layout_width="200dp"
+                    android:layout_height="22dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_toRightOf="@+id/iv_sum"
+                    android:hint="请输入招聘人数"
+                    android:textSize="18sp"
+                    android:background="@null"
+                    android:inputType="number"/>
+
+                <TextView
+                    android:id="@+id/tv_sumContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="18dp"
+                    android:layout_below="@+id/tv_sumTitle"
+                    android:layout_marginBottom="12dp"
+                    android:layout_toRightOf="@+id/iv_sum"
+                    android:text="需要招几位员工"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tv_sumChoose"
                     android:layout_marginRight="12dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

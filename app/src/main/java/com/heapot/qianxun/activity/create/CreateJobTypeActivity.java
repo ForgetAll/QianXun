@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.android.volley.AuthFailureError;
@@ -32,9 +33,11 @@ import java.util.Map;
  * Created by 15859 on 2016/10/16.
  * 工作分类
  */
-public class CreateJobTypeActivity extends BaseActivity{
+public class CreateJobTypeActivity extends BaseActivity implements View.OnClickListener {
     private ListView lv_typeList;
     private List<JobTypeBean.ContentBean> jobList = new ArrayList<>();
+    private ImageView iv_btn_back;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +47,8 @@ public class CreateJobTypeActivity extends BaseActivity{
     }
     private void inteView() {
         lv_typeList=(ListView) findViewById(R.id.lv_typeList);
+        iv_btn_back=(ImageView)   findViewById(R.id.iv_btn_back);
+        iv_btn_back.setOnClickListener(this);
 
     }
     private void getData() {
@@ -95,4 +100,12 @@ public class CreateJobTypeActivity extends BaseActivity{
 
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.iv_btn_back:
+                finish();
+                break;
+        }
+    }
 }
