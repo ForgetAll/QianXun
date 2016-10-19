@@ -13,6 +13,7 @@ public class ConstantsBean {
     //基本路径
 //    public static final String BASE_PATH = "http://qianxun.heapot.com/";
     public static final String BASE_PATH = "https://qinxi1992.xicp.net/";
+    public static final String BASE_PHP_PATH = "http://tsczrz.com";
 
 
     public static final String CONFIG_NAME = "config";
@@ -74,7 +75,11 @@ public class ConstantsBean {
     //版本更新
     public static final String UPDATE_VERSION = "http://114.215.252.158/qianxun_article/index/apk_version/get_version.api.php";
     //获取指定标签下的列表
-    public static final String GET_LIST_WITH_TAG = "http://114.215.252.158/qianxun_article/index/article/view_tag_article.api.php?";
+//    public static final String GET_LIST_WITH_TAG = "http://114.215.252.158/qianxun_article/index/article/view_tag_article.api.php?";
+    //测试接口
+    public static final String GET_LIST_WITH_TAG = BASE_PHP_PATH+"/qianxun_article/index/article/view_tag_article.api.php?";
+
+    public static final String SET_BANNER_MAIN = BASE_PHP_PATH+"/qianxun_article/index/view_tag_super_article.api.php?";
     //添加评论
     public static final String ADD_COMMENT = "comments";
     //创建文章
@@ -85,6 +90,7 @@ public class ConstantsBean {
     public static final String QUERY_UER_ORG = "user/org";
     //工作类型的接口
     public static final String CREATE_JOB_TYPE = "https://qinxi1992.xicp.net/catalogs/jobs";
+
 
 
     //创建文章WEbView的URL

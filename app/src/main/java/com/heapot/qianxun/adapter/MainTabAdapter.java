@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.bean.MainListBean;
 import com.heapot.qianxun.helper.OnRecyclerViewItemClickListener;
@@ -84,8 +85,10 @@ public class MainTabAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             String image = mList.get(position).getImages();
             ((MainTabViewHolder) holder).mTitle.setText(title);
             ((MainTabViewHolder) holder).mTime.setText("发布时间：" + CommonUtil.getDateTime(time));
-            if (image.equals("")) {
+            if (image.equals("")||image == null) {
                 ((MainTabViewHolder) holder).imageView.setVisibility(View.GONE);
+            }else {
+                Glide.with(context).load(image).into(((MainTabViewHolder) holder).imageView);
             }
         }
     }
