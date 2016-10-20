@@ -27,6 +27,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.bumptech.glide.Glide;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.activity.BaseActivity;
+import com.heapot.qianxun.activity.JobActivity;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.bean.CreateJobBean;
@@ -254,6 +255,9 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
                                     CreateJobResultBean createJobResultBean = (CreateJobResultBean) JsonUtil.fromJson(String.valueOf(response), CreateJobResultBean.class);
                                     String newJobId = createJobResultBean.getContent().getId();
                                     Toast.makeText(activity, "发布成功", Toast.LENGTH_SHORT).show();
+                                    Intent job = new Intent(activity, JobActivity.class);
+                                    job.putExtra("id",createJobResultBean.getContent().getId());
+                                    startActivity(job);
                                     finish();
                                 } else {
                                     Toast.makeText(activity, response.getString("message"), Toast.LENGTH_SHORT).show();

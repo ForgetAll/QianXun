@@ -1,6 +1,7 @@
 package com.heapot.qianxun.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -164,6 +165,9 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String articleId = rowsList.get(position).getId();
+                Intent intent = new Intent(activity, ArticleActivity.class);
+                intent.putExtra("id",rowsList.get(position).getId());
+                startActivity(intent);
             }
         });
     }

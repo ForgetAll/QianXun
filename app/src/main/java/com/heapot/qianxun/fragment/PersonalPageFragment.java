@@ -83,6 +83,9 @@ public class PersonalPageFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String id1 = articleList.get(position).getId();
+                Intent intent = new Intent(getActivity(), ArticleActivity.class);
+                intent.putExtra("id",articleList.get(position).getId());
+                startActivity(intent);
             }
         });
     }
