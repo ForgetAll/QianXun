@@ -21,6 +21,7 @@ public class CustomApplication extends Application {
     public static String TOKEN = "";
     public static String NICK_NAME ="";
     public static boolean isFirstConnIM = false;
+    public static String IM_TOKEN = "";
 
     private static String CURRENT_PAGE = ConstantsBean.PAGE_SCIENCE;
 
@@ -102,6 +103,7 @@ public class CustomApplication extends Application {
         }
         return null;
     }
+
 }
 
 

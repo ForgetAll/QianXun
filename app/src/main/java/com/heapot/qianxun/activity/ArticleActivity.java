@@ -1,6 +1,7 @@
 package com.heapot.qianxun.activity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -25,6 +26,8 @@ import com.blankj.utilcode.utils.NetworkUtils;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
+import com.heapot.qianxun.bean.MyUserBean;
+import com.heapot.qianxun.util.SerializableUtils;
 import com.orhanobut.logger.Logger;
 
 import org.json.JSONException;
@@ -34,6 +37,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import io.rong.imkit.RongIM;
+import io.rong.imlib.model.UserInfo;
 
 /**
  * Created by Karl on 2016/9/24.
@@ -100,12 +104,17 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
                     input_comment.setFocusable(true);
                     break;
                 case MSG_TO_CHAT:
-
                     String id = msg.getData().getString("id");
                     String title = msg.getData().getString("title");
-                    Logger.d("传递------------>"+id);
-                    if (RongIM.getInstance() != null){
-                        RongIM.getInstance().startPrivateChat(ArticleActivity.this,id,title);
+                    Object object = SerializableUtils.getSerializable(ArticleActivity.this,ConstantsBean.MY_USER_INFO);
+                    if (object != null){
+                        MyUserBean.ContentBean myUserBean = (MyUserBean.ContentBean) object;
+                        if (!myUserBean.getId().equals(id)){
+                            if (RongIM.getInstance() != null){
+                                RongIM.getInstance().startPrivateChat(ArticleActivity.this,id,title);
+                            }
+                        }
+
                     }
                     break;
             }
@@ -118,6 +127,12 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
         setContentView(R.layout.activity_article);
         initView();
         initEvent();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
 
     }
 

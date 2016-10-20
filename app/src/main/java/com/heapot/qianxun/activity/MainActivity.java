@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Process;
@@ -31,6 +32,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.blankj.utilcode.utils.SPUtils;
 import com.bumptech.glide.Glide;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.activity.chat.ConversationListActivity;
@@ -38,6 +40,8 @@ import com.heapot.qianxun.activity.create.CreateActivity;
 import com.heapot.qianxun.adapter.MainTabFragmentAdapter;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
+import com.heapot.qianxun.bean.Friend;
+import com.heapot.qianxun.bean.MyUserBean;
 import com.heapot.qianxun.bean.SubBean;
 import com.heapot.qianxun.bean.TagsBean;
 import com.heapot.qianxun.util.SerializableUtils;
@@ -56,8 +60,10 @@ import java.util.Map;
 
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.UserInfo;
 
-public class MainActivity extends BaseActivity implements View.OnClickListener {
+public class MainActivity extends BaseActivity implements View.OnClickListener, RongIM.UserInfoProvider {
     private DrawerLayout mDrawerLayout;
     private Toolbar mToolBar;
     private ImageView mBanner;
@@ -115,8 +121,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         //开启融云服务器连接
         getRongToken();
 
+
         //测试token
         Logger.d("打印本地token-->"+PreferenceUtil.getString("token")+"打印application中的token---》"+ CustomApplication.TOKEN);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        RongIM.setUserInfoProvider(MainActivity.this,true);
     }
 
     private void initEvent() {
@@ -210,7 +223,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case R.id.iv_notification:
                 if (RongIM.getInstance() != null){
-                    RongIM.getInstance().startConversationList(MainActivity.this);
+                    //设置融云的用户信息
+
+//                    RongIM.getInstance().startConversationList(MainActivity.this);
+                    RongIM.getInstance().startPrivateChat(this,"110","大大");
+
                 }
                 break;
             case R.id.iv_banner:
@@ -372,6 +389,22 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         localBroadcastManager.unregisterReceiver(refreshReceiver);
     }
 
+
+
+    @Override
+    public UserInfo getUserInfo(String s) {
+        Object object = SerializableUtils.getSerializable(this,ConstantsBean.MY_USER_INFO);
+        if (object != null){
+            MyUserBean.ContentBean myUserBean = (MyUserBean.ContentBean) object;
+//            Logger.d("s-------->"+s+",id---->"+myUserBean.getId());
+            if (myUserBean.getId().equals(s)){
+                return new UserInfo(myUserBean.getId(),myUserBean.getNickname(),Uri.parse(myUserBean.getIcon()));
+            }
+
+        }
+        return null;
+    }
+
     /**
      * 广播接收器
      */
@@ -479,7 +512,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
      * 建立与融云服务器的连接
      * @param token 连接所需token
      */
-    private void conn(String token){
+    private void conn(final String token){
         if (getApplicationInfo().packageName.equals(CustomApplication.getCurProcessName(getApplicationContext()))){
             /**
              * IMKit SDK调用第二步，建立与服务器的连接
@@ -494,10 +527,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
                 @Override
                 public void onSuccess(String s) {
+
                     //连接融云成功
                     Logger.d("IM-Success-------->UserId:"+s);
+                    CustomApplication.IM_TOKEN = token;
+//                    RongIM.getInstance().startConversationList(MainActivity.this);
+
 //                    Intent intent = new Intent(MainActivity.this,ConversationListActivity.class);
 //                    startActivity(intent);
+
 
                 }
 
