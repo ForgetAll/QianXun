@@ -31,7 +31,8 @@ public class MainTabFragmentAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
 
-        return PageFragment.newInstance(position + 1, mList.get(position).getId());
+//        return PageFragment.newInstance(position + 1, mList.get(position).getId());
+        return PageFragment.newInstance(position+1, mList.get(position).getId());
 
     }
 

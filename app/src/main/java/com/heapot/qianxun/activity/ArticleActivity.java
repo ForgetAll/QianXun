@@ -255,13 +255,14 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
                 quote_layout.setVisibility(View.GONE);
                 break;
             case R.id.iv_btn_back:
-
+                webView.clearCache(true);
+                webView.destroy();
+                finish();
                 break;
         }
     }
 
     private void postComment(String content, String article){
-        Toast.makeText(this, "提交评论", Toast.LENGTH_SHORT).show();
         String url = ConstantsBean.BASE_PATH+ConstantsBean.ADD_COMMENT;
         String body;
         if (refId.equals("")){

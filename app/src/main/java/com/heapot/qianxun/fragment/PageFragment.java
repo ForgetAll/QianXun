@@ -1,9 +1,11 @@
 package com.heapot.qianxun.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,9 +18,11 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.gson.JsonObject;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.activity.ArticleActivity;
 import com.heapot.qianxun.activity.JobActivity;
+import com.heapot.qianxun.activity.MainActivity;
 import com.heapot.qianxun.adapter.MainTabAdapter;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
@@ -27,6 +31,8 @@ import com.heapot.qianxun.helper.OnRecyclerViewItemClickListener;
 import com.heapot.qianxun.util.JsonUtil;
 import com.orhanobut.logger.Logger;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -59,6 +65,10 @@ public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     private MainTabAdapter adapter;
     private List<MainListBean.ContentBean> list = new ArrayList<>();
 
+    private Activity mActivity;
+
+    private boolean isPre = false;
+
     public static PageFragment newInstance(int page,String id) {
         Bundle args = new Bundle();
         args.putInt(PAGE,page);
@@ -81,7 +91,7 @@ public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         mView = inflater.inflate(R.layout.layout_list,container,false);
         initView();
         initEvent();
-        Logger.d("OnCreate-");
+
         return mView;
 
     }
@@ -97,7 +107,7 @@ public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     }
     private void initEvent(){
 
-        loadData();
+//        loadData();
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(linearLayoutManager);
         adapter = new MainTabAdapter(getContext());
@@ -107,17 +117,11 @@ public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         adapter.setList(list);
         swipeRefreshLayout.setColorSchemeResources(colorArray[0],colorArray[1],colorArray[2],colorArray[3]);
 
-
-        adapter.setOnItemClickListener(onClickListener);
         swipeRefreshLayout.setOnRefreshListener(this);
         recyclerView.addOnScrollListener(onScrollListener);
 
     }
-    /**
-     * 模拟数据
-     */
     private void loadData(){
-        Logger.d("LoadData");
         String id = mId;
         if (mId != null ){
             getListWithTags(id);
@@ -138,22 +142,23 @@ public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     }
     //获取指定标签对应的列表
     private void getListWithTags(String id){
-        Logger.d(id);
         String url = ConstantsBean.GET_LIST_WITH_TAG+"catalogId=" +id+"&page="+ pageIndex +"&pagesize="+pageSize;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        Logger.d("当前页面---->"+mPage);
+                        Logger.json(String.valueOf(response));
                         MainListBean mainListBean = (MainListBean) JsonUtil.fromJson(String.valueOf(response),MainListBean.class);
                         maxPageIndex =mainListBean.getTotal_page();
                         list.addAll(mainListBean.getContent());
-                        Logger.d("请求数据,获取到集合的大小"+list.size());
                         if (mainListBean.getContent().size()==0){
                             adapter.isShowFooter(false);
                         }
                         adapter.setList(list);
                         recyclerView.setAdapter(adapter);
+                        adapter.setOnItemClickListener(onClickListener);
 
 
                     }
@@ -173,19 +178,16 @@ public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     private OnRecyclerViewItemClickListener onClickListener = new OnRecyclerViewItemClickListener() {
         @Override
         public void onItemClick(View view, int position) {
-            switch (CustomApplication.getCurrentPageName()){
-                case "PAGE_SCIENCE":
-                    Intent intent = new Intent(getActivity(), ArticleActivity.class);
-                    intent.putExtra("id",list.get(position).getId());
-                    startActivity(intent);
-                    break;
-                case "PAGE_RECRUIT":
-                    Intent job = new Intent(getActivity(), JobActivity.class);
-                    job.putExtra("id",list.get(position).getId());
-                    startActivity(job);
-                    break;
-                case "PAGE_TRAIN":
-                    break;
+            if (CustomApplication.getCurrentPageName().equals("PAGE_SCIENCE")){
+                Logger.d("跳转到文章详情，id是"+list.get(position).getId());
+                Intent intent = new Intent(getActivity(), ArticleActivity.class);
+                intent.putExtra("id",list.get(position).getId());
+                startActivity(intent);
+            }else if (CustomApplication.getCurrentPageName().equals("PAGE_RECRUIT")){
+                Intent job = new Intent(getActivity(), JobActivity.class);
+                job.putExtra("id",list.get(position).getId());
+                startActivity(job);
+            }else {
 
             }
 
@@ -230,4 +232,95 @@ public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
         }
     };
+    /**
+     * Banner的图片
+     */
+    private void setTabBanner(String id){
+        final String url = ConstantsBean.GET_LIST_WITH_TAG+"catalogId=" +id;
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Logger.json(String.valueOf(response));
+                        try {
+                            if (response.getString("return_code").equals("success")) {
+                                int pos = response.getInt("total_page");
+                                if (pos != 0) {
+                                    JSONArray jsonArray = response.getJSONArray("content");
+                                    JSONObject jsonObject = jsonArray.getJSONObject(0);
+                                    String image_url = jsonObject.getString("images");
+
+                                    if (image_url != null || !image_url.equals("")) {
+                                        Logger.d("超级标签的Banner----->" + image_url+",开始发送广播");
+                                        ((MainActivity)mActivity).setBanner(url);
+//                                        sendBroadcast(image_url);
+                                    }
+                                }
+                            }else {
+                                Logger.d("请求图片失败");
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }
+        );
+        CustomApplication.getRequestQueue().add(jsonObjectRequest);
+    }
+//    private void sendBroadcast(String url){
+//        Logger.d("发送广播开始");
+//        Intent intent = new Intent("com.karl.refresh");
+//        intent.putExtra("status",6);
+//        intent.putExtra("imageUrl",url);
+//        LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(getActivity());
+//        localBroadcastManager.sendBroadcast(intent);
+//    }
+
+//    懒加载实现
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (getUserVisibleHint()){
+            setUserVisibleHint(true);
+        }
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        isPre = true;
+    }
+
+    @Override
+    public boolean getUserVisibleHint() {
+        return super.getUserVisibleHint();
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser && isPre){
+            //当试图可见的时候加载Banner
+//            Logger.d("可见视图的id"+mId);
+//            setTabBanner(mId);
+            list.clear();
+            loadData();
+
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mActivity = null;
+    }
 }

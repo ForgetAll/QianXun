@@ -1,13 +1,16 @@
 package com.heapot.qianxun.activity;
 
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Process;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.LocalBroadcastManager;
@@ -28,6 +31,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.bumptech.glide.Glide;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.activity.chat.ConversationListActivity;
 import com.heapot.qianxun.activity.create.CreateActivity;
@@ -74,6 +78,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private IntentFilter intentFilter;
     private RefreshReceiver refreshReceiver;
     private LocalBroadcastManager localBroadcastManager;
+
     //主页界面
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -230,8 +235,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     public void closeDrawer(){
         mDrawerLayout.closeDrawers();
     }
-    public void setBanner(Bitmap bitmap){
-        mBanner.setImageBitmap(bitmap);
+    public void setBanner(String url){
+        Logger.d("MainActivity:setBanner------>"+url);
+//        Glide.with(this).load(url).into(mBanner);
     }
     public void setToolBarTitle(String name){
         switch (name){
@@ -288,11 +294,66 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
      */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK){
-            moveTaskToBack(true);
-            return false;
+//        if (keyCode == KeyEvent.KEYCODE_BACK){
+//            moveTaskToBack(true);
+//            return false;
+//        }
+//
+//        return super.onKeyDown(keyCode, event);
+
+
+//        long exitTime=0;
+//        // TODO 按两次返回键退出应用程序
+//        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+//            // 判断间隔时间 大于2秒就退出应用
+//            if ((System.currentTimeMillis() - exitTime) > 2000) {
+//                // 应用名
+//                String applicationName = getResources().getString(
+//                        R.string.app_name);
+//                String msg = "再按一次返回键退出" + applicationName;
+//                //String msg1 = "再按一次返回键回到桌面";
+//                Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+//                // 计算两次返回键按下的时间差
+//                exitTime = System.currentTimeMillis();
+//            } else {
+//                // 关闭应用程序
+//                finish();
+//                // 返回桌面操作
+//                // Intent home = new Intent(Intent.ACTION_MAIN);
+//                // home.addCategory(Intent.CATEGORY_HOME);
+//                // startActivity(home);
+//            }
+//            return true;
+//        }
+//        return super.onKeyDown(keyCode, event);
+        if (KeyEvent.KEYCODE_BACK == event.getKeyCode()) {
+
+
+            final AlertDialog.Builder alterDialog = new AlertDialog.Builder(this);
+            alterDialog.setMessage("确定退出应用？");
+            alterDialog.setCancelable(true);
+
+            alterDialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    if (RongIM.getInstance() != null)
+                        RongIM.getInstance().disconnect(true);
+
+                    android.os.Process.killProcess(Process.myPid());
+                }
+            });
+            alterDialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+            alterDialog.show();
         }
-        return super.onKeyDown(keyCode, event);
+
+        return false;
+
+
     }
     /**
      * 本地广播接收
@@ -352,9 +413,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     break;
                 case 5:
                     break;
+//                case 6:
+//                    String url = intent.getExtras().getString("imageUrl");
+//                    setBanner(url);
+//                    break;
             }
 
-            if (status != 0){
+            if (status != 0 || status != 6){
                 Logger.d("发生变化了"+status);
                 initData();
                 mViewPager.setAdapter(mPageAdapter);
@@ -385,7 +450,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                             if (response.getString("status").equals("success")){
                                 //获取成功，取出来token
                                 String im_token = response.getString("content");
-                                Logger.d("拿到的IM-token----->"+im_token);
                                 conn(im_token);
                             }
                         } catch (JSONException e) {
@@ -424,7 +488,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 @Override
                 public void onTokenIncorrect() {
                     //Token错误，重新请求token
-//                    getRongToken();
+                    getRongToken();
                     Logger.d("拿到的Token错误");
                 }
 
