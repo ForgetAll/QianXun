@@ -1,12 +1,16 @@
 package com.heapot.qianxun.bean;
 
+import com.heapot.qianxun.util.SerializableUtils;
+
+import java.io.Serializable;
+
 /**
  * Created by Karl on 2016/10/20.
  * desc: 聊天好友列表
  *
  */
 
-public class Friend {
+public class Friend implements Serializable {
     private String userId;
 
     private String userName;

@@ -32,6 +32,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.blankj.utilcode.utils.SPUtils;
 import com.bumptech.glide.Glide;
 import com.heapot.qianxun.R;
@@ -48,10 +49,12 @@ import com.heapot.qianxun.util.SerializableUtils;
 import com.heapot.qianxun.util.PreferenceUtil;
 import com.heapot.qianxun.util.TagsUtils;
 import com.orhanobut.logger.Logger;
+import com.zhy.http.okhttp.OkHttpUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -84,6 +87,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private IntentFilter intentFilter;
     private RefreshReceiver refreshReceiver;
     private LocalBroadcastManager localBroadcastManager;
+
+    //聊天集合
+    List<Friend> friendList = new ArrayList<>();
 
     //主页界面
     @Override
@@ -120,6 +126,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         localReceiver();
         //开启融云服务器连接
         getRongToken();
+        //获取用户好友信息
 
 
         //测试token
@@ -130,6 +137,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     protected void onResume() {
         super.onResume();
         RongIM.setUserInfoProvider(MainActivity.this,true);
+//        getLocalFriend();
     }
 
     private void initEvent() {
@@ -222,11 +230,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             case R.id.iv_star:
                 break;
             case R.id.iv_notification:
+
                 if (RongIM.getInstance() != null){
                     //设置融云的用户信息
-
-//                    RongIM.getInstance().startConversationList(MainActivity.this);
-                    RongIM.getInstance().startPrivateChat(this,"110","大大");
+                    RongIM.getInstance().startConversationList(MainActivity.this);
+//                    RongIM.getInstance().startPrivateChat(this,"110","大大");
 
                 }
                 break;
@@ -393,14 +401,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     @Override
     public UserInfo getUserInfo(String s) {
-        Object object = SerializableUtils.getSerializable(this,ConstantsBean.MY_USER_INFO);
-        if (object != null){
-            MyUserBean.ContentBean myUserBean = (MyUserBean.ContentBean) object;
-//            Logger.d("s-------->"+s+",id---->"+myUserBean.getId());
-            if (myUserBean.getId().equals(s)){
-                return new UserInfo(myUserBean.getId(),myUserBean.getNickname(),Uri.parse(myUserBean.getIcon()));
+        getLocalFriend();
+        Logger.d(friendList.size());
+        Toast.makeText(this, "Friend------------->"+friendList.size(), Toast.LENGTH_SHORT).show();
+        //循环添加
+        for (Friend i : friendList){
+            if (i.getUserId().equals(s)){
+                return new UserInfo(i.getUserId(),i.getUserName(),Uri.parse(i.getPortraitUri()));
             }
-
         }
         return null;
     }
@@ -545,6 +553,32 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 }
             });
         }
+    }
+
+    private void getLocalFriend(){
+        friendList.clear();
+        if (SerializableUtils.getSerializable(this,ConstantsBean.IM_FRIEND) != null){
+            Object objFriend = SerializableUtils.getSerializable(this,ConstantsBean.IM_FRIEND);
+            if (objFriend != null) {
+                friendList.addAll((Collection<? extends Friend>) objFriend);
+                Logger.d("第一次取数据---->"+friendList.size());
+            }
+
+        }
+        if (SerializableUtils.getSerializable(this,ConstantsBean.MY_USER_INFO )!=null){
+            Object object = SerializableUtils.getSerializable(this,ConstantsBean.MY_USER_INFO);
+            MyUserBean.ContentBean myUserBean = (MyUserBean.ContentBean) object;
+            String name = myUserBean.getNickname();
+            String id = myUserBean.getId();
+            String icon = myUserBean.getIcon();
+                Friend friend = new Friend(id,name,icon);
+                friendList.add(friend);
+            Logger.d("第二次取数据----->"+friendList.size());
+
+        }
+
+        Logger.d("好友列表大小---->"+friendList.size());
+
     }
 
 }

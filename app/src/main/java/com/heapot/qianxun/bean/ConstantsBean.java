@@ -101,6 +101,9 @@ public class ConstantsBean {
     //以下聊天相关
     public static final String IM_TOKEN = "user/rongCloudToken";
 
+    //根据id去查用户信息
+    public static final String IM_USER_INFO = "user/id/";
+
 
 
 
@@ -150,6 +153,10 @@ public class ConstantsBean {
     //请求动态权限
     public static final int PERMISSION_CODE = 100;
     public static final String PERMISSION_NAME = "PERMISSION_CAMERA_AND_STORAGE";
+
+
+    //本地存储好友列表
+    public static final String IM_FRIEND = "IM_FRIEND";
 
 
 

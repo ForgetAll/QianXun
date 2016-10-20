@@ -26,14 +26,19 @@ import com.blankj.utilcode.utils.NetworkUtils;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
+import com.heapot.qianxun.bean.Friend;
 import com.heapot.qianxun.bean.MyUserBean;
+import com.heapot.qianxun.util.JsonUtil;
 import com.heapot.qianxun.util.SerializableUtils;
 import com.orhanobut.logger.Logger;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import io.rong.imkit.RongIM;
@@ -106,12 +111,16 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
                 case MSG_TO_CHAT:
                     String id = msg.getData().getString("id");
                     String title = msg.getData().getString("title");
+
+                    Logger.d("id------>"+id+",title------>"+title);
                     Object object = SerializableUtils.getSerializable(ArticleActivity.this,ConstantsBean.MY_USER_INFO);
                     if (object != null){
                         MyUserBean.ContentBean myUserBean = (MyUserBean.ContentBean) object;
                         if (!myUserBean.getId().equals(id)){
                             if (RongIM.getInstance() != null){
+                                getUserInfoFromNetWork(id);
                                 RongIM.getInstance().startPrivateChat(ArticleActivity.this,id,title);
+
                             }
                         }
 
@@ -333,6 +342,81 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
         };
         CustomApplication.getRequestQueue().add(jsonObjectRequest);
 
+    }
+
+
+    private void getUserInfoFromNetWork(String id){
+        String url = ConstantsBean.BASE_PATH+ConstantsBean.IM_USER_INFO+id;
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Logger.json(String.valueOf(response));
+                        //所以要取出来原来的数据们然后加入新的一起存取
+                        try {
+                            if (response.getString("status").equals("success")){
+                                Toast.makeText(ArticleActivity.this, "存储成功！", Toast.LENGTH_SHORT).show();
+                                //请求数据成功
+                                MyUserBean userBean = (MyUserBean) JsonUtil.fromJson(String.valueOf(response),MyUserBean.class);
+                                List<MyUserBean.ContentBean> list = new ArrayList<>();
+                                //拿到当前用户信息
+                                list.add(userBean.getContent());
+                                //先判断本地存的有没有数据
+                                Object object = SerializableUtils.getSerializable(ArticleActivity.this,ConstantsBean.IM_FRIEND);
+                                //本地没有数据的话，直接添加
+                                if (object == null){
+                                    List<Friend> friends = new ArrayList<>();
+                                    Friend friend = new Friend(list.get(0).getId(),list.get(0).getNickname(),list.get(0).getIcon());
+                                    friends.add(friend);
+                                    SerializableUtils.setSerializable(ArticleActivity.this,ConstantsBean.IM_FRIEND,friends);
+                                }else {
+                                    //本地已经有数据，在后面追加
+                                    List<Friend> friends = new ArrayList<>();//本地数据集合
+                                    friends.addAll((Collection<? extends Friend>) object);
+                                    List<Integer> pos = new ArrayList<>();//本地已有数据记录位置
+                                    //循环遍历拿到本地已有数据下标,
+                                    for (int i = 0; i < friends.size(); i++) {
+                                        if (friends.get(i).getUserId().equals(list.get(0).getId())){
+                                            pos.add(i);
+                                        }
+                                    }
+                                    //判断是否是重复数据，为0则没有重复，直接添加当前一条数据，
+                                    if (pos.size() != 0){
+                                        //数据已存在，进行数据更新
+                                        for (int i = 0; i < pos.size(); i++) {
+                                            friends.get(pos.get(i)).setUserId(list.get(0).getId());
+                                            friends.get(pos.get(i)).setUserName(list.get(0).getNickname());
+                                            friends.get(pos.get(i)).setPortraitUri(list.get(0).getIcon());
+                                        }
+                                    }else {
+                                        //里面没有重复的数据,将当前id加上
+                                        Friend friend = new Friend(list.get(0).getId(),list.get(0).getNickname(),list.get(0).getIcon());
+                                        friends.add(friend);
+                                    }
+                                    SerializableUtils.setSerializable(ArticleActivity.this,ConstantsBean.IM_FRIEND,friends);
+                                }
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }
+        ){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> headers = new HashMap<>();
+                headers.put(ConstantsBean.KEY_TOKEN,CustomApplication.TOKEN);
+                return headers;
+            }
+        };
+        CustomApplication.getRequestQueue().add(jsonObjectRequest);
     }
 
 }

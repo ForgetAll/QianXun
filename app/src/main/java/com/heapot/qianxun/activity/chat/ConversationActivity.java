@@ -8,8 +8,29 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.heapot.qianxun.R;
+import com.heapot.qianxun.activity.ArticleActivity;
+import com.heapot.qianxun.application.CustomApplication;
+import com.heapot.qianxun.bean.ConstantsBean;
+import com.heapot.qianxun.bean.Friend;
+import com.heapot.qianxun.bean.MyUserBean;
+import com.heapot.qianxun.util.JsonUtil;
+import com.heapot.qianxun.util.SerializableUtils;
 import com.orhanobut.logger.Logger;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Karl on 2016/10/19.
@@ -21,28 +42,12 @@ public class ConversationActivity extends FragmentActivity {
     private ImageView mBack;
     private String mTargetId;
     private String mName;
-    private Intent intent;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.conversation);
-//        intent = getIntent();
-//        getIntentData(intent);
-//        setActionBar();
+        setActionBar();
     }
-    /**
-     * 从Intent中拿到融云传递的Uri
-     */
-    private void getIntentData(Intent intent){
-
-        if (intent.getData().getQueryParameter("title") == null){
-            setActionBarTitle("未知联系人");
-        }else {
-            setActionBarTitle("联系人头像"+intent.getData().getQueryParameter("title"));
-        }
-    }
-
-
     /**
      * 设置actionBar事件
      */
@@ -55,6 +60,9 @@ public class ConversationActivity extends FragmentActivity {
                 finish();
             }
         });
+        mName = getIntent().getData().getQueryParameter("title");
+        mTargetId = getIntent().getData().getQueryParameter("targetId");
+        setActionBarTitle(mName);
     }
     /**
      * 设置actionBar title
