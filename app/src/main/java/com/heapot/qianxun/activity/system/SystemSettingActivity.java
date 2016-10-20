@@ -14,10 +14,12 @@ import com.heapot.qianxun.activity.BaseActivity;
 import com.heapot.qianxun.activity.LoginActivity;
 import com.heapot.qianxun.application.ActivityCollector;
 import com.heapot.qianxun.application.CustomApplication;
+import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.util.ClearCacheTask;
 import com.heapot.qianxun.util.FileSizeUtil;
 import com.heapot.qianxun.util.PackageUtils;
 import com.heapot.qianxun.util.PreferenceUtil;
+import com.heapot.qianxun.util.SerializableUtils;
 import com.heapot.qianxun.util.UpdateUtil;
 
 /**
@@ -104,6 +106,7 @@ public class SystemSettingActivity extends BaseActivity implements View.OnClickL
 //                SerializableUtils.deleteSerializable(this,ConstantsBean.SUB_FILE_NAME);
 //                SerializableUtils.deleteSerializable(this,ConstantsBean.TAG_FILE_NAME);
                 PreferenceUtil.clearPreference();
+                SerializableUtils.deleteSerializable(activity, ConstantsBean.MY_USER_INFO);
                 ActivityCollector.finishAll();
                 Intent intent = new Intent(SystemSettingActivity.this, LoginActivity.class);
                 startActivity(intent);

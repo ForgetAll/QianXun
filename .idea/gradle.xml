@@ -16,6 +16,7 @@
         <option name="myModules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/IMKit" />
             <option value="$PROJECT_DIR$/Volley" />
             <option value="$PROJECT_DIR$/app" />
           </set>

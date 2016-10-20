@@ -38,8 +38,6 @@ import com.heapot.qianxun.util.JsonUtil;
 import com.heapot.qianxun.util.PreferenceUtil;
 import com.heapot.qianxun.util.ToastUtil;
 import com.heapot.qianxun.widget.PhotoCarmaWindow;
-import com.koushikdutta.async.future.FutureCallback;
-import com.koushikdutta.ion.Ion;
 import com.orhanobut.logger.Logger;
 
 import org.json.JSONException;
@@ -57,16 +55,16 @@ import java.util.Map;
  */
 public class CreateJobActivity extends BaseActivity implements View.OnClickListener {
     private TextView tv_back, tv_complete, tv_company1Title, tv_company1Content, tv_companyChoose;
-    private ImageView iv_image, iv_company, iv_detail, iv_describe, iv_describeChoose;
-    private EditText et_title;
+    private ImageView iv_image, iv_company, iv_detail, iv_describe, iv_describeChoose, iv_sum;
+    private EditText et_title, et_sumTitle;
     private TextView tv_detailTitle, tv_detailContent, tv_detailChoose;
     private TextView tv_describeTitle, tv_describeContent;
     private RelativeLayout rl_company, rl_detail, rl_describe;
     private int requestCode;
-    private int number = 1;
+
     Context mContext;
     private String path;
-    private List<UserOrgBean.ContentBean> orgList  = new ArrayList<>();
+    private List<UserOrgBean.ContentBean> orgList = new ArrayList<>();
     private Handler handler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
@@ -102,6 +100,11 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
     private String describe;
     private String title;
     private TextView tv_companyTitle;
+    private int length;
+    private String min;
+    private String max;
+    private String describeTitle;
+    private String number;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,6 +151,10 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
         rl_detail.setOnClickListener(this);
         Glide.with(activity).load(PreferenceUtil.getString(ConstantsBean.userImage)).error(R.mipmap.imagetest).into(iv_detail);
 
+        iv_sum = (ImageView) findViewById(R.id.iv_sum);
+        et_sumTitle = (EditText) findViewById(R.id.tv_sumTitle);
+        Glide.with(activity).load(PreferenceUtil.getString(ConstantsBean.userImage)).error(R.mipmap.imagetest).into(iv_sum);
+
 
         rl_describe = (RelativeLayout) findViewById(R.id.rl_describe);
         iv_describe = (ImageView) findViewById(R.id.iv_describe);
@@ -166,7 +173,13 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
                 finish();
                 break;
             case R.id.tv_complete:
-                sendData();
+                if (catalogId != null) {
+                    sendData();
+                } else {
+                    ToastUtil.show("请检查输入的内容");
+                }
+
+
                 break;
             case R.id.iv_image:
                 PhotoCarmaWindow bottomPopup = new PhotoCarmaWindow(CreateJobActivity.this);
@@ -182,9 +195,9 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
                 break;
             case R.id.rl_describe:
                 requestCode = 105;
-                String describeTitle= tv_describeTitle.getText().toString().trim();
+                describeTitle = tv_describeTitle.getText().toString().trim();
                 Intent intent = new Intent(CreateJobActivity.this, CreateJobDescribe.class);
-                intent.putExtra("describeTitle",describeTitle);
+                intent.putExtra("describeTitle", describeTitle);
                 startActivityForResult(intent, requestCode);
                 break;
         }
@@ -193,42 +206,88 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
 
     private void sendData() {
         CreateJobBean createJobBean = new CreateJobBean();
-        String min = et_min.getText().toString().trim();
-        createJobBean.setMinSalary(Integer.parseInt(min));
-        String max = et_max.getText().toString().trim();
-        createJobBean.setMaxSalary(Integer.parseInt(max));
+        min = et_min.getText().toString().trim();
+        Log.e("最低工资", min);
+
+        max = et_max.getText().toString().trim();
+
         createJobBean.setCatalogId(catalogId);
         String orgCode = PreferenceUtil.getString("orgCode");
         createJobBean.setCode(orgCode);
+
         createJobBean.setDescription(describe);
         createJobBean.setEmail("");
         title = et_title.getText().toString().trim();
+        length = title.length();
         createJobBean.setName(title);
-        createJobBean.setPhone(PreferenceUtil.getString(ConstantsBean.USER_PHONE));
-        createJobBean.setNum(number);
-        createJobBean.setImg(path);
+        createJobBean.setPhone(PreferenceUtil.getString("orgPhone"));
+        number = et_sumTitle.getText().toString().trim();
 
-        String data = JsonUtil.toJson(createJobBean);
-        Log.e("发送的数据：", data);
-        //发送数据
-        Ion.with(this).load(ConstantsBean.BASE_PATH + ConstantsBean.CREATE_JOB).setHeader(ConstantsBean.KEY_TOKEN, CustomApplication.TOKEN).setStringBody(data)
-                .as(CreateJobResultBean.class).setCallback(new FutureCallback<CreateJobResultBean>() {
-            @Override
-            public void onCompleted(Exception e, CreateJobResultBean result) {
-                Log.e("上传返回的数据", String.valueOf(result));
-                if (result != null) {
-                    String status = result.getStatus();
-                    if (status.equals("success")) {
-                        finish();
-                        ToastUtil.show("发表成功");
-                    } else {
-                        ToastUtil.show("发表失败");
+        createJobBean.setImg(path);
+        if (number != null && min != null && max != null) {
+            createJobBean.setMinSalary(Integer.parseInt(min));
+            createJobBean.setMaxSalary(Integer.parseInt(max));
+            createJobBean.setNum(Integer.parseInt(number));
+            String data = JsonUtil.toJson(createJobBean);
+            Log.e("发送的数据：", data);
+            upData(data);
+        } else {
+            Toast.makeText(CreateJobActivity.this, "请检查输入的内容", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    private void upData(String data) {
+        JSONObject json = null;
+        try {
+            json = new JSONObject(data);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        if (catalogId != null && title != null && length >= 2 && describe != null) {
+            String url = ConstantsBean.BASE_PATH + ConstantsBean.CREATE_JOB;
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                    Request.Method.POST, url, json,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            Logger.d(response);
+                            try {
+                                String status = response.getString("status");
+                                if (status.equals("success")) {
+
+                                    CreateJobResultBean createJobResultBean = (CreateJobResultBean) JsonUtil.fromJson(String.valueOf(response), CreateJobResultBean.class);
+                                    String newJobId = createJobResultBean.getContent().getId();
+                                    Toast.makeText(activity, "发布成功", Toast.LENGTH_SHORT).show();
+                                    finish();
+                                } else {
+                                    Toast.makeText(activity, response.getString("message"), Toast.LENGTH_SHORT).show();
+                                    Logger.d(response.getString("message"));
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
+                        }
                     }
-                } else {
-                    ToastUtil.show("发表失败");
+            ) {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> headers = new HashMap<>();
+                    headers.put(ConstantsBean.KEY_TOKEN, CustomApplication.TOKEN);
+                    return headers;
                 }
-            }
-        });
+            };
+            CustomApplication.getRequestQueue().add(jsonObjectRequest);
+
+        } else {
+            Toast.makeText(CreateJobActivity.this, "请检查输入的内容", Toast.LENGTH_SHORT).show();
+        }
 
     }
 
@@ -305,25 +364,25 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
     //获取数据
 
     private void testData() {
-        String url = ConstantsBean.BASE_PATH+ConstantsBean.QUERY_UER_ORG;
+        String url = ConstantsBean.BASE_PATH + ConstantsBean.QUERY_UER_ORG;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         Logger.json(String.valueOf(response));
-                        Log.e("所有的Json数据：",response.toString());
+                        Log.e("所有的Json数据：", response.toString());
                         try {
                             String status = response.getString("status");
-                            if (status.equals("success")){
-                                UserOrgBean userOrgBean = (UserOrgBean) JsonUtil.fromJson(String.valueOf(response),UserOrgBean.class);
+                            if (status.equals("success")) {
+                                UserOrgBean userOrgBean = (UserOrgBean) JsonUtil.fromJson(String.valueOf(response), UserOrgBean.class);
                                 //SerializableUtils.setSerializable(CreateActivity.this,ConstantsBean.USER_ORG_LIST,userOrgBean);
                                 orgList.addAll(userOrgBean.getContent());
                                 //根据ID查询公司名字
                                 orgList.get(0).getOrgId();
-                                Logger.d("orgst------->"+orgList.size());
-                            }else {
-                                Toast.makeText(CreateJobActivity.this, ""+response.getString("message"), Toast.LENGTH_SHORT).show();
+                                Logger.d("orgst------->" + orgList.size());
+                            } else {
+                                Toast.makeText(CreateJobActivity.this, "" + response.getString("message"), Toast.LENGTH_SHORT).show();
 
                             }
                         } catch (JSONException e) {
@@ -337,10 +396,10 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
 
                     }
                 }
-        ){
+        ) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String,String> headers = new HashMap<>();
+                Map<String, String> headers = new HashMap<>();
                 headers.put(ConstantsBean.KEY_TOKEN, CustomApplication.TOKEN);
                 return headers;
             }
