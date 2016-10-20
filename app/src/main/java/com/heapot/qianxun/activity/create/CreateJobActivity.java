@@ -208,13 +208,10 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
         CreateJobBean createJobBean = new CreateJobBean();
         min = et_min.getText().toString().trim();
         Log.e("最低工资", min);
-
         max = et_max.getText().toString().trim();
-
         createJobBean.setCatalogId(catalogId);
         String orgCode = PreferenceUtil.getString("orgCode");
         createJobBean.setCode(orgCode);
-
         createJobBean.setDescription(describe);
         createJobBean.setEmail("");
         title = et_title.getText().toString().trim();
@@ -222,9 +219,8 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
         createJobBean.setName(title);
         createJobBean.setPhone(PreferenceUtil.getString("orgPhone"));
         number = et_sumTitle.getText().toString().trim();
-
         createJobBean.setImg(path);
-        if (number != null && min != null && max != null) {
+        if (!TextUtils.isEmpty(number) && !TextUtils.isEmpty(min) && !TextUtils.isEmpty(max)&&catalogId != null && title != null && length >= 2 && describe != null) {
             createJobBean.setMinSalary(Integer.parseInt(min));
             createJobBean.setMaxSalary(Integer.parseInt(max));
             createJobBean.setNum(Integer.parseInt(number));
@@ -244,7 +240,6 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        if (catalogId != null && title != null && length >= 2 && describe != null) {
             String url = ConstantsBean.BASE_PATH + ConstantsBean.CREATE_JOB;
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                     Request.Method.POST, url, json,
@@ -285,9 +280,6 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
             };
             CustomApplication.getRequestQueue().add(jsonObjectRequest);
 
-        } else {
-            Toast.makeText(CreateJobActivity.this, "请检查输入的内容", Toast.LENGTH_SHORT).show();
-        }
 
     }
 
