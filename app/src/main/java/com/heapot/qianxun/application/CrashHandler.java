@@ -42,7 +42,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
             // 如果自定义的没有处理则让系统默认的异常处理器来处理
             mdeUncaughtExceptionHandler.uncaughtException(thread, ex);
         } else {
-          /*  try {
+           /* try {
                 // 如果处理了，让程序继续运行3秒再退出，保证文件保存并上传到服务器
                 Thread.sleep(3000);
             } catch (Exception e) {
