@@ -96,7 +96,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                         queryData("");
                     }
                     // 根据输入的内容模糊查询商品，并跳转到另一个界面，由你自己去实现
-                    Toast.makeText(SearchActivity.this, "clicked!", Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(SearchActivity.this, "clicked!", Toast.LENGTH_SHORT).show();
 
                 }
                 return false;

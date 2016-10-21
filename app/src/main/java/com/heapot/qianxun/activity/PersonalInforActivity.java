@@ -24,10 +24,10 @@ import com.heapot.qianxun.R;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.bean.MyUserBean;
-import com.heapot.qianxun.util.SerializableUtils;
 import com.heapot.qianxun.util.CommonUtil;
 import com.heapot.qianxun.util.FileUploadTask;
 import com.heapot.qianxun.util.PreferenceUtil;
+import com.heapot.qianxun.util.SerializableUtils;
 import com.heapot.qianxun.widget.PhotoCarmaWindow;
 import com.orhanobut.logger.Logger;
 
@@ -71,7 +71,7 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
                         JSONObject content = jsonObject.getJSONObject("content");
                         String path = content.getString("url");
                         Log.e("上传头像返回的数据", path);
-                        //Glide.with(activity).load(path).into(mHead);
+                       // Glide.with(activity).load(path).error(R.mipmap.imagetest).into(mHead);
                         CommonUtil.loadImage(mHead, path, R.mipmap.imagetest);
                         userBean.setIcon(path);
                         personalStatus = 1;
