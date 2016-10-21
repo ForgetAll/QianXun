@@ -4,22 +4,23 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.bumptech.glide.Glide;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.activity.ArticleActivity;
 import com.heapot.qianxun.adapter.PersonalArticleAdapter;
+import com.heapot.qianxun.adapter.PersonalArticleRecyclerViewAdapter;
 import com.heapot.qianxun.adapter.PersonalTabAdapter;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
@@ -27,6 +28,7 @@ import com.heapot.qianxun.bean.MyPersonalArticle;
 import com.heapot.qianxun.helper.OnRecyclerViewItemClickListener;
 import com.heapot.qianxun.util.JsonUtil;
 import com.heapot.qianxun.util.PreferenceUtil;
+import com.orhanobut.logger.Logger;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -46,49 +48,14 @@ public class PersonalPageFragment extends Fragment {
     View mView;
 
     private PersonalTabAdapter personalTabAdapter;
-    private List<String> list = new ArrayList<>();
+    private List<MyPersonalArticle.ContentBean.RowsBean> list = new ArrayList<>();
     PersonalArticleAdapter personalArticleAdapter;
-    private ListView ll_listView;
     private List<MyPersonalArticle.ContentBean.RowsBean> articleList = new ArrayList<>();
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        loadData();
-        mPage = getArguments().getInt(PAGE);
-        personalTabAdapter=new PersonalTabAdapter(getContext(),list);
-        //添加点击事件
-        personalTabAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                Toast.makeText(getContext(), "点击了", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getActivity(), ArticleActivity.class);
-                startActivity(intent);
-            }
-        });
-
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.activity_personal_page_list, container, false);
-        findList();
-        return mView;
-    }
-
-    private void findList() {
-        ll_listView = (ListView) mView.findViewById(R.id.ll_listView);
-        ll_listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String id1 = articleList.get(position).getId();
-                Intent intent = new Intent(getActivity(), ArticleActivity.class);
-                intent.putExtra("id",articleList.get(position).getId());
-                startActivity(intent);
-            }
-        });
-    }
+    private RecyclerView recyclerView;
+    View view;
+    private LinearLayoutManager linearLayoutManager;
+    private RecyclerView recycler_view;
+    private PersonalArticleRecyclerViewAdapter personalArticleRecyclerViewAdapter;
 
 
     public static PersonalPageFragment newInstance(int page) {
@@ -97,6 +64,43 @@ public class PersonalPageFragment extends Fragment {
         PersonalPageFragment personalPageFragment = new PersonalPageFragment();
         personalPageFragment.setArguments(args);
         return personalPageFragment;
+    }
+
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        mPage = getArguments().getInt(PAGE);
+       /* personalTabAdapter = new PersonalTabAdapter(getContext(), list);
+        personalTabAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Toast.makeText(getContext(), "点击了", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), ArticleActivity.class);
+                startActivity(intent);
+            }
+        });*/
+
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        mView = inflater.inflate(R.layout.activity_personal_page_list, container, false);
+
+        findList();
+        return mView;
+    }
+
+    private void findList() {
+        recycler_view = (RecyclerView) mView.findViewById(R.id.recycler_view);
+        linearLayoutManager = new LinearLayoutManager(getContext());
+        recycler_view.setHasFixedSize(true);
+        recycler_view.setLayoutManager(linearLayoutManager);
+        loadData();
+        Log.e("添加之后的list", String.valueOf(list.size()));
+
     }
 
 
@@ -113,10 +117,38 @@ public class PersonalPageFragment extends Fragment {
                     String status = response.getString("status");
                     if (status.equals("success")) {
                         MyPersonalArticle myPersonalArticle = (MyPersonalArticle) JsonUtil.fromJson(String.valueOf(response), MyPersonalArticle.class);
+
                         articleList = myPersonalArticle.getContent().getRows();
+                        list.addAll(myPersonalArticle.getContent().getRows());
+                        personalArticleRecyclerViewAdapter = new PersonalArticleRecyclerViewAdapter(getContext(), articleList);
+                        recycler_view.setAdapter(personalArticleRecyclerViewAdapter);
+                        personalArticleRecyclerViewAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
+                            @Override
+                            public void onItemClick(View view, int position) {
+                                Logger.d("跳转到文章详情，id是"+articleList.get(position).getId());
+                                Intent intent = new Intent(getActivity(), ArticleActivity.class);
+                                intent.putExtra("id",articleList.get(position).getId());
+                                startActivity(intent);
+                            }
+                        });
+                        recycler_view.setOnScrollListener(new RecyclerView.OnScrollListener() {
+                            @Override
+                            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                                super.onScrolled(recyclerView, dx, dy);
+                                Glide.with(getContext()).resumeRequests();
+                            }
+
+                            @Override
+                            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                                super.onScrollStateChanged(recyclerView, newState);
+                                if (newState != RecyclerView.SCROLL_STATE_IDLE) {
+                                    Glide.with(getContext()).pauseRequests();
+                                }
+                            }
+                        });
+
+                        Log.e("list",articleList.toString());
                         Log.e("我发表的文章：", String.valueOf(articleList.size()));
-                        personalArticleAdapter = new PersonalArticleAdapter(getContext(), articleList);
-                        ll_listView.setAdapter(personalArticleAdapter);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -137,5 +169,6 @@ public class PersonalPageFragment extends Fragment {
         };
         CustomApplication.getRequestQueue().add(jsonObjectRequest);
     }
+
 
 }
