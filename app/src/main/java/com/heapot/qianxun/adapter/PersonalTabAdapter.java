@@ -18,12 +18,12 @@ import java.util.List;
  */
 public class PersonalTabAdapter extends RecyclerView.Adapter<PersonalTabAdapter.PersonalViewHolder> implements View.OnClickListener {
     private Context context;
-    private List<String> mList;
+    private List<String> articleList;
     private LayoutInflater inflater;
     private OnRecyclerViewItemClickListener mListener =null;
-    public PersonalTabAdapter(Context context, List<String> mList) {
+    public PersonalTabAdapter(Context context,List<String> list) {
         this.context = context;
-        this.mList = mList;
+        this.articleList=list;
         inflater = LayoutInflater.from(context);
     }
 
@@ -37,13 +37,13 @@ public class PersonalTabAdapter extends RecyclerView.Adapter<PersonalTabAdapter.
 
     @Override
     public void onBindViewHolder(PersonalTabAdapter.PersonalViewHolder holder, int position) {
-        holder.textView.setText(mList.get(position).toString());
+        holder.textView.setText(articleList.get(position).toString());
         holder.itemView.setTag(position);
     }
 
     @Override
     public int getItemCount() {
-        return mList.size();
+        return articleList.size();
     }
 
     @Override

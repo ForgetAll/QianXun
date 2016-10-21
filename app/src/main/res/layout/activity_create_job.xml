@@ -129,7 +129,7 @@
                     android:layout_height="22dp"
                     android:layout_marginTop="12dp"
                     android:layout_toRightOf="@+id/iv_max"
-                    android:hint="请输入最高工资"
+                    android:hint="请输入平均工资"
                     android:textSize="18sp"
                     android:background="@null"
                     android:inputType="number"/>

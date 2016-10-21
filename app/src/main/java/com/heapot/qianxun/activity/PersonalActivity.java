@@ -125,7 +125,7 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
         Logger.d(mHeadUrl);
 
         for (int i = 0; i < 1; i++) {
-            mList.add("Tab-" + i);
+            mList.add("文章");
         }
         initTab();
 

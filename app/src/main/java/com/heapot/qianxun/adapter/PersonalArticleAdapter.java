@@ -1,6 +1,7 @@
 package com.heapot.qianxun.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +10,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.heapot.qianxun.R;
+import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.MyPersonalArticle;
 
 import java.util.List;
@@ -60,6 +63,11 @@ public class PersonalArticleAdapter extends BaseAdapter {
         viewHolder.txt_main_list_title.setText(bean.getTitle());
         Log.e("",bean.getTitle()+bean.getSummary());
         String path = bean.getImages();
+        if (TextUtils.isEmpty(path)){
+            viewHolder.iv_main_list_image.setVisibility(View.GONE);
+        }else {
+            Glide.with(CustomApplication.getContext()).load(path).error(R.mipmap.imagetest).into(viewHolder.iv_main_list_image);
+        }
           //Glide.with(CustomApplication.getContext()).load(path).into(viewHolder.iv_main_list_image);
         return convertView;
     }
