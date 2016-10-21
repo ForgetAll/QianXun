@@ -52,14 +52,17 @@ public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.SubscribedView
     public void onBindViewHolder(SubscribedViewHolder holder, int position) {
         int status = mList.get(position).getSubscribeStatus();
         String name = mList.get(position).getName();
-        holder.textView.setText(name);
+        String desc = mList.get(position).getDescription().toString();
+
         //状态为0是未订阅
         if (status == 0){
+            holder.textView.setText(desc);
             holder.textView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             holder.textView.setBackgroundColor(context.getResources().getColor(R.color.background_white));
             holder.textView.setTextColor(context.getResources().getColor(R.color.background_blue));
             holder.textView.setGravity(Gravity.CENTER);
         }else if (status ==1){//状态为1，是已订阅
+            holder.textView.setText(name);
             holder.textView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             holder.textView.setBackgroundColor(context.getResources().getColor(R.color.background_blue));
             holder.textView.setTextColor(context.getResources().getColor(R.color.background_white));
