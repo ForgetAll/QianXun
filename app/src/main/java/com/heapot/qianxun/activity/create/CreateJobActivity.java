@@ -227,6 +227,7 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
             createJobBean.setNum(Integer.parseInt(number));
             String data = JsonUtil.toJson(createJobBean);
             Log.e("发送的数据：", data);
+            ToastUtil.show("请稍等");
             upData(data);
         } else {
             Toast.makeText(CreateJobActivity.this, "请检查输入的内容", Toast.LENGTH_SHORT).show();
@@ -260,7 +261,7 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
                                     startActivity(job);
                                     finish();
                                 } else {
-                                    Toast.makeText(activity, response.getString("message"), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(activity, "发布失败", Toast.LENGTH_SHORT).show();
                                     Logger.d(response.getString("message"));
                                 }
                             } catch (JSONException e) {

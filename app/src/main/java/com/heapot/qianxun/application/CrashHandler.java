@@ -1,13 +1,10 @@
 package com.heapot.qianxun.application;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 
-import com.heapot.qianxun.activity.MainActivity;
-import com.heapot.qianxun.util.ActivityUtil;
 import com.heapot.qianxun.util.SDCardUtil;
 
 import java.io.PrintWriter;
@@ -42,18 +39,18 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
             // 如果自定义的没有处理则让系统默认的异常处理器来处理
             mdeUncaughtExceptionHandler.uncaughtException(thread, ex);
         } else {
-           /* try {
+            try {
                 // 如果处理了，让程序继续运行3秒再退出，保证文件保存并上传到服务器
                 Thread.sleep(3000);
             } catch (Exception e) {
                 e.printStackTrace();
-            }*/
+            }
             //关闭所有activity
-            ActivityUtil.removeAll();
+           /* ActivityUtil.removeAll();
             Intent intent = new Intent(mContext, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             mContext.startActivity(intent);
-            android.os.Process.killProcess(android.os.Process.myPid());
+            android.os.Process.killProcess(android.os.Process.myPid());*/
         }
 
     }
