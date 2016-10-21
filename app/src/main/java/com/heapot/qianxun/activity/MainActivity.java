@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Process;
@@ -31,6 +32,8 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.blankj.utilcode.utils.SPUtils;
 import com.bumptech.glide.Glide;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.activity.chat.ConversationListActivity;
@@ -38,16 +41,20 @@ import com.heapot.qianxun.activity.create.CreateActivity;
 import com.heapot.qianxun.adapter.MainTabFragmentAdapter;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
+import com.heapot.qianxun.bean.Friend;
+import com.heapot.qianxun.bean.MyUserBean;
 import com.heapot.qianxun.bean.SubBean;
 import com.heapot.qianxun.bean.TagsBean;
 import com.heapot.qianxun.util.SerializableUtils;
 import com.heapot.qianxun.util.PreferenceUtil;
 import com.heapot.qianxun.util.TagsUtils;
 import com.orhanobut.logger.Logger;
+import com.zhy.http.okhttp.OkHttpUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -56,8 +63,10 @@ import java.util.Map;
 
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.UserInfo;
 
-public class MainActivity extends BaseActivity implements View.OnClickListener {
+public class MainActivity extends BaseActivity implements View.OnClickListener, RongIM.UserInfoProvider {
     private DrawerLayout mDrawerLayout;
     private Toolbar mToolBar;
     private ImageView mBanner;
@@ -78,6 +87,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private IntentFilter intentFilter;
     private RefreshReceiver refreshReceiver;
     private LocalBroadcastManager localBroadcastManager;
+
+    //聊天集合
+    List<Friend> friendList = new ArrayList<>();
 
     //主页界面
     @Override
@@ -114,9 +126,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         localReceiver();
         //开启融云服务器连接
         getRongToken();
+        //获取用户好友信息
+
 
         //测试token
         Logger.d("打印本地token-->"+PreferenceUtil.getString("token")+"打印application中的token---》"+ CustomApplication.TOKEN);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        RongIM.setUserInfoProvider(MainActivity.this,true);
+//        getLocalFriend();
     }
 
     private void initEvent() {
@@ -209,8 +230,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             case R.id.iv_star:
                 break;
             case R.id.iv_notification:
+
                 if (RongIM.getInstance() != null){
+                    //设置融云的用户信息
                     RongIM.getInstance().startConversationList(MainActivity.this);
+//                    RongIM.getInstance().startPrivateChat(this,"110","大大");
+
                 }
                 break;
             case R.id.iv_banner:
@@ -372,6 +397,22 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         localBroadcastManager.unregisterReceiver(refreshReceiver);
     }
 
+
+
+    @Override
+    public UserInfo getUserInfo(String s) {
+        getLocalFriend();
+        Logger.d(friendList.size());
+        Toast.makeText(this, "Friend------------->"+friendList.size(), Toast.LENGTH_SHORT).show();
+        //循环添加
+        for (Friend i : friendList){
+            if (i.getUserId().equals(s)){
+                return new UserInfo(i.getUserId(),i.getUserName(),Uri.parse(i.getPortraitUri()));
+            }
+        }
+        return null;
+    }
+
     /**
      * 广播接收器
      */
@@ -479,7 +520,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
      * 建立与融云服务器的连接
      * @param token 连接所需token
      */
-    private void conn(String token){
+    private void conn(final String token){
         if (getApplicationInfo().packageName.equals(CustomApplication.getCurProcessName(getApplicationContext()))){
             /**
              * IMKit SDK调用第二步，建立与服务器的连接
@@ -494,10 +535,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
                 @Override
                 public void onSuccess(String s) {
+
                     //连接融云成功
                     Logger.d("IM-Success-------->UserId:"+s);
+                    CustomApplication.IM_TOKEN = token;
+//                    RongIM.getInstance().startConversationList(MainActivity.this);
+
 //                    Intent intent = new Intent(MainActivity.this,ConversationListActivity.class);
 //                    startActivity(intent);
+
 
                 }
 
@@ -507,6 +553,32 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 }
             });
         }
+    }
+
+    private void getLocalFriend(){
+        friendList.clear();
+        if (SerializableUtils.getSerializable(this,ConstantsBean.IM_FRIEND) != null){
+            Object objFriend = SerializableUtils.getSerializable(this,ConstantsBean.IM_FRIEND);
+            if (objFriend != null) {
+                friendList.addAll((Collection<? extends Friend>) objFriend);
+                Logger.d("第一次取数据---->"+friendList.size());
+            }
+
+        }
+        if (SerializableUtils.getSerializable(this,ConstantsBean.MY_USER_INFO )!=null){
+            Object object = SerializableUtils.getSerializable(this,ConstantsBean.MY_USER_INFO);
+            MyUserBean.ContentBean myUserBean = (MyUserBean.ContentBean) object;
+            String name = myUserBean.getNickname();
+            String id = myUserBean.getId();
+            String icon = myUserBean.getIcon();
+                Friend friend = new Friend(id,name,icon);
+                friendList.add(friend);
+            Logger.d("第二次取数据----->"+friendList.size());
+
+        }
+
+        Logger.d("好友列表大小---->"+friendList.size());
+
     }
 
 }

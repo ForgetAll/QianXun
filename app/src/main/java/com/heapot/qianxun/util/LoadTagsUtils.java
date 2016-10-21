@@ -44,7 +44,7 @@ public class LoadTagsUtils {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Logger.json(String.valueOf(response));
+//                        Logger.json(String.valueOf(response));
                         try {
                             String status = response.getString("status");
                             if (status.equals("success")) {

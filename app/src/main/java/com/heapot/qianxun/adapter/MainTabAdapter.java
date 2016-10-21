@@ -88,6 +88,7 @@ public class MainTabAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             if (image.equals("")||image == null) {
                 ((MainTabViewHolder) holder).imageView.setVisibility(View.GONE);
             }else {
+                ((MainTabViewHolder) holder).imageView.setVisibility(View.VISIBLE);
                 Glide.with(context).load(image).into(((MainTabViewHolder) holder).imageView);
             }
         }
