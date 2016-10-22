@@ -19,6 +19,7 @@ import com.heapot.qianxun.R;
 import com.heapot.qianxun.application.ActivityCollector;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
+import com.heapot.qianxun.util.ChatInfoUtils;
 import com.heapot.qianxun.util.CommonUtil;
 import com.heapot.qianxun.util.LoadTagsUtils;
 import com.heapot.qianxun.util.PreferenceUtil;
@@ -276,6 +277,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                                     //设置全局变量
                                     CustomApplication.TOKEN = token;
                                     CustomApplication.setCurrentPage(ConstantsBean.PAGE_SCIENCE);
+                                    ChatInfoUtils.getFriendsList(token);
                                     //注册成功，跳转页面
                                     LoadTagsUtils.getTags(RegisterActivity.this,token);
                                     //关闭登录和注册页面，因为开始只有这两个活动，完全可以使用finishAll()

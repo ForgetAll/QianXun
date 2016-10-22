@@ -23,6 +23,7 @@ import com.blankj.utilcode.utils.NetworkUtils;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
+import com.heapot.qianxun.util.ChatInfoUtils;
 import com.heapot.qianxun.util.LoadTagsUtils;
 import com.heapot.qianxun.util.PreferenceUtil;
 
@@ -109,6 +110,7 @@ public class SplashActivity extends BaseActivity implements EasyPermissions.Perm
                                     CustomApplication.setCurrentPage(ConstantsBean.PAGE_SCIENCE);
                                     //跳转页面,同时关闭当前页面
                                     LoadTagsUtils.getTags(SplashActivity.this,token);
+                                    ChatInfoUtils.getFriendsList(token);
                                 }
                             }else {
                                 Toast.makeText(SplashActivity.this, "登陆失败，请重新登陆", Toast.LENGTH_SHORT).show();

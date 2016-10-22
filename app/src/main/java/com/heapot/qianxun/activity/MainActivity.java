@@ -42,6 +42,7 @@ import com.heapot.qianxun.bean.Friend;
 import com.heapot.qianxun.bean.MyUserBean;
 import com.heapot.qianxun.bean.SubBean;
 import com.heapot.qianxun.bean.TagsBean;
+import com.heapot.qianxun.util.ChatInfoUtils;
 import com.heapot.qianxun.util.JsonUtil;
 import com.heapot.qianxun.util.PreferenceUtil;
 import com.heapot.qianxun.util.SerializableUtils;
@@ -59,6 +60,7 @@ import java.util.Map;
 
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.UserInfo;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener, RongIM.UserInfoProvider {
@@ -66,13 +68,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private Toolbar mToolBar;
     private ImageView mBanner;
     private TabLayout mTabLayout;
-    private ImageView  mSearch, mNotification, mStar;
+    private ImageView mSubscription, mSearch, mNotification, mStar;
     private ViewPager mViewPager;
     private MainTabFragmentAdapter mPageAdapter;
     private List<SubBean> mList = new ArrayList<>();
     private List<TagsBean.ContentBean> list = new ArrayList<>();
     private FloatingActionButton mCreate;
-    private TextView mainTitle,mSubscription,subTitle;
+    private TextView mainTitle,subTitle;
     private static final String PAGE_SCIENCE = "PAGE_SCIENCE";
     private static final String PAGE_RECRUIT = "PAGE_RECRUIT";
     private static final String PAGE_TRAIN = "PAGE_TRAIN";
@@ -84,20 +86,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private LocalBroadcastManager localBroadcastManager;
 
     //聊天集合
-    List<Friend> friendList = new ArrayList<>();
-    private Friend lostFriend; //缺少的friend
-    private Handler handler = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            if (msg.what == 100){
-                String id = msg.getData().getString("im_id");
-                String name = msg.getData().getString("im_name");
-                String icon = msg.getData().getString("im_icon");
-                lostFriend = new Friend(id,name,icon);
-                Logger.d("id----->"+id);
-            }
-        }
-    };
+    List<Friend.ContentBean> friendList = new ArrayList<>();
+
 
     //主页界面
     @Override
@@ -123,7 +113,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         mStar = (ImageView) findViewById(R.id.iv_star);
         mNotification = (ImageView) findViewById(R.id.iv_notification);
         mBanner = (ImageView) findViewById(R.id.iv_banner);
-        mSubscription = (TextView) findViewById(R.id.iv_subscription_choose);
+        mSubscription = (ImageView) findViewById(R.id.iv_subscription_choose);
         mCreate = (FloatingActionButton) findViewById(R.id.fab_create);
 
         mainTitle = (TextView) findViewById(R.id.txt_first_title);
@@ -135,7 +125,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         //开启融云服务器连接
         getRongToken();
         //获取用户好友信息
-
+//        ChatInfoUtils.getAddFriendsRequestList(CustomApplication.TOKEN);
+        getFriend();
 
         //测试token
         Logger.d("打印本地token-->"+PreferenceUtil.getString("token")+"打印application中的token---》"+ CustomApplication.TOKEN);
@@ -409,11 +400,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     @Override
     public UserInfo getUserInfo(String s) {
-        getLocalFriend();
+
+        getFriend();
+        Logger.d("MainActivity:FriendList----->"+"当前id是---->"+friendList.get(0).getFriendId()+"当前名字是----->"+friendList.get(0).getNickname());
         //循环添加
-        for (Friend i : friendList){
-            if (i.getUserId().equals(s)){
-                return new UserInfo(i.getUserId(),i.getUserName(),Uri.parse(i.getPortraitUri()));
+        if (friendList.size() != 0) {
+            for (Friend.ContentBean i : friendList) {
+                if (i.getFriendId().equals(s)) {
+                    Logger.d("当前id是---->"+i.getFriendId()+"当前名字是----->"+i.getNickname());
+                    return new UserInfo(i.getFriendId(), i.getNickname(), Uri.parse(i.getIcon()));
+                }
             }
         }
         return null;
@@ -545,11 +541,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                     //连接融云成功
                     Logger.d("IM-Success-------->UserId:"+s);
                     CustomApplication.IM_TOKEN = token;
-//                    RongIM.getInstance().startConversationList(MainActivity.this);
-
-//                    Intent intent = new Intent(MainActivity.this,ConversationListActivity.class);
-//                    startActivity(intent);
-
+                    RongIM.getInstance().getRongIMClient().setOnReceiveMessageListener(new RongIMClient.OnReceiveMessageListener() {
+                        @Override
+                        public boolean onReceived(io.rong.imlib.model.Message message, int i) {
+                            Toast.makeText(MainActivity.this, "有新消息来了", Toast.LENGTH_SHORT).show();
+                            ChatInfoUtils.getAddFriendsRequestList(CustomApplication.TOKEN);//测试拿到用户信息并存储
+                            return false;
+                        }
+                    });
 
                 }
 
@@ -561,83 +560,40 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         }
     }
 
-    private void getLocalFriend(){
-        friendList.clear();
-        if (SerializableUtils.getSerializable(this,ConstantsBean.IM_FRIEND) != null){
-            Object objFriend = SerializableUtils.getSerializable(this,ConstantsBean.IM_FRIEND);
-            if (objFriend != null) {
-                friendList.addAll((Collection<? extends Friend>) objFriend);
-                Logger.d("第一次取数据---->"+friendList.size());
-            }
 
+    private void getFriend(){
+        friendList.clear();
+        Object object = SerializableUtils.getSerializable(this,ConstantsBean.IM_FRIEND);
+        if (object!= null){
+            friendList = (List<Friend.ContentBean>) object;
         }
         if (SerializableUtils.getSerializable(this,ConstantsBean.MY_USER_INFO )!=null){
-            Object object = SerializableUtils.getSerializable(this,ConstantsBean.MY_USER_INFO);
-            MyUserBean.ContentBean myUserBean = (MyUserBean.ContentBean) object;
+            Object object2 = SerializableUtils.getSerializable(this,ConstantsBean.MY_USER_INFO);
+            MyUserBean.ContentBean myUserBean = (MyUserBean.ContentBean) object2;
             String name = myUserBean.getNickname();
             String id = myUserBean.getId();
             String icon = myUserBean.getIcon();
-                Friend friend = new Friend(id,name,icon);
-                friendList.add(friend);
+            Friend.ContentBean friend = new Friend.ContentBean();
+            friend.setFriendId(id);
+            friend.setNickname(name);
+            friend.setIcon(icon);
+            friendList.add(friend);
             Logger.d("第二次取数据----->"+friendList.size());
-
         }
 
-        Logger.d("好友列表大小---->"+friendList.size());
-
     }
 
-    private void getFriendFromNetWork(String id){
-        String url = ConstantsBean.BASE_PATH+ConstantsBean.IM_USER_INFO+id;
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                Request.Method.GET, url, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        //所以要取出来原来的数据们然后加入新的一起存取
-                        try {
-                            if (response.getString("status").equals("success")){
-                                MyUserBean userBean = (MyUserBean) JsonUtil.fromJson(String.valueOf(response),MyUserBean.class);
-                                if (userBean!=null) {
-                                    String id = userBean.getContent().getId();
-                                    String name =userBean.getContent().getNickname();
-                                    String icon =userBean.getContent().getIcon();
-                                    Message message = new Message();
-                                    Bundle bundle = new Bundle();
-                                    bundle.putString("im_id",id);
-                                    bundle.putString("im_name",name);
-                                    bundle.putString("im_icon",icon);
-                                    message.setData(bundle);
-                                    message.what=100;
-                                    handler.sendMessage(message);
-
-
-                                }else {
-                                }
-                            }else {
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                }
-        ){
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String,String> headers = new HashMap<>();
-                headers.put(ConstantsBean.KEY_TOKEN, CustomApplication.TOKEN);
-                return headers;
-            }
-        };
-        CustomApplication.getRequestQueue().add(jsonObjectRequest);
+    @Override
+    protected void onRestart() {
+        super.onRestart();
 
 
     }
-
+    private void refreshUserInfo(){
+        //刷新用户信息
+        String id = "";
+        String name = "";
+        String image = "";
+        RongIM.getInstance().refreshUserInfoCache(new UserInfo(id,name,Uri.parse(image)));
+    }
 }

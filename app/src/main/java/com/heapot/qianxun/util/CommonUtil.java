@@ -87,7 +87,7 @@ public class CommonUtil {
     public static String getDateTime(String time){
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         Long d = new Long(time);
-        String date = format.format(new Date(d*1000));
+        String date = format.format(new Date(d));
         return date;
     }
 
