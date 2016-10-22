@@ -31,8 +31,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <LinearLayout
+      android:background="@drawable/bg_create_shape"
+        android:paddingTop="16dp"
         android:id="@+id/create_article"
-        android:layout_margin="10dp"
+     android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="wrap_content"
@@ -41,24 +45,30 @@
             android:layout_gravity="center_horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/imagetest"/>
+            android:src="@mipmap/my_article_two"/>
         <TextView
          android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="创建项目"
-            android:textSize="20sp"/>
+            android:text="创建文章"
+            android:textSize="18sp"
+            android:textColor="#286351"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="10dp"
-            android:text="写篇文章，发个简历"/>
+            android:text="肆无忌惮，畅所欲言"
+            android:textSize="14sp"/>
     </LinearLayout>
     <LinearLayout
+        android:background="@drawable/bg_create_shape"
+        android:paddingTop="16dp"
         android:id="@+id/create_job"
-        android:layout_margin="10dp"
+       android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="wrap_content"
@@ -67,29 +77,34 @@
             android:layout_gravity="center_horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/imagetest"
-            />
+            android:src="@mipmap/my_work_four"
+           />
         <TextView
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="创建工作"
-            android:textSize="20sp"/>
+            android:textSize="18sp"
+            android:textColor="#286351"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="10dp"
-            android:text="写篇文章，发个简历"/>
+            android:text="肆无忌惮，畅所欲言"
+            android:textSize="14sp"/>
     </LinearLayout>
 </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <LinearLayout
+                android:background="@drawable/bg_create_shape"
+                android:paddingTop="16dp"
                 android:id="@+id/create_course"
-                android:layout_margin="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
@@ -98,23 +113,27 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/imagetest"/>
+                    android:src="@mipmap/my_course_sign"/>
                 <TextView
                     android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="创建培训"
-                    android:textSize="20sp"/>
+                    android:textSize="18sp"
+                    android:textColor="#286351"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:padding="10dp"
-                    android:text="写篇文章，发个简历"/>
+                    android:text="肆无忌惮，畅所欲言"
+                    android:textSize="14sp"/>
             </LinearLayout>
             <LinearLayout
-                android:layout_margin="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"

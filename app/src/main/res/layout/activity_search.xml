@@ -74,12 +74,12 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:background="@null"
                 android:gravity="center_vertical"
                 android:hint="检一片叶，索一片天"
                 android:imeOptions="actionSearch"
-                android:padding="10dp"
                 android:singleLine="true"
                 android:textSize="18sp" />
 

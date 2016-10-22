@@ -6,7 +6,7 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.view.View;
 import android.view.animation.Animation;
-import android.widget.TextView;
+import android.widget.LinearLayout;
 
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.bean.ConstantsBean;
@@ -39,13 +39,11 @@ public class PhotoCarmaWindow extends BasePopupWindow implements View.OnClickLis
 
     @Override
     public View getPopupView() {
-        view = View.inflate(mContext, R.layout.pw_sex_layout, null);
-        TextView photoView = (TextView) view.findViewById(R.id.tv_girl);
+        view = View.inflate(mContext, R.layout.camera_layout, null);
+        LinearLayout photoView = (LinearLayout) view.findViewById(R.id.tv_girl);
         photoView.setOnClickListener(this);
-        photoView.setText("相册");
-        TextView carmaView = (TextView) view.findViewById(R.id.tv_boy);
+        LinearLayout carmaView = (LinearLayout) view.findViewById(R.id.tv_boy);
         carmaView.setOnClickListener(this);
-        carmaView.setText("相机");
         return view;
     }
 

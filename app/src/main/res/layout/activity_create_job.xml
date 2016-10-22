@@ -15,7 +15,7 @@
             android:id="@+id/tv_back"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:drawableLeft="@drawable/ic_back"
+            android:drawableLeft="@mipmap/arrow_back_white"
             android:gravity="center_vertical"
             android:maxLines="1"
             android:text="返回"
@@ -54,7 +54,7 @@
                     android:layout_width="80dp"
                     android:layout_height="60dp"
                     android:layout_margin="12dp"
-                    android:src="@drawable/bye" />
+                   android:src="@mipmap/create_job_edit"/>
 
                 <EditText
                     android:id="@+id/et_title"
@@ -62,7 +62,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/iv_image"
-                    android:maxLength="20"
+                    android:maxLength="100"
                     android:background="@null"
                     android:hint="请在此处键入标题"
                     android:textColorHint="#ff0000"/>
@@ -80,16 +80,18 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_margin="12dp"
-                    android:src="@drawable/imagetest" />
+                    android:src="@mipmap/ic_qianxun" />
 
                 <TextView
                     android:id="@+id/tv_companyTitle"
-                    android:layout_width="match_parent"
+                    android:layout_width="250dp"
                     android:layout_height="22dp"
                     android:layout_marginTop="12dp"
                     android:layout_toRightOf="@+id/iv_company"
                     android:text="招聘公司的名字"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:maxLines="1"
+                    android:ellipsize="end"/>
 
                 <TextView
                     android:id="@+id/tv_companyContent"
@@ -122,7 +124,7 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_margin="12dp"
-                    android:src="@drawable/imagetest" />
+                    android:src="@mipmap/ic_qianxun" />
 
                 <EditText
                     android:id="@+id/tv_maxTitle"
@@ -167,7 +169,7 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_margin="12dp"
-                    android:src="@drawable/imagetest" />
+                    android:src="@mipmap/ic_qianxun"/>
 
                 <EditText
                     android:id="@+id/tv_minTitle"
@@ -212,7 +214,7 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_margin="12dp"
-                    android:src="@drawable/imagetest" />
+                    android:src="@mipmap/ic_qianxun"/>
 
                 <EditText
                     android:id="@+id/tv_sumTitle"
@@ -274,11 +276,11 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_margin="12dp"
-                    android:src="@drawable/imagetest" />
+                    android:src="@mipmap/ic_qianxun"/>
 
                 <TextView
                     android:id="@+id/tv_detailTitle"
-                    android:layout_width="match_parent"
+                    android:layout_width="250dp"
                     android:layout_height="22dp"
                     android:layout_marginTop="12dp"
                     android:layout_toRightOf="@+id/iv_detail"
@@ -317,7 +319,7 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_margin="12dp"
-                    android:src="@drawable/imagetest" />
+                    android:src="@mipmap/ic_qianxun"/>
 
                 <TextView
                     android:id="@+id/tv_describeTitle"
@@ -332,7 +334,7 @@
 
                 <TextView
                     android:id="@+id/tv_describeContent"
-                    android:layout_width="match_parent"
+                    android:layout_width="250dp"
                     android:layout_height="18dp"
                     android:layout_below="@+id/tv_describeTitle"
                     android:layout_marginBottom="12dp"

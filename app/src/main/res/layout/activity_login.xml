@@ -25,14 +25,14 @@
             android:layout_height="wrap_content"
             android:padding="5dp"
             android:gravity="center"
-            android:text="人生怎能无态度"
+            android:text="人生的改变"
             android:textSize="16sp"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp"
             android:gravity="center"
-            android:text="回到仟询，抒发，不再压抑"
+            android:text="源于你这次的到来"
             android:textSize="16sp"/>
         <LinearLayout
             android:layout_width="match_parent"

@@ -13,7 +13,7 @@
             android:id="@+id/tv_back"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:drawableLeft="@drawable/ic_back"
+            android:drawableLeft="@mipmap/arrow_back_white"
             android:gravity="center_vertical"
             android:maxLines="1"
             android:text="返回"
