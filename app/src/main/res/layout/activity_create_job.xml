@@ -64,7 +64,8 @@
                     android:layout_toRightOf="@+id/iv_image"
                     android:maxLength="20"
                     android:background="@null"
-                    android:hint="请在此处键入标题" />
+                    android:hint="请在此处键入标题"
+                    android:textColorHint="#ff0000"/>
             </RelativeLayout>
 
             <RelativeLayout
@@ -132,7 +133,8 @@
                     android:hint="请输入平均工资"
                     android:textSize="18sp"
                     android:background="@null"
-                    android:inputType="number"/>
+                    android:inputType="number"
+                    android:textColorHint="#ff0000"/>
 
                 <TextView
                     android:id="@+id/tv_maxContent"
@@ -176,7 +178,8 @@
                     android:hint="请输入最低工资"
                     android:textSize="18sp"
                     android:background="@null"
-                    android:inputType="number"/>
+                    android:inputType="number"
+                    android:textColorHint="#ff0000"/>
 
                 <TextView
                     android:id="@+id/tv_minContent"
@@ -220,7 +223,8 @@
                     android:hint="请输入招聘人数"
                     android:textSize="18sp"
                     android:background="@null"
-                    android:inputType="number"/>
+                    android:inputType="number"
+                    android:textColorHint="#ff0000"/>
 
                 <TextView
                     android:id="@+id/tv_sumContent"
