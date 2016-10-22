@@ -52,7 +52,7 @@ public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     private int mPage;
     private String mId;//记录当前页面对应标签的id
     private int pageIndex = 1;//记录加载第几页的书
-    private int pageSize = 3;//记录每页加载数据的大小
+    private int pageSize = 6;//记录每页加载数据的大小
     private int maxPageIndex = 1;//网络请求获取到最大页码进行限制
     View mView;
     private Integer[] colorArray = {android.R.color.holo_green_light,android.R.color.holo_blue_light,android.R.color.holo_purple,android.R.color.holo_orange_light};
