@@ -4,29 +4,31 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * Created by Karl on 2016/10/20.
- * desc: 聊天好友列表
+ * Created by Karl on 2016/10/22.
+ * desc: 好友请求列表
  *
  */
 
-public class Friend implements Serializable {
+public class FriendRequestBean implements Serializable{
 
     /**
      * status : success
      * message :
-     * content : [{"id":"204e0d1213734c308e0f06239ccadf35","userId":"f535188fed1f42cbba12e39960bb62ed","friendId":"2579f5a10a3b47ca9c0e2289e7096786","nickname":"小孟","icon":"http://odxpoei6h.bkt.clouddn.com/qianxun5809bc219ad4d.jpg","remark":null,"description":null}]
+     * content : [{"id":"5047f89277e94d519300cb867706ceb8","userId":"2579f5a10a3b47ca9c0e2289e7096786","friendId":"f535188fed1f42cbba12e39960bb62ed","nickname":"coderfan","icon":"http://odxpoei6h.bkt.clouddn.com/qianxun58085b58bb963.jpg","remark":null,"requestDescription":null,"processDescription":null,"status":1}]
      */
 
     private String status;
     private String message;
     /**
-     * id : 204e0d1213734c308e0f06239ccadf35
-     * userId : f535188fed1f42cbba12e39960bb62ed
-     * friendId : 2579f5a10a3b47ca9c0e2289e7096786
-     * nickname : 小孟
-     * icon : http://odxpoei6h.bkt.clouddn.com/qianxun5809bc219ad4d.jpg
+     * id : 5047f89277e94d519300cb867706ceb8
+     * userId : 2579f5a10a3b47ca9c0e2289e7096786
+     * friendId : f535188fed1f42cbba12e39960bb62ed
+     * nickname : coderfan
+     * icon : http://odxpoei6h.bkt.clouddn.com/qianxun58085b58bb963.jpg
      * remark : null
-     * description : null
+     * requestDescription : null
+     * processDescription : null
+     * status : 1
      */
 
     private List<ContentBean> content;
@@ -62,7 +64,9 @@ public class Friend implements Serializable {
         private String nickname;
         private String icon;
         private Object remark;
-        private Object description;
+        private Object requestDescription;
+        private Object processDescription;
+        private int status;
 
         public String getId() {
             return id;
@@ -112,12 +116,28 @@ public class Friend implements Serializable {
             this.remark = remark;
         }
 
-        public Object getDescription() {
-            return description;
+        public Object getRequestDescription() {
+            return requestDescription;
         }
 
-        public void setDescription(Object description) {
-            this.description = description;
+        public void setRequestDescription(Object requestDescription) {
+            this.requestDescription = requestDescription;
+        }
+
+        public Object getProcessDescription() {
+            return processDescription;
+        }
+
+        public void setProcessDescription(Object processDescription) {
+            this.processDescription = processDescription;
+        }
+
+        public int getStatus() {
+            return status;
+        }
+
+        public void setStatus(int status) {
+            this.status = status;
         }
     }
 }

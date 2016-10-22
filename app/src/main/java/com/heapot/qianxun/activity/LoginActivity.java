@@ -24,6 +24,7 @@ import com.heapot.qianxun.R;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.bean.SubscribedBean;
+import com.heapot.qianxun.util.ChatInfoUtils;
 import com.heapot.qianxun.util.CommonUtil;
 import com.heapot.qianxun.util.LoadTagsUtils;
 import com.heapot.qianxun.util.PreferenceUtil;
@@ -139,8 +140,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                                     PreferenceUtil.putString("token", token);
                                     PreferenceUtil.putString("phone", username);
                                     PreferenceUtil.putString("password", password);
+                                    ChatInfoUtils.getFriendsList(token);
                                     LoadTagsUtils.getTags(LoginActivity.this,token);//加载数据并存储
-                                                                    }
+                                }
                             } else {
                                 Toast.makeText(LoginActivity.this, "登陆失败" + response.get("message"), Toast.LENGTH_SHORT).show();
                             }

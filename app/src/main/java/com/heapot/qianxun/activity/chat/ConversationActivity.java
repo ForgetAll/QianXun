@@ -19,6 +19,7 @@ import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.bean.Friend;
 import com.heapot.qianxun.bean.MyUserBean;
+import com.heapot.qianxun.util.ChatInfoUtils;
 import com.heapot.qianxun.util.JsonUtil;
 import com.heapot.qianxun.util.SerializableUtils;
 import com.orhanobut.logger.Logger;
