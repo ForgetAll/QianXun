@@ -135,7 +135,6 @@ public class CreateActivity extends BaseActivity implements View.OnClickListener
                     @Override
                     public void onResponse(JSONObject response) {
                         Logger.json(String.valueOf(response));
-                        Log.e("所有的Json数据：",response.toString());
                         try {
                             String status = response.getString("status");
                             if (status.equals("success")){

@@ -11,6 +11,8 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.os.Process;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -45,6 +47,9 @@ import com.heapot.qianxun.bean.Friend;
 import com.heapot.qianxun.bean.MyUserBean;
 import com.heapot.qianxun.bean.SubBean;
 import com.heapot.qianxun.bean.TagsBean;
+import com.heapot.qianxun.helper.listener.LoadUserInfo;
+import com.heapot.qianxun.helper.listener.OnResponseListener;
+import com.heapot.qianxun.util.JsonUtil;
 import com.heapot.qianxun.util.SerializableUtils;
 import com.heapot.qianxun.util.PreferenceUtil;
 import com.heapot.qianxun.util.TagsUtils;
@@ -90,6 +95,19 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     //聊天集合
     List<Friend> friendList = new ArrayList<>();
+    private Friend lostFriend; //缺少的friend
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == 100){
+                String id = msg.getData().getString("im_id");
+                String name = msg.getData().getString("im_name");
+                String icon = msg.getData().getString("im_icon");
+                lostFriend = new Friend(id,name,icon);
+                Logger.d("id----->"+id);
+            }
+        }
+    };
 
     //主页界面
     @Override
@@ -402,8 +420,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     public UserInfo getUserInfo(String s) {
         getLocalFriend();
-        Logger.d(friendList.size());
-        Toast.makeText(this, "Friend------------->"+friendList.size(), Toast.LENGTH_SHORT).show();
         //循环添加
         for (Friend i : friendList){
             if (i.getUserId().equals(s)){
@@ -578,6 +594,59 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         }
 
         Logger.d("好友列表大小---->"+friendList.size());
+
+    }
+
+    private void getFriendFromNetWork(String id){
+        String url = ConstantsBean.BASE_PATH+ConstantsBean.IM_USER_INFO+id;
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        //所以要取出来原来的数据们然后加入新的一起存取
+                        try {
+                            if (response.getString("status").equals("success")){
+                                MyUserBean userBean = (MyUserBean) JsonUtil.fromJson(String.valueOf(response),MyUserBean.class);
+                                if (userBean!=null) {
+                                    String id = userBean.getContent().getId();
+                                    String name =userBean.getContent().getNickname();
+                                    String icon =userBean.getContent().getIcon();
+                                    Message message = new Message();
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("im_id",id);
+                                    bundle.putString("im_name",name);
+                                    bundle.putString("im_icon",icon);
+                                    message.setData(bundle);
+                                    message.what=100;
+                                    handler.sendMessage(message);
+
+
+                                }else {
+                                }
+                            }else {
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }
+        ){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> headers = new HashMap<>();
+                headers.put(ConstantsBean.KEY_TOKEN, CustomApplication.TOKEN);
+                return headers;
+            }
+        };
+        CustomApplication.getRequestQueue().add(jsonObjectRequest);
+
 
     }
 

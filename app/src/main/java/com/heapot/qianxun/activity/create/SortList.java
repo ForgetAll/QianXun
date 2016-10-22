@@ -119,7 +119,7 @@ public class SortList extends BaseActivity implements View.OnClickListener, Adap
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+        Toast.makeText(this, "提交中请稍等", Toast.LENGTH_SHORT).show();
         request = request +",\"catalogId\":\""+tagList.get(position).getId()+"\"}";
         Logger.d(request);
         postArticle(request);
@@ -155,7 +155,7 @@ public class SortList extends BaseActivity implements View.OnClickListener, Adap
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        Toast.makeText(SortList.this, ""+error, Toast.LENGTH_SHORT).show();
                     }
                 }
         ){
