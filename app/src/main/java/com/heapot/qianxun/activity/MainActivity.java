@@ -168,6 +168,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         if (mList.size() == 0){
             Toast.makeText(MainActivity.this, "快去订阅标签", Toast.LENGTH_SHORT).show();
         }
+
+        mainTitle.setOnClickListener(this);
+        subTitle.setOnClickListener(this);
     }
 
 
@@ -246,6 +249,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             case R.id.fab_create:
                 Intent createIntent = new Intent(this,CreateActivity.class);
                 startActivity(createIntent);
+                break;
+            case R.id.txt_first_title:
+
+                break;
+            case R.id.txt_second_title:
                 break;
         }
     }
