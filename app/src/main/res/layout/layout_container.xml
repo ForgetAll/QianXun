@@ -42,7 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="48dp"
         android:layout_marginRight="10dp"
-        android:src="@drawable/ic_add_24"
+        android:src="@drawable/add"
         android:elevation="5dp"
         app:backgroundTint="@color/fab_ripple"
         app:layout_anchor = "@id/main_view_pager"

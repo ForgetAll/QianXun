@@ -10,8 +10,6 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.os.Process;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -43,7 +41,6 @@ import com.heapot.qianxun.bean.MyUserBean;
 import com.heapot.qianxun.bean.SubBean;
 import com.heapot.qianxun.bean.TagsBean;
 import com.heapot.qianxun.util.ChatInfoUtils;
-import com.heapot.qianxun.util.JsonUtil;
 import com.heapot.qianxun.util.PreferenceUtil;
 import com.heapot.qianxun.util.SerializableUtils;
 import com.heapot.qianxun.util.TagsUtils;
@@ -60,7 +57,6 @@ import java.util.Map;
 
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
-import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.UserInfo;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener, RongIM.UserInfoProvider {
@@ -68,13 +64,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private Toolbar mToolBar;
     private ImageView mBanner;
     private TabLayout mTabLayout;
-    private ImageView mSubscription, mSearch, mNotification, mStar;
+    private ImageView  mSearch, mNotification, mStar;
     private ViewPager mViewPager;
     private MainTabFragmentAdapter mPageAdapter;
     private List<SubBean> mList = new ArrayList<>();
     private List<TagsBean.ContentBean> list = new ArrayList<>();
     private FloatingActionButton mCreate;
-    private TextView mainTitle,subTitle;
+    private TextView mSubscription,mainTitle,subTitle;
     private static final String PAGE_SCIENCE = "PAGE_SCIENCE";
     private static final String PAGE_RECRUIT = "PAGE_RECRUIT";
     private static final String PAGE_TRAIN = "PAGE_TRAIN";
@@ -113,7 +109,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         mStar = (ImageView) findViewById(R.id.iv_star);
         mNotification = (ImageView) findViewById(R.id.iv_notification);
         mBanner = (ImageView) findViewById(R.id.iv_banner);
-        mSubscription = (ImageView) findViewById(R.id.iv_subscription_choose);
+        mSubscription = (TextView) findViewById(R.id.iv_subscription_choose);
         mCreate = (FloatingActionButton) findViewById(R.id.fab_create);
 
         mainTitle = (TextView) findViewById(R.id.txt_first_title);
