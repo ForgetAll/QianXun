@@ -35,7 +35,7 @@ public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.SubscribedView
 
     @Override
     public SubscribedViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.subscription_item,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.tags_item,parent,false);
         SubscribedViewHolder holder = new SubscribedViewHolder(view);
 
         //创建View的点击事件
@@ -88,7 +88,7 @@ public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.SubscribedView
         TextView textView;
         public SubscribedViewHolder(View itemView) {
             super(itemView);
-            textView = (TextView) itemView.findViewById(R.id.txt_subscribed_item);
+            textView = (TextView) itemView.findViewById(R.id.txt_tags_item);
         }
     }
 }
