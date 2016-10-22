@@ -23,7 +23,7 @@
         android:layout_height="match_parent"
         android:layout_marginLeft="@dimen/margin_horizontal"
         android:layout_marginRight="@dimen/margin_horizontal"
-      android:text="订阅"
+        android:text="订阅"
         android:textColor="#ffffff"
         android:gravity="center_vertical"/>
 

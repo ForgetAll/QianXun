@@ -68,13 +68,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private Toolbar mToolBar;
     private ImageView mBanner;
     private TabLayout mTabLayout;
-    private ImageView mSubscription, mSearch, mNotification, mStar;
+    private ImageView mSearch, mNotification, mStar;
     private ViewPager mViewPager;
     private MainTabFragmentAdapter mPageAdapter;
     private List<SubBean> mList = new ArrayList<>();
     private List<TagsBean.ContentBean> list = new ArrayList<>();
     private FloatingActionButton mCreate;
-    private TextView mainTitle,subTitle;
+    private TextView mSubscription,mainTitle,subTitle;
     private static final String PAGE_SCIENCE = "PAGE_SCIENCE";
     private static final String PAGE_RECRUIT = "PAGE_RECRUIT";
     private static final String PAGE_TRAIN = "PAGE_TRAIN";
@@ -113,7 +113,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         mStar = (ImageView) findViewById(R.id.iv_star);
         mNotification = (ImageView) findViewById(R.id.iv_notification);
         mBanner = (ImageView) findViewById(R.id.iv_banner);
-        mSubscription = (ImageView) findViewById(R.id.iv_subscription_choose);
+        mSubscription = (TextView) findViewById(R.id.iv_subscription_choose);
         mCreate = (FloatingActionButton) findViewById(R.id.fab_create);
 
         mainTitle = (TextView) findViewById(R.id.txt_first_title);
