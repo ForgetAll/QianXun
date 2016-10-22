@@ -41,6 +41,7 @@ import com.heapot.qianxun.bean.MyUserBean;
 import com.heapot.qianxun.bean.SubBean;
 import com.heapot.qianxun.bean.TagsBean;
 import com.heapot.qianxun.util.ChatInfoUtils;
+import com.heapot.qianxun.util.JsonUtil;
 import com.heapot.qianxun.util.PreferenceUtil;
 import com.heapot.qianxun.util.SerializableUtils;
 import com.heapot.qianxun.util.TagsUtils;
@@ -57,6 +58,7 @@ import java.util.Map;
 
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.UserInfo;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener, RongIM.UserInfoProvider {

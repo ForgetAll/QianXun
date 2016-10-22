@@ -74,7 +74,7 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
         //初始化数据
         initData();
         // 已订阅列表，含拖拽功能
-        gridLayoutManager = new GridLayoutManager(this,5){
+        gridLayoutManager = new GridLayoutManager(this,4){
             @Override
             public boolean canScrollVertically() {
                 return false;
