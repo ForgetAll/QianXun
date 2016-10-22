@@ -16,7 +16,7 @@ public class ToastUtil {
      * @param tip 提示的字符串
      */
     public static void show(String tip) {
-        Toast.makeText(CustomApplication.context, tip, Toast.LENGTH_LONG).show();
+        Toast.makeText(CustomApplication.context, tip, Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -25,6 +25,6 @@ public class ToastUtil {
      * @param resId 提示的资源id
      */
     public static void show(int resId) {
-        Toast.makeText(CustomApplication.context, resId, Toast.LENGTH_LONG).show();
+        Toast.makeText(CustomApplication.context, resId, Toast.LENGTH_SHORT).show();
     }
 }
