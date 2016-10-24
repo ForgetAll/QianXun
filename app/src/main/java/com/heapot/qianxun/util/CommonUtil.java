@@ -108,16 +108,16 @@ public class CommonUtil {
     }
 
     //加载头像
-    /*public static void loadUserImage(final ImageView imageView, String path, int defaultImage) {
-        Glide.with(context).load(path).placeholder(defaultImage).error(defaultImage).diskCacheStrategy(DiskCacheStrategy.ALL)
-                .bitmapTransform(new GlideCircleTransform(context)).into(new SimpleTarget<GlideDrawable>() {
+  /*  public static void loadUserImage(final ImageView imageView, String path, int defaultImage) {
+        Glide.with(CustomApplication.getContext()).load(path).placeholder(defaultImage).error(defaultImage).diskCacheStrategy(DiskCacheStrategy.ALL)
+                .bitmapTransform(new GlideCircleTransform(CustomApplication.getContext())).into(new SimpleTarget<GlideDrawable>() {
             @Override
             public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
                 imageView.setImageDrawable(resource);
             }
         });
-    }*/
-
+    }
+*/
     //加载图片
     public static void loadImage(final ImageView imageView, String path, int defaultImage) {
         Glide.with(CustomApplication.getContext()).load(path).placeholder(defaultImage).error(defaultImage).diskCacheStrategy(DiskCacheStrategy.ALL)
