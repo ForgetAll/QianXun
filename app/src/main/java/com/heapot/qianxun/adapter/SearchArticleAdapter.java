@@ -55,7 +55,11 @@ public class SearchArticleAdapter extends BaseAdapter {
         }
         SearchBean.ContentBean.RowsBean bean = rowsList.get(position);
         bean.getId();
-        viewHolder.tv_searchItem.setText(bean.getHighlightTitle());
+        String title=bean.getHighlightTitle();
+       String result1=title.replace("<em>","");
+        String result2=result1.replace("</em>","");
+
+        viewHolder.tv_searchItem.setText(result2 );
         return convertView;
     }
 

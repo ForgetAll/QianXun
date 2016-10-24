@@ -14,7 +14,7 @@
         <android.support.design.widget.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:contentScrim="@android:color/holo_blue_light"
+            app:contentScrim="@color/myGreen"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
             <ImageView

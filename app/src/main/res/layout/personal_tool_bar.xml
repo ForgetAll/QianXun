@@ -16,7 +16,7 @@
                 android:id="@+id/iv_headUrl"
                 android:layout_width="112px"
                 android:layout_height="112px"
-                android:src="@drawable/imagetest"
+                android:src="@mipmap/ic_qianxun"
                 android:layout_marginRight="12dp"
                 android:background="@drawable/bg_head_image_shape"/>
             <RelativeLayout

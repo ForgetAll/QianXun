@@ -7,7 +7,7 @@
     android:layout_marginBottom="2dp"
     android:layout_marginLeft="2dp"
     android:layout_marginRight="2dp"
-    android:background="@color/background_blue"
+    android:background="@color/myGreen"
     android:gravity="center"
     android:layout_gravity="center">
     <TextView

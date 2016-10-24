@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.bean.TagsBean;
 import com.heapot.qianxun.helper.OnRecyclerViewItemClickListener;
-import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,13 +57,13 @@ public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.SubscribedView
         if (status == 0){
             holder.textView.setText(desc);
             holder.textView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-            holder.textView.setBackgroundColor(context.getResources().getColor(R.color.background_white));
-            holder.textView.setTextColor(context.getResources().getColor(R.color.background_blue));
+            holder.textView.setBackgroundColor(context.getResources().getColor(R.color.myGreen_min));
+            holder.textView.setTextColor(context.getResources().getColor(R.color.myGreen));
             holder.textView.setGravity(Gravity.CENTER);
         }else if (status ==1){//状态为1，是已订阅
             holder.textView.setText(name);
             holder.textView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-            holder.textView.setBackgroundColor(context.getResources().getColor(R.color.background_blue));
+            holder.textView.setBackgroundColor(context.getResources().getColor(R.color.myGreen));
             holder.textView.setTextColor(context.getResources().getColor(R.color.background_white));
             holder.textView.setGravity(Gravity.CENTER);
         }

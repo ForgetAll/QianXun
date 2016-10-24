@@ -1,6 +1,5 @@
 package com.heapot.qianxun.activity;
 
-import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
@@ -10,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.adapter.SubAdapter;
@@ -19,7 +17,6 @@ import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.bean.SubBean;
 import com.heapot.qianxun.bean.TagsBean;
-import com.heapot.qianxun.helper.ItemTouchHelperCallback;
 import com.heapot.qianxun.helper.OnRecyclerViewItemClickListener;
 import com.heapot.qianxun.util.SerializableUtils;
 import com.orhanobut.logger.Logger;
@@ -28,9 +25,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
-import pub.devrel.easypermissions.AfterPermissionGranted;
-import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * Created by Karl on 2016/8/29.
@@ -83,9 +77,9 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
         sub.setLayoutManager(gridLayoutManager);
         subAdapter = new SubAdapter(Subscription.this,subList);
         sub.setAdapter(subAdapter);
-        ItemTouchHelper.Callback callback = new ItemTouchHelperCallback(subAdapter);
+     /*   ItemTouchHelper.Callback callback = new ItemTouchHelperCallback(subAdapter);
         helper = new ItemTouchHelper(callback);
-        helper.attachToRecyclerView(sub);
+        helper.attachToRecyclerView(sub);*/
 
 
         // 全部标签列表，不可拖拽
@@ -103,7 +97,7 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
         tagsAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Toast.makeText(Subscription.this, "点击了", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(Subscription.this, "点击了", Toast.LENGTH_SHORT).show();
                 String id = tagsList.get(position).getId();
                 int status = tagsList.get(position).getSubscribeStatus();
                 if (status == 0){

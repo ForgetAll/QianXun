@@ -129,14 +129,15 @@
                 <EditText
                     android:id="@+id/tv_maxTitle"
                     android:layout_width="200dp"
-                    android:layout_height="22dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:layout_toRightOf="@+id/iv_max"
                     android:hint="请输入平均工资"
                     android:textSize="18sp"
                     android:background="@null"
                     android:inputType="number"
-                    android:textColorHint="#ff0000"/>
+                    android:textColorHint="#ff0000"
+                    android:maxLength="10"/>
 
                 <TextView
                     android:id="@+id/tv_maxContent"
@@ -174,14 +175,15 @@
                 <EditText
                     android:id="@+id/tv_minTitle"
                     android:layout_width="200dp"
-                    android:layout_height="22dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:layout_toRightOf="@+id/iv_min"
                     android:hint="请输入最低工资"
                     android:textSize="18sp"
                     android:background="@null"
                     android:inputType="number"
-                    android:textColorHint="#ff0000"/>
+                    android:textColorHint="#ff0000"
+                    android:maxLength="10"/>
 
                 <TextView
                     android:id="@+id/tv_minContent"
@@ -219,14 +221,15 @@
                 <EditText
                     android:id="@+id/tv_sumTitle"
                     android:layout_width="200dp"
-                    android:layout_height="22dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:layout_toRightOf="@+id/iv_sum"
                     android:hint="请输入招聘人数"
                     android:textSize="18sp"
                     android:background="@null"
                     android:inputType="number"
-                    android:textColorHint="#ff0000"/>
+                    android:textColorHint="#ff0000"
+                    android:maxLength="10"/>
 
                 <TextView
                     android:id="@+id/tv_sumContent"
@@ -294,7 +297,7 @@
                     android:layout_below="@+id/tv_detailTitle"
                     android:layout_marginBottom="12dp"
                     android:layout_toRightOf="@+id/iv_detail"
-                    android:text="辅助精确搜索"
+                    android:text="一种类型只能发布一条招聘"
                     android:textSize="14sp" />
 
                 <TextView

@@ -9,15 +9,10 @@ import android.widget.TextView;
 
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.bean.SubBean;
-import com.heapot.qianxun.bean.SubscribedBean;
-import com.heapot.qianxun.helper.ItemTouchHelperAdapter;
 import com.heapot.qianxun.helper.OnRecyclerViewItemClickListener;
-import com.heapot.qianxun.util.JsonUtil;
-import com.heapot.qianxun.util.PreferenceUtil;
 import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -25,7 +20,9 @@ import java.util.List;
  * 拖拽页面适配器
  *
  */
-public class SubAdapter extends RecyclerView.Adapter<SubAdapter.DragViewHolder> implements ItemTouchHelperAdapter, View.OnClickListener {
+public class SubAdapter extends RecyclerView.Adapter<SubAdapter.DragViewHolder> implements
+//        ItemTouchHelperAdapter,
+        View.OnClickListener {
     private Context context;
     private List<SubBean> mList = new ArrayList<>();
     private OnRecyclerViewItemClickListener listener = null;
@@ -56,19 +53,19 @@ public class SubAdapter extends RecyclerView.Adapter<SubAdapter.DragViewHolder> 
         return mList.size();
     }
 
-    @Override
-    public boolean onItemMove(int fromPosition, int toPosition) {
-        Collections.swap(mList,fromPosition,toPosition);
-        notifyItemMoved(fromPosition,toPosition);
-        PreferenceUtil.putString("Subscribed",JsonUtil.toJson(mList));
-        return true;
-    }
-
-    @Override
-    public void onItemDismiss(int position) {
-        mList.remove(position);
-        notifyItemRemoved(position);
-    }
+//    @Override
+//    public boolean onItemMove(int fromPosition, int toPosition) {
+//        Collections.swap(mList,fromPosition,toPosition);
+//        notifyItemMoved(fromPosition,toPosition);
+//        PreferenceUtil.putString("Subscribed",JsonUtil.toJson(mList));
+//        return false;
+//    }
+//
+//    @Override
+//    public void onItemDismiss(int position) {
+//        mList.remove(position);
+//        notifyItemRemoved(position);
+//    }
 
     @Override
     public void onClick(View v) {

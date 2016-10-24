@@ -16,10 +16,11 @@
     <color name="background_blue">#2B4062</color>
     <color name="background_white">#E8ECED</color>
 
-    <color name="myGreen">#2EBF93</color>
-    <color name="myGreen_light">#34d9a7</color>
-
+    <color name="myGreen">#2b6151</color>
+    <color name="myGreen_light">#2b6151</color>
+    <color name="myGreen_middle">#2ebf93</color>
+    <!--<color name="myGreen">#34d9a7</color>-->
     <color name="fab_ripple">#2EBF93</color>
-
+    <color name="myGreen_min">#e8edec</color>
     <color name="create_des">#e70d0d</color>
 </resources>
