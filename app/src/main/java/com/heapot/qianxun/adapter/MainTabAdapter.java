@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -85,12 +84,13 @@ public class MainTabAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             String image = mList.get(position).getImages();
             ((MainTabViewHolder) holder).mTitle.setText(title);
             ((MainTabViewHolder) holder).mTime.setText("发布时间：" + CommonUtil.getDateTime(time));
-            if (image.equals("")||image == null) {
+          /*  if (image.equals("")||image == null) {
                 ((MainTabViewHolder) holder).imageView.setVisibility(View.GONE);
             }else {
                 ((MainTabViewHolder) holder).imageView.setVisibility(View.VISIBLE);
                 Glide.with(context).load(image).into(((MainTabViewHolder) holder).imageView);
-            }
+            }*/
+            Glide.with(context).load(image).error(R.mipmap.ic_zhanweitu).into(((MainTabViewHolder) holder).imageView);
         }
     }
     public void isShowFooter(boolean showFooter){

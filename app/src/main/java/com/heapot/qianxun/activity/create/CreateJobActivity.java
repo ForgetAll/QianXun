@@ -340,10 +340,10 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
         Intent intent = new Intent("com.android.camera.action.CROP");
         intent.setDataAndType(uri, "image/*");
         intent.putExtra("crop", "true");
-        intent.putExtra("aspectX", 1);
-        intent.putExtra("aspectY", 1);
-        intent.putExtra("outputX", 90);
-        intent.putExtra("outputY", 90);
+        intent.putExtra("aspectX", 4);
+        intent.putExtra("aspectY", 3);
+        intent.putExtra("outputX", 150);
+        intent.putExtra("outputY", 150);
         intent.putExtra("scale", true);
         intent.putExtra("return-data", false);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, outuri);

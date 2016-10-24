@@ -2,7 +2,6 @@ package com.heapot.qianxun.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,13 +47,13 @@ public class PersonalArticleRecyclerViewAdapter extends RecyclerView.Adapter<Per
         holder.mTitle.setText(title);
         holder.articleType.setText("文章类型：" + articleList.get(position).getCatalog().getName());
         Log.e("适配器的数据", String.valueOf(articleList.size()));
-        if (!TextUtils.isEmpty(image)) {
+       /* if (!TextUtils.isEmpty(image)) {
             holder.imageView.setVisibility(View.VISIBLE);
             Glide.with(context).load(image).into(holder.imageView);
         } else {
             holder.imageView.setVisibility(View.GONE);
-        }
-        // Glide.with(context).load(image).error(R.mipmap.imagetest).into( holder.imageView);
+        }*/
+        Glide.with(context).load(image).error(R.mipmap.ic_zhanweitu).into( holder.imageView);
     }
 
     @Override
