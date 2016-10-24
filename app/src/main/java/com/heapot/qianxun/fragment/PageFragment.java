@@ -232,57 +232,6 @@ public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
         }
     };
-    /**
-     * Banner的图片
-     */
-    private void setTabBanner(String id){
-        final String url = ConstantsBean.GET_LIST_WITH_TAG+"catalogId=" +id;
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                Request.Method.GET, url, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Logger.json(String.valueOf(response));
-                        try {
-                            if (response.getString("return_code").equals("success")) {
-                                int pos = response.getInt("total_page");
-                                if (pos != 0) {
-                                    JSONArray jsonArray = response.getJSONArray("content");
-                                    JSONObject jsonObject = jsonArray.getJSONObject(0);
-                                    String image_url = jsonObject.getString("images");
-
-                                    if (image_url != null || !image_url.equals("")) {
-                                        Logger.d("超级标签的Banner----->" + image_url+",开始发送广播");
-                                        ((MainActivity)mActivity).setBanner(url);
-//                                        sendBroadcast(image_url);
-                                    }
-                                }
-                            }else {
-                                Logger.d("请求图片失败");
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                }
-        );
-        CustomApplication.getRequestQueue().add(jsonObjectRequest);
-    }
-//    private void sendBroadcast(String url){
-//        Logger.d("发送广播开始");
-//        Intent intent = new Intent("com.karl.refresh");
-//        intent.putExtra("status",6);
-//        intent.putExtra("imageUrl",url);
-//        LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(getActivity());
-//        localBroadcastManager.sendBroadcast(intent);
-//    }
-
 //    懒加载实现
 
 
