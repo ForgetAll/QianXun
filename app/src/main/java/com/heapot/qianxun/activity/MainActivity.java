@@ -32,6 +32,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.bumptech.glide.Glide;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.activity.create.CreateActivity;
 import com.heapot.qianxun.adapter.MainTabFragmentAdapter;
@@ -116,7 +117,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         mainTitle = (TextView) findViewById(R.id.txt_first_title);
         subTitle = (TextView) findViewById(R.id.txt_second_title);
 
-
+        //加载Banner的图片
+        Glide.with(this).load("http://114.215.252.158/banner.png").into(mBanner);
         //注册本地广播
         localReceiver();
         //开启融云服务器连接
