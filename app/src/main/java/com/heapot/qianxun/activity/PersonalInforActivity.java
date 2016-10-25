@@ -76,6 +76,7 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
                         userBean.setIcon(path);
                         personalStatus = 1;
                         SerializableUtils.setSerializable(activity, ConstantsBean.MY_USER_INFO, userBean);
+                        PreferenceUtil.putString(ConstantsBean.userImage, path);
                         String body3 = "{\"icon\":\"" +userBean.getIcon() + "\"}";
                         updateUserInfo(body3);
                     } catch (JSONException e) {

@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:layout_gravity="end"
-            android:src="@mipmap/ic_lcose"/>
+            android:src="@mipmap/ic_close_two"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

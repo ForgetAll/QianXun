@@ -2,14 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:roundImageattr="http://schemas.android.com/apk/res/com.heapot.qianxun"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_margin="5dp">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#cccccc"/>
+
 
     <LinearLayout
         android:orientation="horizontal"
@@ -18,7 +16,7 @@
         android:paddingLeft="1dp"
         android:paddingBottom="1dp"
         android:padding="13dp"
-        android:layout_height="100dp">
+        android:layout_height="102.5dp">
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -52,9 +50,20 @@
         <LinearLayout
             android:layout_width="102dp"
             android:layout_height="76.5dp">
-            <ImageView
+            <com.heapot.qianxun.widget.RoundImageView
                 android:id="@+id/iv_main_list_image"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/main_item_width"
+                android:layout_height="@dimen/main_item_height"
+                android:background="@null"
+                android:clickable="false"
+                android:focusable="false"
+                android:scaleType="fitCenter"
+                roundImageattr:corner_radius="3dp"
+                roundImageattr:type="round"
+                />
+            <ImageView
+                android:visibility="gone"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="fitCenter"
                 android:layout_gravity="center"
@@ -62,4 +71,8 @@
         </LinearLayout>
 
     </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#cccccc"/>
 </LinearLayout>

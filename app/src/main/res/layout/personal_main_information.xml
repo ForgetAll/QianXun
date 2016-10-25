@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F7F7F7"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    xmlns:roundImageattr="http://schemas.android.com/apk/res/com.heapot.qianxun">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -36,9 +37,22 @@
             <TextView
                 style="@style/TV_Left"
                 android:text="头像" />
-
-            <ImageView
+            <com.heapot.qianxun.widget.RoundImageView
                 android:id="@+id/iv_head"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@null"
+                android:clickable="false"
+                android:focusable="false"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@+id/iv_arrow"
+                android:scaleType="fitCenter"
+                roundImageattr:corner_radius="3dp"
+                roundImageattr:type="round"
+                android:src="@mipmap/ic_qianxun"  />
+            <ImageView
+               android:visibility="gone"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_centerVertical="true"
