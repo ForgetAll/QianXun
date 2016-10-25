@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_margin="5dp">
 
@@ -32,10 +32,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:layout_margin="4dp"
+                android:layout_marginBottom="6dp"
                 android:maxLines="1"
                 android:ellipsize="end"
-                android:textSize="20sp"
+                android:textSize="17sp"
                 android:text="tab下的列表"
                 android:textColor="#333333"/>
 
@@ -44,9 +44,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:layout_margin="4dp"
                 android:text="提示信息"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 android:textColor="#666666"/>
         </LinearLayout>
 
@@ -55,9 +54,9 @@
             android:layout_height="76.5dp">
             <ImageView
                 android:id="@+id/iv_main_list_image"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:scaleType="centerCrop"
+                android:scaleType="fitCenter"
                 android:layout_gravity="center"
                 android:src="@mipmap/ic_launcher"/>
         </LinearLayout>
