@@ -4,11 +4,7 @@ import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
@@ -23,6 +19,7 @@ import com.blankj.utilcode.utils.NetworkUtils;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
+import com.heapot.qianxun.util.ActivityUtil;
 import com.heapot.qianxun.util.ChatInfoUtils;
 import com.heapot.qianxun.util.LoadTagsUtils;
 import com.heapot.qianxun.util.PreferenceUtil;
@@ -42,15 +39,27 @@ import pub.devrel.easypermissions.EasyPermissions;
  */
 public class SplashActivity extends BaseActivity implements EasyPermissions.PermissionCallbacks{
     private ImageView imageView;
+    private boolean isEnter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        //获取是否已经进入引导界面
+        isEnter = PreferenceUtil.getBoolean(ConstantsBean.KEY_SPLASH, false);
+        if (!isEnter) {
+            ActivityUtil.jumpActivity(this, GuideActivity.class);
+            finish();
+        }
         setContentView(R.layout.activity_splash);
-        imageView = (ImageView) findViewById(R.id.iv_start);
+        intView();
 
+    }
+
+    private void intView() {
+        imageView = (ImageView) findViewById(R.id.iv_start);
         final ScaleAnimation scaleAnimation =
-                new ScaleAnimation(1.0f, 1.0f, 1.0f, 1.0f,Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF,0.5f);
+                new ScaleAnimation(1.0f, 1.0f, 1.0f, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF,0.5f);
         scaleAnimation.setFillAfter(true);
         scaleAnimation.setDuration(3000);
         scaleAnimation.setAnimationListener(new Animation.AnimationListener() {
@@ -72,6 +81,7 @@ public class SplashActivity extends BaseActivity implements EasyPermissions.Perm
         });
         imageView.startAnimation(scaleAnimation);
     }
+
     //跳转页面，这个过程中需要进行自动登陆，如果失败自动进入Login页面重新登陆
     private void startActivity(){
         String name = PreferenceUtil.getString("phone");

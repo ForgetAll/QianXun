@@ -48,4 +48,6 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.4.1'
     compile 'com.zhy:okhttputils:2.6.2'
     compile project(':IMKit')
+    /*广告展示*/
+    compile 'com.bigkoo:convenientbanner:2.0.5'
 }
