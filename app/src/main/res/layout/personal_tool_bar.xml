@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:roundImageattr="http://schemas.android.com/apk/res/com.heapot.qianxun"
+    xmlns:roundImageattr="http://schemas.android.com/apk/res-auto"
     android:id="@+id/personal_tool_bar"
     android:orientation="horizontal"
     android:layout_width="match_parent"
