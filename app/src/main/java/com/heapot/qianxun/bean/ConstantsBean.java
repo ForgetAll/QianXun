@@ -10,6 +10,10 @@ import com.heapot.qianxun.application.CustomApplication;
  *
  */
 public class ConstantsBean {
+
+    //是否进入引导界面
+    public static final String KEY_SPLASH = "isEnter";
+
     //基本路径
 //    public static final String BASE_PATH = "http://qianxun.heapot.com/";
     public static final String BASE_PATH = "https://qinxi1992.xicp.net/";

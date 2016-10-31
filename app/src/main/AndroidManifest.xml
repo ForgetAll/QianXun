@@ -99,6 +99,9 @@
         <activity android:name=".activity.create.CreateJobEditActivity"></activity>
         <!--聊天Activity-->
         <!--会话列表-->
+        
+        <!--引导界面-->
+      <activity android:name=".activity.GuideActivity"></activity>
         <activity
             android:name=".activity.chat.ConversationListActivity"
             android:screenOrientation="portrait"

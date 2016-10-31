@@ -107,6 +107,7 @@ public class SystemSettingActivity extends BaseActivity implements View.OnClickL
 //                SerializableUtils.deleteSerializable(this,ConstantsBean.TAG_FILE_NAME);
                 PreferenceUtil.clearPreference();
                 SerializableUtils.deleteSerializable(activity, ConstantsBean.MY_USER_INFO);
+                PreferenceUtil.putBoolean(ConstantsBean.KEY_SPLASH, true);
                 ActivityCollector.finishAll();
                 Intent intent = new Intent(SystemSettingActivity.this, LoginActivity.class);
                 startActivity(intent);
