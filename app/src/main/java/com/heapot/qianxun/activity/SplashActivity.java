@@ -199,23 +199,6 @@ public class SplashActivity extends BaseActivity implements EasyPermissions.Perm
                     .setRequestCode(ConstantsBean.PERMISSION_CODE)
                     .build()
                     .show();
-//            AlertDialog.Builder builder = new AlertDialog.Builder(SplashActivity.this);
-//            builder.setTitle("权限申请说明");
-//            builder.setMessage("拍照/读写是该应用必须的权限，请前往设置中心设置");
-//            builder.setNegativeButton("取消并退出", new DialogInterface.OnClickListener() {
-//                @Override
-//                public void onClick(DialogInterface dialog, int which) {
-//                    finish();
-//                }
-//            });
-//            builder.setPositiveButton("好的，前往设置", new DialogInterface.OnClickListener() {
-//                @Override
-//                public void onClick(DialogInterface dialog, int which) {
-//                    Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-//                    startActivityForResult(intent,ConstantsBean.PERMISSION_CODE);
-//                }
-//            });
-//            builder.show();
 
         }
 
