@@ -5,6 +5,7 @@ import java.util.List;
 
 /**
  * Created by Karl on 2016/9/28.
+ * desc: 订阅标签,记录
  *
  */
 public class SubscribedBean implements Serializable{
