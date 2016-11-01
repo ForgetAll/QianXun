@@ -102,6 +102,10 @@
         
         <!--引导界面-->
       <activity android:name=".activity.GuideActivity"></activity>
+        <!--学校列表-->
+       <activity android:name=".activity.SchoolListActivity"></activity>
+        <!--出生年-->
+        <activity android:name=".activity.BirthActivity"></activity>
         <activity
             android:name=".activity.chat.ConversationListActivity"
             android:screenOrientation="portrait"

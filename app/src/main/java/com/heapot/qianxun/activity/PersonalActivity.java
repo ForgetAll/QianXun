@@ -217,6 +217,11 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
         localBroadcastManager.unregisterReceiver(refreshReceiver);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
     /**
      * 广播接收器
      */

@@ -8,8 +8,10 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -23,9 +25,12 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
+import com.heapot.qianxun.bean.DetailPostBean;
+import com.heapot.qianxun.bean.MyDetailBean;
 import com.heapot.qianxun.bean.MyUserBean;
 import com.heapot.qianxun.util.CommonUtil;
 import com.heapot.qianxun.util.FileUploadTask;
+import com.heapot.qianxun.util.JsonUtil;
 import com.heapot.qianxun.util.PreferenceUtil;
 import com.heapot.qianxun.util.SerializableUtils;
 import com.heapot.qianxun.widget.PhotoCarmaWindow;
@@ -71,13 +76,13 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
                         JSONObject content = jsonObject.getJSONObject("content");
                         String path = content.getString("url");
                         Log.e("上传头像返回的数据", path);
-                       // Glide.with(activity).load(path).error(R.mipmap.imagetest).into(mHead);
+                        // Glide.with(activity).load(path).error(R.mipmap.imagetest).into(mHead);
                         CommonUtil.loadImage(mHead, path, R.mipmap.imagetest);
                         userBean.setIcon(path);
                         personalStatus = 1;
                         SerializableUtils.setSerializable(activity, ConstantsBean.MY_USER_INFO, userBean);
                         PreferenceUtil.putString(ConstantsBean.userImage, path);
-                        String body3 = "{\"icon\":\"" +userBean.getIcon() + "\"}";
+                        String body3 = "{\"icon\":\"" + userBean.getIcon() + "\"}";
                         updateUserInfo(body3);
                     } catch (JSONException e) {
                     }
@@ -94,6 +99,9 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
             return false;
         }
     });
+    private TextView  tv_birth, tv_sex,tv_man,tv_woman,tv_extra;
+    private int birth;
+    private AlertDialog alertDialogSex;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,20 +121,77 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
         mAutograph = (TextView) findViewById(R.id.tv_autograph);
         findViewById(R.id.rl_autograph).setOnClickListener(this);
         findViewById(R.id.rl_nick).setOnClickListener(this);
+        findViewById(R.id.rl_birth).setOnClickListener(this);
+        findViewById(R.id.rl_sex).setOnClickListener(this);
+        tv_birth = (TextView) findViewById(R.id.tv_birth);
+        tv_sex = (TextView) findViewById(R.id.tv_sex);
         mHead.setOnClickListener(this);
         mBack.setOnClickListener(this);
-
+        getDetail();
     }
+
+    private void getDetail() {
+        String url = ConstantsBean.BASE_PATH + ConstantsBean.USER_DETAIL;
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Logger.json(String.valueOf(response));
+                        Log.e("所有的Json数据：", response.toString());
+                        try {
+                            String status = response.getString("status");
+                            if (status.equals("success")) {
+                                MyDetailBean myDetailBean = (MyDetailBean) JsonUtil.fromJson(String.valueOf(response), MyDetailBean.class);
+                                PreferenceUtil.putString("sex", String.valueOf(myDetailBean.getContent().getSex()));
+                                PreferenceUtil.putString("detaildescribe", myDetailBean.getContent().getDescription());
+                                PreferenceUtil.putString("birthyear", String.valueOf(myDetailBean.getContent().getBirthYear()));
+                                int birthYear = myDetailBean.getContent().getBirthYear();
+
+                                tv_birth.setText(String.valueOf(birthYear));
+                                int sexNumber = myDetailBean.getContent().getSex();
+                                if (sexNumber == 0) {
+                                    tv_sex.setText("女");
+                                } else if (sexNumber == 1) {
+                                    tv_sex.setText("男");
+                                } else {
+                                    tv_sex.setText("其他");
+                                }
+                            } else {
+
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }
+        ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put(ConstantsBean.KEY_TOKEN, CustomApplication.TOKEN);
+                return headers;
+            }
+        };
+        CustomApplication.getRequestQueue().add(jsonObjectRequest);
+    }
+
 
     private void initEvent() {
         Object object = getLocalInfo(ConstantsBean.MY_USER_INFO);
-        if (object == null){
+        if (object == null) {
             Logger.d("object------>null");
-        }else {
+        } else {
             Logger.d("object----->! null");
         }
         userBean = (MyUserBean.ContentBean) object;
-        if (userBean.getDescription()!= null) {
+        if (userBean.getDescription() != null) {
             mAutograph.setText(userBean.getDescription());
         } else {
             mAutograph.setText("请设置签名");
@@ -150,7 +215,7 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
     }
 
     //点击事件
-  @Override
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             //返回
@@ -171,20 +236,81 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
                 requestCode = 202;
                 jumpAlterActivity(mAutograph.getText().toString().trim());
                 break;
+            //生日
+            case R.id.rl_birth:
+                requestCode = 203;
+                Intent birth = new Intent(PersonalInforActivity.this, BirthActivity.class);
+                startActivityForResult(birth, requestCode);
+                break;
+            //性别
+            case R.id.rl_sex:
+                personalSexDialog();
+                break;
+            //男
+            case R.id.tv_man:
+                tv_sex.setText("男");
+                DetailPostBean detailMan = new DetailPostBean();
+                String birthy=PreferenceUtil.getString("birthyear");
+                detailMan.setBirthYear(Integer.parseInt(birthy));
+                PreferenceUtil.putString("sex", String.valueOf(1));
+                detailMan.setSex(1);
+                detailMan.setDescription(PreferenceUtil.getString("detaildescribe"));
+                String body4=JsonUtil.toJson(detailMan);
+                alertDialogSex.dismiss();
+                upDataInfo(body4);
+                break;
+            //女
+            case R.id.tv_woman:
+                tv_sex.setText("女");
+                DetailPostBean detailWoman = new DetailPostBean();
+                String birthye=PreferenceUtil.getString("birthyear");
+                detailWoman.setBirthYear(Integer.parseInt(birthye));
+                PreferenceUtil.putString("sex", String.valueOf(0));
+                detailWoman.setSex(0);
+                detailWoman.setDescription(PreferenceUtil.getString("detaildescribe"));
+                String body5=JsonUtil.toJson(detailWoman);
+                alertDialogSex.dismiss();
+                upDataInfo(body5);
+                break;
+            //其他
+            case R.id.tv_extra:
+                tv_sex.setText("其他");
+                DetailPostBean detailExtra = new DetailPostBean();
+                String birthyea=PreferenceUtil.getString("birthyear");
+                detailExtra.setBirthYear(Integer.parseInt(birthyea));
+                PreferenceUtil.putString("sex", String.valueOf(2));
+                detailExtra.setSex(2);
+                detailExtra.setDescription(PreferenceUtil.getString("detaildescribe"));
+                String body6=JsonUtil.toJson(detailExtra);
+                alertDialogSex.dismiss();
+                upDataInfo(body6);
+                break;
 
         }
     }
-
+    //增加栏目的对话框
+    private void personalSexDialog() {
+        AlertDialog.Builder builderSex = new AlertDialog.Builder(PersonalInforActivity.this);
+        View viewAdd = LayoutInflater.from(PersonalInforActivity.this).inflate(R.layout.personal_sex_dialog, null);
+        tv_man = (TextView) viewAdd.findViewById(R.id.tv_man);
+        tv_woman = (TextView) viewAdd.findViewById(R.id.tv_woman);
+        tv_extra = (TextView) viewAdd.findViewById(R.id.tv_extra);
+        tv_man.setOnClickListener(this);
+        tv_woman.setOnClickListener(this);
+        tv_extra.setOnClickListener(this);
+        builderSex.setView(viewAdd);
+        alertDialogSex = builderSex.show();
+    }
 
     private void sendBroadcast() {
         //发送广播
         Intent intent = new Intent("com.personal.change");
-        intent.putExtra("personalStatus",personalStatus);
-        switch (personalStatus){
+        intent.putExtra("personalStatus", personalStatus);
+        switch (personalStatus) {
             case 0://没有更新不需要处理
                 break;
             case 1:
-                personalStatus=0;
+                personalStatus = 0;
                 break;
         }
         LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(this);
@@ -199,12 +325,10 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
 
     /**
      * 更新用户信息
-     *
-     *
      */
     private void updateUserInfo(String body) {
         Log.e("新建的内容", String.valueOf(userBean));
-      // String body = "{\"name\":\"" + userBean.getName() + "\",\"nickname\":\"" + userBean.getNickname() + "\",\"icon\":\"" +userBean.getIcon() + "\",\"description\":\"" + userBean.getDescription() + "\"}";
+        // String body = "{\"name\":\"" + userBean.getName() + "\",\"nickname\":\"" + userBean.getNickname() + "\",\"icon\":\"" +userBean.getIcon() + "\",\"description\":\"" + userBean.getDescription() + "\"}";
         //发送数据
         JSONObject json = null;
         try {
@@ -219,7 +343,7 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.e("上传后返回的数据：response",response.toString());
+                        Log.e("上传后返回的数据：response", response.toString());
                         Logger.json(String.valueOf(response));
                         try {
                             String status = response.getString("status");
@@ -323,7 +447,7 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
                     PreferenceUtil.putString(ConstantsBean.nickName, nick);
                     personalStatus = 1;
                     String body4 = "{\"nickname\":\"" + userBean.getNickname() + "\"}";
-                    Log.e("修改后的名字",body4);
+                    Log.e("修改后的名字", body4);
                     updateUserInfo(body4);
                     break;
                 //修改签名
@@ -337,8 +461,67 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
                     String body2 = "{\"description\":\"" + userBean.getDescription() + "\"}";
                     updateUserInfo(body2);
                     break;
+                //修改出生年
+                case 203:
+                    birth = intent.getIntExtra(ConstantsBean.INFO, 1992);
+                    PreferenceUtil.putString("birthyear", String.valueOf(birth));
+                    tv_birth.setText(String.valueOf(birth));
+                    DetailPostBean detailPostBean = new DetailPostBean();
+                    detailPostBean.setBirthYear(birth);
+                    detailPostBean.setSex(Integer.parseInt(PreferenceUtil.getString("sex")));
+                    detailPostBean.setDescription(PreferenceUtil.getString("detaildescribe"));
+                    String body3 = JsonUtil.toJson(detailPostBean);
+                    Log.e("上传的数据", body3);
+                    upDataInfo(body3);
+                    break;
             }
         }
+    }
+
+    private void upDataInfo(String data) {
+        JSONObject json = null;
+        try {
+            json = new JSONObject(data);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        String url = ConstantsBean.BASE_PATH + ConstantsBean.USER_DETAIL;
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.POST, url, json,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Logger.d(response);
+                        try {
+                            String status = response.getString("status");
+                            if (status.equals("success")) {
+                                Toast.makeText(activity, "更新成功", Toast.LENGTH_SHORT).show();
+
+                            } else {
+                                Toast.makeText(activity, "更新失败", Toast.LENGTH_SHORT).show();
+                                Logger.d(response.getString("message"));
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }
+        ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put(ConstantsBean.KEY_TOKEN, CustomApplication.TOKEN);
+                return headers;
+            }
+        };
+        CustomApplication.getRequestQueue().add(jsonObjectRequest);
+
     }
 
 }

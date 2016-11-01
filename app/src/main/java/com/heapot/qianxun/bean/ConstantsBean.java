@@ -94,7 +94,8 @@ public class ConstantsBean {
     public static final String QUERY_UER_ORG = "user/org";
     //工作类型的接口
     public static final String CREATE_JOB_TYPE = "https://qinxi1992.xicp.net/catalogs/jobs";
-
+    //用户详情，查询get，修改post
+    public static final String USER_DETAIL =  "/user/detail";
 
 
     //创建文章WEbView的URL
