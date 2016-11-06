@@ -46,5 +46,5 @@
         android:drawablePadding="10dp"
         android:paddingLeft="10dp"
         android:maxLength="20"
-        android:hint="请输入修改内容"/>
+        android:hint="请输入..."/>
 </LinearLayout>

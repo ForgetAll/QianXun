@@ -47,7 +47,7 @@ final String [] school={"郑州大学","河南工业","河南农大","华北水�
              String schoolName=   school[position];
                 Intent schoolIntent=new Intent();
                 schoolIntent.putExtra(ConstantsBean.INFO,schoolName);
-                setResult(110, schoolIntent);
+                setResult(RESULT_OK, schoolIntent);
                 finish();
             }
         });

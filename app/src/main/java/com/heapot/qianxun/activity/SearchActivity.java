@@ -138,11 +138,11 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                     tv_tip.setText("搜索结果");
                     tv_clear.setVisibility(View.GONE);
                     mClearSearch.setVisibility(View.VISIBLE);
-                    searchArticle(s.toString().trim());
+                   searchArticle(s.toString().trim());
                 }
                 String temName = et_search.getText().toString();
-                // 根据tempName去模糊查询数据库中有没有数据
-                queryData(temName);
+                //鸡肋功能，耗时操作需开线程 ,根据tempName去模糊查询数据库中有没有数据
+                 //  queryData(temName);
 
             }
         });
@@ -152,8 +152,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                 //把item的字传到输入框
                 TextView textView = (TextView) view.findViewById(android.R.id.text1);
                 String name = textView.getText().toString();
-                et_search.setText(name);
-                searchArticle(name);
+                et_search.setText(name);searchArticle(name);
                 //跳转事件，待解决
                 listView.setVisibility(View.GONE);
                 lv_search.setVisibility(View.VISIBLE);

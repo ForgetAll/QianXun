@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:id="@+id/rl_title"
+        android:background="#2B6151">
+        <TextView
+            android:id="@+id/tv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:drawableLeft="@mipmap/arrow_back_white"
+            android:gravity="center_vertical"
+            android:text="返回"
+            android:maxLines="1"
+            android:textColor="@android:color/white"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_centerHorizontal="true"
+            android:id="@+id/tv_set"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:text="请填写最高学历"
+            android:textColor="@android:color/white"
+            android:textSize="20sp" />
+        <TextView
+            android:id="@+id/tv_complete"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="完成"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:paddingLeft="10dp"
+            android:paddingRight="12dp"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/rl_school"
+        style="@style/PersonLayout"
+        android:layout_marginTop="6dp">
+
+        <TextView
+            style="@style/TV_Left"
+            android:text="学校" />
+
+        <TextView
+            android:id="@+id/tv_school"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/iv_back"
+            android:text=""
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/arrow_right_ee" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/rl_profession"
+        style="@style/PersonLayout"
+        android:layout_marginTop="2dp">
+
+        <TextView
+            style="@style/TV_Left"
+            android:text="专业" />
+
+        <TextView
+            android:id="@+id/tv_profession"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/iv_back1"
+            android:text=""
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/iv_back1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/arrow_right_ee" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/rl_startYear"
+        style="@style/PersonLayout"
+        android:layout_marginTop="2dp">
+
+        <TextView
+            style="@style/TV_Left"
+            android:text="入学年" />
+
+        <TextView
+            android:id="@+id/tv_startYear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/iv_back2"
+            android:text=""
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/iv_back2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/arrow_right_ee" />
+    </RelativeLayout>
+
+
+</LinearLayout>

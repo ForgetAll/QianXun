@@ -81,7 +81,8 @@
                 android:hint="检一片叶，索一片天"
                 android:imeOptions="actionSearch"
                 android:singleLine="true"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+               />
 
             <ImageView
                 android:id="@+id/iv_clearSearch"

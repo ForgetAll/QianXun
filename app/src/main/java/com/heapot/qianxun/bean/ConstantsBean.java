@@ -96,6 +96,8 @@ public class ConstantsBean {
     public static final String CREATE_JOB_TYPE = "https://qinxi1992.xicp.net/catalogs/jobs";
     //用户详情，查询get，修改post
     public static final String USER_DETAIL =  "/user/detail";
+    //教育信息
+    public static final String USER_EDUCATION =  "/user/education";
 
 
     //创建文章WEbView的URL
@@ -135,6 +137,7 @@ public class ConstantsBean {
     public static final String nickName = "nickname";
     public static final String showname = "showname";
     public static String INFO = "info";
+    public static final int EDUCATION_NUMBER = 0;
     //签名目前未定
     public static final String userAutograph = "description";
 

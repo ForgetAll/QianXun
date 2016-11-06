@@ -2,6 +2,7 @@ package com.heapot.qianxun.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -32,20 +33,21 @@ public class BirthActivity extends BaseActivity implements View.OnClickListener 
 
     private void intView() {
         txt_title=(TextView)    findViewById(R.id.txt_title);
-        txt_title.setText("请选择出生年");
+        txt_title.setText("请认真选择");
         lv_typeList=(ListView)    findViewById(R.id.lv_typeList);
         iv_btn_back=(ImageView)    findViewById(R.id.iv_btn_back);
         iv_btn_back.setOnClickListener(this);
     }
 
     private void setData() {
-        final int [] birth={2010,2009,2008,2007,2006,2005,2004,2003,2002,2001,2000,1999,1998,1997,1996,1995,1994,1993,1992,1991,1990,1989,1988,1987,1986,1985,1984,1983,1982,1981,1980,1979,1978,1977,1976};
+        final int [] birth={2016,2015,2014,2013,2012,2011,2010,2009,2008,2007,2006,2005,2004,2003,2002,2001,2000,1999,1998,1997,1996,1995,1994,1993,1992,1991,1990,1989,1988,1987,1986,1985,1984,1983,1982,1981,1980,1979,1978,1977,1976};
         BirthAdapter birthAdapter=new BirthAdapter(this,birth);
         lv_typeList.setAdapter(birthAdapter);
         lv_typeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                birthYear=   birth[position];
+                Log.e("birthYear", String.valueOf(birthYear));
                 Intent birthIntent=new Intent();
                 birthIntent.putExtra(ConstantsBean.INFO,birthYear);
                 setResult(RESULT_OK, birthIntent);
