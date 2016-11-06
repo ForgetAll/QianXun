@@ -81,7 +81,7 @@ public class JobActivity extends BaseActivity {
         Intent intent = getIntent();
         String id = intent.getExtras().getString("id");
         initWeb();
-        String url = "http://sijiache.heapot.com/Tabs/userPage/?type=job&id="+id;
+        String url = "http://sijiache.heapot.com/Tabs/userPage/?type=job&id="+id+"&device=android";
         webView.loadUrl(url);
         webView.setWebChromeClient(new WebChromeClient() {
         });

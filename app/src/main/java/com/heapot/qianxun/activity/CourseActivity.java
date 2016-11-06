@@ -91,7 +91,7 @@ public class CourseActivity extends BaseActivity {
         Intent intent = getIntent();
         String id = intent.getExtras().getString("id");
 
-        String url = "http://sijiache.heapot.com/Tabs/userPage/?type=train&id="+id;
+        String url = "http://sijiache.heapot.com/Tabs/userPage/?type=train&id="+id+"&device=android";
 
 
         //初始化webView

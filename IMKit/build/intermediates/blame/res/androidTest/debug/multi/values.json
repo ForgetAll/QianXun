@@ -1,10 +1,6 @@
 [
     {
-<<<<<<< HEAD
-        "outputFile": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values\\values.xml",
-=======
         "outputFile": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
         "map": [
             {
                 "to": {
@@ -16,11 +12,7 @@
                     "endOffset": 441
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 2,
                         "startColumn": 4,
@@ -41,11 +33,7 @@
                     "endOffset": 4713
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 17,
                         "startColumn": 4,
@@ -66,11 +54,7 @@
                     "endOffset": 9604
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 147,
                         "startColumn": 4,
@@ -91,11 +75,7 @@
                     "endOffset": 9840
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 277,
                         "startColumn": 4,
@@ -116,11 +96,7 @@
                     "endOffset": 10279
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 286,
                         "startColumn": 4,
@@ -141,11 +117,7 @@
                     "endOffset": 10907
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 303,
                         "startColumn": 4,
@@ -166,11 +138,7 @@
                     "endOffset": 11325
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 327,
                         "startColumn": 4,
@@ -191,11 +159,7 @@
                     "endOffset": 11876
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 343,
                         "startColumn": 4,
@@ -216,11 +180,7 @@
                     "endOffset": 12007
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 364,
                         "startColumn": 4,
@@ -240,11 +200,7 @@
                     "endOffset": 12065
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 369,
                         "startColumn": 4,
@@ -263,11 +219,7 @@
                     "endOffset": 12120
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 370,
                         "startColumn": 4,
@@ -286,11 +238,7 @@
                     "endOffset": 12177
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 371,
                         "startColumn": 4,
@@ -309,11 +257,7 @@
                     "endOffset": 12238
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 372,
                         "startColumn": 4,
@@ -332,11 +276,7 @@
                     "endOffset": 12292
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 373,
                         "startColumn": 4,
@@ -355,11 +295,7 @@
                     "endOffset": 12338
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 374,
                         "startColumn": 4,
@@ -378,11 +314,7 @@
                     "endOffset": 12400
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 375,
                         "startColumn": 4,
@@ -401,11 +333,7 @@
                     "endOffset": 12447
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 376,
                         "startColumn": 4,
@@ -424,11 +352,7 @@
                     "endOffset": 12523
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 377,
                         "startColumn": 4,
@@ -447,11 +371,7 @@
                     "endOffset": 12596
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 378,
                         "startColumn": 4,
@@ -470,11 +390,7 @@
                     "endOffset": 12665
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 379,
                         "startColumn": 4,
@@ -493,11 +409,7 @@
                     "endOffset": 12722
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 380,
                         "startColumn": 4,
@@ -516,11 +428,7 @@
                     "endOffset": 12771
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 381,
                         "startColumn": 4,
@@ -539,11 +447,7 @@
                     "endOffset": 12817
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 382,
                         "startColumn": 4,
@@ -562,11 +466,7 @@
                     "endOffset": 12870
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 383,
                         "startColumn": 4,
@@ -585,11 +485,7 @@
                     "endOffset": 12923
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 384,
                         "startColumn": 4,
@@ -608,11 +504,7 @@
                     "endOffset": 12976
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 385,
                         "startColumn": 4,
@@ -631,11 +523,7 @@
                     "endOffset": 13031
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 386,
                         "startColumn": 4,
@@ -654,11 +542,7 @@
                     "endOffset": 13078
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 387,
                         "startColumn": 4,
@@ -677,11 +561,7 @@
                     "endOffset": 13131
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 388,
                         "startColumn": 4,
@@ -700,11 +580,7 @@
                     "endOffset": 13180
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 389,
                         "startColumn": 4,
@@ -723,11 +599,7 @@
                     "endOffset": 13234
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 390,
                         "startColumn": 4,
@@ -746,11 +618,7 @@
                     "endOffset": 13287
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 391,
                         "startColumn": 4,
@@ -769,11 +637,7 @@
                     "endOffset": 13381
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 392,
                         "startColumn": 4,
@@ -792,11 +656,7 @@
                     "endOffset": 13442
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 393,
                         "startColumn": 4,
@@ -815,11 +675,7 @@
                     "endOffset": 13498
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 394,
                         "startColumn": 4,
@@ -838,11 +694,7 @@
                     "endOffset": 13562
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 395,
                         "startColumn": 4,
@@ -861,11 +713,7 @@
                     "endOffset": 13614
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 396,
                         "startColumn": 4,
@@ -884,11 +732,7 @@
                     "endOffset": 13679
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 397,
                         "startColumn": 4,
@@ -907,11 +751,7 @@
                     "endOffset": 13743
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 398,
                         "startColumn": 4,
@@ -930,11 +770,7 @@
                     "endOffset": 13808
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 399,
                         "startColumn": 4,
@@ -953,11 +789,7 @@
                     "endOffset": 13878
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 400,
                         "startColumn": 4,
@@ -976,11 +808,7 @@
                     "endOffset": 13947
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 401,
                         "startColumn": 4,
@@ -999,11 +827,7 @@
                     "endOffset": 14013
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 402,
                         "startColumn": 4,
@@ -1022,11 +846,7 @@
                     "endOffset": 14061
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 403,
                         "startColumn": 4,
@@ -1045,11 +865,7 @@
                     "endOffset": 14118
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 404,
                         "startColumn": 4,
@@ -1068,11 +884,7 @@
                     "endOffset": 14174
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 405,
                         "startColumn": 4,
@@ -1091,11 +903,7 @@
                     "endOffset": 14251
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 406,
                         "startColumn": 4,
@@ -1114,11 +922,7 @@
                     "endOffset": 14309
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 407,
                         "startColumn": 4,
@@ -1137,11 +941,7 @@
                     "endOffset": 14366
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 408,
                         "startColumn": 4,
@@ -1160,11 +960,7 @@
                     "endOffset": 14414
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 409,
                         "startColumn": 4,
@@ -1183,11 +979,7 @@
                     "endOffset": 14467
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 410,
                         "startColumn": 4,
@@ -1206,11 +998,7 @@
                     "endOffset": 14516
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 411,
                         "startColumn": 4,
@@ -1229,11 +1017,7 @@
                     "endOffset": 14570
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 412,
                         "startColumn": 4,
@@ -1252,11 +1036,7 @@
                     "endOffset": 14625
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 413,
                         "startColumn": 4,
@@ -1275,11 +1055,7 @@
                     "endOffset": 14679
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 414,
                         "startColumn": 4,
@@ -1298,11 +1074,7 @@
                     "endOffset": 15613
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 430,
                         "startColumn": 4,
@@ -1321,11 +1093,7 @@
                     "endOffset": 15675
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 431,
                         "startColumn": 4,
@@ -1344,11 +1112,7 @@
                     "endOffset": 15737
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 432,
                         "startColumn": 4,
@@ -1367,11 +1131,7 @@
                     "endOffset": 15779
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 433,
                         "startColumn": 4,
@@ -1390,11 +1150,7 @@
                     "endOffset": 15816
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 434,
                         "startColumn": 4,
@@ -1413,11 +1169,7 @@
                     "endOffset": 15859
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 435,
                         "startColumn": 4,
@@ -1436,11 +1188,7 @@
                     "endOffset": 15898
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 436,
                         "startColumn": 4,
@@ -1459,11 +1207,7 @@
                     "endOffset": 15939
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 437,
                         "startColumn": 4,
@@ -1482,11 +1226,7 @@
                     "endOffset": 15979
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 438,
                         "startColumn": 4,
@@ -1505,11 +1245,7 @@
                     "endOffset": 16032
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 439,
                         "startColumn": 4,
@@ -1528,11 +1264,7 @@
                     "endOffset": 16087
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 440,
                         "startColumn": 4,
@@ -1551,11 +1283,7 @@
                     "endOffset": 16139
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 441,
                         "startColumn": 4,
@@ -1574,11 +1302,7 @@
                     "endOffset": 16189
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 442,
                         "startColumn": 4,
@@ -1597,11 +1321,7 @@
                     "endOffset": 16240
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 443,
                         "startColumn": 4,
@@ -1620,11 +1340,7 @@
                     "endOffset": 16282
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 444,
                         "startColumn": 4,
@@ -1643,11 +1359,7 @@
                     "endOffset": 16323
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 445,
                         "startColumn": 4,
@@ -1666,11 +1378,7 @@
                     "endOffset": 16361
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 446,
                         "startColumn": 4,
@@ -1689,11 +1397,7 @@
                     "endOffset": 16398
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 447,
                         "startColumn": 4,
@@ -1712,11 +1416,7 @@
                     "endOffset": 16434
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 448,
                         "startColumn": 4,
@@ -1735,11 +1435,7 @@
                     "endOffset": 16482
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 449,
                         "startColumn": 4,
@@ -1758,11 +1454,7 @@
                     "endOffset": 16525
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 450,
                         "startColumn": 4,
@@ -1781,11 +1473,7 @@
                     "endOffset": 16570
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 451,
                         "startColumn": 4,
@@ -1804,11 +1492,7 @@
                     "endOffset": 16608
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 452,
                         "startColumn": 4,
@@ -1827,11 +1511,7 @@
                     "endOffset": 16646
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 453,
                         "startColumn": 4,
@@ -1850,11 +1530,7 @@
                     "endOffset": 16684
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 454,
                         "startColumn": 4,
@@ -1873,11 +1549,7 @@
                     "endOffset": 16722
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 455,
                         "startColumn": 4,
@@ -1896,11 +1568,7 @@
                     "endOffset": 16760
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 456,
                         "startColumn": 4,
@@ -1919,11 +1587,7 @@
                     "endOffset": 16798
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 457,
                         "startColumn": 4,
@@ -1942,11 +1606,7 @@
                     "endOffset": 16836
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 458,
                         "startColumn": 4,
@@ -1965,11 +1625,7 @@
                     "endOffset": 16874
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 459,
                         "startColumn": 4,
@@ -1988,11 +1644,7 @@
                     "endOffset": 16912
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 460,
                         "startColumn": 4,
@@ -2011,11 +1663,7 @@
                     "endOffset": 16950
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 461,
                         "startColumn": 4,
@@ -2034,11 +1682,7 @@
                     "endOffset": 17000
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 462,
                         "startColumn": 4,
@@ -2057,11 +1701,7 @@
                     "endOffset": 17039
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 463,
                         "startColumn": 4,
@@ -2080,11 +1720,7 @@
                     "endOffset": 17076
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 464,
                         "startColumn": 4,
@@ -2103,11 +1739,7 @@
                     "endOffset": 17113
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 465,
                         "startColumn": 4,
@@ -2126,11 +1758,7 @@
                     "endOffset": 17150
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 466,
                         "startColumn": 4,
@@ -2149,11 +1777,7 @@
                     "endOffset": 17202
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 467,
                         "startColumn": 4,
@@ -2172,11 +1796,7 @@
                     "endOffset": 17238
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 468,
                         "startColumn": 4,
@@ -2195,11 +1815,7 @@
                     "endOffset": 17274
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 469,
                         "startColumn": 4,
@@ -2218,11 +1834,7 @@
                     "endOffset": 17312
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 470,
                         "startColumn": 4,
@@ -2241,11 +1853,7 @@
                     "endOffset": 17353
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 471,
                         "startColumn": 4,
@@ -2264,11 +1872,7 @@
                     "endOffset": 17400
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 472,
                         "startColumn": 4,
@@ -2287,11 +1891,7 @@
                     "endOffset": 17441
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 473,
                         "startColumn": 4,
@@ -2310,11 +1910,7 @@
                     "endOffset": 17486
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 474,
                         "startColumn": 4,
@@ -2333,11 +1929,7 @@
                     "endOffset": 17539
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 475,
                         "startColumn": 4,
@@ -2356,11 +1948,7 @@
                     "endOffset": 17591
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 476,
                         "startColumn": 4,
@@ -2379,11 +1967,7 @@
                     "endOffset": 17629
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 477,
                         "startColumn": 4,
@@ -2402,11 +1986,7 @@
                     "endOffset": 17666
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 478,
                         "startColumn": 4,
@@ -2425,11 +2005,7 @@
                     "endOffset": 17710
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 479,
                         "startColumn": 4,
@@ -2448,11 +2024,7 @@
                     "endOffset": 17747
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 480,
                         "startColumn": 4,
@@ -2471,11 +2043,7 @@
                     "endOffset": 17785
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 481,
                         "startColumn": 4,
@@ -2494,11 +2062,7 @@
                     "endOffset": 17830
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 482,
                         "startColumn": 4,
@@ -2517,11 +2081,7 @@
                     "endOffset": 17866
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 483,
                         "startColumn": 4,
@@ -2540,11 +2100,7 @@
                     "endOffset": 17913
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 484,
                         "startColumn": 4,
@@ -2563,11 +2119,7 @@
                     "endOffset": 17966
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 485,
                         "startColumn": 4,
@@ -2586,11 +2138,7 @@
                     "endOffset": 18006
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 486,
                         "startColumn": 4,
@@ -2609,11 +2157,7 @@
                     "endOffset": 18068
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 487,
                         "startColumn": 4,
@@ -2632,11 +2176,7 @@
                     "endOffset": 18138
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 488,
                         "startColumn": 4,
@@ -2655,11 +2195,7 @@
                     "endOffset": 18209
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 489,
                         "startColumn": 4,
@@ -2678,11 +2214,7 @@
                     "endOffset": 18259
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 490,
                         "startColumn": 4,
@@ -2701,11 +2233,7 @@
                     "endOffset": 18307
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 491,
                         "startColumn": 4,
@@ -2724,11 +2252,7 @@
                     "endOffset": 18368
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 492,
                         "startColumn": 4,
@@ -2747,11 +2271,7 @@
                     "endOffset": 18425
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 493,
                         "startColumn": 4,
@@ -2770,11 +2290,7 @@
                     "endOffset": 18495
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 494,
                         "startColumn": 4,
@@ -2793,11 +2309,7 @@
                     "endOffset": 18556
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 495,
                         "startColumn": 4,
@@ -2816,11 +2328,7 @@
                     "endOffset": 18635
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 496,
                         "startColumn": 4,
@@ -2839,11 +2347,7 @@
                     "endOffset": 18694
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 497,
                         "startColumn": 4,
@@ -2862,11 +2366,7 @@
                     "endOffset": 18759
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 498,
                         "startColumn": 4,
@@ -2885,11 +2385,7 @@
                     "endOffset": 18823
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 499,
                         "startColumn": 4,
@@ -2908,11 +2404,7 @@
                     "endOffset": 18890
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 500,
                         "startColumn": 4,
@@ -2931,11 +2423,7 @@
                     "endOffset": 18958
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 501,
                         "startColumn": 4,
@@ -2954,11 +2442,7 @@
                     "endOffset": 19023
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 502,
                         "startColumn": 4,
@@ -2977,11 +2461,7 @@
                     "endOffset": 19086
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 503,
                         "startColumn": 4,
@@ -3000,11 +2480,7 @@
                     "endOffset": 19152
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 504,
                         "startColumn": 4,
@@ -3023,11 +2499,7 @@
                     "endOffset": 19219
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 505,
                         "startColumn": 4,
@@ -3046,11 +2518,7 @@
                     "endOffset": 19291
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 506,
                         "startColumn": 4,
@@ -3069,11 +2537,7 @@
                     "endOffset": 19357
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 507,
                         "startColumn": 4,
@@ -3092,11 +2556,7 @@
                     "endOffset": 19426
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 508,
                         "startColumn": 4,
@@ -3115,11 +2575,7 @@
                     "endOffset": 19493
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 509,
                         "startColumn": 4,
@@ -3138,11 +2594,7 @@
                     "endOffset": 19555
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 510,
                         "startColumn": 4,
@@ -3161,11 +2613,7 @@
                     "endOffset": 19611
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 511,
                         "startColumn": 4,
@@ -3184,11 +2632,7 @@
                     "endOffset": 19663
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 512,
                         "startColumn": 4,
@@ -3207,11 +2651,7 @@
                     "endOffset": 19725
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 513,
                         "startColumn": 4,
@@ -3230,11 +2670,7 @@
                     "endOffset": 19780
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 514,
                         "startColumn": 4,
@@ -3253,11 +2689,7 @@
                     "endOffset": 19842
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 515,
                         "startColumn": 4,
@@ -3276,11 +2708,7 @@
                     "endOffset": 19910
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 516,
                         "startColumn": 4,
@@ -3299,11 +2727,7 @@
                     "endOffset": 19961
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 517,
                         "startColumn": 4,
@@ -3322,11 +2746,7 @@
                     "endOffset": 20018
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 518,
                         "startColumn": 4,
@@ -3345,11 +2765,7 @@
                     "endOffset": 20073
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 519,
                         "startColumn": 4,
@@ -3368,11 +2784,7 @@
                     "endOffset": 20130
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 520,
                         "startColumn": 4,
@@ -3391,11 +2803,7 @@
                     "endOffset": 20185
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 521,
                         "startColumn": 4,
@@ -3414,11 +2822,7 @@
                     "endOffset": 20237
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 522,
                         "startColumn": 4,
@@ -3437,11 +2841,7 @@
                     "endOffset": 20278
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 523,
                         "startColumn": 4,
@@ -3460,11 +2860,7 @@
                     "endOffset": 20330
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 524,
                         "startColumn": 4,
@@ -3483,11 +2879,7 @@
                     "endOffset": 20372
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 525,
                         "startColumn": 4,
@@ -3506,11 +2898,7 @@
                     "endOffset": 20444
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 526,
                         "startColumn": 4,
@@ -3529,11 +2917,7 @@
                     "endOffset": 20519
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 527,
                         "startColumn": 4,
@@ -3552,11 +2936,7 @@
                     "endOffset": 20598
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 528,
                         "startColumn": 4,
@@ -3575,11 +2955,7 @@
                     "endOffset": 20670
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 529,
                         "startColumn": 4,
@@ -3598,11 +2974,7 @@
                     "endOffset": 20742
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 530,
                         "startColumn": 4,
@@ -3621,11 +2993,7 @@
                     "endOffset": 20812
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 531,
                         "startColumn": 4,
@@ -3644,11 +3012,7 @@
                     "endOffset": 20883
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 532,
                         "startColumn": 4,
@@ -3667,11 +3031,7 @@
                     "endOffset": 20950
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 533,
                         "startColumn": 4,
@@ -3690,11 +3050,7 @@
                     "endOffset": 21024
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 534,
                         "startColumn": 4,
@@ -3713,11 +3069,7 @@
                     "endOffset": 21093
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 535,
                         "startColumn": 4,
@@ -3736,11 +3088,7 @@
                     "endOffset": 21156
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 536,
                         "startColumn": 4,
@@ -3759,11 +3107,7 @@
                     "endOffset": 21236
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 537,
                         "startColumn": 4,
@@ -3782,11 +3126,7 @@
                     "endOffset": 21307
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 538,
                         "startColumn": 4,
@@ -3805,11 +3145,7 @@
                     "endOffset": 21378
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 539,
                         "startColumn": 4,
@@ -3828,11 +3164,7 @@
                     "endOffset": 21445
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 540,
                         "startColumn": 4,
@@ -3851,11 +3183,7 @@
                     "endOffset": 21514
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 541,
                         "startColumn": 4,
@@ -3874,11 +3202,7 @@
                     "endOffset": 21588
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 542,
                         "startColumn": 4,
@@ -3897,11 +3221,7 @@
                     "endOffset": 21632
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 543,
                         "startColumn": 4,
@@ -3920,11 +3240,7 @@
                     "endOffset": 21692
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 544,
                         "startColumn": 4,
@@ -3943,11 +3259,7 @@
                     "endOffset": 21754
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 545,
                         "startColumn": 4,
@@ -3966,11 +3278,7 @@
                     "endOffset": 21809
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 546,
                         "startColumn": 4,
@@ -3989,11 +3297,7 @@
                     "endOffset": 21853
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 547,
                         "startColumn": 4,
@@ -4012,11 +3316,7 @@
                     "endOffset": 21897
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 548,
                         "startColumn": 4,
@@ -4035,11 +3335,7 @@
                     "endOffset": 21947
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 549,
                         "startColumn": 4,
@@ -4058,11 +3354,7 @@
                     "endOffset": 21995
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 550,
                         "startColumn": 4,
@@ -4081,11 +3373,7 @@
                     "endOffset": 22056
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 551,
                         "startColumn": 4,
@@ -4104,11 +3392,7 @@
                     "endOffset": 22119
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 552,
                         "startColumn": 4,
@@ -4127,11 +3411,7 @@
                     "endOffset": 22182
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 553,
                         "startColumn": 4,
@@ -4150,11 +3430,7 @@
                     "endOffset": 22226
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 554,
                         "startColumn": 4,
@@ -4173,11 +3449,7 @@
                     "endOffset": 22307
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 555,
                         "startColumn": 4,
@@ -4196,11 +3468,7 @@
                     "endOffset": 22388
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 556,
                         "startColumn": 4,
@@ -4219,11 +3487,7 @@
                     "endOffset": 22460
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 557,
                         "startColumn": 4,
@@ -4242,11 +3506,7 @@
                     "endOffset": 22549
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 558,
                         "startColumn": 4,
@@ -4265,11 +3525,7 @@
                     "endOffset": 22637
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 559,
                         "startColumn": 4,
@@ -4288,11 +3544,7 @@
                     "endOffset": 22715
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 560,
                         "startColumn": 4,
@@ -4311,11 +3563,7 @@
                     "endOffset": 22796
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 561,
                         "startColumn": 4,
@@ -4334,11 +3582,7 @@
                     "endOffset": 22882
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 562,
                         "startColumn": 4,
@@ -4357,11 +3601,7 @@
                     "endOffset": 22943
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 563,
                         "startColumn": 4,
@@ -4380,11 +3620,7 @@
                     "endOffset": 22997
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 564,
                         "startColumn": 4,
@@ -4403,11 +3639,7 @@
                     "endOffset": 23049
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 565,
                         "startColumn": 4,
@@ -4426,11 +3658,7 @@
                     "endOffset": 23115
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 566,
                         "startColumn": 4,
@@ -4449,11 +3677,7 @@
                     "endOffset": 23178
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 567,
                         "startColumn": 4,
@@ -4472,11 +3696,7 @@
                     "endOffset": 23241
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 568,
                         "startColumn": 4,
@@ -4495,11 +3715,7 @@
                     "endOffset": 23304
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 569,
                         "startColumn": 4,
@@ -4518,11 +3734,7 @@
                     "endOffset": 23365
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 570,
                         "startColumn": 4,
@@ -4541,11 +3753,7 @@
                     "endOffset": 23427
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 571,
                         "startColumn": 4,
@@ -4564,11 +3772,7 @@
                     "endOffset": 23490
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 572,
                         "startColumn": 4,
@@ -4587,11 +3791,7 @@
                     "endOffset": 23567
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 573,
                         "startColumn": 4,
@@ -4610,11 +3810,7 @@
                     "endOffset": 23629
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 574,
                         "startColumn": 4,
@@ -4633,11 +3829,7 @@
                     "endOffset": 23689
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 575,
                         "startColumn": 4,
@@ -4656,11 +3848,7 @@
                     "endOffset": 23765
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 576,
                         "startColumn": 4,
@@ -4679,11 +3867,7 @@
                     "endOffset": 23829
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 577,
                         "startColumn": 4,
@@ -4702,11 +3886,7 @@
                     "endOffset": 23877
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 578,
                         "startColumn": 4,
@@ -4725,11 +3905,7 @@
                     "endOffset": 23951
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 579,
                         "startColumn": 4,
@@ -4748,11 +3924,7 @@
                     "endOffset": 24016
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 580,
                         "startColumn": 4,
@@ -4771,11 +3943,7 @@
                     "endOffset": 24076
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 581,
                         "startColumn": 4,
@@ -4794,11 +3962,7 @@
                     "endOffset": 24138
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 582,
                         "startColumn": 4,
@@ -4817,11 +3981,7 @@
                     "endOffset": 24193
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 583,
                         "startColumn": 4,
@@ -4840,11 +4000,7 @@
                     "endOffset": 24243
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 584,
                         "startColumn": 4,
@@ -4863,11 +4019,7 @@
                     "endOffset": 24288
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 585,
                         "startColumn": 4,
@@ -4886,11 +4038,7 @@
                     "endOffset": 24337
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 586,
                         "startColumn": 4,
@@ -4909,11 +4057,7 @@
                     "endOffset": 24398
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 587,
                         "startColumn": 4,
@@ -4932,11 +4076,7 @@
                     "endOffset": 24459
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 588,
                         "startColumn": 4,
@@ -4955,11 +4095,7 @@
                     "endOffset": 24540
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 589,
                         "startColumn": 4,
@@ -4978,11 +4114,7 @@
                     "endOffset": 24598
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 590,
                         "startColumn": 4,
@@ -5001,11 +4133,7 @@
                     "endOffset": 24655
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 591,
                         "startColumn": 4,
@@ -5024,11 +4152,7 @@
                     "endOffset": 24713
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 592,
                         "startColumn": 4,
@@ -5047,11 +4171,7 @@
                     "endOffset": 24774
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 593,
                         "startColumn": 4,
@@ -5070,11 +4190,7 @@
                     "endOffset": 24838
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 594,
                         "startColumn": 4,
@@ -5093,11 +4209,7 @@
                     "endOffset": 24900
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 595,
                         "startColumn": 4,
@@ -5116,11 +4228,7 @@
                     "endOffset": 24958
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 596,
                         "startColumn": 4,
@@ -5139,11 +4247,7 @@
                     "endOffset": 25019
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 597,
                         "startColumn": 4,
@@ -5162,11 +4266,7 @@
                     "endOffset": 25077
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 598,
                         "startColumn": 4,
@@ -5185,11 +4285,7 @@
                     "endOffset": 25125
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 599,
                         "startColumn": 4,
@@ -5208,11 +4304,7 @@
                     "endOffset": 25171
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 600,
                         "startColumn": 4,
@@ -5231,11 +4323,7 @@
                     "endOffset": 25220
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 601,
                         "startColumn": 4,
@@ -5254,11 +4342,7 @@
                     "endOffset": 25259
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 602,
                         "startColumn": 4,
@@ -5277,11 +4361,7 @@
                     "endOffset": 25311
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 603,
                         "startColumn": 4,
@@ -5300,11 +4380,7 @@
                     "endOffset": 25370
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 604,
                         "startColumn": 4,
@@ -5323,11 +4399,7 @@
                     "endOffset": 25422
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 605,
                         "startColumn": 4,
@@ -5346,11 +4418,7 @@
                     "endOffset": 25471
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 606,
                         "startColumn": 4,
@@ -5369,11 +4437,7 @@
                     "endOffset": 25518
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 607,
                         "startColumn": 4,
@@ -5392,11 +4456,7 @@
                     "endOffset": 25564
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 608,
                         "startColumn": 4,
@@ -5415,11 +4475,7 @@
                     "endOffset": 25621
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 609,
                         "startColumn": 4,
@@ -5438,11 +4494,7 @@
                     "endOffset": 25685
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 610,
                         "startColumn": 4,
@@ -5461,11 +4513,7 @@
                     "endOffset": 25754
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 611,
                         "startColumn": 4,
@@ -5484,11 +4532,7 @@
                     "endOffset": 25814
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 612,
                         "startColumn": 4,
@@ -5507,11 +4551,7 @@
                     "endOffset": 25872
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 613,
                         "startColumn": 4,
@@ -5530,11 +4570,7 @@
                     "endOffset": 25930
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 614,
                         "startColumn": 4,
@@ -5553,11 +4589,7 @@
                     "endOffset": 25989
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 615,
                         "startColumn": 4,
@@ -5576,11 +4608,7 @@
                     "endOffset": 26059
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 616,
                         "startColumn": 4,
@@ -5599,11 +4627,7 @@
                     "endOffset": 26119
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 617,
                         "startColumn": 4,
@@ -5622,11 +4646,7 @@
                     "endOffset": 26185
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 618,
                         "startColumn": 4,
@@ -5645,11 +4665,7 @@
                     "endOffset": 26260
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 619,
                         "startColumn": 4,
@@ -5668,11 +4684,7 @@
                     "endOffset": 26316
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 620,
                         "startColumn": 4,
@@ -5691,11 +4703,7 @@
                     "endOffset": 26383
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 621,
                         "startColumn": 4,
@@ -5714,11 +4722,7 @@
                     "endOffset": 26461
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 622,
                         "startColumn": 4,
@@ -5737,11 +4741,7 @@
                     "endOffset": 26526
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 623,
                         "startColumn": 4,
@@ -5760,11 +4760,7 @@
                     "endOffset": 26581
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 624,
                         "startColumn": 4,
@@ -5783,11 +4779,7 @@
                     "endOffset": 26648
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 625,
                         "startColumn": 4,
@@ -5806,11 +4798,7 @@
                     "endOffset": 26708
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 626,
                         "startColumn": 4,
@@ -5829,11 +4817,7 @@
                     "endOffset": 26782
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 627,
                         "startColumn": 4,
@@ -5852,11 +4836,7 @@
                     "endOffset": 26831
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 628,
                         "startColumn": 4,
@@ -5875,11 +4855,7 @@
                     "endOffset": 26889
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 629,
                         "startColumn": 4,
@@ -5898,11 +4874,7 @@
                     "endOffset": 26938
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 630,
                         "startColumn": 4,
@@ -5921,11 +4893,7 @@
                     "endOffset": 26996
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 631,
                         "startColumn": 4,
@@ -5944,11 +4912,7 @@
                     "endOffset": 27053
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 632,
                         "startColumn": 4,
@@ -5967,11 +4931,7 @@
                     "endOffset": 27102
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 633,
                         "startColumn": 4,
@@ -5990,11 +4950,7 @@
                     "endOffset": 27165
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 634,
                         "startColumn": 4,
@@ -6013,11 +4969,7 @@
                     "endOffset": 27221
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 635,
                         "startColumn": 4,
@@ -6036,11 +4988,7 @@
                     "endOffset": 27270
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 636,
                         "startColumn": 4,
@@ -6059,11 +5007,7 @@
                     "endOffset": 27327
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 637,
                         "startColumn": 4,
@@ -6082,11 +5026,7 @@
                     "endOffset": 27392
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 638,
                         "startColumn": 4,
@@ -6105,11 +5045,7 @@
                     "endOffset": 27446
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 639,
                         "startColumn": 4,
@@ -6128,11 +5064,7 @@
                     "endOffset": 27510
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 640,
                         "startColumn": 4,
@@ -6151,11 +5083,7 @@
                     "endOffset": 27559
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 641,
                         "startColumn": 4,
@@ -6174,11 +5102,7 @@
                     "endOffset": 27607
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 642,
                         "startColumn": 4,
@@ -6197,11 +5121,7 @@
                     "endOffset": 27655
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 643,
                         "startColumn": 4,
@@ -6220,11 +5140,7 @@
                     "endOffset": 27706
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 644,
                         "startColumn": 4,
@@ -6243,11 +5159,7 @@
                     "endOffset": 27755
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 645,
                         "startColumn": 4,
@@ -6266,11 +5178,7 @@
                     "endOffset": 27818
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 646,
                         "startColumn": 4,
@@ -6289,11 +5197,7 @@
                     "endOffset": 27883
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 647,
                         "startColumn": 4,
@@ -6312,11 +5216,7 @@
                     "endOffset": 27943
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 648,
                         "startColumn": 4,
@@ -6335,11 +5235,7 @@
                     "endOffset": 28001
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 649,
                         "startColumn": 4,
@@ -6358,11 +5254,7 @@
                     "endOffset": 28063
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 650,
                         "startColumn": 4,
@@ -6381,11 +5273,7 @@
                     "endOffset": 28120
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 651,
                         "startColumn": 4,
@@ -6404,11 +5292,7 @@
                     "endOffset": 28165
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 652,
                         "startColumn": 4,
@@ -6427,11 +5311,7 @@
                     "endOffset": 28222
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 653,
                         "startColumn": 4,
@@ -6450,11 +5330,7 @@
                     "endOffset": 28272
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 654,
                         "startColumn": 4,
@@ -6473,11 +5349,7 @@
                     "endOffset": 28330
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 655,
                         "startColumn": 4,
@@ -6496,11 +5368,7 @@
                     "endOffset": 28406
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 656,
                         "startColumn": 4,
@@ -6519,11 +5387,7 @@
                     "endOffset": 28456
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 657,
                         "startColumn": 4,
@@ -6542,11 +5406,7 @@
                     "endOffset": 28505
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 658,
                         "startColumn": 4,
@@ -6565,11 +5425,7 @@
                     "endOffset": 28560
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 659,
                         "startColumn": 4,
@@ -6588,11 +5444,7 @@
                     "endOffset": 28601
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 660,
                         "startColumn": 4,
@@ -6611,11 +5463,7 @@
                     "endOffset": 28653
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 661,
                         "startColumn": 4,
@@ -6634,11 +5482,7 @@
                     "endOffset": 28714
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 662,
                         "startColumn": 4,
@@ -6657,11 +5501,7 @@
                     "endOffset": 28775
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 663,
                         "startColumn": 4,
@@ -6680,11 +5520,7 @@
                     "endOffset": 28844
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 664,
                         "startColumn": 4,
@@ -6703,11 +5539,7 @@
                     "endOffset": 28908
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 665,
                         "startColumn": 4,
@@ -6726,11 +5558,7 @@
                     "endOffset": 28973
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 666,
                         "startColumn": 4,
@@ -6749,11 +5577,7 @@
                     "endOffset": 29047
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 667,
                         "startColumn": 4,
@@ -6772,11 +5596,7 @@
                     "endOffset": 29125
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 668,
                         "startColumn": 4,
@@ -6795,11 +5615,7 @@
                     "endOffset": 29172
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 669,
                         "startColumn": 4,
@@ -6818,11 +5634,7 @@
                     "endOffset": 29222
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 670,
                         "startColumn": 4,
@@ -6841,11 +5653,7 @@
                     "endOffset": 29281
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 671,
                         "startColumn": 4,
@@ -6864,11 +5672,7 @@
                     "endOffset": 29338
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 672,
                         "startColumn": 4,
@@ -6887,11 +5691,7 @@
                     "endOffset": 29386
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 673,
                         "startColumn": 4,
@@ -6910,11 +5710,7 @@
                     "endOffset": 29437
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 674,
                         "startColumn": 4,
@@ -6933,11 +5729,7 @@
                     "endOffset": 29486
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 675,
                         "startColumn": 4,
@@ -6956,11 +5748,7 @@
                     "endOffset": 29540
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 676,
                         "startColumn": 4,
@@ -6979,11 +5767,7 @@
                     "endOffset": 29591
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 677,
                         "startColumn": 4,
@@ -7002,11 +5786,7 @@
                     "endOffset": 29642
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 678,
                         "startColumn": 4,
@@ -7025,11 +5805,7 @@
                     "endOffset": 29692
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 679,
                         "startColumn": 4,
@@ -7048,11 +5824,7 @@
                     "endOffset": 29755
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 680,
                         "startColumn": 4,
@@ -7071,11 +5843,7 @@
                     "endOffset": 29798
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 681,
                         "startColumn": 4,
@@ -7094,11 +5862,7 @@
                     "endOffset": 29849
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 682,
                         "startColumn": 4,
@@ -7117,11 +5881,7 @@
                     "endOffset": 29894
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 683,
                         "startColumn": 4,
@@ -7140,11 +5900,7 @@
                     "endOffset": 29931
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 684,
                         "startColumn": 4,
@@ -7163,11 +5919,7 @@
                     "endOffset": 29982
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 685,
                         "startColumn": 4,
@@ -7186,11 +5938,7 @@
                     "endOffset": 30045
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 686,
                         "startColumn": 4,
@@ -7210,11 +5958,7 @@
                     "endOffset": 30676
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 687,
                         "startColumn": 4,
@@ -7235,11 +5979,7 @@
                     "endOffset": 30898
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 696,
                         "startColumn": 4,
@@ -7260,11 +6000,7 @@
                     "endOffset": 31106
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 700,
                         "startColumn": 4,
@@ -7285,11 +6021,7 @@
                     "endOffset": 31374
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 704,
                         "startColumn": 4,
@@ -7310,11 +6042,7 @@
                     "endOffset": 31764
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 709,
                         "startColumn": 4,
@@ -7335,11 +6063,7 @@
                     "endOffset": 32259
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 716,
                         "startColumn": 4,
@@ -7360,11 +6084,7 @@
                     "endOffset": 32342
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 725,
                         "startColumn": 4,
@@ -7385,11 +6105,7 @@
                     "endOffset": 32424
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 728,
                         "startColumn": 4,
@@ -7410,11 +6126,7 @@
                     "endOffset": 32602
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 731,
                         "startColumn": 4,
@@ -7435,11 +6147,7 @@
                     "endOffset": 32685
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 734,
                         "startColumn": 4,
@@ -7460,11 +6168,7 @@
                     "endOffset": 32973
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 737,
                         "startColumn": 4,
@@ -7485,11 +6189,7 @@
                     "endOffset": 33055
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 742,
                         "startColumn": 4,
@@ -7510,11 +6210,7 @@
                     "endOffset": 33517
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 745,
                         "startColumn": 4,
@@ -7535,11 +6231,7 @@
                     "endOffset": 33771
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 753,
                         "startColumn": 4,
@@ -7560,11 +6252,7 @@
                     "endOffset": 34144
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 758,
                         "startColumn": 4,
@@ -7585,11 +6273,7 @@
                     "endOffset": 34492
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 765,
                         "startColumn": 4,
@@ -7610,11 +6294,7 @@
                     "endOffset": 34845
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 772,
                         "startColumn": 4,
@@ -7635,11 +6315,7 @@
                     "endOffset": 35243
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 779,
                         "startColumn": 4,
@@ -7660,11 +6336,7 @@
                     "endOffset": 35456
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 787,
                         "startColumn": 4,
@@ -7685,11 +6357,7 @@
                     "endOffset": 35708
                 },
                 "from": {
-<<<<<<< HEAD
-                    "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-=======
                     "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 791,
                         "startColumn": 4,
