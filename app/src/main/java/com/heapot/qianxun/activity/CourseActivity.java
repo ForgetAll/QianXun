@@ -24,14 +24,19 @@ import io.rong.imkit.RongIM;
 import io.rong.imlib.model.UserInfo;
 
 /**
- * Created by Karl on 2016/10/11.
+ * Created by Karl on 2016/11/6.
+ * desc: 培训页面
  */
 
-public class JobActivity extends BaseActivity {
-    private TextView mToolBarTitle,mSave;
+public class CourseActivity extends BaseActivity {
+
+    private TextView mTitle;
     private ImageView mBack;
+
     private WebView webView;
     private WebSettings webSettings;
+
+    private boolean isConnected = false;
 
     private Handler handler = new Handler(){
         @Override
@@ -40,15 +45,16 @@ public class JobActivity extends BaseActivity {
                 String id = msg.getData().getString("id");
                 String title = msg.getData().getString("title");
                 String image = msg.getData().getString("icon");
-                Object object = SerializableUtils.getSerializable(JobActivity.this, ConstantsBean.MY_USER_INFO);
+
+                Object object = SerializableUtils.getSerializable(CourseActivity.this, ConstantsBean.MY_USER_INFO);
                 if (object != null){
                     MyUserBean.ContentBean myUserBean = (MyUserBean.ContentBean) object;
                     if (!myUserBean.getId().equals(id)){
                         RongIM.getInstance().refreshUserInfoCache(new UserInfo(id,title, Uri.parse(image)));
                         if (RongIM.getInstance() != null){
                             //用户开始聊天后默认加好友
-                            ChatInfoUtils.onRequestAddFriend(JobActivity.this,id,title);
-                            RongIM.getInstance().startPrivateChat(JobActivity.this,id,title);
+                            ChatInfoUtils.onRequestAddFriend(CourseActivity.this,id,title);
+                            RongIM.getInstance().startPrivateChat(CourseActivity.this,id,title);
                         }
                     }
 
@@ -56,18 +62,24 @@ public class JobActivity extends BaseActivity {
             }
         }
     };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_job);
+        setContentView(R.layout.activity_course);
         initView();
+        initEvent();
+
     }
+
     private void initView(){
-        mToolBarTitle = (TextView) findViewById(R.id.txt_title);
-        mToolBarTitle.setText("招聘详情");
-        mSave = (TextView) findViewById(R.id.txt_btn_function);
-        mSave.setVisibility(View.GONE);
+        webView = (WebView) findViewById(R.id.wv_course);
+        mTitle = (TextView) findViewById(R.id.txt_title);
         mBack = (ImageView) findViewById(R.id.iv_btn_back);
+        mTitle.setText("课程详情");
+    }
+
+    private void initEvent(){
         mBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,20 +88,23 @@ public class JobActivity extends BaseActivity {
                 finish();
             }
         });
-
-        webView  = (WebView) findViewById(R.id.wv_job);
         Intent intent = getIntent();
         String id = intent.getExtras().getString("id");
-        initWeb();
-        String url = "http://sijiache.heapot.com/Tabs/userPage/?type=job&id="+id;
-        webView.loadUrl(url);
-        webView.setWebChromeClient(new WebChromeClient() {
-        });
-    }
-    private void initWeb(){
 
+        String url = "http://sijiache.heapot.com/Tabs/userPage/?type=train&id="+id;
+
+
+        //初始化webView
+        initSettings();
+        webView.loadUrl(url);
+        webView.setWebChromeClient(new WebChromeClient(){});
+
+    }
+
+
+    private void initSettings() {
         webSettings = webView.getSettings();
-        boolean isConnected = NetworkUtils.isAvailable(this);
+        isConnected = NetworkUtils.isAvailable(this);
         if (isConnected) {
             webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         } else {
@@ -118,6 +133,5 @@ public class JobActivity extends BaseActivity {
         super.onDestroy();
         webView.clearCache(true);
         webView.destroy();
-
     }
 }

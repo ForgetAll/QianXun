@@ -142,13 +142,6 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-//        RongIM.setUserInfoProvider(ArticleActivity.this,true);
-
-    }
-
     private void initView() {
         webView = (WebView) findViewById(R.id.wv_articles);
         input_comment = (EditText) findViewById(R.id.edt_article_input);
@@ -176,19 +169,13 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
         String id = intent.getExtras().getString("id");
         articleId = id;
         String url = "http://sijiache.heapot.com/Tabs/userPage/article/" + "?articleId=" + id + "&device=android";
-//        final String url2 = "http://sijiache.heapot.com/Tabs/editer/test/111.html";
+
         //初始化webView
         initSettings();
         webView.loadUrl(url);
         webView.setWebChromeClient(new WebChromeClient() {
         });
-//        webView.setWebViewClient(new WebViewClient(){
-//            @Override
-//            public void onPageFinished(WebView view, String url) {
-//                super.onPageFinished(view,url);
-//                view.loadUrl("javascript:screenLog(\"加载加载\")");
-//            }
-//        });
+
 
     }
 
@@ -350,9 +337,4 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
     }
 
 
-//    @Override
-//    public UserInfo getUserInfo(String s) {
-//        Logger.d("friName---------->"+friName);
-//        return null;
-//    }
 }
