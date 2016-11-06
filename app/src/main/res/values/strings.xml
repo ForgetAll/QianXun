@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">仟询</string>
-    <string name="menu_01">学术</string>
-    <string name="menu_02">招聘</string>
-    <string name="menu_03">培训</string>
+    <string name="menu_01">千家论道</string>
+    <string name="menu_02">职男职女</string>
+    <string name="menu_03">赋能成长</string>
     <string name="menu_settings">设置</string>
     <string name="menu_help">帮助</string>
 

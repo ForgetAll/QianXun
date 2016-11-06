@@ -1,6 +1,10 @@
 [
     {
+<<<<<<< HEAD
         "outputFile": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values-sw\\values-sw.xml",
+=======
+        "outputFile": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values-sw\\values-sw.xml",
+>>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
         "map": [
             {
                 "to": {
@@ -11,7 +15,11 @@
                     "endOffset": 128
                 },
                 "from": {
+<<<<<<< HEAD
                     "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values-sw\\values-sw.xml",
+=======
+                    "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values-sw\\values-sw.xml",
+>>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 2,
                         "startColumn": 4,
@@ -30,7 +38,11 @@
                     "endOffset": 222
                 },
                 "from": {
+<<<<<<< HEAD
                     "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values-sw\\values-sw.xml",
+=======
+                    "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values-sw\\values-sw.xml",
+>>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 3,
                         "startColumn": 4,
@@ -49,7 +61,11 @@
                     "endOffset": 299
                 },
                 "from": {
+<<<<<<< HEAD
                     "file": "G:\\zpgiteight\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values-sw\\values-sw.xml",
+=======
+                    "file": "D:\\work\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\values-sw\\values-sw.xml",
+>>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8
                     "position": {
                         "startLine": 4,
                         "startColumn": 4,

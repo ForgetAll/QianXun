@@ -84,7 +84,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private List<SubBean> mList = new ArrayList<>();
     private List<TagsBean.ContentBean> list = new ArrayList<>();
     private FloatingActionButton mCreate;
-    private TextView mSubscription,mainTitle,subTitle;
+    private TextView mSubscription,mainTitle;
     private static final String PAGE_SCIENCE = "PAGE_SCIENCE";
     private static final String PAGE_RECRUIT = "PAGE_RECRUIT";
     private static final String PAGE_TRAIN = "PAGE_TRAIN";
@@ -127,7 +127,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         mCreate = (FloatingActionButton) findViewById(R.id.fab_create);
 
         mainTitle = (TextView) findViewById(R.id.txt_first_title);
-        subTitle = (TextView) findViewById(R.id.txt_second_title);
+
 
         //加载Banner的图片
         Glide.with(this).load("http://114.215.252.158/banner.png").into(mBanner);
@@ -169,8 +169,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         mCreate.setOnClickListener(this);
 
         //一些基本的初始化数据
-        mainTitle.setText("学术");
-        subTitle.setText("招聘 培训");
+        mainTitle.setText("千家论道");
 
         mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         mPageAdapter = new MainTabFragmentAdapter(getSupportFragmentManager(), this, mList);
@@ -181,7 +180,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         }
 
         mainTitle.setOnClickListener(this);
-        subTitle.setOnClickListener(this);
     }
 
 
@@ -264,9 +262,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             case R.id.txt_first_title:
                 mDrawerLayout.openDrawer(Gravity.LEFT);
                 break;
-            case R.id.txt_second_title:
-                mDrawerLayout.openDrawer(Gravity.LEFT);
-                break;
         }
     }
 
@@ -286,16 +281,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     public void setToolBarTitle(String name){
         switch (name){
             case PAGE_SCIENCE:
-                mainTitle.setText("学术");
-                subTitle.setText("招聘 培训");
+                mainTitle.setText("千家论道");
                 break;
             case PAGE_RECRUIT:
-                mainTitle.setText("招聘");
-                subTitle.setText("学术 培训");
+                mainTitle.setText("职男职女");
                 break;
             case PAGE_TRAIN:
-                mainTitle.setText("培训");
-                subTitle.setText("学术 招聘");
+                mainTitle.setText("赋能成长");
                 break;
         }
     }
@@ -502,6 +494,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
      * @return 返回获取到的token
      */
     private String getRongToken(){
+
         final String token = "";
         String url = ConstantsBean.BASE_PATH+ConstantsBean.IM_TOKEN;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
@@ -513,6 +506,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                             if (response.getString("status").equals("success")){
                                 //获取成功，取出来token
                                 String im_token = response.getString("content");
+
                                 conn(im_token);
                             }
                         } catch (JSONException e) {
