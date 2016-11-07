@@ -12,7 +12,7 @@ import com.heapot.qianxun.activity.MainActivity;
 import com.heapot.qianxun.application.ActivityCollector;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
-import com.heapot.qianxun.bean.SubscribedBean;
+import com.heapot.qianxun.bean.SubScribedBean;
 import com.heapot.qianxun.bean.TagsBean;
 import com.orhanobut.logger.Logger;
 
@@ -30,7 +30,7 @@ import java.util.Map;
  *
  */
 public class LoadTagsUtils {
-    static List<SubscribedBean.ContentBean.RowsBean> subList = new ArrayList<>();
+    static List<SubScribedBean.ContentBean.RowsBean> subList = new ArrayList<>();
     static List<TagsBean.ContentBean> tagsList = new ArrayList<>();
     /**
      * 加载全部标签并存储到本地，加载成功以后请求加载已订阅标签

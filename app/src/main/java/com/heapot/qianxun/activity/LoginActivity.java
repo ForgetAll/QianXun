@@ -23,7 +23,7 @@ import com.blankj.utilcode.utils.NetworkUtils;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
-import com.heapot.qianxun.bean.SubscribedBean;
+import com.heapot.qianxun.bean.SubScribedBean;
 import com.heapot.qianxun.util.ChatInfoUtils;
 import com.heapot.qianxun.util.CommonUtil;
 import com.heapot.qianxun.util.LoadTagsUtils;
@@ -54,7 +54,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     };
 
     private static boolean isShowPass = false;
-    private List<SubscribedBean.ContentBean.RowsBean> subList = new ArrayList<>();
+    private List<SubScribedBean.ContentBean.RowsBean> subList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

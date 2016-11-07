@@ -87,8 +87,8 @@
         <!--文章分类-->
         <activity android:name=".activity.create.SortList"></activity>
         <!--创建工作描述-->
-       <activity android:name=".activity.create.CreateJobDescribe"
-           android:windowSoftInputMode="adjustResize|stateAlwaysHidden" ></activity>
+        <activity android:name=".activity.create.CreateJobDescribe"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" ></activity>
         <!--更多公司选择-->
         <activity android:name=".activity.create.CreateJobMoreList"></activity>
         <!--工作详情-->
@@ -97,13 +97,15 @@
         <activity android:name=".activity.create.CreateJobTypeActivity"></activity>
         <!---->
         <activity android:name=".activity.create.CreateJobEditActivity"></activity>
+        <!--培训详情-->
+        <activity android:name=".activity.CourseActivity"></activity>
         <!--聊天Activity-->
         <!--会话列表-->
-        
+
         <!--引导界面-->
-      <activity android:name=".activity.GuideActivity"></activity>
+        <activity android:name=".activity.GuideActivity"></activity>
         <!--学校列表-->
-       <activity android:name=".activity.SchoolListActivity"></activity>
+        <activity android:name=".activity.SchoolListActivity"></activity>
         <!--出生年-->
         <activity android:name=".activity.BirthActivity"></activity>
         <!--编辑学校信息-->

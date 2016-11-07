@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,11 +17,10 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.google.gson.JsonObject;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.activity.ArticleActivity;
+import com.heapot.qianxun.activity.CourseActivity;
 import com.heapot.qianxun.activity.JobActivity;
-import com.heapot.qianxun.activity.MainActivity;
 import com.heapot.qianxun.adapter.MainTabAdapter;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
@@ -31,14 +29,10 @@ import com.heapot.qianxun.helper.OnRecyclerViewItemClickListener;
 import com.heapot.qianxun.util.JsonUtil;
 import com.orhanobut.logger.Logger;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.heapot.qianxun.bean.ConstantsBean.PAGE_SCIENCE;
 
 /**
  * Created by Karl on 2016/8/25.
@@ -188,7 +182,9 @@ public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 job.putExtra("id",list.get(position).getId());
                 startActivity(job);
             }else {
-
+                Intent course = new Intent(getActivity(), CourseActivity.class);
+                course.putExtra("id",list.get(position).getId());
+                startActivity(course);
             }
 
         }

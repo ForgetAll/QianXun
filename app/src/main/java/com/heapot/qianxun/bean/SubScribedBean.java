@@ -8,7 +8,7 @@ import java.util.List;
  * desc: 订阅标签,记录
  *
  */
-public class SubscribedBean implements Serializable{
+public class SubScribedBean implements Serializable{
 
     /**
      * status : success

@@ -23,7 +23,7 @@ public class GuideActivity extends BaseActivity  implements ViewPager.OnPageChan
     PreferenceUtil.putBoolean(ConstantsBean.KEY_SPLASH, true);*/
     private ConvenientBanner convenientBanner;
     //图片资源
-    private Integer[] imageIds = {R.mipmap.ic_splash_a1, R.mipmap.ic_splash_a2, R.mipmap.ic_splash_a3};
+    private Integer[] imageIds = {R.mipmap.ic_sp_1, R.mipmap.ic_sp_2, R.mipmap.ic_sp_3};
     private View view;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

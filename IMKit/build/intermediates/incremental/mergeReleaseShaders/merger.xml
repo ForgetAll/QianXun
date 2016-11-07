@@ -1,6 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<<<<<<< HEAD
 <merger version="3"><dataSet config="main"><source path="G:\zpgiteight\QianXun\IMKit\src\main\shaders"/></dataSet><dataSet config="release"><source path="G:\zpgiteight\QianXun\IMKit\src\release\shaders"/></dataSet></merger>
-=======
-<merger version="3"><dataSet config="main"><source path="D:\work\QianXun\IMKit\src\main\shaders"/></dataSet><dataSet config="release"><source path="D:\work\QianXun\IMKit\src\release\shaders"/></dataSet></merger>
->>>>>>> ceac5ee8a7443b32b985a7bad524853c3ebdb8d8

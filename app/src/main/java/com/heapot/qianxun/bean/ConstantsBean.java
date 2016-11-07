@@ -16,8 +16,8 @@ public class ConstantsBean {
 
     //基本路径
     public static final String BASE_PATH = "http://qianxun.heapot.com/";
-//    public static final String BASE_PATH = "https://qinxi1992.xicp.net/";
-    public static final String BASE_PHP_PATH = "http://tsczrz.com";
+    //    public static final String BASE_PATH = "https://qinxi1992.xicp.net/";
+    public static final String BASE_PHP_PATH = "http://114.215.252.158/";
 
 
     public static final String CONFIG_NAME = "config";

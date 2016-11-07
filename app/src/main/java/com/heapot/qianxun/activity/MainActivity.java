@@ -107,8 +107,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         setTransparentBar();
         initView();
         initEvent();
-   //检查版本更新,待修改完后台数据 就把注销去掉
-      //  UpdateUtil.getInstance().checkUpdate(activity, null, false);
+        //检查版本更新,待修改完后台数据 就把注销去掉
+        //  UpdateUtil.getInstance().checkUpdate(activity, null, false);
 
     }
 
@@ -245,7 +245,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 if (RongIM.getInstance() != null){
                     //设置融云的用户信息
                     RongIM.getInstance().startConversationList(MainActivity.this);
-//                    RongIM.getInstance().startPrivateChat(this,"110","大大");
 
                 }
                 break;
@@ -273,10 +272,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
      */
     public void closeDrawer(){
         mDrawerLayout.closeDrawers();
-    }
-    public void setBanner(String url){
-        Logger.d("MainActivity:setBanner------>"+url);
-//        Glide.with(this).load(url).into(mBanner);
     }
     public void setToolBarTitle(String name){
         switch (name){
@@ -330,38 +325,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
      */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-//        if (keyCode == KeyEvent.KEYCODE_BACK){
-//            moveTaskToBack(true);
-//            return false;
-//        }
-//
-//        return super.onKeyDown(keyCode, event);
 
-
-//        long exitTime=0;
-//        // TODO 按两次返回键退出应用程序
-//        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-//            // 判断间隔时间 大于2秒就退出应用
-//            if ((System.currentTimeMillis() - exitTime) > 2000) {
-//                // 应用名
-//                String applicationName = getResources().getString(
-//                        R.string.app_name);
-//                String msg = "再按一次返回键退出" + applicationName;
-//                //String msg1 = "再按一次返回键回到桌面";
-//                Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
-//                // 计算两次返回键按下的时间差
-//                exitTime = System.currentTimeMillis();
-//            } else {
-//                // 关闭应用程序
-//                finish();
-//                // 返回桌面操作
-//                // Intent home = new Intent(Intent.ACTION_MAIN);
-//                // home.addCategory(Intent.CATEGORY_HOME);
-//                // startActivity(home);
-//            }
-//            return true;
-//        }
-//        return super.onKeyDown(keyCode, event);
         if (KeyEvent.KEYCODE_BACK == event.getKeyCode()) {
 
 
@@ -468,10 +432,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                     break;
                 case 5:
                     break;
-//                case 6:
-//                    String url = intent.getExtras().getString("imageUrl");
-//                    setBanner(url);
-//                    break;
             }
 
             if (status != 0 || status != 6){
@@ -493,43 +453,48 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
      * 获取当前用户在融云的token
      * @return 返回获取到的token
      */
-    private String getRongToken(){
+    private void getRongToken(){
 
-        final String token = "";
-        String url = ConstantsBean.BASE_PATH+ConstantsBean.IM_TOKEN;
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                Request.Method.GET, url, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            if (response.getString("status").equals("success")){
-                                //获取成功，取出来token
-                                String im_token = response.getString("content");
+        if (PreferenceUtil.getString("IM_TOKEN") == null || PreferenceUtil.getString("IM_TOKEN").equals("")) {
 
-                                conn(im_token);
+            String url = ConstantsBean.BASE_PATH + ConstantsBean.IM_TOKEN;
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                    Request.Method.GET, url, null,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                if (response.getString("status").equals("success")) {
+                                    //获取成功，取出来token
+                                    String im_token = response.getString("content");
+
+                                    conn(im_token);
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
                         }
                     }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
+            ) {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> headers = new HashMap<>();
+                    headers.put(ConstantsBean.KEY_TOKEN, CustomApplication.TOKEN);
+                    return headers;
                 }
-        ){
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String,String> headers = new HashMap<>();
-                headers.put(ConstantsBean.KEY_TOKEN, CustomApplication.TOKEN);
-                return headers;
-            }
-        };
-        CustomApplication.getRequestQueue().add(jsonObjectRequest);
-        return token;
+            };
+            CustomApplication.getRequestQueue().add(jsonObjectRequest);
+        }else {
+            String token = PreferenceUtil.getString("IM_TOKEN");
+            conn(token);
+        }
+
     }
 
     /**
@@ -546,7 +511,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 public void onTokenIncorrect() {
                     //Token错误，重新请求token
                     getRongToken();
-                    Logger.d("拿到的Token错误");
+                    PreferenceUtil.putString("IM_TOKEN","");
                 }
 
                 @Override
@@ -555,6 +520,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                     //连接融云成功
                     Logger.d("IM-Success-------->UserId:"+s);
                     CustomApplication.IM_TOKEN = token;
+                    PreferenceUtil.putString("IM_TOKEN",token);
                     RongIM.getInstance().getRongIMClient().setOnReceiveMessageListener(new RongIMClient.OnReceiveMessageListener() {
                         @Override
                         public boolean onReceived(io.rong.imlib.model.Message message, int i) {
@@ -603,11 +569,5 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
 
     }
-    private void refreshUserInfo(){
-        //刷新用户信息
-        String id = "";
-        String name = "";
-        String image = "";
-        RongIM.getInstance().refreshUserInfoCache(new UserInfo(id,name,Uri.parse(image)));
-    }
+
 }
