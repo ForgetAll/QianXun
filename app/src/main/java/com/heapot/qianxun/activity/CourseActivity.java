@@ -92,9 +92,9 @@ public class CourseActivity extends BaseActivity {
         String id = intent.getExtras().getString("id");
 
       //  String url = "http://sijiache.heapot.com/Tabs/userPage/?type=train&id="+id+"&device=android";
-        String url ="http://sijiache.heapot.com/Tabs/userPage/article/?articleId=\" + pageConfig().id + \"&device=\" + pageConfig().device";
+        String url ="http://sijiache.heapot.com/Tabs/userPage/article/?articleId=" + id + "&device=android";
 
-                //初始化webView
+        //初始化webView
         initSettings();
         webView.loadUrl(url);
         webView.setWebChromeClient(new WebChromeClient(){});

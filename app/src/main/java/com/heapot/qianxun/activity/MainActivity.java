@@ -136,11 +136,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         //开启融云服务器连接
         getRongToken();
         //获取用户好友信息
-//        ChatInfoUtils.getAddFriendsRequestList(CustomApplication.TOKEN);
         getFriend();
 
-        //测试token
-        Logger.d("打印本地token-->"+PreferenceUtil.getString("token")+"打印application中的token---》"+ CustomApplication.TOKEN);
     }
 
     @Override

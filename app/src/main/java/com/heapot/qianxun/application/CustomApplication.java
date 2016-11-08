@@ -3,6 +3,7 @@ package com.heapot.qianxun.application;
 import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
+import android.os.StrictMode;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
@@ -31,6 +32,8 @@ public class CustomApplication extends Application {
     public static String PAGE_ARTICLES_ID = "f3b8d91b8f9c4a03a4a06a5678e79872";
     public static String PAGE_ACTIVITIES_ID = "9025053c65e04a6992374c5d43f31acf";
     public static String PAGE_JOBS_ID = "af3a09e8a4414c97a038a2d735064ebc";
+
+    private static final boolean DEV_MODE = true;
 
     @Override
     public void onCreate() {
@@ -103,6 +106,32 @@ public class CustomApplication extends Application {
         }
         return null;
     }
+    /**
+     * 初始化StrictMode工具类,
+     * 系统检测出主线程违例的情况并作出相应反映
+     */
+    private void initStrictMode(){
+        if (DEV_MODE){
+            StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+                    .detectCustomSlowCalls()//自定义耗时操作
+                    .detectDiskReads()//磁盘读取操作
+                    .detectDiskWrites()//磁盘写入操作
+                    .detectNetwork()//网络操作，以上可以用detectAll()来代替
+                    .penaltyDialog()//弹出违规对话框
+                    .penaltyLog()//在Logcat中打印异常信息
+                    .penaltyFlashScreen()
+                    .build());
+            StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+                    .detectActivityLeaks()
+                    .detectLeakedClosableObjects()
+                    .detectLeakedSqlLiteObjects()
+                    .penaltyLog()
+                    .penaltyDeath()
+                    .build());
+        }
+    }
+
+
 
 }
 
