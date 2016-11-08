@@ -50,4 +50,8 @@ dependencies {
     compile project(':IMKit')
     /*广告展示*/
     compile 'com.bigkoo:convenientbanner:2.0.5'
+    /*Bugly*/
+    compile 'com.tencent.bugly:crashreport:latest.release'
+
+
 }

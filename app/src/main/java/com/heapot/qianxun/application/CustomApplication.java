@@ -8,6 +8,7 @@ import android.os.StrictMode;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.heapot.qianxun.bean.ConstantsBean;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import io.rong.imkit.RongIM;
 
@@ -38,6 +39,9 @@ public class CustomApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        //初始化Bugly
+        CrashReport.initCrashReport(getApplicationContext(),"900057726",true);
+
         //初始化日志工具类
         com.orhanobut.logger.Logger
                 .init("QianXun")
@@ -45,8 +49,6 @@ public class CustomApplication extends Application {
         //初始化上下文
         context = getApplicationContext();
 
-        //初始化全局异常捕获
-        CrashHandler.getInstance(context).init(context);
         //初始化融云
         if (getApplicationInfo().packageName.equals(getCurProcessName(getApplicationContext()))){
             RongIM.init(this);
