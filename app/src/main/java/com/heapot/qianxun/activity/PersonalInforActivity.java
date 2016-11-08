@@ -140,9 +140,8 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
                         Log.e("所有的Json数据：", String.valueOf(response));
                         try {
                             String status = response.getString("status");
-                            if (status.equals("success")) {
-                                if (response.getJSONObject("content") != null) {
-                                    ToastUtil.show("获取成功");
+                            Log.e("content：", String.valueOf(response.getJSONObject("content")));
+                                if (status.equals("success")&&response.getJSONObject("content") != null) {
                                     MyDetailBean myDetailBean = (MyDetailBean) JsonUtil.fromJson(String.valueOf(response), MyDetailBean.class);
                                     PreferenceUtil.putString("sex", String.valueOf(myDetailBean.getContent().getSex()));
                                     PreferenceUtil.putString("detaildescribe", myDetailBean.getContent().getDescription());
@@ -162,22 +161,12 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
                                     } else {
                                         tv_sex.setText("其他");
                                     }
-                                } else if (response.getJSONObject("content") == null) {
-                                    ToastUtil.show("Object为空...........");
-                                    Log.e("数据为空，这是保存本地的", "走这一步了");
-                                    PreferenceUtil.putString("sex", "2");
-                                    PreferenceUtil.putString("detaildescribe", "仟询");
-                                    PreferenceUtil.putString("birthyear", "1");
+
                                 }else {
 
                                 }
 
-                            } else {
-                                ToastUtil.show("获取数据失败");
-                                PreferenceUtil.putString("sex", "2");
-                                PreferenceUtil.putString("detaildescribe", "仟询");
-                                PreferenceUtil.putString("birthyear", "1");
-                            }
+
 
 
                         } catch (JSONException e) {
@@ -271,6 +260,9 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
                 tv_sex.setText("男");
                 DetailPostBean detailMan = new DetailPostBean();
                 String birthy = PreferenceUtil.getString("birthyear");
+                if (birthy==null){
+                    birthy="1";
+                }
                 detailMan.setBirthYear(Integer.parseInt(birthy));
                 PreferenceUtil.putString("sex", String.valueOf(1));
                 detailMan.setSex(1);
@@ -285,6 +277,9 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
                 tv_sex.setText("女");
                 DetailPostBean detailWoman = new DetailPostBean();
                 String birthye = PreferenceUtil.getString("birthyear");
+                if (birthye==null){
+                    birthye="1";
+                }
                 detailWoman.setBirthYear(Integer.parseInt(birthye));
                 PreferenceUtil.putString("sex", String.valueOf(0));
                 detailWoman.setSex(0);
@@ -299,6 +294,9 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
                 tv_sex.setText("其他");
                 DetailPostBean detailExtra = new DetailPostBean();
                 String birthyea = PreferenceUtil.getString("birthyear");
+                if (birthyea==null){
+                    birthyea="1";
+                }
                 detailExtra.setBirthYear(Integer.parseInt(birthyea));
                 PreferenceUtil.putString("sex", String.valueOf(2));
                 detailExtra.setSex(2);
@@ -500,6 +498,9 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
                     detailPostBean.setDescription("仟询");
                     String body3 = JsonUtil.toJson(detailPostBean);*/
                     String sexNumb = PreferenceUtil.getString("sex");
+                    if (sexNumb==null){
+                        sexNumb="2";
+                    }
                     Log.e("sexNumb", sexNumb);
                     String descri = "仟询";
                     String body3 = "{\"sex\":\"" + sexNumb + "\",\"birthYear\":\"" + birth + "\",\"description\":\"" + descri + "\"}";
