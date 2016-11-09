@@ -16,7 +16,6 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="30dp"
-        android:onClick="enterClick"
         android:paddingRight="20dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"

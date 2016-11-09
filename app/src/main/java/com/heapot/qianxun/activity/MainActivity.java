@@ -130,7 +130,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
 
         //加载Banner的图片
-        Glide.with(this).load("http://114.215.252.158/banner.png").into(mBanner);
+//        Glide.with(this).load("http://114.215.252.158/banner.png").into(mBanner);
+        Glide.with(this).load(R.drawable.ic_test).into(mBanner);
         //注册本地广播
         localReceiver();
         //开启融云服务器连接
@@ -563,7 +564,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     protected void onRestart() {
         super.onRestart();
-
 
     }
 

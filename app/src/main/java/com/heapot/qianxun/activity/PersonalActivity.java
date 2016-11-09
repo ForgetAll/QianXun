@@ -32,6 +32,7 @@ import java.util.List;
 
 /**
  * Created by Karl on 2016/8/29.
+ * desc:
  */
 public class PersonalActivity extends BaseActivity implements View.OnClickListener, ViewPager.OnPageChangeListener {
     private ViewPager mViewPager;

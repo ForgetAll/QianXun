@@ -254,9 +254,6 @@ public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser && isPre){
-            //当试图可见的时候加载Banner
-//            Logger.d("可见视图的id"+mId);
-//            setTabBanner(mId);
             list.clear();
             loadData();
 

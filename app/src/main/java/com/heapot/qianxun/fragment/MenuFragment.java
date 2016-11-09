@@ -23,6 +23,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.bumptech.glide.Glide;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.activity.MainActivity;
 import com.heapot.qianxun.activity.PersonalActivity;
@@ -135,7 +136,8 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
                 mName.setText("请设置昵称");
             }
             if (myUserBean.getIcon() != null) {
-                CommonUtil.loadImage(mIcon, myUserBean.getIcon(), R.drawable.imagetest);
+//                CommonUtil.loadImage(mIcon, myUserBean.getIcon(), R.drawable.imagetest);
+                Glide.with(getActivity()).load(R.drawable.ic_test).into(mIcon);
                 Log.e("网上获取图片", myUserBean.getIcon());
             } else {
                 mIcon.setImageResource(R.drawable.imagetest);
@@ -184,7 +186,8 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
                                     mName.setText("请设置昵称");
                                 }
                                 if (userBean.getIcon() != null) {
-                                    CommonUtil.loadImage(mIcon, userBean.getIcon(), R.drawable.imagetest);
+//                                    CommonUtil.loadImage(mIcon, userBean.getIcon(), R.drawable.imagetest);
+                                    Glide.with(getActivity()).load(R.drawable.ic_test).into(mIcon);
                                     Log.e("网上获取图片fgsgbtehgte", userBean.getIcon());
                                 } else {
                                     mIcon.setImageResource(R.drawable.imagetest);

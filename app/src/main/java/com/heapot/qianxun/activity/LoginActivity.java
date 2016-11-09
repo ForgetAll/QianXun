@@ -15,6 +15,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -29,12 +30,18 @@ import com.heapot.qianxun.util.CommonUtil;
 import com.heapot.qianxun.util.LoadTagsUtils;
 import com.heapot.qianxun.util.PreferenceUtil;
 import com.orhanobut.logger.Logger;
+import com.squareup.haha.perflib.Main;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
 
 /**
  * Created by Karl on 2016/9/17.
@@ -45,16 +52,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private TextView reset, register;
     private ImageView removeData, showPass;
     private Button login;
-    private ScrollView mScrollView;
-    private Handler handler = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            mScrollView.scrollTo(0,mScrollView.getHeight());
-        }
-    };
+
 
     private static boolean isShowPass = false;
-    private List<SubScribedBean.ContentBean.RowsBean> subList = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +75,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         login = (Button) findViewById(R.id.btn_login);
         register = (TextView) findViewById(R.id.txt_login_to_register);
         reset = (TextView) findViewById(R.id.txt_reset_password);
-        mScrollView = (ScrollView) findViewById(R.id.sl_login);
+
 
     }
 
@@ -84,15 +85,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         login.setOnClickListener(this);
         register.setOnClickListener(this);
         reset.setOnClickListener(this);
-        showLoginBtn();
+
     }
 
-    /**
-     * 登陆事件，需要判断管理员账号和普通账号
-     * 由于界面没有加用户自主选择管理员还是普通用户，所以这里先进行验证
-     * 先以管理员登陆，失败后以普通用户登陆
-     */
-    //登陆前需要检查网络状态
+
     private void postLogin() {
         String username = edt_name.getText().toString();
         String password = edt_pass.getText().toString();
@@ -110,57 +106,123 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         }
     }
 
-    /**
-     * 普通用户登陆
-     *
-     * @param username 用户名
-     * @param password 用户密码
-     */
     private void postLogin(final String username, final String password) {
         String url = ConstantsBean.BASE_PATH + ConstantsBean.LOGIN + "?loginName=" + username + "&password=" + password;
         Logger.d(url);
         JsonObjectRequest jsonObject = new JsonObjectRequest(
-                Request.Method.POST,
-                url,
-                null,
+                Request.Method.POST, url,null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
 
-                        try {
-                            if (response.getString("status").equals("success")) {
-                                if (response.has("content")) {
-                                    JSONObject content = response.getJSONObject("content");
-                                    String token = content.getString("auth-token");
-                                    //设置全局变量
-                                    CustomApplication.TOKEN = token;
-                                    //设置跳转到主页-->学术页面,但是因为默认就是学术作为主页，所以这里其实并没有实际作用，仅保险起见设置，可删除
-                                    CustomApplication.setCurrentPage(ConstantsBean.PAGE_SCIENCE);
-                                    //存储到本地
-                                    PreferenceUtil.putString("token", token);
-                                    PreferenceUtil.putString("phone", username);
-                                    PreferenceUtil.putString("password", password);
-                                    ChatInfoUtils.getFriendsList(token);
-                                    LoadTagsUtils.getTags(LoginActivity.this,token);//加载数据并存储
-                                }
-                            } else {
-                                Toast.makeText(LoginActivity.this, "登陆失败" + response.get("message"), Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                        parseResponse(response,username,password);
+
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Logger.d(error);
-                        Toast.makeText(LoginActivity.this, "登陆失败", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "登陆失败"+error.getMessage(), Toast.LENGTH_SHORT).show();
 
                     }
                 }
         );
         CustomApplication.getRequestQueue().add(jsonObject);
+    }
+
+    private void parseResponse(JSONObject response,String username,String password){
+        try {
+            if (response.getString("status").equals("success")) {
+                if (response.has("content")) {
+                    JSONObject content = response.getJSONObject("content");
+                    String token = content.getString("auth-token");
+                    CustomApplication.setCurrentPage(ConstantsBean.PAGE_SCIENCE);
+                    //存储到本地
+                    PreferenceUtil.putString("token", token);
+                    PreferenceUtil.putString("phone", username);
+                    PreferenceUtil.putString("password", password);
+                    getIMToken(token);
+                }
+            } else {
+                Toast.makeText(LoginActivity.this, "登陆失败" + response.get("message"), Toast.LENGTH_SHORT).show();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void getIMToken(final String token){
+        if (getChatToken().equals("")) {
+            String url = ConstantsBean.BASE_PATH + ConstantsBean.IM_TOKEN;
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                    Request.Method.GET, url, null,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            parseChatTokenResponse(response);
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
+                        }
+                    }
+            ) {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> headers = new HashMap<>();
+                    headers.put(ConstantsBean.KEY_TOKEN, token);
+                    return headers;
+                }
+            };
+            CustomApplication.getRequestQueue().add(jsonObjectRequest);
+        }else {
+            String chat_token = getChatToken();
+            connChat(chat_token);
+        }
+    }
+
+    private void parseChatTokenResponse(JSONObject response){
+        try {
+            if (response.getString("status").equals("success")){
+
+                String im_token = response.getString("content");
+                connChat(im_token);
+            }else {
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void connChat(final String token){
+        if (getApplicationInfo().packageName.equals(CustomApplication.getCurProcessName(getApplicationContext()))){
+            /**
+             * IMKit SDK调用第二步，建立与服务器的连接
+             */
+            RongIM.connect(token, new RongIMClient.ConnectCallback() {
+                @Override
+                public void onTokenIncorrect() {
+
+                }
+
+                @Override
+                public void onSuccess(String s) {
+                    PreferenceUtil.putString("chat_token",token);
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    finish();
+
+                }
+
+                @Override
+                public void onError(RongIMClient.ErrorCode errorCode) {
+
+                }
+            });
+        }
     }
 
 
@@ -198,25 +260,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 startActivity(intentForgetPass);
                 break;
         }
-    }
-    /**
-     * 当输入得到焦点的时候，ScrollView指向底部,避免遮挡Login
-     */
-    private void showLoginBtn(){
-        edt_name.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                handler.sendEmptyMessage(1);
-                return false;
-            }
-        });
-        edt_pass.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                handler.sendEmptyMessage(1);
-                return false;
-            }
-        });
     }
 
 }

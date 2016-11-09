@@ -8,6 +8,7 @@ import android.os.StrictMode;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.heapot.qianxun.bean.ConstantsBean;
+import com.squareup.leakcanary.LeakCanary;
 import com.tencent.bugly.crashreport.CrashReport;
 
 import io.rong.imkit.RongIM;
@@ -39,6 +40,9 @@ public class CustomApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        //监测内存泄露
+        LeakCanary.install(this);
+
         //初始化Bugly
         CrashReport.initCrashReport(getApplicationContext(),"900057726",true);
 
