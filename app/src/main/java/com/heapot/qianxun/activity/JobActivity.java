@@ -17,7 +17,6 @@ import com.blankj.utilcode.utils.NetworkUtils;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.bean.MyUserBean;
-import com.heapot.qianxun.util.ChatInfoUtils;
 import com.heapot.qianxun.util.SerializableUtils;
 
 import io.rong.imkit.RongIM;
@@ -47,7 +46,7 @@ public class JobActivity extends BaseActivity {
                         RongIM.getInstance().refreshUserInfoCache(new UserInfo(id,title, Uri.parse(image)));
                         if (RongIM.getInstance() != null){
                             //用户开始聊天后默认加好友
-                            ChatInfoUtils.onRequestAddFriend(JobActivity.this,id,title);
+//                            ChatInfoUtils.onRequestAddFriend(JobActivity.this,id,title);
                             RongIM.getInstance().startPrivateChat(JobActivity.this,id,title);
                         }
                     }

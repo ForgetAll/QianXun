@@ -2,16 +2,12 @@ package com.heapot.qianxun.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,20 +20,14 @@ import com.blankj.utilcode.utils.NetworkUtils;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
-import com.heapot.qianxun.bean.SubScribedBean;
-import com.heapot.qianxun.util.ChatInfoUtils;
 import com.heapot.qianxun.util.CommonUtil;
-import com.heapot.qianxun.util.LoadTagsUtils;
 import com.heapot.qianxun.util.PreferenceUtil;
 import com.orhanobut.logger.Logger;
-import com.squareup.haha.perflib.Main;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import io.rong.imkit.RongIM;
@@ -137,7 +127,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 if (response.has("content")) {
                     JSONObject content = response.getJSONObject("content");
                     String token = content.getString("auth-token");
-                    CustomApplication.setCurrentPage(ConstantsBean.PAGE_SCIENCE);
                     //存储到本地
                     PreferenceUtil.putString("token", token);
                     PreferenceUtil.putString("phone", username);

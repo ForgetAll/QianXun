@@ -80,12 +80,12 @@ public class SystemSettingActivity extends BaseActivity implements View.OnClickL
                 break;
             //清理缓存
             case R.id.rl_clear:
-                ClearCacheTask clearCacheTask = new ClearCacheTask(activity, mCache);
+                ClearCacheTask clearCacheTask = new ClearCacheTask(SystemSettingActivity.this, mCache);
                 clearCacheTask.execute();
                 break;
             //版本更新
             case R.id.rl_update:
-                UpdateUtil.getInstance().checkUpdate(activity, mVersion, true);
+                UpdateUtil.getInstance().checkUpdate(SystemSettingActivity.this, mVersion, true);
                 break;
             //提交意见
             case R.id.tv_suggest:
@@ -106,7 +106,7 @@ public class SystemSettingActivity extends BaseActivity implements View.OnClickL
 //                SerializableUtils.deleteSerializable(this,ConstantsBean.SUB_FILE_NAME);
 //                SerializableUtils.deleteSerializable(this,ConstantsBean.TAG_FILE_NAME);
                 PreferenceUtil.clearPreference();
-                SerializableUtils.deleteSerializable(activity, ConstantsBean.MY_USER_INFO);
+                SerializableUtils.deleteSerializable(SystemSettingActivity.this, ConstantsBean.MY_USER_INFO);
                 PreferenceUtil.putBoolean(ConstantsBean.KEY_SPLASH, true);
                 ActivityCollector.finishAll();
                 Intent intent = new Intent(SystemSettingActivity.this, LoginActivity.class);

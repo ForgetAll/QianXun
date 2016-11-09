@@ -27,7 +27,6 @@ import com.heapot.qianxun.R;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.bean.MyUserBean;
-import com.heapot.qianxun.util.ChatInfoUtils;
 import com.heapot.qianxun.util.SerializableUtils;
 import com.orhanobut.logger.Logger;
 
@@ -117,7 +116,7 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
                             RongIM.getInstance().refreshUserInfoCache(new UserInfo(id,title,Uri.parse(image)));
                             if (RongIM.getInstance() != null){
                                 //用户开始聊天后默认加好友
-                                ChatInfoUtils.onRequestAddFriend(ArticleActivity.this,id,title);
+//                                ChatInfoUtils.onRequestAddFriend(ArticleActivity.this,id,title);
                                 RongIM.getInstance().startPrivateChat(ArticleActivity.this,id,title);
                             }
                         }
@@ -323,7 +322,7 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> map = new HashMap<>();
-                map.put(ConstantsBean.KEY_TOKEN,CustomApplication.TOKEN);
+                map.put(ConstantsBean.KEY_TOKEN,getAppToken());
                 return map;
             }
         };

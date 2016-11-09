@@ -132,7 +132,7 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
 
         rl_company = (RelativeLayout) findViewById(R.id.rl_company);
         iv_company = (ImageView) findViewById(R.id.iv_company);
-        Glide.with(activity).load(PreferenceUtil.getString(ConstantsBean.userImage)).error(R.mipmap.imagetest).into(iv_company);
+        Glide.with(this).load(PreferenceUtil.getString(ConstantsBean.userImage)).error(R.mipmap.imagetest).into(iv_company);
         tv_companyTitle = (TextView) findViewById(R.id.tv_companyTitle);
         String orgName = PreferenceUtil.getString("orgName");
         tv_companyTitle.setText(orgName);
@@ -141,20 +141,20 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
 
         et_min = (EditText) findViewById(R.id.tv_minTitle);
         iv_max = (ImageView) findViewById(R.id.iv_max);
-        Glide.with(activity).load(PreferenceUtil.getString(ConstantsBean.userImage)).error(R.mipmap.imagetest).into(iv_max);
+        Glide.with(this).load(PreferenceUtil.getString(ConstantsBean.userImage)).error(R.mipmap.imagetest).into(iv_max);
         iv_min = (ImageView) findViewById(R.id.iv_min);
         et_max = (EditText) findViewById(R.id.tv_maxTitle);
-        Glide.with(activity).load(PreferenceUtil.getString(ConstantsBean.userImage)).error(R.mipmap.imagetest).into(iv_min);
+        Glide.with(this).load(PreferenceUtil.getString(ConstantsBean.userImage)).error(R.mipmap.imagetest).into(iv_min);
 
         rl_detail = (RelativeLayout) findViewById(R.id.rl_detail);
         iv_detail = (ImageView) findViewById(R.id.iv_detail);
         tv_detailTitle = (TextView) findViewById(R.id.tv_detailTitle);
         rl_detail.setOnClickListener(this);
-        Glide.with(activity).load(PreferenceUtil.getString(ConstantsBean.userImage)).error(R.mipmap.imagetest).into(iv_detail);
+        Glide.with(this).load(PreferenceUtil.getString(ConstantsBean.userImage)).error(R.mipmap.imagetest).into(iv_detail);
 
         iv_sum = (ImageView) findViewById(R.id.iv_sum);
         et_sumTitle = (EditText) findViewById(R.id.tv_sumTitle);
-        Glide.with(activity).load(PreferenceUtil.getString(ConstantsBean.userImage)).error(R.mipmap.imagetest).into(iv_sum);
+        Glide.with(this).load(PreferenceUtil.getString(ConstantsBean.userImage)).error(R.mipmap.imagetest).into(iv_sum);
 
 
         rl_describe = (RelativeLayout) findViewById(R.id.rl_describe);
@@ -162,7 +162,7 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
         tv_describeTitle = (TextView) findViewById(R.id.tv_describeTitle);
         tv_describeContent = (TextView) findViewById(R.id.tv_describeContent);
         iv_describeChoose = (ImageView) findViewById(R.id.iv_describeChoose);
-        Glide.with(activity).load(PreferenceUtil.getString(ConstantsBean.userImage)).error(R.mipmap.imagetest).into(iv_describe);
+        Glide.with(this).load(PreferenceUtil.getString(ConstantsBean.userImage)).error(R.mipmap.imagetest).into(iv_describe);
         rl_describe.setOnClickListener(this);
 
     }
@@ -255,13 +255,13 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
 
                                     CreateJobResultBean createJobResultBean = (CreateJobResultBean) JsonUtil.fromJson(String.valueOf(response), CreateJobResultBean.class);
                                     String newJobId = createJobResultBean.getContent().getId();
-                                    Toast.makeText(activity, "发布成功", Toast.LENGTH_SHORT).show();
-                                    Intent job = new Intent(activity, JobActivity.class);
+                                    Toast.makeText(CreateJobActivity.this, "发布成功", Toast.LENGTH_SHORT).show();
+                                    Intent job = new Intent(CreateJobActivity.this, JobActivity.class);
                                     job.putExtra("id",createJobResultBean.getContent().getId());
                                     startActivity(job);
                                     finish();
                                 } else {
-                                    Toast.makeText(activity, "发布失败", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(CreateJobActivity.this, "发布失败", Toast.LENGTH_SHORT).show();
                                     Logger.d(response.getString("message"));
                                 }
                             } catch (JSONException e) {
@@ -279,7 +279,7 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     Map<String, String> headers = new HashMap<>();
-                    headers.put(ConstantsBean.KEY_TOKEN, CustomApplication.TOKEN);
+                    headers.put(ConstantsBean.KEY_TOKEN, getAppToken());
                     return headers;
                 }
             };
@@ -397,7 +397,7 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<>();
-                headers.put(ConstantsBean.KEY_TOKEN, CustomApplication.TOKEN);
+                headers.put(ConstantsBean.KEY_TOKEN, getAppToken());
                 return headers;
             }
         };

@@ -81,7 +81,7 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
                         CommonUtil.loadImage(mHead, path, R.mipmap.imagetest);
                         userBean.setIcon(path);
                         personalStatus = 1;
-                        SerializableUtils.setSerializable(activity, ConstantsBean.MY_USER_INFO, userBean);
+                        SerializableUtils.setSerializable(PersonalInforActivity.this, ConstantsBean.MY_USER_INFO, userBean);
                         PreferenceUtil.putString(ConstantsBean.userImage, path);
                         String body3 = "{\"icon\":\"" + userBean.getIcon() + "\"}";
                         updateUserInfo(body3);
@@ -184,7 +184,7 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<>();
-                headers.put(ConstantsBean.KEY_TOKEN, CustomApplication.TOKEN);
+                headers.put(ConstantsBean.KEY_TOKEN, getAppToken());
                 return headers;
             }
         };
@@ -220,7 +220,7 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
     }
 
     private Object getLocalInfo(String fileName) {
-        return SerializableUtils.getSerializable(activity, fileName);
+        return SerializableUtils.getSerializable(PersonalInforActivity.this, fileName);
     }
 
     //点击事件
@@ -392,7 +392,7 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> map = new HashMap<>();
-                map.put(ConstantsBean.KEY_TOKEN, CustomApplication.TOKEN);
+                map.put(ConstantsBean.KEY_TOKEN, getAppToken());
                 return map;
             }
         };
@@ -465,7 +465,7 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
                     nick = intent.getStringExtra(ConstantsBean.INFO);
                     mNick.setText(nick);
                     userBean.setNickname(nick);
-                    SerializableUtils.setSerializable(activity, ConstantsBean.MY_USER_INFO, userBean);
+                    SerializableUtils.setSerializable(PersonalInforActivity.this, ConstantsBean.MY_USER_INFO, userBean);
                     PreferenceUtil.putString(ConstantsBean.nickName, nick);
                     personalStatus = 1;
                     String body4 = "{\"nickname\":\"" + userBean.getNickname() + "\"}";
@@ -477,7 +477,7 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
                     autograph = intent.getStringExtra(ConstantsBean.INFO);
                     mAutograph.setText(autograph);
                     userBean.setDescription(autograph);
-                    SerializableUtils.setSerializable(activity, ConstantsBean.MY_USER_INFO, userBean);
+                    SerializableUtils.setSerializable(PersonalInforActivity.this, ConstantsBean.MY_USER_INFO, userBean);
                     PreferenceUtil.putString(ConstantsBean.userAutograph, autograph);
                     personalStatus = 1;
                     String body2 = "{\"description\":\"" + userBean.getDescription() + "\"}";
@@ -528,10 +528,10 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
                         try {
                             String status = response.getString("status");
                             if (status.equals("success")) {
-                                Toast.makeText(activity, "更新成功", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(PersonalInforActivity.this, "更新成功", Toast.LENGTH_SHORT).show();
 
                             } else {
-                                Toast.makeText(activity, "更新失败", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(PersonalInforActivity.this, "更新失败", Toast.LENGTH_SHORT).show();
                                 Logger.d(response.getString("message"));
                             }
                         } catch (JSONException e) {
@@ -549,7 +549,7 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<>();
-                headers.put(ConstantsBean.KEY_TOKEN, CustomApplication.TOKEN);
+                headers.put(ConstantsBean.KEY_TOKEN, getAppToken());
                 return headers;
             }
         };

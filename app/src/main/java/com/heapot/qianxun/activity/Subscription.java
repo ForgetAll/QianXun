@@ -45,7 +45,7 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
     ItemTouchHelper helper;
     //全部数据集合
     List<TagsBean.ContentBean> list = new ArrayList<>();
-    private String pid = CustomApplication.PAGE_ARTICLES_ID;
+    private String pid = "";
     List<String> postIdList = new ArrayList<>();//实时记录要提交的数据
     List<String> deleteIdList = new ArrayList<>();//实时记录要删除的数据
     //加入关闭按钮
@@ -107,7 +107,6 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
                     subBean.setId(tagsList.get(position).getId());
                     subBean.setPid(tagsList.get(position).getPid().toString());
                     subBean.setName(tagsList.get(position).getName());
-                    subBean.setStatus(tagsList.get(position).getSubscribeStatus());
                     subList.add(subBean);
                     //还需要更新list，找出相同id的数据在list的下标
                     int count = 0;
@@ -241,17 +240,7 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
      */
     private void initData(){
         //判断当前页面是什么
-        switch (CustomApplication.getCurrentPageName()){
-            case "PAGE_SCIENCE":
-                pid = CustomApplication.PAGE_ARTICLES_ID;
-                break;
-            case "PAGE_RECRUIT":
-                pid = CustomApplication.PAGE_JOBS_ID;
-                break;
-            case "PAGE_TRAIN":
-                pid = CustomApplication.PAGE_ACTIVITIES_ID;
-                break;
-        }
+
         Object objTags =  SerializableUtils.getSerializable(Subscription.this,ConstantsBean.TAG_FILE_NAME);
         list.addAll((Collection<? extends TagsBean.ContentBean>) objTags);
         List<Integer> posList = new ArrayList<>();
@@ -274,7 +263,6 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
                 subBean.setId(tagsList.get(i).getId());
                 subBean.setPid(tagsList.get(i).getPid().toString());
                 subBean.setName(tagsList.get(i).getName());
-                subBean.setStatus(tagsList.get(i).getSubscribeStatus());
                 subList.add(subBean);
             }
         }

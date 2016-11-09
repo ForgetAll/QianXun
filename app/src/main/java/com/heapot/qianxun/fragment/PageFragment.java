@@ -21,6 +21,7 @@ import com.heapot.qianxun.R;
 import com.heapot.qianxun.activity.ArticleActivity;
 import com.heapot.qianxun.activity.CourseActivity;
 import com.heapot.qianxun.activity.JobActivity;
+import com.heapot.qianxun.activity.MainActivity;
 import com.heapot.qianxun.adapter.MainTabAdapter;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
@@ -172,12 +173,12 @@ public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     private OnRecyclerViewItemClickListener onClickListener = new OnRecyclerViewItemClickListener() {
         @Override
         public void onItemClick(View view, int position) {
-            if (CustomApplication.getCurrentPageName().equals("PAGE_SCIENCE")){
+            if (((MainActivity)mActivity).PAGE_CURRENT.equals("PAGE_SCIENCE")){
                 Logger.d("跳转到文章详情，id是"+list.get(position).getId());
                 Intent intent = new Intent(getActivity(), ArticleActivity.class);
                 intent.putExtra("id",list.get(position).getId());
                 startActivity(intent);
-            }else if (CustomApplication.getCurrentPageName().equals("PAGE_RECRUIT")){
+            }else if (((MainActivity)mActivity).PAGE_CURRENT.equals("PAGE_RECRUIT")){
                 Intent job = new Intent(getActivity(), JobActivity.class);
                 job.putExtra("id",list.get(position).getId());
                 startActivity(job);

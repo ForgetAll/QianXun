@@ -1,10 +1,8 @@
 package com.heapot.qianxun.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -17,12 +15,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.blankj.utilcode.utils.NetworkUtils;
 import com.heapot.qianxun.R;
-import com.heapot.qianxun.application.ActivityCollector;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
-import com.heapot.qianxun.util.ChatInfoUtils;
 import com.heapot.qianxun.util.CommonUtil;
-import com.heapot.qianxun.util.LoadTagsUtils;
 import com.heapot.qianxun.util.PreferenceUtil;
 import com.orhanobut.logger.Logger;
 
@@ -276,7 +271,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 if (response.has("content")) {
                     JSONObject content = response.getJSONObject("content");
                     String token = content.getString("auth-token");
-                    CustomApplication.setCurrentPage(ConstantsBean.PAGE_SCIENCE);
+
                     //存储到本地
                     PreferenceUtil.putString("token", token);
                     PreferenceUtil.putString("phone", username);

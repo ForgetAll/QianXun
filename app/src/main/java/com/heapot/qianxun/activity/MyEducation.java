@@ -122,12 +122,12 @@ public class MyEducation extends BaseActivity implements View.OnClickListener {
                         try {
                             String status = response.getString("status");
                             if (status.equals("success")) {
-                                Toast.makeText(activity, "成功", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MyEducation.this, "成功", Toast.LENGTH_SHORT).show();
                                 personalStatus=1;
                                 sendBroad();
                                 finish();
                             } else {
-                                Toast.makeText(activity, "更新失败", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MyEducation.this, "更新失败", Toast.LENGTH_SHORT).show();
                                 Logger.d(response.getString("message"));
                             }
                         } catch (JSONException e) {
@@ -145,7 +145,7 @@ public class MyEducation extends BaseActivity implements View.OnClickListener {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<>();
-                headers.put(ConstantsBean.KEY_TOKEN, CustomApplication.TOKEN);
+                headers.put(ConstantsBean.KEY_TOKEN, getAppToken());
                 return headers;
             }
         };

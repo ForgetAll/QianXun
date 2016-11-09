@@ -27,21 +27,35 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.bumptech.glide.Glide;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.activity.create.CreateActivity;
 import com.heapot.qianxun.adapter.MainTabFragmentAdapter;
+import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.bean.Friend;
+import com.heapot.qianxun.bean.MyTagBean;
 import com.heapot.qianxun.bean.SubBean;
 import com.heapot.qianxun.bean.TagsBean;
+import com.heapot.qianxun.util.JsonUtil;
+import com.heapot.qianxun.util.LoadTagsUtils;
 import com.heapot.qianxun.util.SerializableUtils;
 import com.heapot.qianxun.util.TagsUtils;
 import com.orhanobut.logger.Logger;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.UserInfo;
@@ -58,7 +72,7 @@ import io.rong.imlib.model.UserInfo;
  *
  */
 
-public class MainActivity extends BaseActivity implements View.OnClickListener, RongIM.UserInfoProvider {
+public class MainActivity extends BaseActivity implements View.OnClickListener, RongIM.UserInfoProvider, LoadTagsUtils.OnLoadTagListener {
     private DrawerLayout mDrawerLayout;
     private Toolbar mToolBar;
     private ImageView mBanner;
@@ -67,30 +81,22 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private ViewPager mViewPager;
     private MainTabFragmentAdapter mPageAdapter;
     private List<SubBean> mList = new ArrayList<>();
-    private List<TagsBean.ContentBean> list = new ArrayList<>();
     private FloatingActionButton mCreate;
     private TextView mSubscription,mainTitle;
 
     private String PAGE_ARTICLE = "PAGE_ARTICLE";
     private String PAGE_RECRUIT = "PAGE_RECRUIT";
     private String PAGE_TRAIN = "PAGE_TRAIN";
-    private static final String PAGE_CURRENT = "PAGE_ARTICLE";
+    public  String PAGE_CURRENT = "PAGE_ARTICLE";
 
     //添加主页页面的ID
     public String PAGE_ARTICLES_ID = "f3b8d91b8f9c4a03a4a06a5678e79872";
     public String PAGE_ACTIVITIES_ID = "9025053c65e04a6992374c5d43f31acf";
     public String PAGE_JOBS_ID = "af3a09e8a4414c97a038a2d735064ebc";
-
-    private String pid = PAGE_ARTICLES_ID;
-
-    //本地广播尝试
-    private IntentFilter intentFilter;
-    private RefreshReceiver refreshReceiver;
-    private LocalBroadcastManager localBroadcastManager;
-
-    //聊天集合
-    List<Friend.ContentBean> friendList = new ArrayList<>();
-
+//    //本地广播尝试
+//    private IntentFilter intentFilter;
+//    private RefreshReceiver refreshReceiver;
+//    private LocalBroadcastManager localBroadcastManager;
 
     //主页界面
     @Override
@@ -118,26 +124,19 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         mBanner = (ImageView) findViewById(R.id.iv_banner);
         mSubscription = (TextView) findViewById(R.id.iv_subscription_choose);
         mCreate = (FloatingActionButton) findViewById(R.id.fab_create);
-
         mainTitle = (TextView) findViewById(R.id.txt_first_title);
-
-
-        Glide.with(this).load("http://114.215.252.158/banner.png").into(mBanner);
-        //注册本地广播
-        localReceiver();
-
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        RongIM.setUserInfoProvider(MainActivity.this,true);
+//        RongIM.setUserInfoProvider(MainActivity.this,true);
+        LoadTagsUtils.getTags(getAppToken());
+        LoadTagsUtils.onLoadListener(this);
     }
 
     private void initEvent() {
-        initData();
-        //状态栏和抽屉效果
         mToolBar.setTitle("");
         setSupportActionBar(mToolBar);
         ActionBarDrawerToggle drawerToggle =
@@ -155,61 +154,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
         //一些基本的初始化数据
         mainTitle.setText("仟言仟语");
+        PAGE_CURRENT = PAGE_ARTICLE;
 
         mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
-        mPageAdapter = new MainTabFragmentAdapter(getSupportFragmentManager(), this, mList);
+
         mViewPager.setAdapter(mPageAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
         if (mList.size() == 0){
             Toast.makeText(MainActivity.this, "快去订阅标签", Toast.LENGTH_SHORT).show();
         }
-
         mainTitle.setOnClickListener(this);
+        Glide.with(this).load("http://114.215.252.158/banner.png").into(mBanner);
+//        localReceiver();
     }
 
-
-    /**
-     * 初始化数据
-     */
-    public  void initData(){
-        mList.clear();
-        list.clear();
-        switch (PAGE_CURRENT){
-            case "PAGE_ARTICLE":
-                pid = PAGE_ARTICLES_ID;
-                break;
-            case "PAGE_RECRUIT":
-                pid = PAGE_JOBS_ID;
-                break;
-            case "PAGE_TRAIN":
-                pid = PAGE_ACTIVITIES_ID;
-                break;
-        }
-        Object object = SerializableUtils.getSerializable(MainActivity.this, ConstantsBean.TAG_FILE_NAME);
-        if (object != null) {
-            list.addAll((Collection<? extends TagsBean.ContentBean>) object);//获取所有数据
-            List<Integer> posList = new ArrayList<>();
-            //获取指定二级标题的pos
-            for (int i = 0; i < list.size(); i++) {
-                if (list.get(i).getPid() != null && list.get(i).getPid().equals(pid) && list.get(i).getSubscribeStatus() == 1){
-                    posList.add(i);
-                }
-            }
-            //获取指定页面的二级标题赋值给mList
-            SubBean subBean;
-            for (int i = 0; i < posList.size(); i++) {
-                subBean = new SubBean();
-                subBean.setId(list.get(posList.get(i)).getId());
-                subBean.setPid(list.get(posList.get(i)).getPid().toString());
-                subBean.setName(list.get(posList.get(i)).getName());
-                subBean.setStatus(list.get(posList.get(i)).getSubscribeStatus());
-                mList.add(subBean);
-            }
-
-        } else {
-
-        }
-    }
 
     /**
      * 点击事件
@@ -245,13 +203,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 break;
         }
     }
-
-
-    /**
-     * 提供一些对外接口方法
-     * 1、关闭抽屉
-     * 3、设置导航图片banner
-     */
     public void closeDrawer(){
         mDrawerLayout.closeDrawers();
     }
@@ -268,16 +219,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     /**
      * 刷新数据
      */
-    public void refreshData(){
-        initData();
-        mPageAdapter.notifyDataSetChanged();
-        mViewPager.setAdapter(mPageAdapter);
-        mTabLayout.setupWithViewPager(mViewPager);
-        if (mList.size() == 0){
-            Toast.makeText(MainActivity.this, "快去订阅标签", Toast.LENGTH_SHORT).show();
-        }
+//    public void refreshData(){
+//        mPageAdapter.notifyDataSetChanged();
+//        mViewPager.setAdapter(mPageAdapter);
+//        mTabLayout.setupWithViewPager(mViewPager);
+//        if (mList.size() == 0){
+//            Toast.makeText(MainActivity.this, "快去订阅标签", Toast.LENGTH_SHORT).show();
+//        }
 
-    }
+//    }
 
 
     /**
@@ -333,21 +283,21 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
 
     }
-    /**
-     * 本地广播接收
-     */
-    private void localReceiver(){
-        localBroadcastManager = LocalBroadcastManager.getInstance(this);//获取实例
-        intentFilter = new IntentFilter();
-        intentFilter.addAction("com.karl.refresh");
-        refreshReceiver = new RefreshReceiver();
-        localBroadcastManager.registerReceiver(refreshReceiver,intentFilter);
-    }
+//    /**
+//     * 本地广播接收
+//     */
+//    private void localReceiver(){
+//        localBroadcastManager = LocalBroadcastManager.getInstance(this);//获取实例
+//        intentFilter = new IntentFilter();
+//        intentFilter.addAction("com.karl.refresh");
+//        refreshReceiver = new RefreshReceiver();
+//        localBroadcastManager.registerReceiver(refreshReceiver,intentFilter);
+//    }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        localBroadcastManager.unregisterReceiver(refreshReceiver);
+//        localBroadcastManager.unregisterReceiver(refreshReceiver);
     }
 
 
@@ -355,74 +305,143 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     public UserInfo getUserInfo(String s) {
 
-
-        //循环添加
-        if (friendList.size() != 0) {
-            for (Friend.ContentBean i : friendList) {
-                if (i.getFriendId().equals(s)) {
-                    Logger.d("当前id是---->"+i.getFriendId()+"当前名字是----->"+i.getNickname());
-                    return new UserInfo(i.getFriendId(), i.getNickname(), Uri.parse(i.getIcon()));
-                }
-            }
-        }
         return null;
     }
 
-    /**
-     * 广播接收器
-     */
-    class RefreshReceiver extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            int status = intent.getExtras().getInt("status");
-            switch (status){
-                case 0://无更新,不需要操作
-                    break;
-                case 1:
-                    //只提交更新
-                    List<String> post = new ArrayList<>();
-                    post.addAll((Collection<? extends String>) intent.getExtras().getSerializable("postList"));
-                    for (int i = 0; i < post.size(); i++) {
-                        TagsUtils.postSub(MainActivity.this,post.get(i));
-                    }
-                    break;
-                case 2:
-                    List<String> del = new ArrayList<>();
-                    del.addAll((Collection<? extends String>) intent.getExtras().getSerializable("delList"));
-                    for (int i = 0; i < del.size(); i++) {
-                        TagsUtils.deleteSub(MainActivity.this,del.get(i));
-                    }
-                    //只提交取消
-                    break;
-                case 3:
-                    //订阅和取消都要提交
-                    List<String> postList = new ArrayList<>();
-                    postList.addAll((Collection<? extends String>) intent.getExtras().getSerializable("postList"));
-                    for (int i = 0; i < postList.size(); i++) {
-                        TagsUtils.postSub(MainActivity.this,postList.get(i));
-                    }
-                    List<String> delList = new ArrayList<>();
-                    delList.addAll((Collection<? extends String>) intent.getExtras().getSerializable("delList"));
-                    for (int i = 0; i < delList.size(); i++) {
-                        TagsUtils.deleteSub(MainActivity.this,delList.get(i));
-                    }
-                    break;
-                case 5:
-                    break;
+    @Override
+    public void onLoadAllSuccess(List<TagsBean.ContentBean> list) {
+
+    }
+
+    @Override
+    public void onLoadSuccess(List<MyTagBean.ContentBean.RowsBean> list) {
+        if (list != null){
+            loadData(list);
+        }else {
+            Toast.makeText(this, "尚未订阅数据", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    private void loadData(List<MyTagBean.ContentBean.RowsBean> list){
+        mList.clear();
+        if (PAGE_CURRENT.equals(PAGE_ARTICLE)){
+            List<Integer> pos = new ArrayList<>();
+            int n = list.size();
+            for (int i = 0; i < n; i++) {
+                if (list.get(i).getPid().equals(PAGE_ARTICLES_ID)){
+                    pos.add(i);
+                }
+            }
+            if (pos.size()>0){
+                SubBean subBean;
+                for (int i = 0; i < pos.size(); i++) {
+                    subBean = new SubBean();
+                    subBean.setPid(list.get(pos.get(i)).getPid());
+                    subBean.setName(list.get(pos.get(i)).getName());
+                    subBean.setId(list.get(pos.get(i)).getId());
+                    mList.add(subBean);
+                }
             }
 
-            if (status != 0 || status != 6){
-                Logger.d("发生变化了"+status);
-                initData();
-                mViewPager.setAdapter(mPageAdapter);
-                mPageAdapter.notifyDataSetChanged();
-                mTabLayout.setupWithViewPager(mViewPager);
-                if (mList.size() == 0){
-                    Toast.makeText(MainActivity.this, "快去订阅标签", Toast.LENGTH_SHORT).show();
+        }else if (PAGE_CURRENT.equals(PAGE_RECRUIT)){
+            List<Integer> pos = new ArrayList<>();
+            int n = list.size();
+            for (int i = 0; i < n; i++) {
+                if (list.get(i).getPid().equals(PAGE_JOBS_ID)){
+                    pos.add(i);
+                }
+            }
+            if (pos.size()>0){
+                SubBean subBean;
+                for (int i = 0; i < pos.size(); i++) {
+                    subBean = new SubBean();
+                    subBean.setPid(list.get(pos.get(i)).getPid());
+                    subBean.setName(list.get(pos.get(i)).getName());
+                    subBean.setId(list.get(pos.get(i)).getId());
+                    mList.add(subBean);
+                }
+            }
+
+        }else if (PAGE_CURRENT.equals(PAGE_TRAIN)){
+            List<Integer> pos = new ArrayList<>();
+            int n = list.size();
+            for (int i = 0; i < n; i++) {
+                if (list.get(i).getPid().equals(PAGE_ACTIVITIES_ID)){
+                    pos.add(i);
+                }
+            }
+            if (pos.size()>0){
+                SubBean subBean;
+                for (int i = 0; i < pos.size(); i++) {
+                    subBean = new SubBean();
+                    subBean.setPid(list.get(pos.get(i)).getPid());
+                    subBean.setName(list.get(pos.get(i)).getName());
+                    subBean.setId(list.get(pos.get(i)).getId());
+                    mList.add(subBean);
                 }
             }
         }
+
+        mPageAdapter = new MainTabFragmentAdapter(getSupportFragmentManager(),this,mList);
     }
+
+//    /**
+//     * 广播接收器
+//     */
+//    class RefreshReceiver extends BroadcastReceiver {
+//        @Override
+//        public void onReceive(Context context, Intent intent) {
+//            int status = intent.getExtras().getInt("status");
+//            switch (status){
+//                case 0://无更新,不需要操作
+//                    break;
+//                case 1:
+//                    //只提交更新
+//                    List<String> post = new ArrayList<>();
+//                    post.addAll((Collection<? extends String>) intent.getExtras().getSerializable("postList"));
+//                    for (int i = 0; i < post.size(); i++) {
+//                        TagsUtils.postSub(MainActivity.this,post.get(i));
+//                    }
+//                    break;
+//                case 2:
+//                    List<String> del = new ArrayList<>();
+//                    del.addAll((Collection<? extends String>) intent.getExtras().getSerializable("delList"));
+//                    for (int i = 0; i < del.size(); i++) {
+//                        TagsUtils.deleteSub(MainActivity.this,del.get(i));
+//                    }
+//                    //只提交取消
+//                    break;
+//                case 3:
+//                    //订阅和取消都要提交
+//                    List<String> postList = new ArrayList<>();
+//                    postList.addAll((Collection<? extends String>) intent.getExtras().getSerializable("postList"));
+//                    for (int i = 0; i < postList.size(); i++) {
+//                        TagsUtils.postSub(MainActivity.this,postList.get(i));
+//                    }
+//                    List<String> delList = new ArrayList<>();
+//                    delList.addAll((Collection<? extends String>) intent.getExtras().getSerializable("delList"));
+//                    for (int i = 0; i < delList.size(); i++) {
+//                        TagsUtils.deleteSub(MainActivity.this,delList.get(i));
+//                    }
+//                    break;
+//                case 5:
+//                    break;
+//            }
+//
+//            if (status != 0 || status != 6){
+//                Logger.d("发生变化了"+status);
+//                LoadTagsUtils.getTags(getAppToken());
+//                LoadTagsUtils.onLoadListener(MainActivity.this);
+//                mViewPager.setAdapter(mPageAdapter);
+//                mPageAdapter.notifyDataSetChanged();
+//                mTabLayout.setupWithViewPager(mViewPager);
+//                if (mList.size() == 0){
+//                    Toast.makeText(MainActivity.this, "快去订阅标签", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        }
+//    }
 
 
 }

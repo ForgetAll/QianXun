@@ -94,7 +94,7 @@ public class CreateJobMoreList extends BaseActivity {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     Map<String,String> headers = new HashMap<>();
-                    headers.put(ConstantsBean.KEY_TOKEN, CustomApplication.TOKEN);
+                    headers.put(ConstantsBean.KEY_TOKEN, getAppToken());
                     return headers;
                 }
             };

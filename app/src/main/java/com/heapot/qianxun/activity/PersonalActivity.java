@@ -95,7 +95,7 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
      * 本地广播接收
      */
     private void localReceiver() {
-        localBroadcastManager = LocalBroadcastManager.getInstance(activity);//获取实例
+        localBroadcastManager = LocalBroadcastManager.getInstance(this);//获取实例
         intentFilter = new IntentFilter();
         intentFilter.addAction("com.personal.change");
         refreshReceiver = new RefreshPersonalInfoReceiver();
@@ -132,7 +132,7 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
 
     }
     private Object getLocalInfo(String fileName) {
-        return SerializableUtils.getSerializable(activity, fileName);
+        return SerializableUtils.getSerializable(this, fileName);
     }
 
     private void initTab() {
@@ -234,7 +234,7 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
                 case 0://无更新,不需要操作
                     break;
                 case 1:
-                    Object object = SerializableUtils.getSerializable(activity, ConstantsBean.MY_USER_INFO);
+                    Object object = SerializableUtils.getSerializable(PersonalActivity.this, ConstantsBean.MY_USER_INFO);
                     if (object != null) {
                         MyUserBean.ContentBean myUserBean = (MyUserBean.ContentBean) object;
                         CommonUtil.loadImage(mHeadUrl, myUserBean.getIcon(), R.drawable.imagetest);

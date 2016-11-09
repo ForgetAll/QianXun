@@ -115,7 +115,8 @@ public class PersonalFirstFragment extends Fragment {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<>();
-                headers.put(ConstantsBean.KEY_TOKEN, CustomApplication.TOKEN);
+                String token = PreferenceUtil.getString("token");
+                headers.put(ConstantsBean.KEY_TOKEN, token);
                 return headers;
             }
         };

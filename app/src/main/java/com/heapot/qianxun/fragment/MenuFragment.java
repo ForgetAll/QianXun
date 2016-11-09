@@ -37,6 +37,7 @@ import com.heapot.qianxun.util.CommonUtil;
 import com.heapot.qianxun.util.JsonUtil;
 import com.heapot.qianxun.util.PreferenceUtil;
 import com.orhanobut.logger.Logger;
+import com.squareup.haha.perflib.Main;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -63,6 +64,10 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
     private IntentFilter intentFilter;
     private RefreshPersonalReceiver refreshReceiver;
     private LocalBroadcastManager localBroadcastManager;
+
+    public final String PAGE_SCIENCE = "PAGE_ARTICLE";
+    public final String PAGE_RECRUIT = "PAGE_RECRUIT";
+    public final String PAGE_TRAIN = "PAGE_TRAIN";
 
 //    private List<MyUserBean.ContentBean> mList = new ArrayList<>();
 
@@ -131,13 +136,12 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
             String nickName = myUserBean.getNickname();
             if (nickName != null) {
                 mName.setText(nickName);
-                CustomApplication.NICK_NAME = nickName;
             } else {
                 mName.setText("请设置昵称");
             }
             if (myUserBean.getIcon() != null) {
-//                CommonUtil.loadImage(mIcon, myUserBean.getIcon(), R.drawable.imagetest);
-                Glide.with(getActivity()).load(R.drawable.ic_test).into(mIcon);
+                CommonUtil.loadImage(mIcon, myUserBean.getIcon(), R.drawable.imagetest);
+//                Glide.with(getActivity()).load(R.drawable.ic_test).into(mIcon);
                 Log.e("网上获取图片", myUserBean.getIcon());
             } else {
                 mIcon.setImageResource(R.drawable.imagetest);
@@ -164,7 +168,6 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
                             if (status.equals("success")) {
                                 MyUserBean myUserBean = (MyUserBean) JsonUtil.fromJson(String.valueOf(response), MyUserBean.class);
                                 MyUserBean.ContentBean userBean = myUserBean.getContent();
-                                SerializableUtils.setSerializable(getContext(), ConstantsBean.MY_USER_INFO, userBean);
                                 PreferenceUtil.putString(ConstantsBean.USER_PHONE, myUserBean.getContent().getPhone());
                                 PreferenceUtil.putString(ConstantsBean.nickName, myUserBean.getContent().getNickname());
                                 PreferenceUtil.putString(ConstantsBean.userAutograph, myUserBean.getContent().getDescription());
@@ -180,22 +183,17 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
                                 String nickName = userBean.getNickname();
                                 if (nickName != null) {
                                     mName.setText(nickName);
-                                    CustomApplication.NICK_NAME = nickName;
-                                    Log.e("网上获取图片fgsgbtehgte", nickName);
                                 } else {
                                     mName.setText("请设置昵称");
                                 }
                                 if (userBean.getIcon() != null) {
-//                                    CommonUtil.loadImage(mIcon, userBean.getIcon(), R.drawable.imagetest);
-                                    Glide.with(getActivity()).load(R.drawable.ic_test).into(mIcon);
-                                    Log.e("网上获取图片fgsgbtehgte", userBean.getIcon());
+                                    CommonUtil.loadImage(mIcon, userBean.getIcon(), R.drawable.imagetest);
                                 } else {
                                     mIcon.setImageResource(R.drawable.imagetest);
                                 }
 
                             } else {
                                 Toast.makeText(getContext(), response.getString("message"), Toast.LENGTH_SHORT).show();
-                                Logger.d(response.getString("message"));
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -212,7 +210,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<>();
-                headers.put(ConstantsBean.KEY_TOKEN, CustomApplication.TOKEN);
+                headers.put(ConstantsBean.KEY_TOKEN, ((MainActivity)mActivity).getAppToken());
                 return headers;
             }
         };
@@ -229,21 +227,21 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
             //science学术、recruit招聘、train培训三个menu的点击事件，点击切换fragment
             case R.id.txt_menu_science:
                 ((MainActivity) mActivity).closeDrawer();
-                ((MainActivity) mActivity).setToolBarTitle(ConstantsBean.PAGE_SCIENCE);
-                CustomApplication.setCurrentPage(ConstantsBean.PAGE_SCIENCE);
-                ((MainActivity) mActivity).refreshData();
+                ((MainActivity) mActivity).setToolBarTitle(PAGE_SCIENCE);
+                ((MainActivity) mActivity).PAGE_CURRENT = PAGE_SCIENCE;
+//                ((MainActivity) mActivity).refreshData();
                 break;
             case R.id.txt_menu_recruit:
                 ((MainActivity) mActivity).closeDrawer();
-                ((MainActivity) mActivity).setToolBarTitle(ConstantsBean.PAGE_RECRUIT);
-                CustomApplication.setCurrentPage(ConstantsBean.PAGE_RECRUIT);
-                ((MainActivity) mActivity).refreshData();
+                ((MainActivity) mActivity).setToolBarTitle(PAGE_RECRUIT);
+                ((MainActivity) mActivity).PAGE_CURRENT = PAGE_RECRUIT;
+//                ((MainActivity) mActivity).refreshData();
                 break;
             case R.id.txt_menu_train:
                 ((MainActivity) mActivity).closeDrawer();
-                ((MainActivity) mActivity).setToolBarTitle(ConstantsBean.PAGE_TRAIN);
-                CustomApplication.setCurrentPage(ConstantsBean.PAGE_TRAIN);
-                ((MainActivity) mActivity).refreshData();
+                ((MainActivity) mActivity).setToolBarTitle(PAGE_TRAIN);
+                ((MainActivity) mActivity).PAGE_CURRENT = PAGE_TRAIN;
+//                ((MainActivity) mActivity).refreshData();
                 break;
             //设置、帮助的点击事件
             case R.id.txt_menu_settings:

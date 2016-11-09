@@ -1,6 +1,7 @@
 package com.heapot.qianxun.util;
 
 import android.content.Context;
+import android.media.session.MediaSession;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -55,7 +56,8 @@ public class TagsUtils {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> map = new HashMap<>();
-                map.put(ConstantsBean.KEY_TOKEN, CustomApplication.TOKEN);
+                String token = PreferenceUtil.getString("token");
+                map.put(ConstantsBean.KEY_TOKEN, token);
                 return map;
             }
         };
@@ -94,7 +96,8 @@ public class TagsUtils {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String,String> headers = new HashMap<>();
-                headers.put(ConstantsBean.KEY_TOKEN,CustomApplication.TOKEN);
+                String token = PreferenceUtil.getString("token");
+                headers.put(ConstantsBean.KEY_TOKEN,token);
                 return headers;
             }
         };

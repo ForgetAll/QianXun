@@ -63,7 +63,7 @@ public class CreateJobTypeActivity extends BaseActivity implements View.OnClickL
                         JobTypeBean jobTypeBean = (JobTypeBean) JsonUtil.fromJson(String.valueOf(response), JobTypeBean.class);
                         jobList = jobTypeBean.getContent();
                         Log.e("工作的类型：", String.valueOf(jobList.size()));
-                        CreateJobTypeAdapter  createJobTypeAdapter = new CreateJobTypeAdapter(activity, jobList);
+                        CreateJobTypeAdapter  createJobTypeAdapter = new CreateJobTypeAdapter(CreateJobTypeActivity.this, jobList);
                         lv_typeList.setAdapter(createJobTypeAdapter);
                         lv_typeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
@@ -92,7 +92,7 @@ public class CreateJobTypeActivity extends BaseActivity implements View.OnClickL
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<>();
-                headers.put(ConstantsBean.KEY_TOKEN, CustomApplication.TOKEN);
+                headers.put(ConstantsBean.KEY_TOKEN, getAppToken());
                 return headers;
             }
         };

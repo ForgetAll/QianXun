@@ -121,7 +121,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                 if (isAvailable) {
                     searchArticle(searchStr);
                 } else {
-                    Toast.makeText(activity, "请检查网络连接", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SearchActivity.this, "请检查网络连接", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -164,7 +164,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String articleId = rowsList.get(position).getId();
-                Intent intent = new Intent(activity, ArticleActivity.class);
+                Intent intent = new Intent(SearchActivity.this, ArticleActivity.class);
                 intent.putExtra("id",rowsList.get(position).getId());
                 startActivity(intent);
             }
@@ -235,7 +235,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                         SearchBean searchBean = (SearchBean) JsonUtil.fromJson(String.valueOf(response), SearchBean.class);
                          rowsList =searchBean.getContent().getRows();
                         Log.e("搜索的结果是：", String.valueOf(rowsList.size()));
-                        SearchArticleAdapter articleAdapter = new SearchArticleAdapter(activity, rowsList);
+                        SearchArticleAdapter articleAdapter = new SearchArticleAdapter(SearchActivity.this, rowsList);
                         lv_search.setAdapter(articleAdapter);
                     }
                 } catch (JSONException e) {
