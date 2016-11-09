@@ -132,8 +132,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     protected void onResume() {
         super.onResume();
 //        RongIM.setUserInfoProvider(MainActivity.this,true);
-        LoadTagsUtils.getTags(getAppToken());
-        LoadTagsUtils.onLoadListener(this);
+
     }
 
     private void initEvent() {
@@ -155,17 +154,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         //一些基本的初始化数据
         mainTitle.setText("仟言仟语");
         PAGE_CURRENT = PAGE_ARTICLE;
-
         mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+        new LoadTagsUtils(this,this).getUserTag(getAppToken());
 
-        mViewPager.setAdapter(mPageAdapter);
-        mTabLayout.setupWithViewPager(mViewPager);
-        if (mList.size() == 0){
-            Toast.makeText(MainActivity.this, "快去订阅标签", Toast.LENGTH_SHORT).show();
-        }
         mainTitle.setOnClickListener(this);
         Glide.with(this).load("http://114.215.252.158/banner.png").into(mBanner);
-//        localReceiver();
     }
 
 
@@ -322,6 +315,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         }
     }
 
+    @Override
+    public void onLoadFailed() {
+        Toast.makeText(this, "快去订阅数据", Toast.LENGTH_SHORT).show();
+    }
+
 
     private void loadData(List<MyTagBean.ContentBean.RowsBean> list){
         mList.clear();
@@ -384,64 +382,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         }
 
         mPageAdapter = new MainTabFragmentAdapter(getSupportFragmentManager(),this,mList);
+        mViewPager.setAdapter(mPageAdapter);
+        mTabLayout.setupWithViewPager(mViewPager);
     }
-
-//    /**
-//     * 广播接收器
-//     */
-//    class RefreshReceiver extends BroadcastReceiver {
-//        @Override
-//        public void onReceive(Context context, Intent intent) {
-//            int status = intent.getExtras().getInt("status");
-//            switch (status){
-//                case 0://无更新,不需要操作
-//                    break;
-//                case 1:
-//                    //只提交更新
-//                    List<String> post = new ArrayList<>();
-//                    post.addAll((Collection<? extends String>) intent.getExtras().getSerializable("postList"));
-//                    for (int i = 0; i < post.size(); i++) {
-//                        TagsUtils.postSub(MainActivity.this,post.get(i));
-//                    }
-//                    break;
-//                case 2:
-//                    List<String> del = new ArrayList<>();
-//                    del.addAll((Collection<? extends String>) intent.getExtras().getSerializable("delList"));
-//                    for (int i = 0; i < del.size(); i++) {
-//                        TagsUtils.deleteSub(MainActivity.this,del.get(i));
-//                    }
-//                    //只提交取消
-//                    break;
-//                case 3:
-//                    //订阅和取消都要提交
-//                    List<String> postList = new ArrayList<>();
-//                    postList.addAll((Collection<? extends String>) intent.getExtras().getSerializable("postList"));
-//                    for (int i = 0; i < postList.size(); i++) {
-//                        TagsUtils.postSub(MainActivity.this,postList.get(i));
-//                    }
-//                    List<String> delList = new ArrayList<>();
-//                    delList.addAll((Collection<? extends String>) intent.getExtras().getSerializable("delList"));
-//                    for (int i = 0; i < delList.size(); i++) {
-//                        TagsUtils.deleteSub(MainActivity.this,delList.get(i));
-//                    }
-//                    break;
-//                case 5:
-//                    break;
-//            }
-//
-//            if (status != 0 || status != 6){
-//                Logger.d("发生变化了"+status);
-//                LoadTagsUtils.getTags(getAppToken());
-//                LoadTagsUtils.onLoadListener(MainActivity.this);
-//                mViewPager.setAdapter(mPageAdapter);
-//                mPageAdapter.notifyDataSetChanged();
-//                mTabLayout.setupWithViewPager(mViewPager);
-//                if (mList.size() == 0){
-//                    Toast.makeText(MainActivity.this, "快去订阅标签", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        }
-//    }
 
 
 }

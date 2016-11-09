@@ -50,6 +50,10 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
     List<String> deleteIdList = new ArrayList<>();//实时记录要删除的数据
     //加入关闭按钮
     private ImageView btnToMain;
+
+
+    Intent intent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +66,7 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
         sub = (RecyclerView) findViewById(R.id.rv_drag);
         tags = (RecyclerView) findViewById(R.id.rv_content);
         btnToMain = (ImageView) findViewById(R.id.btn_close_subscription);
+        intent = getIntent();
 
     }
     private void initEvent(){
@@ -77,10 +82,6 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
         sub.setLayoutManager(gridLayoutManager);
         subAdapter = new SubAdapter(Subscription.this,subList);
         sub.setAdapter(subAdapter);
-     /*   ItemTouchHelper.Callback callback = new ItemTouchHelperCallback(subAdapter);
-        helper = new ItemTouchHelper(callback);
-        helper.attachToRecyclerView(sub);*/
-
 
         // 全部标签列表，不可拖拽
         linearLayoutManager = new LinearLayoutManager(this){
@@ -97,7 +98,6 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
         tagsAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-               // Toast.makeText(Subscription.this, "点击了", Toast.LENGTH_SHORT).show();
                 String id = tagsList.get(position).getId();
                 int status = tagsList.get(position).getSubscribeStatus();
                 if (status == 0){
@@ -270,41 +270,18 @@ public class Subscription extends BaseActivity implements View.OnClickListener {
     }
     @Override
     public void onClick(View v) {
-        sendBroadcast();
+
     }
 
     @Override
     public void onBackPressed() {
-        sendBroadcast();
+
     }
 
+    private void notifyRefresh(){
 
-    /**
-     * 发送广播
-     */
-    private void sendBroadcast(){
-        int status = getRefreshStatus();
-        //发送广播并关闭页面
-        Intent intent = new Intent("com.karl.refresh");
-        intent.putExtra("status",status);
-        switch (status){
-            case 0://没有更新不需要处理
-                break;
-            case 1:
-                intent.putExtra("postList", (Serializable) postIdList);
-                break;
-            case 2:
-                intent.putExtra("delList", (Serializable) deleteIdList);
-                break;
-            case 3:
-                intent.putExtra("postList", (Serializable) postIdList);
-                intent.putExtra("delList", (Serializable) deleteIdList);
-                break;
-        }
-        LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(this);
-        localBroadcastManager.sendBroadcast(intent);//发送本地广播
-        Subscription.this.finish();
     }
+
     private int getRefreshStatus(){
         int status = 0;//不需要刷新
         int del = deleteIdList.size();

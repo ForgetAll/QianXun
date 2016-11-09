@@ -1,6 +1,9 @@
 package com.heapot.qianxun.util;
 
 import android.content.Context;
+import android.content.Loader;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -11,6 +14,7 @@ import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.bean.MyTagBean;
 import com.heapot.qianxun.bean.TagsBean;
+import com.orhanobut.logger.Logger;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,31 +30,29 @@ import java.util.Map;
  *
  */
 public class LoadTagsUtils {
-    static List<MyTagBean.ContentBean.RowsBean> list = new ArrayList<>();
-    static List<TagsBean.ContentBean> tagsList = new ArrayList<>();
 
     private Context context;
     static OnLoadTagListener listener;
 
-    public LoadTagsUtils(Context context) {
-
-    }
-
-    public static void onLoadListener(OnLoadTagListener listener) {
-        LoadTagsUtils.listener = listener;
+    public LoadTagsUtils(Context context,OnLoadTagListener listener) {
+        this.context =context;
+        this.listener = listener;
     }
 
     /**
      * 加载全部标签并存储到本地，加载成功以后请求加载已订阅标签
      * @param token token
      */
-    public static void getTags(final String token){
+    public  void getTags(final String token){
+
         String url = ConstantsBean.BASE_PATH + ConstantsBean.CATALOGS;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.GET,url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        Logger.json(String.valueOf(response));
+                        List<TagsBean.ContentBean> tagsList = new ArrayList<>();
                         try {
                             String status = response.getString("status");
                             if (status.equals("success")) {
@@ -80,19 +82,25 @@ public class LoadTagsUtils {
         CustomApplication.getRequestQueue().add(jsonObjectRequest);
     }
     //获取已订阅标签
-    private void getUserTag(final String token){
+    public void getUserTag(final String token){
+        Toast.makeText(context, "调用方法了", Toast.LENGTH_SHORT).show();
         String url = ConstantsBean.BASE_PATH+ConstantsBean.SUBSCRIBE_CATALOGS;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        Log.d("QianXun","打印数据");
+                        Logger.json(String.valueOf(response));
+                        List<MyTagBean.ContentBean.RowsBean> list = new ArrayList<>();
                         try {
                             String status = response.getString("status");
                             if (status.equals("success")) {
                                 MyTagBean myTagBean = (MyTagBean) JsonUtil.fromJson(String.valueOf(response),MyTagBean.class);
-                                list.add((MyTagBean.ContentBean.RowsBean) myTagBean.getContent().getRows());
-                                listener.onLoadSuccess(list);
+                                if (myTagBean.getContent().getRows() != null) {
+                                    list.addAll(myTagBean.getContent().getRows());
+                                    listener.onLoadSuccess(list);
+                                }
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -103,7 +111,7 @@ public class LoadTagsUtils {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        Logger.d("加载失败");
                     }
                 }
         ){
@@ -126,6 +134,8 @@ public class LoadTagsUtils {
         void onLoadAllSuccess(List<TagsBean.ContentBean> list);
 
         void onLoadSuccess(List<MyTagBean.ContentBean.RowsBean> list);
+
+        void onLoadFailed();
     }
 
 }

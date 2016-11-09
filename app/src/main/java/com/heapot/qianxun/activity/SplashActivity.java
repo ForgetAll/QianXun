@@ -30,12 +30,12 @@ public class SplashActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        //获取是否已经进入引导界面
-        isEnter = PreferenceUtil.getBoolean(ConstantsBean.KEY_SPLASH, false);
-        if (!isEnter) {
-            ActivityUtil.jumpActivity(this, GuideActivity.class);
-            finish();
-        }
+//        //获取是否已经进入引导界面
+//        isEnter = PreferenceUtil.getBoolean(ConstantsBean.KEY_SPLASH, false);
+//        if (!isEnter) {
+//            ActivityUtil.jumpActivity(this, GuideActivity.class);
+//            finish();
+//        }
         setContentView(R.layout.activity_splash);
         imageView = (ImageView) findViewById(R.id.iv_start);
         Glide.with(this).load(R.mipmap.ic_start).into(imageView);
