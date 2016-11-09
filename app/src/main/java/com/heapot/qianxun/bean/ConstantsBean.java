@@ -101,7 +101,7 @@ public class ConstantsBean {
 
 
     //创建文章WEbView的URL
-    public static final String WEB_CREATE_ARTICLE_EDIT = "http://sijiache.heapot.com/Tabs/editer/artical/?f?device=android&author="+ CustomApplication.NICK_NAME+"&type=article";
+    public static final String WEB_CREATE_ARTICLE_EDIT = "http://sijiache.heapot.com/Tabs/editer/artical/?f?device=android&author=";
     //创建招聘URL
     public static final String WEB_CREATE_JOB_EDIT = "http://sijiache.heapot.com/Tabs/editer/artical/?f?device=android&type=job";
 

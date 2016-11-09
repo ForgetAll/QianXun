@@ -1,10 +1,11 @@
 <resources>
     <string name="app_name">仟询</string>
-    <string name="menu_01">仟言万语</string>
+    <string name="menu_01">仟言仟语</string>
     <string name="menu_02">仟职百态</string>
     <string name="menu_03">仟锤百炼</string>
     <string name="menu_settings">设置</string>
     <string name="menu_help">帮助</string>
+    <string name="main_sub">订阅</string>
 
     <string name="help_about">
         仟询平台是搭建优质企业用人与优秀学生就业的一站式免费服务平台，提供企业与学生的个性化定制与储备。通过平台使学生从大一开始通过平台和企业资深人士、专家接触 ，与社会技术发展接轨，让企业招之即用， 不仅解决企业急聘人才之需，还可以在学生中筛选出优秀人才定向化培养，储备企业人力资源库，解决长期用人需求。

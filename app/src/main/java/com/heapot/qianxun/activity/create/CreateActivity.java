@@ -125,7 +125,7 @@ public class CreateActivity extends BaseActivity implements View.OnClickListener
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<>();
-                headers.put(ConstantsBean.KEY_TOKEN, CustomApplication.TOKEN);
+                headers.put(ConstantsBean.KEY_TOKEN, getAppToken());
                 return headers;
             }
         };
@@ -198,7 +198,7 @@ public class CreateActivity extends BaseActivity implements View.OnClickListener
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<>();
-                headers.put(ConstantsBean.KEY_TOKEN, CustomApplication.TOKEN);
+                headers.put(ConstantsBean.KEY_TOKEN, getAppToken());
                 return headers;
             }
         };

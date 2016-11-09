@@ -20,20 +20,7 @@ import io.rong.imkit.RongIM;
 public class CustomApplication extends Application {
     //获取全局上下文
     public static Context context;
-
-    public static String TOKEN = "";
-    public static String NICK_NAME ="";
-    public static boolean isFirstConnIM = false;
-    public static String IM_TOKEN = "";
-
-    private static String CURRENT_PAGE = ConstantsBean.PAGE_SCIENCE;
-
     private static RequestQueue requestQueue;
-
-    //添加主页页面的ID
-    public static String PAGE_ARTICLES_ID = "f3b8d91b8f9c4a03a4a06a5678e79872";
-    public static String PAGE_ACTIVITIES_ID = "9025053c65e04a6992374c5d43f31acf";
-    public static String PAGE_JOBS_ID = "af3a09e8a4414c97a038a2d735064ebc";
 
     private static final boolean DEV_MODE = true;
 
@@ -72,22 +59,6 @@ public class CustomApplication extends Application {
             return requestQueue;
         }
         return  requestQueue = Volley.newRequestQueue(context);
-    }
-
-    /**
-     *  获取主页当前页面名称
-     * @return 返回字符串
-     */
-    public static String getCurrentPageName(){
-        return CURRENT_PAGE;
-    }
-
-    /**
-     * 设置主页当前页面名称
-     * @param name
-     */
-    public static void setCurrentPage(String name){
-        CURRENT_PAGE = name;
     }
 
     /**

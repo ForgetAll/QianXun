@@ -27,38 +27,23 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.bumptech.glide.Glide;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.activity.create.CreateActivity;
 import com.heapot.qianxun.adapter.MainTabFragmentAdapter;
-import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.bean.Friend;
-import com.heapot.qianxun.bean.MyUserBean;
 import com.heapot.qianxun.bean.SubBean;
 import com.heapot.qianxun.bean.TagsBean;
-import com.heapot.qianxun.util.ChatInfoUtils;
-import com.heapot.qianxun.util.PreferenceUtil;
 import com.heapot.qianxun.util.SerializableUtils;
 import com.heapot.qianxun.util.TagsUtils;
 import com.orhanobut.logger.Logger;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import io.rong.imkit.RongIM;
-import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.UserInfo;
 
 /**
@@ -85,10 +70,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private List<TagsBean.ContentBean> list = new ArrayList<>();
     private FloatingActionButton mCreate;
     private TextView mSubscription,mainTitle;
-    private static final String PAGE_SCIENCE = "PAGE_SCIENCE";
-    private static final String PAGE_RECRUIT = "PAGE_RECRUIT";
-    private static final String PAGE_TRAIN = "PAGE_TRAIN";
-    private String pid = CustomApplication.PAGE_ARTICLES_ID;
+
+    private String PAGE_ARTICLE = "PAGE_ARTICLE";
+    private String PAGE_RECRUIT = "PAGE_RECRUIT";
+    private String PAGE_TRAIN = "PAGE_TRAIN";
+    private static final String PAGE_CURRENT = "PAGE_ARTICLE";
+
+    //添加主页页面的ID
+    public String PAGE_ARTICLES_ID = "f3b8d91b8f9c4a03a4a06a5678e79872";
+    public String PAGE_ACTIVITIES_ID = "9025053c65e04a6992374c5d43f31acf";
+    public String PAGE_JOBS_ID = "af3a09e8a4414c97a038a2d735064ebc";
+
+    private String pid = PAGE_ARTICLES_ID;
 
     //本地广播尝试
     private IntentFilter intentFilter;
@@ -129,15 +122,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         mainTitle = (TextView) findViewById(R.id.txt_first_title);
 
 
-        //加载Banner的图片
-//        Glide.with(this).load("http://114.215.252.158/banner.png").into(mBanner);
-        Glide.with(this).load(R.drawable.ic_test).into(mBanner);
+        Glide.with(this).load("http://114.215.252.158/banner.png").into(mBanner);
         //注册本地广播
         localReceiver();
-        //开启融云服务器连接
-        getRongToken();
-        //获取用户好友信息
-        getFriend();
+
 
     }
 
@@ -145,7 +133,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     protected void onResume() {
         super.onResume();
         RongIM.setUserInfoProvider(MainActivity.this,true);
-//        getLocalFriend();
     }
 
     private void initEvent() {
@@ -167,7 +154,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         mCreate.setOnClickListener(this);
 
         //一些基本的初始化数据
-        mainTitle.setText("千家论道");
+        mainTitle.setText("仟言仟语");
 
         mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         mPageAdapter = new MainTabFragmentAdapter(getSupportFragmentManager(), this, mList);
@@ -187,15 +174,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     public  void initData(){
         mList.clear();
         list.clear();
-        switch (CustomApplication.getCurrentPageName()){
-            case "PAGE_SCIENCE":
-                pid = CustomApplication.PAGE_ARTICLES_ID;
+        switch (PAGE_CURRENT){
+            case "PAGE_ARTICLE":
+                pid = PAGE_ARTICLES_ID;
                 break;
             case "PAGE_RECRUIT":
-                pid = CustomApplication.PAGE_JOBS_ID;
+                pid = PAGE_JOBS_ID;
                 break;
             case "PAGE_TRAIN":
-                pid = CustomApplication.PAGE_ACTIVITIES_ID;
+                pid = PAGE_ACTIVITIES_ID;
                 break;
         }
         Object object = SerializableUtils.getSerializable(MainActivity.this, ConstantsBean.TAG_FILE_NAME);
@@ -218,7 +205,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 subBean.setStatus(list.get(posList.get(i)).getSubscribeStatus());
                 mList.add(subBean);
             }
-            Logger.d("当前页面："+CustomApplication.getCurrentPageName()+",当前数据大小"+mList.size());
 
         } else {
 
@@ -239,11 +225,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             case R.id.iv_star:
                 break;
             case R.id.iv_notification:
-
                 if (RongIM.getInstance() != null){
                     //设置融云的用户信息
                     RongIM.getInstance().startConversationList(MainActivity.this);
-
                 }
                 break;
             case R.id.iv_banner:
@@ -272,16 +256,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         mDrawerLayout.closeDrawers();
     }
     public void setToolBarTitle(String name){
-        switch (name){
-            case PAGE_SCIENCE:
-                mainTitle.setText("千家论道");
-                break;
-            case PAGE_RECRUIT:
-                mainTitle.setText("职男职女");
-                break;
-            case PAGE_TRAIN:
-                mainTitle.setText("赋能成长");
-                break;
+        if (name.equals(PAGE_ARTICLE)){
+            mainTitle.setText("仟言仟语");
+        }else if (name.equals(PAGE_RECRUIT)){
+            mainTitle.setText("仟职百态");
+        } else if (name.equals(PAGE_TRAIN)) {
+            mainTitle.setText("仟锤百炼");
         }
     }
 
@@ -375,8 +355,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     public UserInfo getUserInfo(String s) {
 
-        getFriend();
-        Logger.d("MainActivity:FriendList----->"+"当前id是---->"+friendList.get(0).getFriendId()+"当前名字是----->"+friendList.get(0).getNickname());
+
         //循环添加
         if (friendList.size() != 0) {
             for (Friend.ContentBean i : friendList) {
@@ -444,127 +423,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             }
         }
     }
-    /**
-     *需要的时候进行融云服务器连接
-     */
-    /**
-     * 获取当前用户在融云的token
-     * @return 返回获取到的token
-     */
-    private void getRongToken(){
 
-        if (PreferenceUtil.getString("IM_TOKEN") == null || PreferenceUtil.getString("IM_TOKEN").equals("")) {
-
-            String url = ConstantsBean.BASE_PATH + ConstantsBean.IM_TOKEN;
-            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                    Request.Method.GET, url, null,
-                    new Response.Listener<JSONObject>() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            try {
-                                if (response.getString("status").equals("success")) {
-                                    //获取成功，取出来token
-                                    String im_token = response.getString("content");
-
-                                    conn(im_token);
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-
-                        }
-                    }
-            ) {
-                @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
-                    Map<String, String> headers = new HashMap<>();
-                    headers.put(ConstantsBean.KEY_TOKEN, CustomApplication.TOKEN);
-                    return headers;
-                }
-            };
-            CustomApplication.getRequestQueue().add(jsonObjectRequest);
-        }else {
-            String token = PreferenceUtil.getString("IM_TOKEN");
-            conn(token);
-        }
-
-    }
-
-    /**
-     * 建立与融云服务器的连接
-     * @param token 连接所需token
-     */
-    private void conn(final String token){
-        if (getApplicationInfo().packageName.equals(CustomApplication.getCurProcessName(getApplicationContext()))){
-            /**
-             * IMKit SDK调用第二步，建立与服务器的连接
-             */
-            RongIM.connect(token, new RongIMClient.ConnectCallback() {
-                @Override
-                public void onTokenIncorrect() {
-                    //Token错误，重新请求token
-                    getRongToken();
-                    PreferenceUtil.putString("IM_TOKEN","");
-                }
-
-                @Override
-                public void onSuccess(String s) {
-
-                    //连接融云成功
-                    Logger.d("IM-Success-------->UserId:"+s);
-                    CustomApplication.IM_TOKEN = token;
-                    PreferenceUtil.putString("IM_TOKEN",token);
-                    RongIM.getInstance().getRongIMClient().setOnReceiveMessageListener(new RongIMClient.OnReceiveMessageListener() {
-                        @Override
-                        public boolean onReceived(io.rong.imlib.model.Message message, int i) {
-                            Toast.makeText(MainActivity.this, "有新消息来了", Toast.LENGTH_SHORT).show();
-                            ChatInfoUtils.getAddFriendsRequestList(CustomApplication.TOKEN);//测试拿到用户信息并存储
-                            return false;
-                        }
-                    });
-
-                }
-
-                @Override
-                public void onError(RongIMClient.ErrorCode errorCode) {
-                    Logger.d("连接失败，错误码--------->"+errorCode);
-                }
-            });
-        }
-    }
-
-
-    private void getFriend(){
-        friendList.clear();
-        Object object = SerializableUtils.getSerializable(this,ConstantsBean.IM_FRIEND);
-        if (object!= null){
-            friendList = (List<Friend.ContentBean>) object;
-        }
-        if (SerializableUtils.getSerializable(this,ConstantsBean.MY_USER_INFO )!=null){
-            Object object2 = SerializableUtils.getSerializable(this,ConstantsBean.MY_USER_INFO);
-            MyUserBean.ContentBean myUserBean = (MyUserBean.ContentBean) object2;
-            String name = myUserBean.getNickname();
-            String id = myUserBean.getId();
-            String icon = myUserBean.getIcon();
-            Friend.ContentBean friend = new Friend.ContentBean();
-            friend.setFriendId(id);
-            friend.setNickname(name);
-            friend.setIcon(icon);
-            friendList.add(friend);
-            Logger.d("第二次取数据----->"+friendList.size());
-        }
-
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-
-    }
 
 }

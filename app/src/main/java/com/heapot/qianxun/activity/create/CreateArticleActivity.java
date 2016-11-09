@@ -24,6 +24,7 @@ import com.heapot.qianxun.activity.BaseActivity;
 import com.heapot.qianxun.application.CreateActivityCollector;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.util.FileUploadTask;
+import com.heapot.qianxun.util.PreferenceUtil;
 import com.heapot.qianxun.widget.PhotoCarmaWindow;
 import com.orhanobut.logger.Logger;
 
@@ -143,7 +144,8 @@ public class CreateArticleActivity extends BaseActivity implements View.OnClickL
     }
 
     private void initSettings(){
-
+        String nickname = PreferenceUtil.getString("nickname");
+        String url = ConstantsBean.WEB_CREATE_ARTICLE_EDIT+nickname+"&type=article";
         webSettings = webView.getSettings();
         boolean isConnected = NetworkUtils.isAvailable(this);
         if (isConnected) {
