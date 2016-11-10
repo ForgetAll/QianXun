@@ -218,7 +218,7 @@ public class Subscription extends BaseActivity implements View.OnClickListener,T
             tags.setAdapter(tagsAdapter);
             tagsAdapter.notifyDataSetChanged();
             //重新进行本地数据存储
-//            SerializableUtils.setSerializable(Subscription.this, ConstantsBean.TAG_FILE_NAME, list);
+            SerializableUtils.setSerializable(Subscription.this, ConstantsBean.TAG_FILE_NAME, list);
 
 
         isRefresh = true;
@@ -246,6 +246,7 @@ public class Subscription extends BaseActivity implements View.OnClickListener,T
             //重新进行本地数据存储
             SerializableUtils.setSerializable(Subscription.this, ConstantsBean.TAG_FILE_NAME, list);
         }else if (flag ==1){
+            Toast.makeText(this, "取消成功", Toast.LENGTH_SHORT).show();
             int pos = 0;
             for (int i = 0; i < tagsList.size(); i++) {
                 if (tagsList.get(i).getId().equals(id)){
@@ -264,7 +265,7 @@ public class Subscription extends BaseActivity implements View.OnClickListener,T
                 }
             }
             list.get(pos2).setSubscribeStatus(0);
-//            SerializableUtils.setSerializable(Subscription.this,ConstantsBean.TAG_FILE_NAME,list);//重新存储
+            SerializableUtils.setSerializable(Subscription.this,ConstantsBean.TAG_FILE_NAME,list);//重新存储
             //自身也要删除
             subList.remove(position);
             sub.setAdapter(subAdapter);

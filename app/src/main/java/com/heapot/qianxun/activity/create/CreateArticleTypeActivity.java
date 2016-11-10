@@ -92,7 +92,7 @@ public class CreateArticleTypeActivity extends BaseActivity implements View.OnCl
                         JobTypeBean jobTypeBean = (JobTypeBean) JsonUtil.fromJson(String.valueOf(response), JobTypeBean.class);
                         jobList = jobTypeBean.getContent();
                         Log.e("工作的类型：", String.valueOf(jobList.size()));
-                        CreateJobTypeAdapter createJobTypeAdapter = new CreateJobTypeAdapter(activity, jobList);
+                        CreateJobTypeAdapter createJobTypeAdapter = new CreateJobTypeAdapter(CreateArticleTypeActivity.this, jobList);
                         lv_typeList.setAdapter(createJobTypeAdapter);
                         lv_typeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override

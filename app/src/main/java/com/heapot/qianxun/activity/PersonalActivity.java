@@ -93,7 +93,7 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
      * 本地广播接收
      */
     private void localReceiver() {
-        localBroadcastManager = LocalBroadcastManager.getInstance(activity);//获取实例
+        localBroadcastManager = LocalBroadcastManager.getInstance(PersonalActivity.this);//获取实例
         intentFilter = new IntentFilter();
         intentFilter.addAction("com.personal.change");
         refreshReceiver = new RefreshPersonalInfoReceiver();

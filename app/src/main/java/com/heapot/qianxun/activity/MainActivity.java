@@ -189,7 +189,7 @@ public class MainActivity extends BaseActivity
         }
     }
     public void refreshData(String page){
-        new LoadTagsUtils(this,this).getTags(getAppToken(),1);
+        new LoadTagsUtils(this,this).getTags(getAppToken(),0);
     }
 
 
@@ -297,7 +297,7 @@ public class MainActivity extends BaseActivity
             List<Integer> pos = new ArrayList<>();
             int n = list.size();
             for (int i = 0; i < n; i++) {
-                if (list.get(i).getPid() != null && list.get(i).getPid().equals(PAGE_ARTICLES_ID)){
+                if (list.get(i).getPid() != null && list.get(i).getPid().equals(PAGE_ARTICLES_ID) && list.get(i).getSubscribeStatus() == 1){
                     pos.add(i);
                 }
             }
@@ -318,7 +318,7 @@ public class MainActivity extends BaseActivity
             List<Integer> pos = new ArrayList<>();
             int n = list.size();
             for (int i = 0; i < n; i++) {
-                if (list.get(i).getPid().equals(PAGE_JOBS_ID)){
+                if (list.get(i).getPid() != null && list.get(i).getPid().equals(PAGE_JOBS_ID)&& list.get(i).getSubscribeStatus() == 1){
                     pos.add(i);
                 }
             }
@@ -338,7 +338,7 @@ public class MainActivity extends BaseActivity
             List<Integer> pos = new ArrayList<>();
             int n = list.size();
             for (int i = 0; i < n; i++) {
-                if (list.get(i).getPid().equals(PAGE_ACTIVITIES_ID)){
+                if (list.get(i).getPid() != null && list.get(i).getPid().equals(PAGE_ACTIVITIES_ID)&& list.get(i).getSubscribeStatus() == 1){
                     pos.add(i);
                 }
             }
@@ -371,7 +371,7 @@ public class MainActivity extends BaseActivity
         if (resultCode == 101){
             boolean result = data.getBooleanExtra("result",true);
             if (result){
-                new LoadTagsUtils(this,this).getTags(getAppToken(),1);
+                new LoadTagsUtils(this,this).getTags(getAppToken(),0);
             }
         }
 

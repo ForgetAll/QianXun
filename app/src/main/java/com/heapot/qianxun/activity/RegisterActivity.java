@@ -313,7 +313,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
 
                             } else {
-                                Toast.makeText(activity, response.getString("message"), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegisterActivity.this, response.getString("message"), Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

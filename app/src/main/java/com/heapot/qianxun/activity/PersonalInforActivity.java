@@ -517,10 +517,10 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
                         try {
                             String status = response.getString("status");
                             if (status.equals("success")) {
-                                Toast.makeText(activity, "更新成功", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(PersonalInforActivity.this, "更新成功", Toast.LENGTH_SHORT).show();
 
                             } else {
-                                Toast.makeText(activity, "更新失败", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(PersonalInforActivity.this, "更新失败", Toast.LENGTH_SHORT).show();
                                 Logger.d(response.getString("message"));
                             }
                         } catch (JSONException e) {

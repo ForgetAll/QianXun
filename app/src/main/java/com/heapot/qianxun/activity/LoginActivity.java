@@ -167,7 +167,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
 
                                 } else {
-                                    Toast.makeText(activity, response.getString("message"), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(LoginActivity.this, response.getString("message"), Toast.LENGTH_SHORT).show();
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
