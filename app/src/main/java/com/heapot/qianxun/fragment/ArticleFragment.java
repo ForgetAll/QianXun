@@ -8,9 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,13 +26,10 @@ import com.heapot.qianxun.adapter.MainTabFragmentAdapter;
 import com.heapot.qianxun.bean.MyTagBean;
 import com.heapot.qianxun.bean.SubBean;
 import com.heapot.qianxun.bean.TagsBean;
-import com.heapot.qianxun.util.LoadTagsUtils;
-import com.orhanobut.logger.Logger;
+import com.heapot.qianxun.util.LoadArticleTagsUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import io.rong.imkit.RongIM;
 
 /**
  * Created by Karl on 2016/11/10.
@@ -42,7 +37,7 @@ import io.rong.imkit.RongIM;
  */
 
 public class ArticleFragment extends Fragment
-        implements View.OnClickListener,LoadTagsUtils.OnLoadTagListener {
+        implements View.OnClickListener,LoadArticleTagsUtils.OnLoadTagListener {
 
     private View mView;
     private Toolbar mToolBar;
@@ -57,12 +52,12 @@ public class ArticleFragment extends Fragment
 
     private String PAGE_ARTICLE = "PAGE_ARTICLE";
 
-    public String PAGE_ARTICLES_ID = "f3b8d91b8f9c4a03a4a06a5678e79872";
+    public String PAGE_ARTICLES_ID ="f3b8d91b8f9c4a03a4a06a5678e79872";
 
 
     private Activity mActivity;
 
-    LoadTagsUtils loadTagsUtils;
+    LoadArticleTagsUtils loadArticleTagsUtils;
 
 
     @Nullable
@@ -106,9 +101,9 @@ public class ArticleFragment extends Fragment
         mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         Glide.with(this).load("http://114.215.252.158/banner.png").into(mBanner);
 
-        loadTagsUtils = new LoadTagsUtils(getContext());
-        loadTagsUtils.setOnLoadTagListener(this);
-        loadTagsUtils.getTags(0);
+        loadArticleTagsUtils = new LoadArticleTagsUtils(getContext());
+        loadArticleTagsUtils.setOnLoadTagListener(this);
+        loadArticleTagsUtils.getTags(0);
 
     }
 
@@ -146,7 +141,7 @@ public class ArticleFragment extends Fragment
 
     @Override
     public void onLoadAllSuccess(List<TagsBean.ContentBean> list, int flag) {
-        Toast.makeText(mActivity, "加载数据了！", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(mActivity, "加载数据了！", Toast.LENGTH_SHORT).show();
         if (list!=null){
             loadData(list,flag);
         }
@@ -158,8 +153,8 @@ public class ArticleFragment extends Fragment
     }
 
     @Override
-    public void onLoadFailed() {
-        Toast.makeText(mActivity, "数据加载失败", Toast.LENGTH_SHORT).show();
+    public void onLoadFailed(String message) {
+        Toast.makeText(mActivity, "message", Toast.LENGTH_SHORT).show();
     }
 
     private void loadData(List<TagsBean.ContentBean> list,int flag){
@@ -171,6 +166,7 @@ public class ArticleFragment extends Fragment
                 pos.add(i);
             }
         }
+//        Logger.d("list的大小 %d, pos的大小 %d",list.size(),pos.size());
         if (pos.size()>0){
             SubBean subBean;
             for (int i = 0; i < pos.size(); i++) {
@@ -181,7 +177,7 @@ public class ArticleFragment extends Fragment
                 mList.add(subBean);
             }
         }
-        Logger.d(mList.size());
+//        Logger.d(mList.size());
         if (flag == 0) {
             mPageAdapter = new MainTabFragmentAdapter(getChildFragmentManager(), getContext(), mList,PAGE_ARTICLE);
             mViewPager.setAdapter(mPageAdapter);
@@ -191,7 +187,12 @@ public class ArticleFragment extends Fragment
             mPageAdapter.setData(mList);
         }
     }
-
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 101 && resultCode == 101){
+            loadArticleTagsUtils.getTags(1);
+        }
+    }
 
     @Override
     public void onDestroy() {

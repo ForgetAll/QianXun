@@ -62,6 +62,7 @@ public class MainActivity extends BaseActivity
         setContentView(R.layout.activity_main);
         setTransparentBar();
         initView();
+//        setDefaultFragment();
         if (savedInstanceState == null){
             setDefaultFragment();
         }
@@ -74,44 +75,39 @@ public class MainActivity extends BaseActivity
 
     private void  setDefaultFragment(){
         articleFragment = new ArticleFragment();
-        jobFragment = new JobFragment();
-        trainFragment = new TrainFragment();
-
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
-        transaction
-                .add(R.id.fl_main_content,articleFragment,"千家论道")
-                .add(R.id.fl_main_content,jobFragment,"职男职女")
-                .add(R.id.fl_main_content,trainFragment,"赋能成长")
-                .hide(jobFragment)
-                .hide(trainFragment)
-                .commit();
+        transaction.add(R.id.fl_main_content,articleFragment,"千家论道").commit();
     }
 
     public void showFragmentPage(int i){
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
+        hideFragment(transaction);
         switch (i){
             case PAGE_ARTICLE:
                 if (articleFragment == null){
                     articleFragment = new ArticleFragment();
+                    transaction.add(R.id.fl_main_content,articleFragment,"千家论道");
                 }
-                transaction
-                        .show(articleFragment)
-                        .hide(jobFragment)
-                        .hide(trainFragment);
+                transaction.show(articleFragment);
                 break;
             case PAGE_JOB:
-                transaction
-                        .show(jobFragment)
-                        .hide(articleFragment)
-                        .hide(trainFragment);
+                if (jobFragment == null){
+                    jobFragment = new JobFragment();
+                    transaction.add(R.id.fl_main_content,jobFragment,"职男职女");
+                }
+
+                transaction.show(jobFragment);
+
                 break;
             case PAGE_TRAIN:
-                transaction
-                        .show(trainFragment)
-                        .hide(articleFragment)
-                        .hide(jobFragment);
+                if (trainFragment == null){
+                    trainFragment = new TrainFragment();
+                    transaction.add(R.id.fl_main_content,trainFragment,"赋能成长");
+                }
+                transaction.show(trainFragment);
+
                 break;
             default:
                 break;
@@ -120,16 +116,26 @@ public class MainActivity extends BaseActivity
         transaction.commit();
     }
 
-    public void setDrawerLayout(boolean isOpen){
-        Toast.makeText(this, "打开", Toast.LENGTH_SHORT).show();
-        if (isOpen){
-            mDrawer.openDrawer(Gravity.LEFT);
-        }else {
-            mDrawer.closeDrawers();
+    private void hideFragment(FragmentTransaction transaction){
+        if (articleFragment != null){
+            transaction.hide(articleFragment);
+        }
+        if (jobFragment != null){
+            transaction.hide(jobFragment);
+        }
+
+        if (trainFragment != null) {
+            transaction.hide(trainFragment);
         }
     }
+
+    public void closeDrawer(){
+        mDrawer.closeDrawers();
+    }
     public void openDrawer(){
-        mDrawer.openDrawer(Gravity.LEFT);
+        if (mDrawer != null) {
+            mDrawer.openDrawer(Gravity.LEFT);
+        }
     }
 
     public void startChatList(){
@@ -169,33 +175,38 @@ public class MainActivity extends BaseActivity
     /**
      * 返回桌面不退出应用，只放在后台
      */
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//        if (KeyEvent.KEYCODE_BACK == event.getKeyCode()) {
+//            final AlertDialog.Builder alterDialog = new AlertDialog.Builder(this);
+//            alterDialog.setMessage("确定退出应用？");
+//            alterDialog.setCancelable(true);
+//
+//            alterDialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    if (RongIM.getInstance() != null)
+//                        RongIM.getInstance().disconnect(true);
+//
+//                    android.os.Process.killProcess(Process.myPid());
+//                }
+//            });
+//            alterDialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    dialog.cancel();
+//                }
+//            });
+//            alterDialog.show();
+//        }
+//        return false;
+//    }
+
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (KeyEvent.KEYCODE_BACK == event.getKeyCode()) {
-            final AlertDialog.Builder alterDialog = new AlertDialog.Builder(this);
-            alterDialog.setMessage("确定退出应用？");
-            alterDialog.setCancelable(true);
-
-            alterDialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    if (RongIM.getInstance() != null)
-                        RongIM.getInstance().disconnect(true);
-
-                    android.os.Process.killProcess(Process.myPid());
-                }
-            });
-            alterDialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.cancel();
-                }
-            });
-            alterDialog.show();
-        }
-        return false;
+    public void onBackPressed() {
+        super.onBackPressed();
+        this.finish();
     }
-
 
     @Override
     protected void onDestroy() {

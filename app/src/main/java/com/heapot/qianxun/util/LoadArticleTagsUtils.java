@@ -1,9 +1,6 @@
 package com.heapot.qianxun.util;
 
 import android.content.Context;
-import android.content.Loader;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -29,18 +26,18 @@ import java.util.Map;
  * 用于统一加载标签
  *
  */
-public class LoadTagsUtils {
+public class LoadArticleTagsUtils {
 
     private Context context;
     static OnLoadTagListener listener;
 
-    public LoadTagsUtils(Context context) {
+    public LoadArticleTagsUtils(Context context) {
         this.context =context;
 
     }
 
     public void setOnLoadTagListener(OnLoadTagListener listener){
-        LoadTagsUtils.listener = listener;
+        LoadArticleTagsUtils.listener = listener;
     }
 
     /**
@@ -55,7 +52,7 @@ public class LoadTagsUtils {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Logger.json(String.valueOf(response));
+//                        Logger.json(String.valueOf(response));
                         List<TagsBean.ContentBean> tagsList = new ArrayList<>();
                         try {
                             String status = response.getString("status");
@@ -67,6 +64,8 @@ public class LoadTagsUtils {
                                     listener.onLoadAllSuccess(tagsList, flag);
                                 }
 //                                getUserTag(token,flag);
+                            }else {
+                                listener.onLoadFailed(response.getString("message"));
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -84,6 +83,7 @@ public class LoadTagsUtils {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String,String> headers = new HashMap<>();
                 String token = PreferenceUtil.getString("token");
+                Logger.d("token"+token);
                 headers.put(ConstantsBean.KEY_TOKEN,token);
                 return headers;
             }
@@ -139,13 +139,14 @@ public class LoadTagsUtils {
 
 
 
+
     public interface OnLoadTagListener{
 
         void onLoadAllSuccess(List<TagsBean.ContentBean> list,int flag);
 
         void onLoadSuccess(List<MyTagBean.ContentBean.RowsBean> list,int flag);
 
-        void onLoadFailed();
+        void onLoadFailed(String message);
     }
 
 }

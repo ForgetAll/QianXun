@@ -113,12 +113,14 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         super.onResume();
         //注册本地广播
         localReceiver();
+        Logger.d("侧滑广播1");
     }
 
     /**
      * 本地广播接收
      */
     private void localReceiver() {
+        Logger.d("侧滑广播2~~~~");
         localBroadcastManager = LocalBroadcastManager.getInstance(getContext());//获取实例
         intentFilter = new IntentFilter();
         intentFilter.addAction("com.personal.change");
@@ -156,15 +158,15 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             //science学术、recruit招聘、train培训三个menu的点击事件，点击切换fragment
             case R.id.txt_menu_science:
-                ((MainActivity)mActivity).setDrawerLayout(false);
+                ((MainActivity)mActivity).closeDrawer();
                 ((MainActivity)mActivity).showFragmentPage(1);
                 break;
             case R.id.txt_menu_recruit:
-                ((MainActivity) mActivity).setDrawerLayout(false);
+                ((MainActivity) mActivity).closeDrawer();
                 ((MainActivity)mActivity).showFragmentPage(2);
                 break;
             case R.id.txt_menu_train:
-                ((MainActivity) mActivity).setDrawerLayout(false);
+                ((MainActivity) mActivity).closeDrawer();
                 ((MainActivity)mActivity).showFragmentPage(3);
                 break;
             //设置、帮助的点击事件

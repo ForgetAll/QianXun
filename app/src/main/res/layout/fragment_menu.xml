@@ -13,20 +13,20 @@
         android:orientation="vertical"
         android:background="@drawable/menu_background"
         android:padding="10dp">
-        <com.heapot.qianxun.widget.RoundImageView
-            android:id="@+id/iv_menu_image"
-            android:layout_width="@dimen/menu_image"
-            android:layout_height="@dimen/menu_image"
-            android:background="@null"
-            android:clickable="false"
-            android:focusable="false"
-            android:layout_margin="15dp"
-            android:scaleType="fitCenter"
-            roundImageattr:corner_radius="3dp"
-            roundImageattr:type="round"
-            />
+        <!--<com.heapot.qianxun.widget.RoundImageView-->
+            <!--android:id="@+id/iv_menu_image"-->
+            <!--android:layout_width="@dimen/menu_image"-->
+            <!--android:layout_height="@dimen/menu_image"-->
+            <!--android:background="@null"-->
+            <!--android:clickable="false"-->
+            <!--android:focusable="false"-->
+            <!--android:layout_margin="15dp"-->
+            <!--android:scaleType="fitCenter"-->
+            <!--roundImageattr:corner_radius="3dp"-->
+            <!--roundImageattr:type="round"-->
+            <!--/>-->
         <ImageView
-           android:visibility="gone"
+            android:id="@+id/iv_menu_image"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_margin="15dp"

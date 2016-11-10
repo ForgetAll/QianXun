@@ -84,6 +84,7 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
                         String body3 = "{\"icon\":\"" + path + "\"}";
                         updateUserInfo(body3);
                     } catch (JSONException e) {
+                        e.printStackTrace();
                     }
                 }
                 /*{

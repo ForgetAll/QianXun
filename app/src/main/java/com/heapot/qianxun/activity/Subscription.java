@@ -63,6 +63,8 @@ public class Subscription extends BaseActivity implements View.OnClickListener,T
     public String PAGE_ACTIVITIES_ID = "9025053c65e04a6992374c5d43f31acf";
     public String PAGE_JOBS_ID = "af3a09e8a4414c97a038a2d735064ebc";
 
+    public int resultCode = 101;
+
 
     Intent intent;
 
@@ -148,10 +150,16 @@ public class Subscription extends BaseActivity implements View.OnClickListener,T
         if (page.equals(PAGE_ARTICLE)){
 
             pid = PAGE_ARTICLES_ID;
+            resultCode =101;
+
         }else if (page.equals(PAGE_RECRUIT)){
             pid = PAGE_JOBS_ID;
+            resultCode =102;
+
         }else if (page.equals(PAGE_TRAIN)){
             pid =PAGE_ACTIVITIES_ID;
+            resultCode =103;
+
         }
         Object objTags =  SerializableUtils.getSerializable(Subscription.this,ConstantsBean.TAG_FILE_NAME);
         list.addAll((Collection<? extends TagsBean.ContentBean>) objTags);
@@ -181,10 +189,22 @@ public class Subscription extends BaseActivity implements View.OnClickListener,T
     }
     @Override
     public void onClick(View v) {
+        intent.putExtra("result", isRefresh);
         switch (v.getId()){
             case R.id.btn_close_subscription:
-                intent.putExtra("result", isRefresh);
-                setResult(101, intent);
+                switch (resultCode){
+                    case 101:
+                        setResult(101, intent);
+                        break;
+                    case 102:
+                        setResult(102, intent);
+                        break;
+                    case 103:
+                        setResult(103, intent);
+                        break;
+                    default:
+                        break;
+                }
                 this.finish();
                 break;
         }

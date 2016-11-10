@@ -47,21 +47,21 @@
         <LinearLayout
             android:layout_width="102dp"
             android:layout_height="76.5dp">
-            <com.heapot.qianxun.widget.RoundImageView
+            <!--<com.heapot.qianxun.widget.RoundImageView-->
+                <!--android:id="@+id/iv_main_list_image"-->
+                <!--android:layout_width="@dimen/main_item_width"-->
+                <!--android:layout_height="@dimen/main_item_height"-->
+                <!--android:background="@null"-->
+                <!--android:clickable="false"-->
+                <!--android:focusable="false"-->
+                <!--android:scaleType="fitCenter"-->
+                <!--roundImageattr:corner_radius="3dp"-->
+                <!--roundImageattr:type="round"-->
+                <!--/>-->
+            <ImageView
                 android:id="@+id/iv_main_list_image"
                 android:layout_width="@dimen/main_item_width"
                 android:layout_height="@dimen/main_item_height"
-                android:background="@null"
-                android:clickable="false"
-                android:focusable="false"
-                android:scaleType="fitCenter"
-                roundImageattr:corner_radius="3dp"
-                roundImageattr:type="round"
-                />
-            <ImageView
-                android:visibility="gone"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
                 android:scaleType="fitCenter"
                 android:layout_gravity="center"
                 android:src="@mipmap/ic_launcher"/>

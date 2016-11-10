@@ -147,8 +147,6 @@ public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Logger.d("当前页面---->"+mPage);
-                        Logger.json(String.valueOf(response));
                         MainListBean mainListBean = (MainListBean) JsonUtil.fromJson(String.valueOf(response),MainListBean.class);
                         maxPageIndex =mainListBean.getTotal_page();
                         list.addAll(mainListBean.getContent());

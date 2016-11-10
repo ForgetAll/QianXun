@@ -86,6 +86,7 @@ public class CreateJobActivity extends BaseActivity implements View.OnClickListe
                         CommonUtil.loadImage(iv_image, path + "", R.mipmap.imagetest);
                         //Glide.with(CustomApplication.getContext()).load(path.toString()).into(iv_image);
                     } catch (JSONException e) {
+                        e.printStackTrace();
                     }
                 }
             }

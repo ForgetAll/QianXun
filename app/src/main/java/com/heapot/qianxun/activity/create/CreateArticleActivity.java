@@ -108,6 +108,7 @@ public class CreateArticleActivity extends BaseActivity implements View.OnClickL
                         webView.loadUrl("javascript:imgReady(\""+token+"\",\""+images+"\")");
                         Logger.d("Images:"+images+",Token:"+token);
                     } catch (JSONException e) {
+                        e.printStackTrace();
                     }
                 }
             }

@@ -54,12 +54,13 @@ public class SplashActivity extends BaseActivity {
         Intent intent = new Intent();
         if (token.equals("") || chat_token.equals("")){
             intent.setClass(this,LoginActivity.class);
+            startActivity(intent);
+            this.finish();
         }else {
             connChat(chat_token);
-            intent.setClass(this,MainActivity.class);
+//            intent.setClass(this,MainActivity.class);
         }
-        startActivity(intent);
-        this.finish();
+
     }
 
     private void connChat(final String token){
