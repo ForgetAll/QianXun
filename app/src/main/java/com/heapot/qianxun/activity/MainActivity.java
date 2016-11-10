@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Process;
@@ -30,6 +31,7 @@ import com.heapot.qianxun.bean.MyTagBean;
 import com.heapot.qianxun.bean.SubBean;
 import com.heapot.qianxun.bean.TagsBean;
 import com.heapot.qianxun.util.LoadTagsUtils;
+import com.heapot.qianxun.util.LoadUserInfo;
 import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
@@ -51,7 +53,7 @@ import io.rong.imlib.model.UserInfo;
  */
 
 public class MainActivity extends BaseActivity
-        implements View.OnClickListener, RongIM.UserInfoProvider, LoadTagsUtils.OnLoadTagListener {
+        implements View.OnClickListener, RongIM.UserInfoProvider, LoadTagsUtils.OnLoadTagListener, LoadUserInfo.OnUserInfoListener {
     private DrawerLayout mDrawerLayout;
     private Toolbar mToolBar;
     private ImageView mBanner;
@@ -258,21 +260,27 @@ public class MainActivity extends BaseActivity
     @Override
     public UserInfo getUserInfo(String s) {
 
+        new LoadUserInfo(MainActivity.this,MainActivity.this).getChatUserInfo(s,getAppToken());
+
         return null;
     }
 
     @Override
-    public void onLoadAllSuccess(List<TagsBean.ContentBean> list) {
-
-    }
-
-    @Override
-    public void onLoadSuccess(List<MyTagBean.ContentBean.RowsBean> list , int flag) {
+    public void onLoadAllSuccess(List<TagsBean.ContentBean> list,int flag) {
         if (list != null) {
             loadData(list,flag);
         } else {
             Toast.makeText(this, "尚未订阅数据", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void onLoadSuccess(List<MyTagBean.ContentBean.RowsBean> list , int flag) {
+//        if (list != null) {
+//            loadData(list,flag);
+//        } else {
+//            Toast.makeText(this, "尚未订阅数据", Toast.LENGTH_SHORT).show();
+//        }
 
     }
 
@@ -282,14 +290,14 @@ public class MainActivity extends BaseActivity
     }
 
 
-    private void loadData(List<MyTagBean.ContentBean.RowsBean> list,int flag){
+    private void loadData(List<TagsBean.ContentBean> list,int flag){
         mList.clear();
         if (PAGE_CURRENT.equals(PAGE_ARTICLE)){
 
             List<Integer> pos = new ArrayList<>();
             int n = list.size();
             for (int i = 0; i < n; i++) {
-                if (list.get(i).getPid().equals("f3b8d91b8f9c4a03a4a06a5678e79872")){
+                if (list.get(i).getPid() != null && list.get(i).getPid().equals(PAGE_ARTICLES_ID)){
                     pos.add(i);
                 }
             }
@@ -297,7 +305,7 @@ public class MainActivity extends BaseActivity
                 SubBean subBean;
                 for (int i = 0; i < pos.size(); i++) {
                     subBean = new SubBean();
-                    subBean.setPid(list.get(pos.get(i)).getPid());
+                    subBean.setPid((String) list.get(pos.get(i)).getPid());
                     subBean.setName(list.get(pos.get(i)).getName());
                     subBean.setId(list.get(pos.get(i)).getId());
                     mList.add(subBean);
@@ -318,7 +326,7 @@ public class MainActivity extends BaseActivity
                 SubBean subBean;
                 for (int i = 0; i < pos.size(); i++) {
                     subBean = new SubBean();
-                    subBean.setPid(list.get(pos.get(i)).getPid());
+                    subBean.setPid((String) list.get(pos.get(i)).getPid());
                     subBean.setName(list.get(pos.get(i)).getName());
                     subBean.setId(list.get(pos.get(i)).getId());
                     mList.add(subBean);
@@ -338,7 +346,7 @@ public class MainActivity extends BaseActivity
                 SubBean subBean;
                 for (int i = 0; i < pos.size(); i++) {
                     subBean = new SubBean();
-                    subBean.setPid(list.get(pos.get(i)).getPid());
+                    subBean.setPid((String) list.get(pos.get(i)).getPid());
                     subBean.setName(list.get(pos.get(i)).getName());
                     subBean.setId(list.get(pos.get(i)).getId());
                     mList.add(subBean);
@@ -361,12 +369,21 @@ public class MainActivity extends BaseActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == 101){
-            Toast.makeText(this, "刷新了", Toast.LENGTH_SHORT).show();
             boolean result = data.getBooleanExtra("result",true);
             if (result){
                 new LoadTagsUtils(this,this).getTags(getAppToken(),1);
             }
         }
 
+    }
+
+    @Override
+    public void onResponseSuccess(String id, String nickname, String icon) {
+        RongIM.getInstance().refreshUserInfoCache(new UserInfo(id,nickname, Uri.parse(icon)));
+    }
+
+    @Override
+    public void onResponseError(String id) {
+        RongIM.getInstance().refreshUserInfoCache(new UserInfo(id,"仟询用户", null));
     }
 }

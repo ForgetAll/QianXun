@@ -51,15 +51,18 @@ public class LoadTagsUtils {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        Logger.json(String.valueOf(response));
                         List<TagsBean.ContentBean> tagsList = new ArrayList<>();
                         try {
                             String status = response.getString("status");
                             if (status.equals("success")) {
                                 TagsBean tagsBean = (TagsBean) JsonUtil.fromJson(String.valueOf(response),TagsBean.class);
                                 SerializableUtils.setSerializable(context,ConstantsBean.TAG_FILE_NAME,tagsBean.getContent());
-                                tagsList.addAll(tagsBean.getContent());
-                                listener.onLoadAllSuccess(tagsList);
-                                getUserTag(token,flag);
+                                if (tagsBean.getContent()!= null) {
+                                    tagsList.addAll(tagsBean.getContent());
+                                    listener.onLoadAllSuccess(tagsList, flag);
+                                }
+//                                getUserTag(token,flag);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -133,7 +136,7 @@ public class LoadTagsUtils {
 
     public interface OnLoadTagListener{
 
-        void onLoadAllSuccess(List<TagsBean.ContentBean> list);
+        void onLoadAllSuccess(List<TagsBean.ContentBean> list,int flag);
 
         void onLoadSuccess(List<MyTagBean.ContentBean.RowsBean> list,int flag);
 

@@ -32,7 +32,6 @@ import com.heapot.qianxun.util.CommonUtil;
 import com.heapot.qianxun.util.FileUploadTask;
 import com.heapot.qianxun.util.JsonUtil;
 import com.heapot.qianxun.util.PreferenceUtil;
-import com.heapot.qianxun.util.SerializableUtils;
 import com.heapot.qianxun.util.ToastUtil;
 import com.heapot.qianxun.widget.PhotoCarmaWindow;
 import com.orhanobut.logger.Logger;
@@ -51,9 +50,9 @@ import java.util.Map;
 public class PersonalInforActivity extends BaseActivity implements View.OnClickListener {
     public String userId;
     private TextView mBack;
-    private ImageView mHead;
-    private TextView mNick;
-    private TextView mAutograph;
+    private ImageView mHeadUrl;
+    private TextView mName;
+    private TextView mSign;
     private int requestCode;
     private String nick;
     private String autograph;
@@ -78,12 +77,11 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
                         String path = content.getString("url");
                         Log.e("上传头像返回的数据", path);
                         // Glide.with(activity).load(path).error(R.mipmap.imagetest).into(mHead);
-                        CommonUtil.loadImage(mHead, path, R.mipmap.imagetest);
+                        CommonUtil.loadImage(mHeadUrl, path, R.mipmap.imagetest);
                         userBean.setIcon(path);
                         personalStatus = 1;
-                        SerializableUtils.setSerializable(PersonalInforActivity.this, ConstantsBean.MY_USER_INFO, userBean);
                         PreferenceUtil.putString(ConstantsBean.userImage, path);
-                        String body3 = "{\"icon\":\"" + userBean.getIcon() + "\"}";
+                        String body3 = "{\"icon\":\"" + path + "\"}";
                         updateUserInfo(body3);
                     } catch (JSONException e) {
                     }
@@ -115,16 +113,16 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
     //查找控件
     private void initView() {
         mBack = (TextView) findViewById(R.id.tv_back);
-        mHead = (ImageView) findViewById(R.id.iv_head);
-        mNick = (TextView) findViewById(R.id.tv_nick);
-        mAutograph = (TextView) findViewById(R.id.tv_autograph);
+        mHeadUrl = (ImageView) findViewById(R.id.iv_head);
+        mName = (TextView) findViewById(R.id.tv_nick);
+        mSign = (TextView) findViewById(R.id.tv_autograph);
         findViewById(R.id.rl_autograph).setOnClickListener(this);
         findViewById(R.id.rl_nick).setOnClickListener(this);
         findViewById(R.id.rl_birth).setOnClickListener(this);
         findViewById(R.id.rl_sex).setOnClickListener(this);
         tv_birth = (TextView) findViewById(R.id.tv_birth);
         tv_sex = (TextView) findViewById(R.id.tv_sex);
-        mHead.setOnClickListener(this);
+        mHeadUrl.setOnClickListener(this);
         mBack.setOnClickListener(this);
 
     }
@@ -141,30 +139,30 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
                         try {
                             String status = response.getString("status");
                             Log.e("content：", String.valueOf(response.getJSONObject("content")));
-                                if (status.equals("success")&&response.getJSONObject("content") != null) {
-                                    MyDetailBean myDetailBean = (MyDetailBean) JsonUtil.fromJson(String.valueOf(response), MyDetailBean.class);
-                                    PreferenceUtil.putString("sex", String.valueOf(myDetailBean.getContent().getSex()));
-                                    PreferenceUtil.putString("detaildescribe", myDetailBean.getContent().getDescription());
-                                    PreferenceUtil.putString("birthyear", String.valueOf(myDetailBean.getContent().getBirthYear()));
-                                    int birthYear = myDetailBean.getContent().getBirthYear();
-                                    if (birthYear == 1) {
-                                        tv_birth.setText("");
-                                    } else {
-                                        tv_birth.setText(String.valueOf(birthYear));
-                                    }
-
-                                    int sexNumber = myDetailBean.getContent().getSex();
-                                    if (sexNumber == 0) {
-                                        tv_sex.setText("女");
-                                    } else if (sexNumber == 1) {
-                                        tv_sex.setText("男");
-                                    } else {
-                                        tv_sex.setText("其他");
-                                    }
-
-                                }else {
-
+                            if (status.equals("success")&&response.getJSONObject("content") != null) {
+                                MyDetailBean myDetailBean = (MyDetailBean) JsonUtil.fromJson(String.valueOf(response), MyDetailBean.class);
+                                PreferenceUtil.putString("sex", String.valueOf(myDetailBean.getContent().getSex()));
+                                PreferenceUtil.putString("detaildescribe", myDetailBean.getContent().getDescription());
+                                PreferenceUtil.putString("birthyear", String.valueOf(myDetailBean.getContent().getBirthYear()));
+                                int birthYear = myDetailBean.getContent().getBirthYear();
+                                if (birthYear == 1) {
+                                    tv_birth.setText("");
+                                } else {
+                                    tv_birth.setText(String.valueOf(birthYear));
                                 }
+
+                                int sexNumber = myDetailBean.getContent().getSex();
+                                if (sexNumber == 0) {
+                                    tv_sex.setText("女");
+                                } else if (sexNumber == 1) {
+                                    tv_sex.setText("男");
+                                } else {
+                                    tv_sex.setText("其他");
+                                }
+
+                            }else {
+
+                            }
 
 
 
@@ -193,35 +191,28 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
 
 
     private void initEvent() {
-        Object object = getLocalInfo(ConstantsBean.MY_USER_INFO);
-        if (object == null) {
-            Logger.d("object------>null");
-        } else {
-            Logger.d("object----->! null");
-        }
-        userBean = (MyUserBean.ContentBean) object;
-        if (userBean.getDescription() != null) {
-            mAutograph.setText(userBean.getDescription());
-        } else {
-            mAutograph.setText("请设置签名");
-        }
-        String nickName = userBean.getNickname();
+        String nickName= PreferenceUtil.getString(ConstantsBean.nickName);
+        String autoGraph=PreferenceUtil.getString(ConstantsBean.userAutograph);
+        String headUrl=PreferenceUtil.getString(ConstantsBean.userImage);
         if (nickName != null) {
-            mNick.setText(nickName);
+            mName.setText(nickName);
         } else {
-            mNick.setText("请设置昵称");
+            mName.setText("请设置昵称");
         }
-        if (userBean.getIcon() != null) {
-            CommonUtil.loadImage(mHead, userBean.getIcon(), R.drawable.imagetest);
+        if (autoGraph != null) {
+            mSign.setText(autoGraph);
+        }  else {
+            mSign.setText("请设置签名");
+        }
+        if (headUrl != null) {
+            CommonUtil.loadImage(mHeadUrl,headUrl, R.drawable.imagetest);
         } else {
-            mHead.setImageResource(R.drawable.imagetest);
+            mHeadUrl.setImageResource(R.drawable.imagetest);
         }
 
     }
 
-    private Object getLocalInfo(String fileName) {
-        return SerializableUtils.getSerializable(PersonalInforActivity.this, fileName);
-    }
+
 
     //点击事件
     @Override
@@ -238,12 +229,12 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
             //名字
             case R.id.rl_nick:
                 requestCode = 201;
-                jumpAlterActivity(mNick.getText().toString().trim());
+                jumpAlterActivity(mName.getText().toString().trim());
                 break;
             //签名
             case R.id.rl_autograph:
                 requestCode = 202;
-                jumpAlterActivity(mAutograph.getText().toString().trim());
+                jumpAlterActivity(mSign.getText().toString().trim());
                 break;
             //生日
             case R.id.rl_birth:
@@ -310,7 +301,7 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
         }
     }
 
-    //增加栏目的对话框
+    //增加性别栏目的对话框
     private void personalSexDialog() {
         AlertDialog.Builder builderSex = new AlertDialog.Builder(PersonalInforActivity.this);
         View viewAdd = LayoutInflater.from(PersonalInforActivity.this).inflate(R.layout.personal_sex_dialog, null);
@@ -463,24 +454,22 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
                 //修改昵称
                 case 201:
                     nick = intent.getStringExtra(ConstantsBean.INFO);
-                    mNick.setText(nick);
+                    mName.setText(nick);
                     userBean.setNickname(nick);
-                    SerializableUtils.setSerializable(PersonalInforActivity.this, ConstantsBean.MY_USER_INFO, userBean);
                     PreferenceUtil.putString(ConstantsBean.nickName, nick);
                     personalStatus = 1;
-                    String body4 = "{\"nickname\":\"" + userBean.getNickname() + "\"}";
+                    String body4 = "{\"nickname\":\"" + nick + "\"}";
                     Log.e("修改后的名字", body4);
                     updateUserInfo(body4);
                     break;
                 //修改签名
                 case 202:
                     autograph = intent.getStringExtra(ConstantsBean.INFO);
-                    mAutograph.setText(autograph);
+                    mSign.setText(autograph);
                     userBean.setDescription(autograph);
-                    SerializableUtils.setSerializable(PersonalInforActivity.this, ConstantsBean.MY_USER_INFO, userBean);
                     PreferenceUtil.putString(ConstantsBean.userAutograph, autograph);
                     personalStatus = 1;
-                    String body2 = "{\"description\":\"" + userBean.getDescription() + "\"}";
+                    String body2 = "{\"description\":\"" + autograph + "\"}";
                     updateUserInfo(body2);
                     break;
                 //修改出生年
@@ -528,10 +517,10 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
                         try {
                             String status = response.getString("status");
                             if (status.equals("success")) {
-                                Toast.makeText(PersonalInforActivity.this, "更新成功", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(activity, "更新成功", Toast.LENGTH_SHORT).show();
 
                             } else {
-                                Toast.makeText(PersonalInforActivity.this, "更新失败", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(activity, "更新失败", Toast.LENGTH_SHORT).show();
                                 Logger.d(response.getString("message"));
                             }
                         } catch (JSONException e) {

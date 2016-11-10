@@ -98,6 +98,8 @@ public class ConstantsBean {
     public static final String USER_DETAIL =  "/user/detail";
     //教育信息
     public static final String USER_EDUCATION =  "/user/education";
+    //文章分类
+    public static final String CREATE_ARTICLE_TYPE = "/catalogs/articles";
 
 
     //创建文章WEbView的URL
@@ -108,12 +110,13 @@ public class ConstantsBean {
     //以下聊天相关
     public static final String IM_TOKEN = "user/rongCloudToken";
     public static final String IM_CHECK_FRIEND = "friends/check?friendId";//={friendId}//验证是否是好友
-    public static final String IM_GET_FRIEND_LIST = "/friends";//获取好友列表
+    public static final String IM_GET_FRIEND_LIST = "friends";//获取好友列表
     public static final String IM_GET_FRIENDS_REQUEST_LIST = "friends/req";//获取好友请求列表
     public static final String IM_POST_ADD_FRIENDS_REQUEST = "friends/req";//发送好友请求
     public static final String IM_POST_ADMIT_ADD_FRIEND = "friends/req/";//{userId}同意好友请求
     //根据id去查用户信息
     public static final String IM_USER_INFO = "user/id/";
+
 
 
 

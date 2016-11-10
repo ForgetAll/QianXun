@@ -64,7 +64,7 @@ public class CreateArticleActivity extends BaseActivity implements View.OnClickL
                         if (title.equals("") || content.equals("")){
                             Toast.makeText(CreateArticleActivity.this, "标题/内容不能为空", Toast.LENGTH_SHORT).show();
                         }else {
-                            Intent intent = new Intent(CreateArticleActivity.this,SortList.class);
+                            Intent intent = new Intent(CreateArticleActivity.this,CreateArticleTypeActivity.class);
                             body = "{\"title\":\"" + title + "\",\"content\":\"" + content + "\"";
                             intent.putExtra("article",body);
                             if (images.equals("")) {

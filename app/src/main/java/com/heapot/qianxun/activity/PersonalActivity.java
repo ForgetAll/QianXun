@@ -22,9 +22,8 @@ import android.widget.TextView;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.adapter.PersonalPageAdapter;
 import com.heapot.qianxun.bean.ConstantsBean;
-import com.heapot.qianxun.bean.MyUserBean;
-import com.heapot.qianxun.util.SerializableUtils;
 import com.heapot.qianxun.util.CommonUtil;
+import com.heapot.qianxun.util.PreferenceUtil;
 import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
@@ -32,7 +31,6 @@ import java.util.List;
 
 /**
  * Created by Karl on 2016/8/29.
- * desc:
  */
 public class PersonalActivity extends BaseActivity implements View.OnClickListener, ViewPager.OnPageChangeListener {
     private ViewPager mViewPager;
@@ -95,28 +93,28 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
      * 本地广播接收
      */
     private void localReceiver() {
-        localBroadcastManager = LocalBroadcastManager.getInstance(this);//获取实例
+        localBroadcastManager = LocalBroadcastManager.getInstance(activity);//获取实例
         intentFilter = new IntentFilter();
         intentFilter.addAction("com.personal.change");
         refreshReceiver = new RefreshPersonalInfoReceiver();
         localBroadcastManager.registerReceiver(refreshReceiver, intentFilter);
     }
     private void initData() {
-        Object object = getLocalInfo(ConstantsBean.MY_USER_INFO);
-        MyUserBean.ContentBean myUserBean = (MyUserBean.ContentBean) object;
-        if (myUserBean.getDescription() != null) {
-            mSign.setText(myUserBean.getDescription());
-        }  else {
-            mSign.setText("请设置签名");
-        }
-        String nickName = myUserBean.getNickname();
+        String nickName= PreferenceUtil.getString(ConstantsBean.nickName);
+        String autoGraph=PreferenceUtil.getString(ConstantsBean.userAutograph);
+        String headUrl=PreferenceUtil.getString(ConstantsBean.userImage);
         if (nickName != null) {
             mName.setText(nickName);
         } else {
             mName.setText("请设置昵称");
         }
-        if (myUserBean.getIcon() != null) {
-            CommonUtil.loadImage(mHeadUrl, myUserBean.getIcon(), R.drawable.imagetest);
+        if (autoGraph != null) {
+            mSign.setText(autoGraph);
+        }  else {
+            mSign.setText("请设置签名");
+        }
+        if (headUrl != null) {
+            CommonUtil.loadImage(mHeadUrl,headUrl, R.drawable.imagetest);
         } else {
             mHeadUrl.setImageResource(R.drawable.imagetest);
         }
@@ -130,9 +128,6 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
         }
         initTab();
 
-    }
-    private Object getLocalInfo(String fileName) {
-        return SerializableUtils.getSerializable(this, fileName);
     }
 
     private void initTab() {
@@ -168,7 +163,6 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
                 break;
             //大图片
             case R.id.personal_iv_banner:
-
                 break;
             //头像
             case R.id.iv_headUrl:
@@ -234,12 +228,23 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
                 case 0://无更新,不需要操作
                     break;
                 case 1:
-                    Object object = SerializableUtils.getSerializable(PersonalActivity.this, ConstantsBean.MY_USER_INFO);
-                    if (object != null) {
-                        MyUserBean.ContentBean myUserBean = (MyUserBean.ContentBean) object;
-                        CommonUtil.loadImage(mHeadUrl, myUserBean.getIcon(), R.drawable.imagetest);
-                        mName.setText(myUserBean.getNickname());
-                        mSign.setText(myUserBean.getDescription());
+                    String nickName= PreferenceUtil.getString(ConstantsBean.nickName);
+                    String autoGraph=PreferenceUtil.getString(ConstantsBean.userAutograph);
+                    String headUrl=PreferenceUtil.getString(ConstantsBean.userImage);
+                    if (nickName != null) {
+                        mName.setText(nickName);
+                    } else {
+                        mName.setText("请设置昵称");
+                    }
+                    if (autoGraph != null) {
+                        mSign.setText(autoGraph);
+                    }  else {
+                        mSign.setText("请设置签名");
+                    }
+                    if (headUrl != null) {
+                        CommonUtil.loadImage(mHeadUrl,headUrl, R.drawable.imagetest);
+                    } else {
+                        mHeadUrl.setImageResource(R.drawable.imagetest);
                     }
                     break;
             }

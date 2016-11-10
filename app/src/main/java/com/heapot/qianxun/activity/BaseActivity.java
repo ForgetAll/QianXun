@@ -17,10 +17,12 @@ import com.orhanobut.logger.Logger;
  *
  */
 public class BaseActivity extends AppCompatActivity implements BaseView{
+    public   Activity activity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        activity=this;
 
     }
 

@@ -104,6 +104,8 @@
         <activity android:name=".activity.create.CreateJobEditActivity"></activity>
         <!--培训详情-->
         <activity android:name=".activity.CourseActivity"></activity>
+        <!--文章类型-->
+        <activity android:name=".activity.create.CreateArticleTypeActivity"></activity>
         <!--聊天Activity-->
         <!--会话列表-->
 

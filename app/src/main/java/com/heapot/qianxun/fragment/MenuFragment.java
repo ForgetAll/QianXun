@@ -55,8 +55,8 @@ import java.util.Map;
  * 取数据：SerializableUtils.getSerializable(getContext(),ConstantsBean.MY_USER_INFO)
  */
 public class MenuFragment extends Fragment implements View.OnClickListener {
-    private ImageView mIcon;
-    private TextView mName, mQuote, mScience, mRecruit, mTrain, mSetting, mHelp;
+    private ImageView mHeadUrl;
+    private TextView mName, mSign, mScience, mRecruit, mTrain, mSetting, mHelp;
     private LinearLayout mHeader;
     private View mMenuView;
     private Activity mActivity;
@@ -83,9 +83,9 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
 
 
     private void initView() {
-        mIcon = (ImageView) mMenuView.findViewById(R.id.iv_menu_image);
+        mHeadUrl = (ImageView) mMenuView.findViewById(R.id.iv_menu_image);
         mName = (TextView) mMenuView.findViewById(R.id.txt_menu_name);
-        mQuote = (TextView) mMenuView.findViewById(R.id.txt_menu_quote);
+        mSign = (TextView) mMenuView.findViewById(R.id.txt_menu_quote);
         mScience = (TextView) mMenuView.findViewById(R.id.txt_menu_science);
         mRecruit = (TextView) mMenuView.findViewById(R.id.txt_menu_recruit);
         mTrain = (TextView) mMenuView.findViewById(R.id.txt_menu_train);
@@ -125,101 +125,29 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initData() {
-        Object object = getLocalInfo(ConstantsBean.MY_USER_INFO);
-        if (object != null) {
-            MyUserBean.ContentBean myUserBean = (MyUserBean.ContentBean) object;
-            if (myUserBean.getDescription() != null) {
-                mQuote.setText(myUserBean.getDescription());
-            } else {
-                mQuote.setText("请设置签名");
-            }
-            String nickName = myUserBean.getNickname();
-            if (nickName != null) {
-                mName.setText(nickName);
-            } else {
-                mName.setText("请设置昵称");
-            }
-            if (myUserBean.getIcon() != null) {
-                CommonUtil.loadImage(mIcon, myUserBean.getIcon(), R.drawable.imagetest);
-//                Glide.with(getActivity()).load(R.drawable.ic_test).into(mIcon);
-                Log.e("网上获取图片", myUserBean.getIcon());
-            } else {
-                mIcon.setImageResource(R.drawable.imagetest);
-            }
+        String nickName= PreferenceUtil.getString(ConstantsBean.nickName);
+        String autoGraph=PreferenceUtil.getString(ConstantsBean.userAutograph);
+        String headUrl=PreferenceUtil.getString(ConstantsBean.userImage);
+        if (nickName != null) {
+            mName.setText(nickName);
         } else {
-            getUserInfo();
+            mName.setText("请设置昵称");
+        }
+        if (autoGraph != null) {
+            mSign.setText(autoGraph);
+        }  else {
+            mSign.setText("请设置签名");
+        }
+        if (headUrl != null) {
+            CommonUtil.loadImage(mHeadUrl,headUrl, R.drawable.imagetest);
+        } else {
+            mHeadUrl.setImageResource(R.drawable.imagetest);
         }
 
     }
 
-    /**
-     * 在主页获取用户信息然后进行存储，直接在侧滑菜单进行绘制就可以了
-     */
-    private void getUserInfo() {
-        String url = ConstantsBean.BASE_PATH + ConstantsBean.PERSONAL_INFO;
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                Request.Method.GET, url, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Logger.d(response);
-                        try {
-                            String status = response.getString("status");
-                            if (status.equals("success")) {
-                                MyUserBean myUserBean = (MyUserBean) JsonUtil.fromJson(String.valueOf(response), MyUserBean.class);
-                                MyUserBean.ContentBean userBean = myUserBean.getContent();
-                                PreferenceUtil.putString(ConstantsBean.USER_PHONE, myUserBean.getContent().getPhone());
-                                PreferenceUtil.putString(ConstantsBean.nickName, myUserBean.getContent().getNickname());
-                                PreferenceUtil.putString(ConstantsBean.userAutograph, myUserBean.getContent().getDescription());
-                                PreferenceUtil.putString(ConstantsBean.userImage, myUserBean.getContent().getIcon());
-                                PreferenceUtil.putString(ConstantsBean.USER_ID, myUserBean.getContent().getId());
-                                PreferenceUtil.putString("name",userBean.getName());
-                                Log.e("用户ID",myUserBean.getContent().getId());
-                                if (userBean.getDescription() != null) {
-                                    mQuote.setText(userBean.getDescription());
-                                } else {
-                                    mQuote.setText("请设置签名");
-                                }
-                                String nickName = userBean.getNickname();
-                                if (nickName != null) {
-                                    mName.setText(nickName);
-                                } else {
-                                    mName.setText("请设置昵称");
-                                }
-                                if (userBean.getIcon() != null) {
-                                    CommonUtil.loadImage(mIcon, userBean.getIcon(), R.drawable.imagetest);
-                                } else {
-                                    mIcon.setImageResource(R.drawable.imagetest);
-                                }
 
-                            } else {
-                                Toast.makeText(getContext(), response.getString("message"), Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
 
-                    }
-                }
-        ) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<>();
-                headers.put(ConstantsBean.KEY_TOKEN, ((MainActivity)mActivity).getAppToken());
-                return headers;
-            }
-        };
-        CustomApplication.getRequestQueue().add(jsonObjectRequest);
-    }
-
-    private Object getLocalInfo(String fileName) {
-        return SerializableUtils.getSerializable(getContext(), fileName);
-    }
 
     @Override
     public void onClick(View v) {
@@ -284,12 +212,23 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
                 case 0://无更新,不需要操作
                     break;
                 case 1:
-                    Object object = SerializableUtils.getSerializable(getContext(), ConstantsBean.MY_USER_INFO);
-                    if (object != null) {
-                        MyUserBean.ContentBean myUserBean = (MyUserBean.ContentBean) object;
-                        CommonUtil.loadImage(mIcon, myUserBean.getIcon(), R.drawable.imagetest);
-                        mName.setText(myUserBean.getNickname());
-                        mQuote.setText(myUserBean.getDescription());
+                    String nickName= PreferenceUtil.getString(ConstantsBean.nickName);
+                    String autoGraph=PreferenceUtil.getString(ConstantsBean.userAutograph);
+                    String headUrl=PreferenceUtil.getString(ConstantsBean.userImage);
+                    if (nickName != null) {
+                        mName.setText(nickName);
+                    } else {
+                        mName.setText("请设置昵称");
+                    }
+                    if (autoGraph != null) {
+                        mSign.setText(autoGraph);
+                    }  else {
+                        mSign.setText("请设置签名");
+                    }
+                    if (headUrl != null) {
+                        CommonUtil.loadImage(mHeadUrl,headUrl, R.drawable.imagetest);
+                    } else {
+                        mHeadUrl.setImageResource(R.drawable.imagetest);
                     }
                     break;
             }

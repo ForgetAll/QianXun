@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,7 +21,9 @@ import com.blankj.utilcode.utils.NetworkUtils;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
+import com.heapot.qianxun.bean.MyUserBean;
 import com.heapot.qianxun.util.CommonUtil;
+import com.heapot.qianxun.util.JsonUtil;
 import com.heapot.qianxun.util.PreferenceUtil;
 import com.orhanobut.logger.Logger;
 
@@ -131,6 +134,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     PreferenceUtil.putString("phone", username);
                     PreferenceUtil.putString("password", password);
                     getIMToken(token);
+                    getUserInfo();
                 }
             } else {
                 Toast.makeText(LoginActivity.this, "登陆失败" + response.get("message"), Toast.LENGTH_SHORT).show();
@@ -138,6 +142,54 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    private void getUserInfo() {
+            String url = ConstantsBean.BASE_PATH + ConstantsBean.PERSONAL_INFO;
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                    Request.Method.GET, url, null,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            Logger.d(response);
+                            try {
+                                String status = response.getString("status");
+                                if (status.equals("success")) {
+                                    MyUserBean myUserBean = (MyUserBean) JsonUtil.fromJson(String.valueOf(response), MyUserBean.class);
+                                    MyUserBean.ContentBean userBean = myUserBean.getContent();
+                                    PreferenceUtil.putString(ConstantsBean.USER_PHONE, myUserBean.getContent().getPhone());
+                                    PreferenceUtil.putString(ConstantsBean.nickName, myUserBean.getContent().getNickname());
+                                    PreferenceUtil.putString(ConstantsBean.userAutograph, myUserBean.getContent().getDescription());
+                                    PreferenceUtil.putString(ConstantsBean.userImage, myUserBean.getContent().getIcon());
+                                    PreferenceUtil.putString(ConstantsBean.USER_ID, myUserBean.getContent().getId());
+                                    PreferenceUtil.putString("name",userBean.getName());
+                                    Log.e("用户ID",myUserBean.getContent().getId());
+
+
+                                } else {
+                                    Toast.makeText(activity, response.getString("message"), Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
+                        }
+                    }
+            ) {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> headers = new HashMap<>();
+                    headers.put(ConstantsBean.KEY_TOKEN, getAppToken());
+                    return headers;
+                }
+            };
+            CustomApplication.getRequestQueue().add(jsonObjectRequest);
+
     }
 
     private void getIMToken(final String token){
