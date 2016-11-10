@@ -157,7 +157,7 @@ public class CreateArticleActivity extends BaseActivity implements View.OnClickL
         webSettings.setDefaultTextEncodingName("utf-8");
         webView.addJavascriptInterface(this,"android");
         webView.setWebChromeClient(new WebChromeClient() {});
-        webView.loadUrl(ConstantsBean.WEB_CREATE_ARTICLE_EDIT);
+        webView.loadUrl(url);
 
     }
 
@@ -167,8 +167,6 @@ public class CreateArticleActivity extends BaseActivity implements View.OnClickL
      */
     @JavascriptInterface
     public void setHtml(String json){
-        Logger.d("json--->"+json);
-
         Message message = new Message();
         Bundle bundle = new Bundle();
         bundle.putString("content",json);

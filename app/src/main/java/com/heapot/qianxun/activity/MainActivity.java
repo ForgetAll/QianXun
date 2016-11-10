@@ -1,19 +1,14 @@
 package com.heapot.qianxun.activity;
 
 import android.app.AlertDialog;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Process;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -27,35 +22,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.bumptech.glide.Glide;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.activity.create.CreateActivity;
 import com.heapot.qianxun.adapter.MainTabFragmentAdapter;
-import com.heapot.qianxun.application.CustomApplication;
-import com.heapot.qianxun.bean.ConstantsBean;
-import com.heapot.qianxun.bean.Friend;
 import com.heapot.qianxun.bean.MyTagBean;
 import com.heapot.qianxun.bean.SubBean;
 import com.heapot.qianxun.bean.TagsBean;
-import com.heapot.qianxun.util.JsonUtil;
 import com.heapot.qianxun.util.LoadTagsUtils;
-import com.heapot.qianxun.util.SerializableUtils;
-import com.heapot.qianxun.util.TagsUtils;
 import com.orhanobut.logger.Logger;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.UserInfo;
@@ -72,7 +50,8 @@ import io.rong.imlib.model.UserInfo;
  *
  */
 
-public class MainActivity extends BaseActivity implements View.OnClickListener, RongIM.UserInfoProvider, LoadTagsUtils.OnLoadTagListener {
+public class MainActivity extends BaseActivity
+        implements View.OnClickListener, RongIM.UserInfoProvider, LoadTagsUtils.OnLoadTagListener {
     private DrawerLayout mDrawerLayout;
     private Toolbar mToolBar;
     private ImageView mBanner;
@@ -93,10 +72,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     public String PAGE_ARTICLES_ID = "f3b8d91b8f9c4a03a4a06a5678e79872";
     public String PAGE_ACTIVITIES_ID = "9025053c65e04a6992374c5d43f31acf";
     public String PAGE_JOBS_ID = "af3a09e8a4414c97a038a2d735064ebc";
-//    //本地广播尝试
-//    private IntentFilter intentFilter;
-//    private RefreshReceiver refreshReceiver;
-//    private LocalBroadcastManager localBroadcastManager;
 
     //主页界面
     @Override
@@ -131,7 +106,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     protected void onResume() {
         super.onResume();
-//        RongIM.setUserInfoProvider(MainActivity.this,true);
+        RongIM.setUserInfoProvider(MainActivity.this,true);
 
     }
 
@@ -155,7 +130,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         mainTitle.setText("仟言仟语");
         PAGE_CURRENT = PAGE_ARTICLE;
         mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
-        new LoadTagsUtils(this,this).getUserTag(getAppToken());
+
+
+        new LoadTagsUtils(this,this).getTags(getAppToken(),0);
 
         mainTitle.setOnClickListener(this);
         Glide.with(this).load("http://114.215.252.158/banner.png").into(mBanner);
@@ -185,7 +162,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 break;
             case R.id.iv_subscription_choose:
                 Intent intent = new Intent(this, Subscription.class);
-                startActivity(intent);
+                intent.putExtra("page",PAGE_CURRENT);
+                startActivityForResult(intent,101);
                 break;
             case R.id.fab_create:
                 Intent createIntent = new Intent(this,CreateActivity.class);
@@ -208,19 +186,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             mainTitle.setText("仟锤百炼");
         }
     }
+    public void refreshData(String page){
+        new LoadTagsUtils(this,this).getTags(getAppToken(),1);
+    }
 
-    /**
-     * 刷新数据
-     */
-//    public void refreshData(){
-//        mPageAdapter.notifyDataSetChanged();
-//        mViewPager.setAdapter(mPageAdapter);
-//        mTabLayout.setupWithViewPager(mViewPager);
-//        if (mList.size() == 0){
-//            Toast.makeText(MainActivity.this, "快去订阅标签", Toast.LENGTH_SHORT).show();
-//        }
 
-//    }
 
 
     /**
@@ -276,21 +246,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
 
     }
-//    /**
-//     * 本地广播接收
-//     */
-//    private void localReceiver(){
-//        localBroadcastManager = LocalBroadcastManager.getInstance(this);//获取实例
-//        intentFilter = new IntentFilter();
-//        intentFilter.addAction("com.karl.refresh");
-//        refreshReceiver = new RefreshReceiver();
-//        localBroadcastManager.registerReceiver(refreshReceiver,intentFilter);
-//    }
+
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-//        localBroadcastManager.unregisterReceiver(refreshReceiver);
     }
 
 
@@ -307,27 +267,29 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     @Override
-    public void onLoadSuccess(List<MyTagBean.ContentBean.RowsBean> list) {
-        if (list != null){
-            loadData(list);
-        }else {
+    public void onLoadSuccess(List<MyTagBean.ContentBean.RowsBean> list , int flag) {
+        if (list != null) {
+            loadData(list,flag);
+        } else {
             Toast.makeText(this, "尚未订阅数据", Toast.LENGTH_SHORT).show();
         }
+
     }
 
     @Override
     public void onLoadFailed() {
-        Toast.makeText(this, "快去订阅数据", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "请求数据失败", Toast.LENGTH_SHORT).show();
     }
 
 
-    private void loadData(List<MyTagBean.ContentBean.RowsBean> list){
+    private void loadData(List<MyTagBean.ContentBean.RowsBean> list,int flag){
         mList.clear();
         if (PAGE_CURRENT.equals(PAGE_ARTICLE)){
+
             List<Integer> pos = new ArrayList<>();
             int n = list.size();
             for (int i = 0; i < n; i++) {
-                if (list.get(i).getPid().equals(PAGE_ARTICLES_ID)){
+                if (list.get(i).getPid().equals("f3b8d91b8f9c4a03a4a06a5678e79872")){
                     pos.add(i);
                 }
             }
@@ -341,8 +303,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                     mList.add(subBean);
                 }
             }
+            Logger.d("文章"+mList.size());
 
         }else if (PAGE_CURRENT.equals(PAGE_RECRUIT)){
+
             List<Integer> pos = new ArrayList<>();
             int n = list.size();
             for (int i = 0; i < n; i++) {
@@ -360,6 +324,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                     mList.add(subBean);
                 }
             }
+            Logger.d("招聘"+mList.size());
 
         }else if (PAGE_CURRENT.equals(PAGE_TRAIN)){
             List<Integer> pos = new ArrayList<>();
@@ -378,13 +343,30 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                     subBean.setId(list.get(pos.get(i)).getId());
                     mList.add(subBean);
                 }
+                Logger.d("招聘"+mList.size());
+            }
+        }
+        Logger.d("Main subList"+mList.size());
+        if (flag == 0) {
+            mPageAdapter = new MainTabFragmentAdapter(getSupportFragmentManager(), this, mList);
+            mViewPager.setAdapter(mPageAdapter);
+            mTabLayout.setupWithViewPager(mViewPager);
+        }else {
+            //刷新数据源
+            mPageAdapter.setData(mList);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == 101){
+            Toast.makeText(this, "刷新了", Toast.LENGTH_SHORT).show();
+            boolean result = data.getBooleanExtra("result",true);
+            if (result){
+                new LoadTagsUtils(this,this).getTags(getAppToken(),1);
             }
         }
 
-        mPageAdapter = new MainTabFragmentAdapter(getSupportFragmentManager(),this,mList);
-        mViewPager.setAdapter(mPageAdapter);
-        mTabLayout.setupWithViewPager(mViewPager);
     }
-
-
 }

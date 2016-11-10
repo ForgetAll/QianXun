@@ -229,19 +229,19 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
                 ((MainActivity) mActivity).closeDrawer();
                 ((MainActivity) mActivity).setToolBarTitle(PAGE_SCIENCE);
                 ((MainActivity) mActivity).PAGE_CURRENT = PAGE_SCIENCE;
-//                ((MainActivity) mActivity).refreshData();
+                ((MainActivity) mActivity).refreshData(PAGE_SCIENCE);
                 break;
             case R.id.txt_menu_recruit:
                 ((MainActivity) mActivity).closeDrawer();
                 ((MainActivity) mActivity).setToolBarTitle(PAGE_RECRUIT);
                 ((MainActivity) mActivity).PAGE_CURRENT = PAGE_RECRUIT;
-//                ((MainActivity) mActivity).refreshData();
+                ((MainActivity) mActivity).refreshData(PAGE_RECRUIT);
                 break;
             case R.id.txt_menu_train:
                 ((MainActivity) mActivity).closeDrawer();
                 ((MainActivity) mActivity).setToolBarTitle(PAGE_TRAIN);
                 ((MainActivity) mActivity).PAGE_CURRENT = PAGE_TRAIN;
-//                ((MainActivity) mActivity).refreshData();
+                ((MainActivity) mActivity).refreshData(PAGE_TRAIN);
                 break;
             //设置、帮助的点击事件
             case R.id.txt_menu_settings:

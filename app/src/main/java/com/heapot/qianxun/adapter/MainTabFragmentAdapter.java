@@ -28,6 +28,11 @@ public class MainTabFragmentAdapter extends FragmentStatePagerAdapter {
         this.mList = list;
     }
 
+    public void setData(List<SubBean> list){
+        this.mList = list;
+        notifyDataSetChanged();
+    }
+
     @Override
     public Fragment getItem(int position) {
         return PageFragment.newInstance(position+1, mList.get(position).getId());
@@ -35,7 +40,7 @@ public class MainTabFragmentAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return mList.size();
+        return mList==null? 0 :mList.size();
     }
 
     @Override

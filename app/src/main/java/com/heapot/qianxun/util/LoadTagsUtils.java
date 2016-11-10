@@ -43,7 +43,7 @@ public class LoadTagsUtils {
      * 加载全部标签并存储到本地，加载成功以后请求加载已订阅标签
      * @param token token
      */
-    public  void getTags(final String token){
+    public  void getTags(final String token, final int flag){
 
         String url = ConstantsBean.BASE_PATH + ConstantsBean.CATALOGS;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
@@ -51,14 +51,15 @@ public class LoadTagsUtils {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Logger.json(String.valueOf(response));
                         List<TagsBean.ContentBean> tagsList = new ArrayList<>();
                         try {
                             String status = response.getString("status");
                             if (status.equals("success")) {
                                 TagsBean tagsBean = (TagsBean) JsonUtil.fromJson(String.valueOf(response),TagsBean.class);
-                                tagsList.add((TagsBean.ContentBean) tagsBean.getContent());
+                                SerializableUtils.setSerializable(context,ConstantsBean.TAG_FILE_NAME,tagsBean.getContent());
+                                tagsList.addAll(tagsBean.getContent());
                                 listener.onLoadAllSuccess(tagsList);
+                                getUserTag(token,flag);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -82,15 +83,13 @@ public class LoadTagsUtils {
         CustomApplication.getRequestQueue().add(jsonObjectRequest);
     }
     //获取已订阅标签
-    public void getUserTag(final String token){
-        Toast.makeText(context, "调用方法了", Toast.LENGTH_SHORT).show();
+    public void getUserTag(final String token, final int flag){
         String url = ConstantsBean.BASE_PATH+ConstantsBean.SUBSCRIBE_CATALOGS;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d("QianXun","打印数据");
                         Logger.json(String.valueOf(response));
                         List<MyTagBean.ContentBean.RowsBean> list = new ArrayList<>();
                         try {
@@ -99,8 +98,11 @@ public class LoadTagsUtils {
                                 MyTagBean myTagBean = (MyTagBean) JsonUtil.fromJson(String.valueOf(response),MyTagBean.class);
                                 if (myTagBean.getContent().getRows() != null) {
                                     list.addAll(myTagBean.getContent().getRows());
-                                    listener.onLoadSuccess(list);
+                                    Logger.d(list.size());
+                                    listener.onLoadSuccess(list,flag);
                                 }
+                            }else {
+
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -133,7 +135,7 @@ public class LoadTagsUtils {
 
         void onLoadAllSuccess(List<TagsBean.ContentBean> list);
 
-        void onLoadSuccess(List<MyTagBean.ContentBean.RowsBean> list);
+        void onLoadSuccess(List<MyTagBean.ContentBean.RowsBean> list,int flag);
 
         void onLoadFailed();
     }
