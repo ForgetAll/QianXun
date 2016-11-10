@@ -69,6 +69,8 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
     public final String PAGE_RECRUIT = "PAGE_RECRUIT";
     public final String PAGE_TRAIN = "PAGE_TRAIN";
 
+
+
 //    private List<MyUserBean.ContentBean> mList = new ArrayList<>();
 
     @Nullable
@@ -154,22 +156,16 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             //science学术、recruit招聘、train培训三个menu的点击事件，点击切换fragment
             case R.id.txt_menu_science:
-                ((MainActivity) mActivity).closeDrawer();
-                ((MainActivity) mActivity).setToolBarTitle(PAGE_SCIENCE);
-                ((MainActivity) mActivity).PAGE_CURRENT = PAGE_SCIENCE;
-                ((MainActivity) mActivity).refreshData(PAGE_SCIENCE);
+                ((MainActivity)mActivity).setDrawerLayout(false);
+                ((MainActivity)mActivity).showFragmentPage(1);
                 break;
             case R.id.txt_menu_recruit:
-                ((MainActivity) mActivity).closeDrawer();
-                ((MainActivity) mActivity).setToolBarTitle(PAGE_RECRUIT);
-                ((MainActivity) mActivity).PAGE_CURRENT = PAGE_RECRUIT;
-                ((MainActivity) mActivity).refreshData(PAGE_RECRUIT);
+                ((MainActivity) mActivity).setDrawerLayout(false);
+                ((MainActivity)mActivity).showFragmentPage(2);
                 break;
             case R.id.txt_menu_train:
-                ((MainActivity) mActivity).closeDrawer();
-                ((MainActivity) mActivity).setToolBarTitle(PAGE_TRAIN);
-                ((MainActivity) mActivity).PAGE_CURRENT = PAGE_TRAIN;
-                ((MainActivity) mActivity).refreshData(PAGE_TRAIN);
+                ((MainActivity) mActivity).setDrawerLayout(false);
+                ((MainActivity)mActivity).showFragmentPage(3);
                 break;
             //设置、帮助的点击事件
             case R.id.txt_menu_settings:

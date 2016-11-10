@@ -31,7 +31,7 @@ public class CustomApplication extends Application {
         LeakCanary.install(this);
 
         //初始化Bugly
-        CrashReport.initCrashReport(getApplicationContext(),"900057726",true);
+        CrashReport.initCrashReport(getApplicationContext(),"900057726",false);
 
         //初始化日志工具类
         com.orhanobut.logger.Logger

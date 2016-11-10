@@ -7,7 +7,14 @@
     android:fitsSystemWindows="true"
     tools:context=".activity.MainActivity">
     <!--content-->
-    <include layout="@layout/layout_container"></include>
+    <!--<include layout="@layout/layout_container"></include>-->
+
+    <FrameLayout
+        android:id="@+id/fl_main_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </FrameLayout>
     <!--Drawer Menu-->
     <fragment
         android:id="@+id/main_menu_fragment"

@@ -34,16 +34,20 @@ public class LoadTagsUtils {
     private Context context;
     static OnLoadTagListener listener;
 
-    public LoadTagsUtils(Context context,OnLoadTagListener listener) {
+    public LoadTagsUtils(Context context) {
         this.context =context;
-        this.listener = listener;
+
+    }
+
+    public void setOnLoadTagListener(OnLoadTagListener listener){
+        LoadTagsUtils.listener = listener;
     }
 
     /**
      * 加载全部标签并存储到本地，加载成功以后请求加载已订阅标签
-     * @param token token
+     *
      */
-    public  void getTags(final String token, final int flag){
+    public  void getTags( final int flag){
 
         String url = ConstantsBean.BASE_PATH + ConstantsBean.CATALOGS;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
@@ -79,6 +83,7 @@ public class LoadTagsUtils {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String,String> headers = new HashMap<>();
+                String token = PreferenceUtil.getString("token");
                 headers.put(ConstantsBean.KEY_TOKEN,token);
                 return headers;
             }

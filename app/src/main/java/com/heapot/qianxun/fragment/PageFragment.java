@@ -42,10 +42,12 @@ import java.util.List;
  *
  */
 public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
-    public static final String PAGE = "PAGE";
-    public static final String ID = "PAGE_ID";
+    private static final String PAGE = "PAGE";
+    private static final String ID = "PAGE_ID";
+    private static final String CURRENT_PAGE = "CURRENT_PAGE";
     private int mPage;
     private String mId;//记录当前页面对应标签的id
+    private String currentPage;
     private int pageIndex = 1;//记录加载第几页的书
     private int pageSize = 6;//记录每页加载数据的大小
     private int maxPageIndex = 1;//网络请求获取到最大页码进行限制
@@ -64,10 +66,11 @@ public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     private boolean isPre = false;
 
-    public static PageFragment newInstance(int page,String id) {
+    public static PageFragment newInstance(int page,String id,String currentPage) {
         Bundle args = new Bundle();
         args.putInt(PAGE,page);
         args.putString(ID,id);
+        args.putString(CURRENT_PAGE,currentPage);
         PageFragment pageFragment = new PageFragment();
         pageFragment.setArguments(args);
         return pageFragment;
@@ -78,6 +81,7 @@ public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         super.onCreate(savedInstanceState);
         mPage = getArguments().getInt(PAGE);
         mId = getArguments().getString(ID);
+        currentPage = getArguments().getString(CURRENT_PAGE);
     }
 
     @Nullable
@@ -173,12 +177,13 @@ public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     private OnRecyclerViewItemClickListener onClickListener = new OnRecyclerViewItemClickListener() {
         @Override
         public void onItemClick(View view, int position) {
-            if (((MainActivity)mActivity).PAGE_CURRENT.equals("PAGE_SCIENCE")){
+
+            if (currentPage.equals("PAGE_SCIENCE")){
                 Logger.d("跳转到文章详情，id是"+list.get(position).getId());
                 Intent intent = new Intent(getActivity(), ArticleActivity.class);
                 intent.putExtra("id",list.get(position).getId());
                 startActivity(intent);
-            }else if (((MainActivity)mActivity).PAGE_CURRENT.equals("PAGE_RECRUIT")){
+            }else if (currentPage.equals("PAGE_RECRUIT")){
                 Intent job = new Intent(getActivity(), JobActivity.class);
                 job.putExtra("id",list.get(position).getId());
                 startActivity(job);
