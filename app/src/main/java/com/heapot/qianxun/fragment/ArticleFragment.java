@@ -91,7 +91,7 @@ public class ArticleFragment extends Fragment
 
     private void initEvent(){
         mToolBar.setTitle("");
-        ((MainActivity)mActivity).setSupportActionBar(mToolBar);
+//        ((MainActivity)mActivity).setSupportActionBar(mToolBar);
         //添加监听事件
         mSearch.setOnClickListener(this);
         mStar.setOnClickListener(this);
@@ -99,6 +99,7 @@ public class ArticleFragment extends Fragment
         mBanner.setOnClickListener(this);
         mSubscription.setOnClickListener(this);
         mCreate.setOnClickListener(this);
+        mainTitle.setOnClickListener(this);
 
         //一些基本的初始化数据
         mainTitle.setText("仟言仟语");
@@ -137,7 +138,7 @@ public class ArticleFragment extends Fragment
                 startActivity(createIntent);
                 break;
             case R.id.txt_first_title:
-                ((MainActivity)mActivity).setDrawerLayout(true);
+                ((MainActivity)mActivity).openDrawer();
                 break;
         }
     }
@@ -145,6 +146,7 @@ public class ArticleFragment extends Fragment
 
     @Override
     public void onLoadAllSuccess(List<TagsBean.ContentBean> list, int flag) {
+        Toast.makeText(mActivity, "加载数据了！", Toast.LENGTH_SHORT).show();
         if (list!=null){
             loadData(list,flag);
         }
@@ -179,7 +181,7 @@ public class ArticleFragment extends Fragment
                 mList.add(subBean);
             }
         }
-
+        Logger.d(mList.size());
         if (flag == 0) {
             mPageAdapter = new MainTabFragmentAdapter(getChildFragmentManager(), getContext(), mList,PAGE_ARTICLE);
             mViewPager.setAdapter(mPageAdapter);
@@ -197,21 +199,5 @@ public class ArticleFragment extends Fragment
         mActivity = null;
     }
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (resultCode == 101){
-//            boolean result = data.getBooleanExtra("result",true);
-//            if (result){
-//                new LoadTagsUtils(this,this).getTags(getAppToken(),0);
-//            }
-//        }
-//
-//    }
 
-
-    public String  getCurrentPage(){
-
-        return PAGE_ARTICLE;
-    }
 }

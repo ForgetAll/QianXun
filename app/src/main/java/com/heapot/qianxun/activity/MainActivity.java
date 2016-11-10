@@ -15,6 +15,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.fragment.ArticleFragment;
@@ -120,11 +121,15 @@ public class MainActivity extends BaseActivity
     }
 
     public void setDrawerLayout(boolean isOpen){
+        Toast.makeText(this, "打开", Toast.LENGTH_SHORT).show();
         if (isOpen){
             mDrawer.openDrawer(Gravity.LEFT);
         }else {
             mDrawer.closeDrawers();
         }
+    }
+    public void openDrawer(){
+        mDrawer.openDrawer(Gravity.LEFT);
     }
 
     public void startChatList(){

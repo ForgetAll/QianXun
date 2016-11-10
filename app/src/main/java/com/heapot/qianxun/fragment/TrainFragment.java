@@ -37,15 +37,15 @@ import java.util.List;
  */
 
 public class TrainFragment extends Fragment implements View.OnClickListener, LoadTagsUtils.OnLoadTagListener {
-    private Toolbar mToolBar;
-    private ImageView mBanner;
-    private TabLayout mTabLayout;
-    private ImageView mSearch, mNotification, mStar;
-    private ViewPager mViewPager;
-    private MainTabFragmentAdapter mPageAdapter;
-    private List<SubBean> mList = new ArrayList<>();
-    private FloatingActionButton mCreate;
-    private TextView mSubscription,mainTitle;
+//    private Toolbar mToolBar;
+//    private ImageView mBanner;
+//    private TabLayout mTabLayout;
+//    private ImageView mSearch, mNotification, mStar;
+//    private ViewPager mViewPager;
+//    private MainTabFragmentAdapter mPageAdapter;
+//    private List<SubBean> mList = new ArrayList<>();
+//    private FloatingActionButton mCreate;
+//    private TextView mSubscription,mainTitle;
 
     private String PAGE_TRAIN = "PAGE_TRAIN";
     public String PAGE_ACTIVITIES_ID = "9025053c65e04a6992374c5d43f31acf";
@@ -59,83 +59,83 @@ public class TrainFragment extends Fragment implements View.OnClickListener, Loa
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_train,container,false);
-        initView();
-        initEvent();
+//        initView();
+//        initEvent();
 
         return mView;
     }
-
-    private void initView(){
-        mToolBar = (Toolbar) mView.findViewById(R.id.main_tool_bar);
-        mTabLayout = (TabLayout) mView.findViewById(R.id.main_tab_layout);
-        mViewPager = (ViewPager) mView.findViewById(R.id.main_view_pager);
-        mSearch = (ImageView) mView.findViewById(R.id.iv_search);
-        mStar = (ImageView) mView.findViewById(R.id.iv_star);
-        mNotification = (ImageView) mView.findViewById(R.id.iv_notification);
-        mBanner = (ImageView) mView.findViewById(R.id.iv_banner);
-        mSubscription = (TextView) mView.findViewById(R.id.iv_subscription_choose);
-        mCreate = (FloatingActionButton) mView.findViewById(R.id.fab_create);
-        mainTitle = (TextView) mView.findViewById(R.id.txt_first_title);
-    }
-
-    private void initEvent(){
-        mToolBar.setTitle("");
-//        ((MainActivity)mActivity).setSupportActionBar(mToolBar);
-        //添加监听事件
-        mSearch.setOnClickListener(this);
-        mStar.setOnClickListener(this);
-        mNotification.setOnClickListener(this);
-        mBanner.setOnClickListener(this);
-        mSubscription.setOnClickListener(this);
-        mCreate.setOnClickListener(this);
-
-        //一些基本的初始化数据
-        mainTitle.setText("仟锤百炼");
-        mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
-        Glide.with(this).load("http://114.215.252.158/banner.png").into(mBanner);
-
-        loadTagsUtils = new LoadTagsUtils(getContext());
-        loadTagsUtils.setOnLoadTagListener(this);
-        loadTagsUtils.getTags(0);
-
-    }
-
+//
+//    private void initView(){
+//        mToolBar = (Toolbar) mView.findViewById(R.id.main_tool_bar);
+//        mTabLayout = (TabLayout) mView.findViewById(R.id.main_tab_layout);
+//        mViewPager = (ViewPager) mView.findViewById(R.id.main_view_pager);
+//        mSearch = (ImageView) mView.findViewById(R.id.iv_search);
+//        mStar = (ImageView) mView.findViewById(R.id.iv_star);
+//        mNotification = (ImageView) mView.findViewById(R.id.iv_notification);
+//        mBanner = (ImageView) mView.findViewById(R.id.iv_banner);
+//        mSubscription = (TextView) mView.findViewById(R.id.iv_subscription_choose);
+//        mCreate = (FloatingActionButton) mView.findViewById(R.id.fab_create);
+//        mainTitle = (TextView) mView.findViewById(R.id.txt_first_title);
+//    }
+//
+//    private void initEvent(){
+//        mToolBar.setTitle("");
+////        ((MainActivity)mActivity).setSupportActionBar(mToolBar);
+//        //添加监听事件
+//        mSearch.setOnClickListener(this);
+//        mStar.setOnClickListener(this);
+//        mNotification.setOnClickListener(this);
+//        mBanner.setOnClickListener(this);
+//        mSubscription.setOnClickListener(this);
+//        mCreate.setOnClickListener(this);
+//
+//        //一些基本的初始化数据
+//        mainTitle.setText("仟锤百炼");
+//        mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+//        Glide.with(this).load("http://114.215.252.158/banner.png").into(mBanner);
+//
+//        loadTagsUtils = new LoadTagsUtils(getContext());
+//        loadTagsUtils.setOnLoadTagListener(this);
+//        loadTagsUtils.getTags(0);
+//
+//    }
+//
 
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.iv_search:
-                Intent search = new Intent(getContext(), SearchActivity.class);
-                startActivity(search);
-                break;
-            case R.id.iv_star:
-                break;
-            case R.id.iv_notification:
-                ((MainActivity)mActivity).startChatList();
-                break;
-            case R.id.iv_banner:
-                break;
-            case R.id.iv_subscription_choose:
-                Intent intent = new Intent(getContext(), Subscription.class);
-                intent.putExtra("page",PAGE_TRAIN);
-                startActivityForResult(intent,102);
-                break;
-            case R.id.fab_create:
-                Intent createIntent = new Intent(getContext(),CreateActivity.class);
-                startActivity(createIntent);
-                break;
-            case R.id.txt_first_title:
-                ((MainActivity)mActivity).setDrawerLayout(true);
-                break;
-        }
+//        switch (v.getId()) {
+//            case R.id.iv_search:
+//                Intent search = new Intent(getContext(), SearchActivity.class);
+//                startActivity(search);
+//                break;
+//            case R.id.iv_star:
+//                break;
+//            case R.id.iv_notification:
+//                ((MainActivity)mActivity).startChatList();
+//                break;
+//            case R.id.iv_banner:
+//                break;
+//            case R.id.iv_subscription_choose:
+//                Intent intent = new Intent(getContext(), Subscription.class);
+//                intent.putExtra("page",PAGE_TRAIN);
+//                startActivityForResult(intent,102);
+//                break;
+//            case R.id.fab_create:
+//                Intent createIntent = new Intent(getContext(),CreateActivity.class);
+//                startActivity(createIntent);
+//                break;
+//            case R.id.txt_first_title:
+//                ((MainActivity)mActivity).setDrawerLayout(true);
+//                break;
+//        }
     }
 
 
     @Override
     public void onLoadAllSuccess(List<TagsBean.ContentBean> list, int flag) {
         if (list!=null){
-            loadData(list,flag);
+//            loadData(list,flag);
         }
     }
 
@@ -149,35 +149,35 @@ public class TrainFragment extends Fragment implements View.OnClickListener, Loa
         Toast.makeText(mActivity, "数据加载失败", Toast.LENGTH_SHORT).show();
     }
 
-    private void loadData(List<TagsBean.ContentBean> list,int flag){
-        mList.clear();
-        List<Integer> pos = new ArrayList<>();
-        int n = list.size();
-        for (int i = 0; i < n; i++) {
-            if (list.get(i).getPid() != null && list.get(i).getPid().equals(PAGE_ACTIVITIES_ID) && list.get(i).getSubscribeStatus() == 1){
-                pos.add(i);
-            }
-        }
-        if (pos.size()>0){
-            SubBean subBean;
-            for (int i = 0; i < pos.size(); i++) {
-                subBean = new SubBean();
-                subBean.setPid((String) list.get(pos.get(i)).getPid());
-                subBean.setName(list.get(pos.get(i)).getName());
-                subBean.setId(list.get(pos.get(i)).getId());
-                mList.add(subBean);
-            }
-        }
-
-        if (flag == 0) {
-            mPageAdapter = new MainTabFragmentAdapter(getChildFragmentManager(), getContext(), mList,PAGE_TRAIN);
-            mViewPager.setAdapter(mPageAdapter);
-            mTabLayout.setupWithViewPager(mViewPager);
-        }else {
-            //刷新数据源
-            mPageAdapter.setData(mList);
-        }
-    }
+//    private void loadData(List<TagsBean.ContentBean> list,int flag){
+//        mList.clear();
+//        List<Integer> pos = new ArrayList<>();
+//        int n = list.size();
+//        for (int i = 0; i < n; i++) {
+//            if (list.get(i).getPid() != null && list.get(i).getPid().equals(PAGE_ACTIVITIES_ID) && list.get(i).getSubscribeStatus() == 1){
+//                pos.add(i);
+//            }
+//        }
+//        if (pos.size()>0){
+//            SubBean subBean;
+//            for (int i = 0; i < pos.size(); i++) {
+//                subBean = new SubBean();
+//                subBean.setPid((String) list.get(pos.get(i)).getPid());
+//                subBean.setName(list.get(pos.get(i)).getName());
+//                subBean.setId(list.get(pos.get(i)).getId());
+//                mList.add(subBean);
+//            }
+//        }
+//
+//        if (flag == 0) {
+//            mPageAdapter = new MainTabFragmentAdapter(getChildFragmentManager(), getContext(), mList,PAGE_TRAIN);
+//            mViewPager.setAdapter(mPageAdapter);
+//            mTabLayout.setupWithViewPager(mViewPager);
+//        }else {
+//            //刷新数据源
+//            mPageAdapter.setData(mList);
+//        }
+//    }
 
 
     @Override
