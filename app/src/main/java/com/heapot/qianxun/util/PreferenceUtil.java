@@ -63,6 +63,18 @@ public class PreferenceUtil {
         return sp.getString(key, null);
     }
 
+    public static Long getLong(String key){
+        SharedPreferences sp = CustomApplication.context.getSharedPreferences(ConstantsBean.CONFIG_NAME,MODE_PRIVATE);
+        return sp.getLong(key,0);
+    }
+
+    public static void putLong(String key,Long value){
+        SharedPreferences sp = CustomApplication.getContext().getSharedPreferences(ConstantsBean.CONFIG_NAME, MODE_PRIVATE);
+        SharedPreferences.Editor edit = sp.edit();
+        edit.putLong(key,value);
+        edit.commit();
+    }
+
     /**
      * 清空偏好设置
      */

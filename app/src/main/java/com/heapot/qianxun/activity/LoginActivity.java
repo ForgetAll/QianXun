@@ -133,6 +133,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     PreferenceUtil.putString("token", token);
                     PreferenceUtil.putString("phone", username);
                     PreferenceUtil.putString("password", password);
+                    long time = System.currentTimeMillis();
+                    PreferenceUtil.putLong("time",time);
                     getIMToken(token);
                     getUserInfo();
                 }

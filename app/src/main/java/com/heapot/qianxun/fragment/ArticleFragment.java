@@ -26,7 +26,7 @@ import com.heapot.qianxun.adapter.MainTabFragmentAdapter;
 import com.heapot.qianxun.bean.MyTagBean;
 import com.heapot.qianxun.bean.SubBean;
 import com.heapot.qianxun.bean.TagsBean;
-import com.heapot.qianxun.util.LoadArticleTagsUtils;
+import com.heapot.qianxun.util.LoadTagsUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +37,7 @@ import java.util.List;
  */
 
 public class ArticleFragment extends Fragment
-        implements View.OnClickListener,LoadArticleTagsUtils.OnLoadTagListener {
+        implements View.OnClickListener,LoadTagsUtils.OnLoadTagListener {
 
     private View mView;
     private Toolbar mToolBar;
@@ -57,7 +57,7 @@ public class ArticleFragment extends Fragment
 
     private Activity mActivity;
 
-    LoadArticleTagsUtils loadArticleTagsUtils;
+    LoadTagsUtils loadTagsUtils;
 
 
     @Nullable
@@ -101,9 +101,9 @@ public class ArticleFragment extends Fragment
         mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         Glide.with(this).load("http://114.215.252.158/banner.png").into(mBanner);
 
-        loadArticleTagsUtils = new LoadArticleTagsUtils(getContext());
-        loadArticleTagsUtils.setOnLoadTagListener(this);
-        loadArticleTagsUtils.getTags(0);
+        loadTagsUtils = new LoadTagsUtils(getContext());
+        loadTagsUtils.setOnLoadTagListener(this);
+        loadTagsUtils.getTags(0);
 
     }
 
@@ -190,7 +190,7 @@ public class ArticleFragment extends Fragment
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 101 && resultCode == 101){
-            loadArticleTagsUtils.getTags(1);
+            loadTagsUtils.getTags(1);
         }
     }
 

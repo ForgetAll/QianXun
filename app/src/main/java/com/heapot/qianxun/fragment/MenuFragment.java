@@ -113,14 +113,12 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         super.onResume();
         //注册本地广播
         localReceiver();
-        Logger.d("侧滑广播1");
     }
 
     /**
      * 本地广播接收
      */
     private void localReceiver() {
-        Logger.d("侧滑广播2~~~~");
         localBroadcastManager = LocalBroadcastManager.getInstance(getContext());//获取实例
         intentFilter = new IntentFilter();
         intentFilter.addAction("com.personal.change");

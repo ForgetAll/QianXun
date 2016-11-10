@@ -1,12 +1,14 @@
 package com.heapot.qianxun.util;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.heapot.qianxun.activity.LoginActivity;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.bean.MyTagBean;
@@ -26,25 +28,25 @@ import java.util.Map;
  * 用于统一加载标签
  *
  */
-public class LoadArticleTagsUtils {
+public class LoadTagsUtils {
 
     private Context context;
     static OnLoadTagListener listener;
 
-    public LoadArticleTagsUtils(Context context) {
+    public LoadTagsUtils(Context context) {
         this.context =context;
 
     }
 
     public void setOnLoadTagListener(OnLoadTagListener listener){
-        LoadArticleTagsUtils.listener = listener;
+        LoadTagsUtils.listener = listener;
     }
 
     /**
      * 加载全部标签并存储到本地，加载成功以后请求加载已订阅标签
      *
      */
-    public  void getTags( final int flag){
+    public  void getUserTags( final int flag){
 
         String url = ConstantsBean.BASE_PATH + ConstantsBean.CATALOGS;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
@@ -90,8 +92,72 @@ public class LoadArticleTagsUtils {
         };
         CustomApplication.getRequestQueue().add(jsonObjectRequest);
     }
+
+    public void getTags(int flag){
+        //判断是否超过30分钟
+        Long time = PreferenceUtil.getLong("time");
+        Long currentTime = System.currentTimeMillis();
+        if ((currentTime -time)/(1000*60) >= 30){
+            postLogin(flag);
+        }else {
+            getUserTags(flag);
+        }
+    }
+
+    private void postLogin(final int flag) {
+        final String username = PreferenceUtil.getString("phone");
+        final String password = PreferenceUtil.getString("password");
+        String url = ConstantsBean.BASE_PATH + ConstantsBean.LOGIN + "?loginName=" + username + "&password=" + password;
+        JsonObjectRequest jsonObject = new JsonObjectRequest(
+                Request.Method.POST, url,null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        parseResponse(response,username,password,flag);
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Logger.d(error);
+
+                    }
+                }
+        );
+        CustomApplication.getRequestQueue().add(jsonObject);
+    }
+
+    private void parseResponse(JSONObject response,String username,String password,int flag){
+        try {
+            if (response.getString("status").equals("success")) {
+                if (response.has("content")) {
+                    JSONObject content = response.getJSONObject("content");
+                    String token = content.getString("auth-token");
+                    //存储到本地
+                    PreferenceUtil.putString("token", token);
+                    PreferenceUtil.putString("phone", username);
+                    PreferenceUtil.putString("password", password);
+                    long time = System.currentTimeMillis();
+                    PreferenceUtil.putLong("time",time);
+                    getTags(flag);
+                }
+            } else {
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+
+
+
+
     //获取已订阅标签
-    public void getUserTag(final String token, final int flag){
+    public void getSubTag( final int flag){
         String url = ConstantsBean.BASE_PATH+ConstantsBean.SUBSCRIBE_CATALOGS;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.GET, url, null,
@@ -128,6 +194,7 @@ public class LoadArticleTagsUtils {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String,String> headers = new HashMap<>();
+                String token = PreferenceUtil.getString("token");
                 headers.put(ConstantsBean.KEY_TOKEN,token);
                 return headers;
             }
