@@ -33,7 +33,7 @@ import java.util.List;
 
 /**
  * Created by Karl on 2016/11/10.
- * desc: 培训Fragment
+ * desc: 培训主页
  */
 
 public class TrainFragment extends Fragment implements View.OnClickListener, LoadTagsUtils.OnLoadTagListener {
