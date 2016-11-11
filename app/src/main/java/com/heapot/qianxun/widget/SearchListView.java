@@ -1,4 +1,4 @@
-package com.heapot.qianxun.popupwindow;
+package com.heapot.qianxun.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;

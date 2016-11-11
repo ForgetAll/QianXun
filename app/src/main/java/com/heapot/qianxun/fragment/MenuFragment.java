@@ -19,7 +19,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.activity.MainActivity;
-import com.heapot.qianxun.activity.PersonalActivity;
+import com.heapot.qianxun.activity.personal.PersonalActivity;
 import com.heapot.qianxun.activity.system.SystemHelpActivity;
 import com.heapot.qianxun.activity.system.SystemSettingActivity;
 import com.heapot.qianxun.bean.ConstantsBean;
@@ -28,12 +28,8 @@ import com.heapot.qianxun.util.PreferenceUtil;
 
 /**
  * Created by Karl on 2016/8/20.
- * 自定义侧滑菜单布局：
- * <p/>
- * <p/>
- * desc:
- * 存数据：SerializableUtils.setSerializable(getContext(), ConstantsBean.MY_USER_INFO, myUserBean);
- * 取数据：SerializableUtils.getSerializable(getContext(),ConstantsBean.MY_USER_INFO)
+ * desc: 侧滑菜单布局
+ *
  */
 public class MenuFragment extends Fragment implements View.OnClickListener {
     private ImageView mHeadUrl;

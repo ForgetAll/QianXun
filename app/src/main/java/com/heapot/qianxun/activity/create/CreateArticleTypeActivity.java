@@ -16,7 +16,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.heapot.qianxun.R;
-import com.heapot.qianxun.activity.ArticleActivity;
+import com.heapot.qianxun.activity.detail.ArticleActivity;
 import com.heapot.qianxun.activity.BaseActivity;
 import com.heapot.qianxun.adapter.CreateJobTypeAdapter;
 import com.heapot.qianxun.application.CreateActivityCollector;

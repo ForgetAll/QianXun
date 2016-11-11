@@ -1,4 +1,4 @@
-package com.heapot.qianxun.activity;
+package com.heapot.qianxun.activity.personal;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.heapot.qianxun.R;
+import com.heapot.qianxun.activity.BaseActivity;
 import com.heapot.qianxun.bean.ConstantsBean;
 
 /**

@@ -1,4 +1,4 @@
-package com.heapot.qianxun.activity;
+package com.heapot.qianxun.activity.welcome;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -7,6 +7,8 @@ import android.view.View;
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.heapot.qianxun.R;
+import com.heapot.qianxun.activity.BaseActivity;
+import com.heapot.qianxun.activity.login.LoginActivity;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.util.ActivityUtil;
 import com.heapot.qianxun.util.PreferenceUtil;
@@ -18,7 +20,7 @@ import java.util.Arrays;
  * Created by 15859 on 2016/10/28.
  *引导页
  */
-public class GuideActivity extends BaseActivity  implements ViewPager.OnPageChangeListener{
+public class GuideActivity extends BaseActivity implements ViewPager.OnPageChangeListener{
     /*//保存进入状态,此页面执行到最后的时候加入这个
     PreferenceUtil.putBoolean(ConstantsBean.KEY_SPLASH, true);*/
     private ConvenientBanner convenientBanner;

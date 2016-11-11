@@ -1,6 +1,5 @@
 package com.heapot.qianxun.fragment;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,10 +17,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.heapot.qianxun.R;
-import com.heapot.qianxun.activity.ArticleActivity;
-import com.heapot.qianxun.activity.CourseActivity;
-import com.heapot.qianxun.activity.JobActivity;
-import com.heapot.qianxun.activity.MainActivity;
+import com.heapot.qianxun.activity.detail.ArticleActivity;
+import com.heapot.qianxun.activity.detail.CourseActivity;
+import com.heapot.qianxun.activity.detail.JobActivity;
 import com.heapot.qianxun.adapter.MainTabAdapter;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;

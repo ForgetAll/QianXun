@@ -33,7 +33,7 @@ import java.util.List;
 
 /**
  * Created by Karl on 2016/11/10.
- * desc:
+ * desc: 招聘主页
  */
 
 public class JobFragment extends Fragment implements View.OnClickListener, LoadTagsUtils.OnLoadTagListener {

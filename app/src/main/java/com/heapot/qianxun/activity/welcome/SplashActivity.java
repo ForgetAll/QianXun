@@ -1,4 +1,4 @@
-package com.heapot.qianxun.activity;
+package com.heapot.qianxun.activity.welcome;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,9 +8,10 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.heapot.qianxun.R;
+import com.heapot.qianxun.activity.BaseActivity;
+import com.heapot.qianxun.activity.MainActivity;
+import com.heapot.qianxun.activity.login.LoginActivity;
 import com.heapot.qianxun.application.CustomApplication;
-import com.heapot.qianxun.bean.ConstantsBean;
-import com.heapot.qianxun.util.ActivityUtil;
 import com.heapot.qianxun.util.PreferenceUtil;
 
 import io.rong.imkit.RongIM;

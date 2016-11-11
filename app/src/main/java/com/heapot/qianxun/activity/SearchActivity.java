@@ -29,12 +29,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.blankj.utilcode.utils.NetworkUtils;
 import com.heapot.qianxun.R;
+import com.heapot.qianxun.activity.detail.ArticleActivity;
 import com.heapot.qianxun.adapter.SearchArticleAdapter;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.bean.SearchBean;
 import com.heapot.qianxun.helper.RecordSQLiteOpenHelper;
-import com.heapot.qianxun.popupwindow.SearchListView;
+import com.heapot.qianxun.widget.SearchListView;
 import com.heapot.qianxun.util.JsonUtil;
 
 import org.json.JSONException;
@@ -72,8 +73,8 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     private void findView() {
         et_search = (EditText) findViewById(R.id.et_search);
         tv_tip = (TextView) findViewById(R.id.tv_tip);
-        listView = (com.heapot.qianxun.popupwindow.SearchListView) findViewById(R.id.listView);
-        lv_search = (com.heapot.qianxun.popupwindow.SearchListView) findViewById(R.id.lv_search);
+        listView = (SearchListView) findViewById(R.id.listView);
+        lv_search = (SearchListView) findViewById(R.id.lv_search);
         setListViewHeightBasedOnChildren(lv_search);
         tv_clear = (TextView) findViewById(R.id.tv_clear);
         mBack = (ImageView) findViewById(R.id.iv_back);

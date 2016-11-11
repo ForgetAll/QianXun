@@ -1,4 +1,4 @@
-package com.heapot.qianxun.activity;
+package com.heapot.qianxun.activity.detail;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.utils.NetworkUtils;
 import com.heapot.qianxun.R;
+import com.heapot.qianxun.activity.BaseActivity;
 import com.heapot.qianxun.util.PreferenceUtil;
 
 import io.rong.imkit.RongIM;

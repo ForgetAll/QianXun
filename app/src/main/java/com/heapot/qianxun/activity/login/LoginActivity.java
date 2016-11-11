@@ -1,4 +1,4 @@
-package com.heapot.qianxun.activity;
+package com.heapot.qianxun.activity.login;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,6 +19,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.blankj.utilcode.utils.NetworkUtils;
 import com.heapot.qianxun.R;
+import com.heapot.qianxun.activity.BaseActivity;
+import com.heapot.qianxun.activity.MainActivity;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.bean.MyUserBean;

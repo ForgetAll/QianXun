@@ -1,4 +1,4 @@
-package com.heapot.qianxun.activity;
+package com.heapot.qianxun.activity.personal;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.heapot.qianxun.R;
+import com.heapot.qianxun.activity.BaseActivity;
 import com.heapot.qianxun.adapter.PersonalPageAdapter;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.util.CommonUtil;

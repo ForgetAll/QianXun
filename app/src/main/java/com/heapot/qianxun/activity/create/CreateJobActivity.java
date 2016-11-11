@@ -27,7 +27,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.bumptech.glide.Glide;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.activity.BaseActivity;
-import com.heapot.qianxun.activity.JobActivity;
+import com.heapot.qianxun.activity.detail.JobActivity;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.bean.CreateJobBean;
