@@ -9,41 +9,22 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.bumptech.glide.Glide;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.activity.MainActivity;
 import com.heapot.qianxun.activity.PersonalActivity;
 import com.heapot.qianxun.activity.system.SystemHelpActivity;
 import com.heapot.qianxun.activity.system.SystemSettingActivity;
-import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
-import com.heapot.qianxun.bean.MyUserBean;
-import com.heapot.qianxun.util.SerializableUtils;
 import com.heapot.qianxun.util.CommonUtil;
-import com.heapot.qianxun.util.JsonUtil;
 import com.heapot.qianxun.util.PreferenceUtil;
-import com.orhanobut.logger.Logger;
-import com.squareup.haha.perflib.Main;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by Karl on 2016/8/20.
@@ -141,9 +122,10 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
             mSign.setText("请设置签名");
         }
         if (headUrl != null) {
-            CommonUtil.loadImage(mHeadUrl,headUrl, R.drawable.imagetest);
+//            CommonUtil.loadImage(mHeadUrl,headUrl, R.drawable.imagetest);
+            Glide.with(getActivity()).load(headUrl).error(R.drawable.ic_default_icon).into(mHeadUrl);
         } else {
-            mHeadUrl.setImageResource(R.drawable.imagetest);
+            Glide.with(getActivity()).load(R.drawable.ic_default_icon).into(mHeadUrl);
         }
 
     }

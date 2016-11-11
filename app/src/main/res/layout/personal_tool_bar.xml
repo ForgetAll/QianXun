@@ -30,7 +30,7 @@
                 android:layout_width="56dp"
                 android:layout_height="56dp"
                 android:scaleType="fitCenter"
-                android:src="@mipmap/ic_qianxun"
+                android:src="@drawable/ic_default_icon"
                 android:layout_marginRight="12dp"/>
             <RelativeLayout
                 android:layout_width="match_parent"

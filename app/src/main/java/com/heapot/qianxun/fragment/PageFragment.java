@@ -62,7 +62,6 @@ public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     private MainTabAdapter adapter;
     private List<MainListBean.ContentBean> list = new ArrayList<>();
 
-    private Activity mActivity;
 
     private boolean isPre = false;
 
@@ -82,6 +81,7 @@ public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         mPage = getArguments().getInt(PAGE);
         mId = getArguments().getString(ID);
         currentPage = getArguments().getString(CURRENT_PAGE);
+        Logger.d("PAge当前页面"+currentPage);
     }
 
     @Nullable
@@ -176,8 +176,7 @@ public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         @Override
         public void onItemClick(View view, int position) {
 
-            if (currentPage.equals("PAGE_SCIENCE")){
-                Logger.d("跳转到文章详情，id是"+list.get(position).getId());
+            if (currentPage.equals("PAGE_ARTICLE")){
                 Intent intent = new Intent(getActivity(), ArticleActivity.class);
                 intent.putExtra("id",list.get(position).getId());
                 startActivity(intent);
@@ -267,6 +266,5 @@ public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mActivity = null;
     }
 }

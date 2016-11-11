@@ -27,6 +27,7 @@ import com.heapot.qianxun.R;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.bean.MyUserBean;
+import com.heapot.qianxun.util.PreferenceUtil;
 import com.heapot.qianxun.util.SerializableUtils;
 import com.orhanobut.logger.Logger;
 
@@ -107,21 +108,18 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
                     String id = msg.getData().getString("id");
                     String title = msg.getData().getString("title");
                     String image = msg.getData().getString("icon");
-                    Logger.d("id------>"+id+",title------>"+title);
-                    Logger.d("image--------->"+image);
-                    Object object = SerializableUtils.getSerializable(ArticleActivity.this,ConstantsBean.MY_USER_INFO);
-                    if (object != null){
-                        MyUserBean.ContentBean myUserBean = (MyUserBean.ContentBean) object;
-                        if (!myUserBean.getId().equals(id)){
-                            RongIM.getInstance().refreshUserInfoCache(new UserInfo(id,title,Uri.parse(image)));
-                            if (RongIM.getInstance() != null){
-                                //用户开始聊天后默认加好友
-//                                ChatInfoUtils.onRequestAddFriend(ArticleActivity.this,id,title);
-                                RongIM.getInstance().startPrivateChat(ArticleActivity.this,id,title);
-                            }
+                    String userId = PreferenceUtil.getString("id");
+                    Logger.d("用户id是------->"+userId+"，头像id是---------->"+id);
+                    if (!userId.equals(id)) {
+                        RongIM.getInstance().refreshUserInfoCache(new UserInfo(id, title, Uri.parse(image)));
+                        if (RongIM.getInstance() != null) {
+                            //用户开始聊天后默认加好友
+                            Logger.d("开始聊天");
+                            RongIM.getInstance().startPrivateChat(ArticleActivity.this, id, title);
                         }
-
                     }
+
+
                     break;
             }
         }

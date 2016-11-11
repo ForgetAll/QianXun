@@ -84,7 +84,7 @@ public class MainTabAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             String image = mList.get(position).getImages();
             ((MainTabViewHolder) holder).mTitle.setText(title);
             ((MainTabViewHolder) holder).mTime.setText("发布时间：" + CommonUtil.getDateTime(time));
-            Glide.with(context).load(image).error(R.mipmap.ic_zhanweitu).into(((MainTabViewHolder) holder).imageView);
+            Glide.with(context).load(image).error(R.drawable.ic_default_item_background).into(((MainTabViewHolder) holder).imageView);
 //            Glide.with(context).load(R.drawable.ic_test).error(R.mipmap.ic_zhanweitu).into(((MainTabViewHolder) holder).imageView);
         }
     }

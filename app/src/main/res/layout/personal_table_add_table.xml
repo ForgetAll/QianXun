@@ -9,14 +9,14 @@
     android:layout_marginLeft="60dp"
     android:layout_gravity="center">
 
-        <TextView
-            android:id="@+id/tv_tabTitleAdd"
-            android:layout_marginLeft="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="56dp"
-            android:gravity="center_vertical"
-            android:text="新建栏目"
-            android:textSize="18sp" />
+    <TextView
+        android:id="@+id/tv_tabTitleAdd"
+        android:layout_marginLeft="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="56dp"
+        android:gravity="center_vertical"
+        android:text="新建栏目"
+        android:textSize="18sp" />
 
 
 
@@ -39,7 +39,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:text="新闻"
+            android:inputType="text"
+            android:hint="新闻"
             android:singleLine="true"
             android:textSize="16sp"/>
 

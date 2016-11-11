@@ -19,6 +19,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.adapter.PersonalPageAdapter;
 import com.heapot.qianxun.bean.ConstantsBean;
@@ -114,9 +115,10 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
             mSign.setText("请设置签名");
         }
         if (headUrl != null) {
-            CommonUtil.loadImage(mHeadUrl,headUrl, R.drawable.imagetest);
+//            CommonUtil.loadImage(mHeadUrl,headUrl, R.drawable.imagetest);
+            Glide.with(this).load(headUrl).error(R.drawable.ic_default_icon).into(mHeadUrl);
         } else {
-            mHeadUrl.setImageResource(R.drawable.imagetest);
+            Glide.with(this).load(R.drawable.ic_default_icon).into(mHeadUrl);
         }
 
         //Glide.with(activity).load("http://odxpoei6h.bkt.clouddn.com/qianxun57f1fb7f9a56e.jpeg").into(mHeadUrl);

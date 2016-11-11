@@ -15,9 +15,7 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.utils.NetworkUtils;
 import com.heapot.qianxun.R;
-import com.heapot.qianxun.bean.ConstantsBean;
-import com.heapot.qianxun.bean.MyUserBean;
-import com.heapot.qianxun.util.SerializableUtils;
+import com.heapot.qianxun.util.PreferenceUtil;
 
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.UserInfo;
@@ -44,20 +42,17 @@ public class CourseActivity extends BaseActivity {
                 String id = msg.getData().getString("id");
                 String title = msg.getData().getString("title");
                 String image = msg.getData().getString("icon");
-
-                Object object = SerializableUtils.getSerializable(CourseActivity.this, ConstantsBean.MY_USER_INFO);
-                if (object != null){
-                    MyUserBean.ContentBean myUserBean = (MyUserBean.ContentBean) object;
-                    if (!myUserBean.getId().equals(id)){
-                        RongIM.getInstance().refreshUserInfoCache(new UserInfo(id,title, Uri.parse(image)));
-                        if (RongIM.getInstance() != null){
-                            //用户开始聊天后默认加好友
-//                            ChatInfoUtils.onRequestAddFriend(CourseActivity.this,id,title);
-                            RongIM.getInstance().startPrivateChat(CourseActivity.this,id,title);
-                        }
+                String userId = PreferenceUtil.getString("id");
+                if (!userId.equals(id)){
+                    RongIM.getInstance().refreshUserInfoCache(new UserInfo(id,title, Uri.parse(image)));
+                    if (RongIM.getInstance() != null){
+                        //用户开始聊天后默认加好友
+                        RongIM.getInstance().startPrivateChat(CourseActivity.this,id,title);
                     }
-
                 }
+
+
+
             }
         }
     };

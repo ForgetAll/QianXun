@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import com.heapot.qianxun.bean.SubBean;
 import com.heapot.qianxun.fragment.ArticleFragment;
 import com.heapot.qianxun.fragment.PageFragment;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +32,7 @@ public class MainTabFragmentAdapter extends FragmentStatePagerAdapter {
         this.mContext = context;
         this.mList = list;
         this.currentPage = currentPage;
+        Logger.d("adapter里面"+currentPage);
     }
 
     public void setData(List<SubBean> list){

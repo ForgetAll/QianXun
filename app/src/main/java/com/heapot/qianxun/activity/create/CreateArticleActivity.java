@@ -157,7 +157,7 @@ public class CreateArticleActivity extends BaseActivity implements View.OnClickL
         webSettings.setJavaScriptEnabled(true);
         webSettings.setDefaultTextEncodingName("utf-8");
         webView.addJavascriptInterface(this,"android");
-        webView.setWebChromeClient(new WebChromeClient() {});
+        webView.setWebChromeClient(new WebChromeClient() { });
         webView.loadUrl(url);
 
     }
