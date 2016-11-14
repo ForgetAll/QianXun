@@ -22,6 +22,7 @@ import com.heapot.qianxun.activity.MainActivity;
 import com.heapot.qianxun.activity.SearchActivity;
 import com.heapot.qianxun.activity.Subscription;
 import com.heapot.qianxun.activity.create.CreateActivity;
+import com.heapot.qianxun.adapter.JobFragmentAdapter;
 import com.heapot.qianxun.adapter.MainTabFragmentAdapter;
 import com.heapot.qianxun.bean.MyTagBean;
 import com.heapot.qianxun.bean.SubBean;
@@ -33,7 +34,7 @@ import java.util.List;
 
 /**
  * Created by Karl on 2016/11/10.
- * desc: 招聘主页
+ * desc:
  */
 
 public class JobFragment extends Fragment implements View.OnClickListener, LoadTagsUtils.OnLoadTagListener {
@@ -42,7 +43,7 @@ public class JobFragment extends Fragment implements View.OnClickListener, LoadT
     private TabLayout mTabLayout;
     private ImageView mSearch, mNotification, mStar;
     private ViewPager mViewPager;
-    private MainTabFragmentAdapter mPageAdapter;
+    private JobFragmentAdapter mPageAdapter;
     private List<SubBean> mList = new ArrayList<>();
     private FloatingActionButton mCreate;
     private TextView mSubscription,mainTitle;
@@ -172,7 +173,7 @@ public class JobFragment extends Fragment implements View.OnClickListener, LoadT
         }
 
         if (flag == 0) {
-            mPageAdapter = new MainTabFragmentAdapter(getChildFragmentManager(), getContext(), mList,PAGE_RECRUIT);
+            mPageAdapter = new JobFragmentAdapter(getChildFragmentManager(), getContext(), mList);
             mViewPager.setAdapter(mPageAdapter);
             mTabLayout.setupWithViewPager(mViewPager);
         }else {

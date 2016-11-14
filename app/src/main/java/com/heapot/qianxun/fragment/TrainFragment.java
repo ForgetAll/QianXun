@@ -23,6 +23,7 @@ import com.heapot.qianxun.activity.SearchActivity;
 import com.heapot.qianxun.activity.Subscription;
 import com.heapot.qianxun.activity.create.CreateActivity;
 import com.heapot.qianxun.adapter.MainTabFragmentAdapter;
+import com.heapot.qianxun.adapter.TrainFragmentAdapter;
 import com.heapot.qianxun.bean.MyTagBean;
 import com.heapot.qianxun.bean.SubBean;
 import com.heapot.qianxun.bean.TagsBean;
@@ -42,7 +43,7 @@ public class TrainFragment extends Fragment implements View.OnClickListener, Loa
     private TabLayout mTabLayout;
     private ImageView mSearch, mNotification, mStar;
     private ViewPager mViewPager;
-    private MainTabFragmentAdapter mPageAdapter;
+    private TrainFragmentAdapter mPageAdapter;
     private List<SubBean> mList = new ArrayList<>();
     private FloatingActionButton mCreate;
     private TextView mSubscription,mainTitle;
@@ -172,7 +173,7 @@ public class TrainFragment extends Fragment implements View.OnClickListener, Loa
         }
 
         if (flag == 0) {
-            mPageAdapter = new MainTabFragmentAdapter(getChildFragmentManager(), getContext(), mList,PAGE_TRAIN);
+            mPageAdapter = new TrainFragmentAdapter(getChildFragmentManager(), getContext(), mList);
             mViewPager.setAdapter(mPageAdapter);
             mTabLayout.setupWithViewPager(mViewPager);
         }else {

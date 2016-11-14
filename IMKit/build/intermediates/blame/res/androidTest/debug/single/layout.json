@@ -4,36 +4,36 @@
         "source": "D:\\code\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\layout\\rc_item_public_service_rich_content_message.xml"
     },
     {
-        "merged": "D:\\code\\QianXun\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\rc_item_system_conversation.xml",
-        "source": "D:\\code\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\layout\\rc_item_system_conversation.xml"
-    },
-    {
         "merged": "D:\\code\\QianXun\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\rc_ac_file_download.xml",
         "source": "D:\\code\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\layout\\rc_ac_file_download.xml"
     },
     {
-        "merged": "D:\\code\\QianXun\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\rc_item_public_service_input_menus.xml",
-        "source": "D:\\code\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\layout\\rc_item_public_service_input_menus.xml"
-    },
-    {
-        "merged": "D:\\code\\QianXun\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\rc_item_progress.xml",
-        "source": "D:\\code\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\layout\\rc_item_progress.xml"
+        "merged": "D:\\code\\QianXun\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\rc_item_system_conversation.xml",
+        "source": "D:\\code\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\layout\\rc_item_system_conversation.xml"
     },
     {
         "merged": "D:\\code\\QianXun\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\rc_fr_file_list.xml",
         "source": "D:\\code\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\layout\\rc_fr_file_list.xml"
     },
     {
-        "merged": "D:\\code\\QianXun\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\rc_fr_public_service_search.xml",
-        "source": "D:\\code\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\layout\\rc_fr_public_service_search.xml"
+        "merged": "D:\\code\\QianXun\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\rc_item_progress.xml",
+        "source": "D:\\code\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\layout\\rc_item_progress.xml"
+    },
+    {
+        "merged": "D:\\code\\QianXun\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\rc_item_public_service_input_menus.xml",
+        "source": "D:\\code\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\layout\\rc_item_public_service_input_menus.xml"
+    },
+    {
+        "merged": "D:\\code\\QianXun\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\rc_picsel_grid_camera.xml",
+        "source": "D:\\code\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\layout\\rc_picsel_grid_camera.xml"
     },
     {
         "merged": "D:\\code\\QianXun\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\rc_item_public_service_message.xml",
         "source": "D:\\code\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\layout\\rc_item_public_service_message.xml"
     },
     {
-        "merged": "D:\\code\\QianXun\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\rc_picsel_grid_camera.xml",
-        "source": "D:\\code\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\layout\\rc_picsel_grid_camera.xml"
+        "merged": "D:\\code\\QianXun\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\rc_fr_public_service_search.xml",
+        "source": "D:\\code\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\layout\\rc_fr_public_service_search.xml"
     },
     {
         "merged": "D:\\code\\QianXun\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\rc_fr_messagelist.xml",

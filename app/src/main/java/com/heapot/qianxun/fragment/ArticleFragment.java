@@ -34,7 +34,7 @@ import java.util.List;
 
 /**
  * Created by Karl on 2016/11/10.
- * desc: 文章主页
+ * desc:
  */
 
 public class ArticleFragment extends Fragment

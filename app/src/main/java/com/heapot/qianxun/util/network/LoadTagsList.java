@@ -47,7 +47,7 @@ public class LoadTagsList {
         if ((currentTime -time)/(1000*60) >= 30){
             postLogin(flag,url);
         }else {
-
+            getList(flag,url);
         }
     }
     private void postLogin(final int flag, final String listUrl) {
@@ -118,6 +118,7 @@ public class LoadTagsList {
     }
 
     private void parseListResponse(JSONObject response,int flag){
+        list.clear();
         try {
             int index = response.getInt("total_page");
             String result = response.getString("return_code");
