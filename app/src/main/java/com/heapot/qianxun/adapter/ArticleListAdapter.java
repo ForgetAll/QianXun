@@ -59,6 +59,7 @@ public class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.
             String title = mList.get(position).getTitle();
             String time = mList.get(position).getCreate_time();
             String image = mList.get(position).getImages();
+            holder.mTitle.setText(title);
             holder.mTime.setText("发布时间：" + CommonUtil.getDateTime(time));
             Glide.with(context).load(image).error(R.drawable.ic_default_item_background).into(holder.imageView);
         }
