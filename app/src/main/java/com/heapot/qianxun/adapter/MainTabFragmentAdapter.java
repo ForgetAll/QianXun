@@ -8,7 +8,6 @@ import android.support.v4.view.PagerAdapter;
 import android.view.ViewGroup;
 
 import com.heapot.qianxun.bean.SubBean;
-import com.heapot.qianxun.fragment.ArticleFragment;
 import com.heapot.qianxun.fragment.PageFragment;
 import com.orhanobut.logger.Logger;
 

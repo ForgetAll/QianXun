@@ -65,6 +65,8 @@ public class JobListFragment extends Fragment implements LoadTagsList.onLoadTags
             android.R.color.holo_purple,
             android.R.color.holo_orange_light};
 
+    private boolean isPre = false;
+
 
     public static JobListFragment getInstance(int page,String pageId){
         Bundle bundle = new Bundle();
@@ -215,5 +217,35 @@ public class JobListFragment extends Fragment implements LoadTagsList.onLoadTags
     @Override
     public void onItemClick(View view, int postion) {
         Toast.makeText(getActivity(), "点击了", Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * 懒加载
+     */
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (getUserVisibleHint()){
+            setUserVisibleHint(true);
+        }
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        isPre = true;
+    }
+
+    @Override
+    public boolean getUserVisibleHint() {
+        return super.getUserVisibleHint();
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser && isPre){
+            initData(0);
+        }
     }
 }

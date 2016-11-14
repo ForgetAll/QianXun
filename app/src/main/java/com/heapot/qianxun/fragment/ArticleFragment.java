@@ -23,7 +23,6 @@ import com.heapot.qianxun.activity.SearchActivity;
 import com.heapot.qianxun.activity.Subscription;
 import com.heapot.qianxun.activity.create.CreateActivity;
 import com.heapot.qianxun.adapter.ArticleFragmentAdapter;
-import com.heapot.qianxun.adapter.MainTabFragmentAdapter;
 import com.heapot.qianxun.bean.MyTagBean;
 import com.heapot.qianxun.bean.SubBean;
 import com.heapot.qianxun.bean.TagsBean;

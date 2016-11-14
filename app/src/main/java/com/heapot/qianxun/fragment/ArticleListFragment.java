@@ -62,6 +62,7 @@ public class ArticleListFragment extends Fragment
 
     private Integer[] refreshColor = {android.R.color.holo_green_light,android.R.color.holo_blue_light,android.R.color.holo_purple,android.R.color.holo_orange_light};
 
+    private boolean isPre = false;
 
 
     /**
@@ -238,5 +239,37 @@ public class ArticleListFragment extends Fragment
     @Override
     public void onItemClick(View view, int position) {
         Toast.makeText(getActivity(), "点击了", Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * 实现懒加载
+     */
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (getUserVisibleHint()){
+            setUserVisibleHint(true);
+        }
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        isPre = true;
+    }
+
+    @Override
+    public boolean getUserVisibleHint() {
+        return super.getUserVisibleHint();
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser && isPre){
+            initData(0);
+        }
     }
 }

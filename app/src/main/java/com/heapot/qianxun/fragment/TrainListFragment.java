@@ -66,6 +66,8 @@ public class TrainListFragment extends Fragment implements LoadTagsList.onLoadTa
             android.R.color.holo_purple,
             android.R.color.holo_orange_light};
 
+    private boolean isPre = false;
+
 
     public static TrainListFragment getInstance(int page,String id){
         Bundle bundle = new Bundle();
@@ -219,5 +221,35 @@ public class TrainListFragment extends Fragment implements LoadTagsList.onLoadTa
     @Override
     public void onItemClick(View view, int position) {
         Toast.makeText(getActivity(), "点击了", Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * 懒加载
+     */
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (getUserVisibleHint()){
+            setUserVisibleHint(true);
+        }
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        isPre = true;
+    }
+
+    @Override
+    public boolean getUserVisibleHint() {
+        return super.getUserVisibleHint();
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser && isPre){
+            initData(0);
+        }
     }
 }
