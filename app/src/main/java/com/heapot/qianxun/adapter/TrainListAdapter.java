@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.bean.MainListBean;
 import com.heapot.qianxun.util.CommonUtil;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,17 +26,33 @@ public class TrainListAdapter extends RecyclerView.Adapter<TrainListAdapter.Trai
 
     private Context mContext;
 
-    private List<MainListBean.ContentBean> mList = new ArrayList<>();
+    private List<MainListBean.ContentBean> mPreList = new ArrayList<>();
 
     private OnTrainListItemClickListener mListener;
 
     public TrainListAdapter(Context mContext, List<MainListBean.ContentBean> mList) {
         this.mContext = mContext;
-        this.mList = mList;
+//        this.mList = mList;
+        mPreList.addAll(mList);
     }
 
-    public void setData(List<MainListBean.ContentBean> mList){
-        this.mList = mList;
+    public void setData(List<MainListBean.ContentBean> list){
+//        this.mList = list;
+//        notifyDataSetChanged();
+//        Logger.d(list.size());
+        int previousSize = mPreList.size();
+        mPreList.clear();
+        notifyItemRangeRemoved(0,previousSize);
+        mPreList.addAll(list);
+        notifyItemRangeInserted(0,list.size());
+
+    }
+
+    public void setMoreData(List<MainListBean.ContentBean> list){
+        int preSize = mPreList.size();
+        mPreList.addAll(list);
+        notifyItemRangeInserted(preSize,mPreList.size());
+
     }
 
     public void setOnTrainListItemClickListener(OnTrainListItemClickListener listener){
@@ -54,9 +71,9 @@ public class TrainListAdapter extends RecyclerView.Adapter<TrainListAdapter.Trai
     @Override
     public void onBindViewHolder(TrainListViewHolder holder, int position) {
         if (holder instanceof TrainListViewHolder){
-            String title = mList.get(position).getTitle();
-            String time = mList.get(position).getCreate_time();
-            String icon = mList.get(position).getImages();
+            String title = mPreList.get(position).getTitle();
+            String time = mPreList.get(position).getCreate_time();
+            String icon = mPreList.get(position).getImages();
             holder.mTitle.setText(title);
             holder.mTime.setText("发布时间："+ CommonUtil.getDateTime(time));
             Glide.with(mContext).load(icon).error(R.drawable.ic_default_item_background).into(holder.mIcon);
@@ -65,7 +82,7 @@ public class TrainListAdapter extends RecyclerView.Adapter<TrainListAdapter.Trai
 
     @Override
     public int getItemCount() {
-        return mList == null? 0 : mList.size();
+        return mPreList == null? 0 : mPreList.size();
     }
 
     public class TrainListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

@@ -97,6 +97,7 @@ public class ArticleListFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_layout_list,container,false);
+        Logger.d("当前页面是"+mPage);
         initView();
         initEvent();
 
@@ -155,6 +156,7 @@ public class ArticleListFragment extends Fragment
         } else{
 
             mCurrentIndex = 1;
+            isLoadMore = false;
         }
 
         String url = ConstantsBean.GET_LIST_WITH_TAG+"catalogId=" +mPageId+"&page="+ mCurrentIndex +"&pagesize="+PAGE_SIZE;
@@ -165,7 +167,6 @@ public class ArticleListFragment extends Fragment
     @Override
     public void onSuccessResponse(List<MainListBean.ContentBean> list, int totalIndex, int flag) {
         mMaxIndex = totalIndex;
-        Logger.d("MaxIndex"+mMaxIndex+",CurrentIndex"+mCurrentIndex);
         if (list!= null){
             loadData(flag,list);
         }
@@ -188,72 +189,76 @@ public class ArticleListFragment extends Fragment
      * @param list
      */
     private void loadData(int flag,List<MainListBean.ContentBean> list){
-
-        if (mAdapter == null) {
-            mAdapter = new ArticleListAdapter(getActivity(), mList);
-            mRecyclerView.setAdapter(mAdapter);
-            mAdapter.setOnArticleListClickListener(this);
-        }
-
-        if (flag == 0){
+        if (flag == 0 || flag == 2){
             mList.clear();
-        }
-
-        if (flag ==2){
-            mList.clear();
-            mRefresh.setRefreshing(false);
-            isRefresh = false;
+            mList.addAll(list);
+        }else if (flag ==1){
+            mList.addAll(list);
         }
 
         if (mCurrentIndex > mMaxIndex){
 
+            isLoadMore = true;
+
+            //实际上走不到这一步
             if (flag == 0 ){
-                if (mAdapter == null) {
-                    mAdapter = new ArticleListAdapter(getActivity(), mList);
+                if (mAdapter == null){
+                    mAdapter = new ArticleListAdapter(getActivity(), list);
                     mRecyclerView.setAdapter(mAdapter);
+                    mAdapter.setOnArticleListClickListener(this);
                 }
-            }
+            }else if (flag == 1){
 
-            if (flag == 1){
-                isLoadMore = true;
                 Toast.makeText(getActivity(), "没有更多数据了", Toast.LENGTH_SHORT).show();
-            }
 
-            if (flag ==2){
-                //加载完成，不提示消息
+            }else if (flag ==2){
+
             }
 
         }else if (mCurrentIndex == mMaxIndex){
 
+            isLoadMore = false;
+
             mList.addAll(list);
 
-            if (flag == 0){
+            if (flag == 0) {
 
-            }
+                mAdapter = new ArticleListAdapter(getActivity(), list);
+                mRecyclerView.setAdapter(mAdapter);
+                mAdapter.setOnArticleListClickListener(this);
 
-            if (flag == 1){
-                isLoadMore = true;
-                mAdapter.setData(mList);
-            }
 
-            if (flag == 2){
-                mAdapter.setData(mList);
+            }else if (flag == 1){
+
+                mAdapter.setMoreData(list);
+
+            }else if (flag == 2){
+
+                mAdapter.setData(list);
+                mRefresh.setRefreshing(false);
+                isRefresh = false;
             }
 
         }else {
+            isLoadMore = false;
             mList.addAll(list);
+            Logger.d("mList:"+mList.size()+",list:"+list.size());
 
-            if (flag == 0){
+            if (flag == 0) {
+                if (mAdapter == null) {
+                    mAdapter = new ArticleListAdapter(getActivity(), list);
+                    mRecyclerView.setAdapter(mAdapter);
+                    mAdapter.setOnArticleListClickListener(this);
+                }
 
-            }
+            }else if (flag == 1){
 
-            if (flag == 1){
-                isLoadMore = false;
-            }
+                mAdapter.setMoreData(list);
 
-
-            if (flag == 1 || flag == 2){
-                mAdapter.setData(mList);
+            }else if (flag == 2){
+                mAdapter.setData(list);
+                mRefresh.setRefreshing(false);
+                isRefresh = false;
             }
         }
 

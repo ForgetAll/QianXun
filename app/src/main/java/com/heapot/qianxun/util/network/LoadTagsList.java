@@ -118,7 +118,6 @@ public class LoadTagsList {
     }
 
     private void parseListResponse(JSONObject response,int flag){
-        Logger.json(String.valueOf(response));
         list.clear();
 
         try {
@@ -128,7 +127,6 @@ public class LoadTagsList {
                 MainListBean mainListBean = (MainListBean) JsonUtil.fromJson(String.valueOf(response),MainListBean.class);
                 if (mainListBean != null){
                     list.addAll(mainListBean.getContent());
-                    Logger.d(list.size());
                 }
                 listListener.onSuccessResponse(list,index,flag);
             }

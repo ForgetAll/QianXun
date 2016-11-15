@@ -18,6 +18,7 @@ import com.heapot.qianxun.adapter.TrainListAdapter;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.bean.MainListBean;
 import com.heapot.qianxun.util.network.LoadTagsList;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -145,11 +146,13 @@ public class TrainListFragment extends Fragment implements LoadTagsList.onLoadTa
 
     private void initData(int flag){
         if (flag == 1){
+
             mCurrentIndex ++;
 
         } else{
 
             mCurrentIndex = 1;
+            isLoadMore = false;
         }
         String url = ConstantsBean.GET_LIST_WITH_TAG+"catalogId=" +mPageId+"&page="+ mCurrentIndex +"&pagesize="+PAGE_SIZE;
         loadTagsList.getTagsList(url,flag);
@@ -175,71 +178,77 @@ public class TrainListFragment extends Fragment implements LoadTagsList.onLoadTa
 
     private void loadData(int flag,List<MainListBean.ContentBean> list){
 
-        if (mAdapter == null) {
-            mAdapter = new TrainListAdapter(getActivity(), mList);
-            mRecyclerView.setAdapter(mAdapter);
-            mAdapter.setOnTrainListItemClickListener(this);
-        }
-
-        if (flag == 0){
+        if (flag == 0 || flag == 2){
             mList.clear();
-        }
-
-        if (flag ==2){
-            mList.clear();
-            mRefresh.setRefreshing(false);
-            isRefresh = false;
+            mList.addAll(list);
+        }else if (flag ==1){
+            mList.addAll(list);
         }
 
         if (mCurrentIndex > mMaxIndex){
 
+            isLoadMore = true;
+
             if (flag == 0 ){
-                if (mAdapter == null) {
-                    mAdapter = new TrainListAdapter(getActivity(), mList);
+                if (mAdapter == null){
+                    mAdapter = new TrainListAdapter(getActivity(), list);
                     mRecyclerView.setAdapter(mAdapter);
+                    mAdapter.setOnTrainListItemClickListener(this);
                 }
-            }
+            }else if (flag == 1){
 
-            if (flag == 1){
-                isLoadMore = true;
                 Toast.makeText(getActivity(), "没有更多数据了", Toast.LENGTH_SHORT).show();
-            }
 
-            if (flag ==2){
-                //加载完成，不提示消息
+            }else if (flag ==2){
             }
 
         }else if (mCurrentIndex == mMaxIndex){
 
+            isLoadMore = false;
+
             mList.addAll(list);
 
-            if (flag == 0){
+            if (flag == 0) {
 
-            }
+                mAdapter = new TrainListAdapter(getActivity(), list);
+                mRecyclerView.setAdapter(mAdapter);
+                mAdapter.setOnTrainListItemClickListener(this);
 
-            if (flag == 1){
+            }else if (flag == 1){
+
                 isLoadMore = true;
-                mAdapter.setData(mList);
-            }
+                mAdapter.setMoreData(list);
 
-            if (flag == 2){
-                mAdapter.setData(mList);
+            }else if (flag == 2){
+
+                mAdapter.setData(list);
+                mRefresh.setRefreshing(false);
+                isRefresh = false;
             }
 
         }else {
+
+            isLoadMore = false;
+
             mList.addAll(list);
 
-            if (flag == 0){
+            if (flag == 0) {
+                if (mAdapter == null) {
+                    mAdapter = new TrainListAdapter(getActivity(), list);
+                    mRecyclerView.setAdapter(mAdapter);
+                    mAdapter.setOnTrainListItemClickListener(this);
+                }
+            }else if (flag == 1){
 
-            }
-
-            if (flag == 1){
                 isLoadMore = false;
-            }
+                mAdapter.setMoreData(list);
 
+            }else if (flag == 2){
 
-            if (flag == 1 || flag == 2){
-                mAdapter.setData(mList);
+                mAdapter.setData(list);
+                mRefresh.setRefreshing(false);
+                isRefresh = false;
+
             }
         }
 

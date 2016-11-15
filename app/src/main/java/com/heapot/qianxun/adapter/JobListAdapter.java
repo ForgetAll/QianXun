@@ -25,7 +25,7 @@ public class JobListAdapter extends RecyclerView.Adapter<JobListAdapter.JobListV
 
     private Context mContext;
 
-    private List<MainListBean.ContentBean> mList = new ArrayList<>();
+    private List<MainListBean.ContentBean> mPreList = new ArrayList<>();
 
     private OnJobListItemClickListener mListener;
 
@@ -33,14 +33,29 @@ public class JobListAdapter extends RecyclerView.Adapter<JobListAdapter.JobListV
 
         this.mContext = mContext;
 
-        this.mList = mList;
+//        this.mList = mList;
+        mPreList.addAll(mList);
+
     }
 
     public void setData(List<MainListBean.ContentBean> list){
 
-        this.mList = list;
+//        this.mList = list;
 
-        notifyDataSetChanged();
+//        notifyDataSetChanged();
+        int previousSize = mPreList.size();
+        mPreList.clear();
+        notifyItemRangeRemoved(0,previousSize);
+        mPreList.addAll(list);
+        notifyItemRangeInserted(0,list.size());
+
+    }
+
+    public void setMoreData(List<MainListBean.ContentBean> list){
+        int preSize = mPreList.size();
+        mPreList.addAll(list);
+        notifyItemRangeInserted(preSize,mPreList.size());
+
     }
 
     public void setOnJobListItemClickListener(OnJobListItemClickListener listener){
@@ -61,9 +76,9 @@ public class JobListAdapter extends RecyclerView.Adapter<JobListAdapter.JobListV
     @Override
     public void onBindViewHolder(JobListViewHolder holder, int position) {
         if (holder instanceof  JobListViewHolder){
-            String title = mList.get(position).getTitle();
-            String time = mList.get(position).getCreate_time();
-            String icon = mList.get(position).getImages();
+            String title = mPreList.get(position).getTitle();
+            String time = mPreList.get(position).getCreate_time();
+            String icon = mPreList.get(position).getImages();
             holder.mTitle.setText(title);
             holder.mTime.setText("发布时间："+ CommonUtil.getDateTime(time));
             Glide.with(mContext).load(icon).error(R.drawable.ic_default_item_background).into(holder.mIcon);
@@ -72,7 +87,7 @@ public class JobListAdapter extends RecyclerView.Adapter<JobListAdapter.JobListV
 
     @Override
     public int getItemCount() {
-        return mList == null ? 0 : mList.size();
+        return mPreList == null ? 0 : mPreList.size();
     }
 
 
@@ -106,7 +121,7 @@ public class JobListAdapter extends RecyclerView.Adapter<JobListAdapter.JobListV
 
     public interface OnJobListItemClickListener{
 
-        void onItemClick(View view, int postion);
+        void onItemClick(View view, int position);
 
     }
 }

@@ -14,10 +14,12 @@ import android.widget.Toast;
 
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.activity.detail.JobActivity;
+import com.heapot.qianxun.adapter.ArticleListAdapter;
 import com.heapot.qianxun.adapter.JobListAdapter;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.bean.MainListBean;
 import com.heapot.qianxun.util.network.LoadTagsList;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -147,6 +149,8 @@ public class JobListFragment extends Fragment implements LoadTagsList.onLoadTags
         } else{
 
             mCurrentIndex = 1;
+            isLoadMore = false;
+
         }
         String url = ConstantsBean.GET_LIST_WITH_TAG+"catalogId=" +mPageId+"&page="+ mCurrentIndex +"&pagesize="+PAGE_SIZE;
         loadTagsList.getTagsList(url,flag);
@@ -172,71 +176,78 @@ public class JobListFragment extends Fragment implements LoadTagsList.onLoadTags
 
     private void loadData(int flag,List<MainListBean.ContentBean> list){
 
-        if (mAdapter == null) {
-            mAdapter = new JobListAdapter(getActivity(), mList);
-            mRecyclerView.setAdapter(mAdapter);
-            mAdapter.setOnJobListItemClickListener(this);
-        }
-
-        if (flag == 0){
+        if (flag == 0 || flag == 2){
             mList.clear();
-        }
-
-        if (flag ==2){
-            mList.clear();
-            mRefresh.setRefreshing(false);
-            isRefresh = false;
+            mList.addAll(list);
+        }else if (flag ==1){
+            mList.addAll(list);
         }
 
         if (mCurrentIndex > mMaxIndex){
 
+            isLoadMore = true;
+
             if (flag == 0 ){
-                if (mAdapter == null) {
-                    mAdapter = new JobListAdapter(getActivity(), mList);
+                if (mAdapter == null){
+                    mAdapter = new JobListAdapter(getActivity(), list);
                     mRecyclerView.setAdapter(mAdapter);
+                    mAdapter.setOnJobListItemClickListener(this);
                 }
-            }
+            }else if (flag == 1){
 
-            if (flag == 1){
-                isLoadMore = true;
                 Toast.makeText(getActivity(), "没有更多数据了", Toast.LENGTH_SHORT).show();
-            }
 
-            if (flag ==2){
+            }else if (flag ==2){
                 //加载完成，不提示消息
             }
 
         }else if (mCurrentIndex == mMaxIndex){
 
+            isLoadMore = false;
+
             mList.addAll(list);
 
-            if (flag == 0){
+            if (flag == 0) {
 
-            }
+                mAdapter = new JobListAdapter(getActivity(), list);
+                mRecyclerView.setAdapter(mAdapter);
+                mAdapter.setOnJobListItemClickListener(this);
 
-            if (flag == 1){
+            }else if (flag == 1){
+
                 isLoadMore = true;
-                mAdapter.setData(mList);
-            }
+                mAdapter.setMoreData(list);
 
-            if (flag == 2){
-                mAdapter.setData(mList);
+            }else if (flag == 2){
+
+                mAdapter.setData(list);
+                mRefresh.setRefreshing(false);
+                isRefresh = false;
             }
 
         }else {
+
+            isLoadMore = false;
+
             mList.addAll(list);
 
-            if (flag == 0){
+            if (flag == 0) {
+                if (mAdapter == null) {
+                    mAdapter = new JobListAdapter(getActivity(), list);
+                    mRecyclerView.setAdapter(mAdapter);
+                    mAdapter.setOnJobListItemClickListener(this);
+                }
+            }else if (flag == 1){
 
-            }
-
-            if (flag == 1){
                 isLoadMore = false;
-            }
+                mAdapter.setMoreData(list);
 
+            }else if (flag == 2){
 
-            if (flag == 1 || flag == 2){
-                mAdapter.setData(mList);
+                mAdapter.setData(list);
+                mRefresh.setRefreshing(false);
+                isRefresh = false;
+
             }
         }
 

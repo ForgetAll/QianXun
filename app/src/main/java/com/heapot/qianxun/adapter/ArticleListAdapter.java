@@ -26,18 +26,33 @@ public class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.
 
     private Context context;
 
-    private List<MainListBean.ContentBean> mList = new ArrayList<>();
+    private List<MainListBean.ContentBean> mPreList = new ArrayList<>();
 
     private OnArticleListItemClickListener mListener;
 
     public ArticleListAdapter(Context context, List<MainListBean.ContentBean> mList) {
         this.context = context;
-        this.mList = mList;
+//        this.mPreList = mList;
+        mPreList.addAll(mList);
     }
 
     public void setData(List<MainListBean.ContentBean> list){
-        this.mList = list;
-        notifyDataSetChanged();
+//        this.mList = list;
+//        notifyDataSetChanged();
+        Logger.d(list.size());
+        int previousSize = mPreList.size();
+        mPreList.clear();
+        notifyItemRangeRemoved(0,previousSize);
+        mPreList.addAll(list);
+        notifyItemRangeInserted(0,list.size());
+
+    }
+
+    public void setMoreData(List<MainListBean.ContentBean> list){
+        int preSize = mPreList.size();
+        mPreList.addAll(list);
+        notifyItemRangeInserted(preSize,mPreList.size());
+
     }
 
     public void setOnArticleListClickListener(OnArticleListItemClickListener listClickListener){
@@ -58,9 +73,9 @@ public class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.
     @Override
     public void onBindViewHolder(ArticleListViewHolder holder, int position) {
         if (holder instanceof  ArticleListViewHolder){
-            String title = mList.get(position).getTitle();
-            String time = mList.get(position).getCreate_time();
-            String image = mList.get(position).getImages();
+            String title = mPreList.get(position).getTitle();
+            String time = mPreList.get(position).getCreate_time();
+            String image = mPreList.get(position).getImages();
             holder.mTitle.setText(title);
             holder.mTime.setText("发布时间：" + CommonUtil.getDateTime(time));
             Glide.with(context).load(image).error(R.drawable.ic_default_item_background).into(holder.imageView);
@@ -69,7 +84,7 @@ public class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.
 
     @Override
     public int getItemCount() {
-        return mList == null ? 0 : mList.size() ;
+        return mPreList == null ? 0 : mPreList.size() ;
     }
 
     public class ArticleListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
