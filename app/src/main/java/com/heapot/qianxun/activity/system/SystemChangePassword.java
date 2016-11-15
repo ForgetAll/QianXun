@@ -127,7 +127,7 @@ public class SystemChangePassword extends BaseActivity implements View.OnClickLi
             public Map<String, String> getHeaders() throws AuthFailureError {
 
                 Map<String, String> headers = new HashMap<>();
-                headers.put(ConstantsBean.KEY_TOKEN, CustomApplication.TOKEN);
+                headers.put(ConstantsBean.KEY_TOKEN, getAppToken());
                 return headers;
             }
         };
@@ -171,7 +171,7 @@ public class SystemChangePassword extends BaseActivity implements View.OnClickLi
                                                         JSONObject content = response.getJSONObject("content");
                                                         String token = content.getString("auth-token");
                                                         //设置全局变量
-                                                        CustomApplication.TOKEN = token;
+//                                                        CustomApplication.TOKEN = token;
                                                         //存储到本地
                                                         // 因为token只有三十分钟有效期，也就是说用户退出以后下次失效的可能性比较高，所以这里实际上没有存本地的意义
                                                         PreferenceUtil.putString("token", token);
@@ -210,7 +210,7 @@ public class SystemChangePassword extends BaseActivity implements View.OnClickLi
                 public Map<String, String> getHeaders() throws AuthFailureError {
 
                     Map<String, String> headers = new HashMap<>();
-                    headers.put(ConstantsBean.KEY_TOKEN, CustomApplication.TOKEN);
+                    headers.put(ConstantsBean.KEY_TOKEN, getAppToken());
                     return headers;
                 }
             };

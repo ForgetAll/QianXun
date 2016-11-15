@@ -1,18 +1,15 @@
 package com.heapot.qianxun.util;
 
 import android.content.Context;
-import android.content.Intent;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.heapot.qianxun.activity.MainActivity;
-import com.heapot.qianxun.application.ActivityCollector;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
-import com.heapot.qianxun.bean.SubscribedBean;
+import com.heapot.qianxun.bean.MyTagBean;
 import com.heapot.qianxun.bean.TagsBean;
 import com.orhanobut.logger.Logger;
 
@@ -30,13 +27,24 @@ import java.util.Map;
  *
  */
 public class LoadTagsUtils {
-    static List<SubscribedBean.ContentBean.RowsBean> subList = new ArrayList<>();
-    static List<TagsBean.ContentBean> tagsList = new ArrayList<>();
+
+    private Context context;
+    static OnLoadTagListener listener;
+
+    public LoadTagsUtils(Context context) {
+        this.context =context;
+
+    }
+
+    public void setOnLoadTagListener(OnLoadTagListener listener){
+        LoadTagsUtils.listener = listener;
+    }
+
     /**
      * 加载全部标签并存储到本地，加载成功以后请求加载已订阅标签
-     * @param token token
+     *
      */
-    public static void getTags(final Context context, final String token){
+    public  void getUserTags( final int flag){
 
         String url = ConstantsBean.BASE_PATH + ConstantsBean.CATALOGS;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
@@ -45,32 +53,128 @@ public class LoadTagsUtils {
                     @Override
                     public void onResponse(JSONObject response) {
 //                        Logger.json(String.valueOf(response));
+                        List<TagsBean.ContentBean> tagsList = new ArrayList<>();
                         try {
                             String status = response.getString("status");
                             if (status.equals("success")) {
-                                TagsBean jsonBean = (TagsBean) JsonUtil.fromJson(String.valueOf(response), TagsBean.class);
-                                tagsList.addAll(jsonBean.getContent());
-                                SerializableUtils.setSerializable(context, ConstantsBean.TAG_FILE_NAME, tagsList);
-                                List<Integer> posList = new ArrayList<>();
-                                //获取三个主页的id
-                                for (int i = 0; i < tagsList.size(); i++) {
-                                    if (tagsList.get(i).getPid() == null){
-                                        posList.add(i);
-                                    }
+                                TagsBean tagsBean = (TagsBean) JsonUtil.fromJson(String.valueOf(response),TagsBean.class);
+                                SerializableUtils.setSerializable(context,ConstantsBean.TAG_FILE_NAME,tagsBean.getContent());
+                                if (tagsBean.getContent()!= null) {
+                                    tagsList.addAll(tagsBean.getContent());
+                                    listener.onLoadAllSuccess(tagsList, flag);
                                 }
-                                for (int i = 0; i < posList.size(); i++) {
-                                    if (tagsList.get(i).getCode().equals("articles")){
-                                        CustomApplication.PAGE_ARTICLES_ID = tagsList.get(posList.get(i)).getId();
-                                    }else if (tagsList.get(i).equals("jobs")){
-                                        CustomApplication.PAGE_JOBS_ID =  tagsList.get(posList.get(i)).getId();
-                                    }else if (tagsList.get(i).getCode().equals("activities")){
-                                        CustomApplication.PAGE_ACTIVITIES_ID = tagsList.get(posList.get(i)).getId();
-                                    }
+//                                getUserTag(token,flag);
+                            }else {
+                                listener.onLoadFailed(response.getString("message"));
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }
+        ){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> headers = new HashMap<>();
+                String token = PreferenceUtil.getString("token");
+                Logger.d("token"+token);
+                headers.put(ConstantsBean.KEY_TOKEN,token);
+                return headers;
+            }
+        };
+        CustomApplication.getRequestQueue().add(jsonObjectRequest);
+    }
+
+    public void getTags(int flag){
+        //判断是否超过30分钟
+        Long time = PreferenceUtil.getLong("time");
+        Long currentTime = System.currentTimeMillis();
+        if ((currentTime -time)/(1000*60) >= 30){
+            postLogin(flag);
+        }else {
+            getUserTags(flag);
+        }
+    }
+
+    private void postLogin(final int flag) {
+        final String username = PreferenceUtil.getString("phone");
+        final String password = PreferenceUtil.getString("password");
+        String url = ConstantsBean.BASE_PATH + ConstantsBean.LOGIN + "?loginName=" + username + "&password=" + password;
+        JsonObjectRequest jsonObject = new JsonObjectRequest(
+                Request.Method.POST, url,null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        parseResponse(response,username,password,flag);
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Logger.d(error);
+
+                    }
+                }
+        );
+        CustomApplication.getRequestQueue().add(jsonObject);
+    }
+
+    private void parseResponse(JSONObject response,String username,String password,int flag){
+        try {
+            if (response.getString("status").equals("success")) {
+                if (response.has("content")) {
+                    JSONObject content = response.getJSONObject("content");
+                    String token = content.getString("auth-token");
+                    //存储到本地
+                    PreferenceUtil.putString("token", token);
+                    PreferenceUtil.putString("phone", username);
+                    PreferenceUtil.putString("password", password);
+                    long time = System.currentTimeMillis();
+                    PreferenceUtil.putLong("time",time);
+                    getTags(flag);
+                }
+            } else {
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+
+
+
+
+    //获取已订阅标签
+    public void getSubTag( final int flag){
+        String url = ConstantsBean.BASE_PATH+ConstantsBean.SUBSCRIBE_CATALOGS;
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Logger.json(String.valueOf(response));
+                        List<MyTagBean.ContentBean.RowsBean> list = new ArrayList<>();
+                        try {
+                            String status = response.getString("status");
+                            if (status.equals("success")) {
+                                MyTagBean myTagBean = (MyTagBean) JsonUtil.fromJson(String.valueOf(response),MyTagBean.class);
+                                if (myTagBean.getContent().getRows() != null) {
+                                    list.addAll(myTagBean.getContent().getRows());
+                                    Logger.d(list.size());
+                                    listener.onLoadSuccess(list,flag);
                                 }
-                                Logger.d("所有数据List："+tagsList.size()+"，获取到的主页id下标集合POSList："+posList.size());
-                                Intent intent = new Intent(context,MainActivity.class);
-                                context.startActivity(intent);
-                                ActivityCollector.finishAll();
+                            }else {
+
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -81,17 +185,33 @@ public class LoadTagsUtils {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        Logger.d("加载失败");
                     }
                 }
         ){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String,String> headers = new HashMap<>();
+                String token = PreferenceUtil.getString("token");
                 headers.put(ConstantsBean.KEY_TOKEN,token);
                 return headers;
             }
         };
         CustomApplication.getRequestQueue().add(jsonObjectRequest);
+
+    }
+
+
+
+
+
+    public interface OnLoadTagListener{
+
+        void onLoadAllSuccess(List<TagsBean.ContentBean> list,int flag);
+
+        void onLoadSuccess(List<MyTagBean.ContentBean.RowsBean> list,int flag);
+
+        void onLoadFailed(String message);
     }
 
 }

@@ -1,11 +1,9 @@
 package com.heapot.qianxun.fragment;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,11 +16,10 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.google.gson.JsonObject;
 import com.heapot.qianxun.R;
-import com.heapot.qianxun.activity.ArticleActivity;
-import com.heapot.qianxun.activity.JobActivity;
-import com.heapot.qianxun.activity.MainActivity;
+import com.heapot.qianxun.activity.detail.ArticleActivity;
+import com.heapot.qianxun.activity.detail.CourseActivity;
+import com.heapot.qianxun.activity.detail.JobActivity;
 import com.heapot.qianxun.adapter.MainTabAdapter;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
@@ -31,14 +28,10 @@ import com.heapot.qianxun.helper.OnRecyclerViewItemClickListener;
 import com.heapot.qianxun.util.JsonUtil;
 import com.orhanobut.logger.Logger;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.heapot.qianxun.bean.ConstantsBean.PAGE_SCIENCE;
 
 /**
  * Created by Karl on 2016/8/25.
@@ -47,10 +40,12 @@ import static com.heapot.qianxun.bean.ConstantsBean.PAGE_SCIENCE;
  *
  */
 public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
-    public static final String PAGE = "PAGE";
-    public static final String ID = "PAGE_ID";
+    private static final String PAGE = "PAGE";
+    private static final String ID = "PAGE_ID";
+    private static final String CURRENT_PAGE = "CURRENT_PAGE";
     private int mPage;
     private String mId;//记录当前页面对应标签的id
+    private String currentPage;
     private int pageIndex = 1;//记录加载第几页的书
     private int pageSize = 6;//记录每页加载数据的大小
     private int maxPageIndex = 1;//网络请求获取到最大页码进行限制
@@ -65,14 +60,14 @@ public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     private MainTabAdapter adapter;
     private List<MainListBean.ContentBean> list = new ArrayList<>();
 
-    private Activity mActivity;
 
     private boolean isPre = false;
 
-    public static PageFragment newInstance(int page,String id) {
+    public static PageFragment newInstance(int page,String id,String currentPage) {
         Bundle args = new Bundle();
         args.putInt(PAGE,page);
         args.putString(ID,id);
+        args.putString(CURRENT_PAGE,currentPage);
         PageFragment pageFragment = new PageFragment();
         pageFragment.setArguments(args);
         return pageFragment;
@@ -83,6 +78,8 @@ public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         super.onCreate(savedInstanceState);
         mPage = getArguments().getInt(PAGE);
         mId = getArguments().getString(ID);
+        currentPage = getArguments().getString(CURRENT_PAGE);
+        Logger.d("PAge当前页面"+currentPage);
     }
 
     @Nullable
@@ -148,8 +145,6 @@ public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Logger.d("当前页面---->"+mPage);
-                        Logger.json(String.valueOf(response));
                         MainListBean mainListBean = (MainListBean) JsonUtil.fromJson(String.valueOf(response),MainListBean.class);
                         maxPageIndex =mainListBean.getTotal_page();
                         list.addAll(mainListBean.getContent());
@@ -178,17 +173,19 @@ public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     private OnRecyclerViewItemClickListener onClickListener = new OnRecyclerViewItemClickListener() {
         @Override
         public void onItemClick(View view, int position) {
-            if (CustomApplication.getCurrentPageName().equals("PAGE_SCIENCE")){
-                Logger.d("跳转到文章详情，id是"+list.get(position).getId());
+
+            if (currentPage.equals("PAGE_ARTICLE")){
                 Intent intent = new Intent(getActivity(), ArticleActivity.class);
                 intent.putExtra("id",list.get(position).getId());
                 startActivity(intent);
-            }else if (CustomApplication.getCurrentPageName().equals("PAGE_RECRUIT")){
+            }else if (currentPage.equals("PAGE_RECRUIT")){
                 Intent job = new Intent(getActivity(), JobActivity.class);
                 job.putExtra("id",list.get(position).getId());
                 startActivity(job);
             }else {
-
+                Intent course = new Intent(getActivity(), CourseActivity.class);
+                course.putExtra("id",list.get(position).getId());
+                startActivity(course);
             }
 
         }
@@ -258,9 +255,6 @@ public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser && isPre){
-            //当试图可见的时候加载Banner
-//            Logger.d("可见视图的id"+mId);
-//            setTabBanner(mId);
             list.clear();
             loadData();
 
@@ -270,6 +264,5 @@ public class PageFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mActivity = null;
     }
 }

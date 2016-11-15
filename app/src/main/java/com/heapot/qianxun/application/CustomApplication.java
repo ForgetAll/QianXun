@@ -3,10 +3,13 @@ package com.heapot.qianxun.application;
 import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
+import android.os.StrictMode;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.heapot.qianxun.bean.ConstantsBean;
+import com.squareup.leakcanary.LeakCanary;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import io.rong.imkit.RongIM;
 
@@ -17,24 +20,19 @@ import io.rong.imkit.RongIM;
 public class CustomApplication extends Application {
     //获取全局上下文
     public static Context context;
-
-    public static String TOKEN = "";
-    public static String NICK_NAME ="";
-    public static boolean isFirstConnIM = false;
-    public static String IM_TOKEN = "";
-
-    private static String CURRENT_PAGE = ConstantsBean.PAGE_SCIENCE;
-
     private static RequestQueue requestQueue;
 
-    //添加主页页面的ID
-    public static String PAGE_ARTICLES_ID = "f3b8d91b8f9c4a03a4a06a5678e79872";
-    public static String PAGE_ACTIVITIES_ID = "9025053c65e04a6992374c5d43f31acf";
-    public static String PAGE_JOBS_ID = "af3a09e8a4414c97a038a2d735064ebc";
+    private static final boolean DEV_MODE = true;
 
     @Override
     public void onCreate() {
         super.onCreate();
+        //监测内存泄露
+        LeakCanary.install(this);
+
+        //初始化Bugly
+        CrashReport.initCrashReport(getApplicationContext(),"900057726",false);
+
         //初始化日志工具类
         com.orhanobut.logger.Logger
                 .init("QianXun")
@@ -42,8 +40,6 @@ public class CustomApplication extends Application {
         //初始化上下文
         context = getApplicationContext();
 
-        //初始化全局异常捕获
-        CrashHandler.getInstance(context).init(context);
         //初始化融云
         if (getApplicationInfo().packageName.equals(getCurProcessName(getApplicationContext()))){
             RongIM.init(this);
@@ -63,22 +59,6 @@ public class CustomApplication extends Application {
             return requestQueue;
         }
         return  requestQueue = Volley.newRequestQueue(context);
-    }
-
-    /**
-     *  获取主页当前页面名称
-     * @return 返回字符串
-     */
-    public static String getCurrentPageName(){
-        return CURRENT_PAGE;
-    }
-
-    /**
-     * 设置主页当前页面名称
-     * @param name
-     */
-    public static void setCurrentPage(String name){
-        CURRENT_PAGE = name;
     }
 
     /**
@@ -103,6 +83,32 @@ public class CustomApplication extends Application {
         }
         return null;
     }
+    /**
+     * 初始化StrictMode工具类,
+     * 系统检测出主线程违例的情况并作出相应反映
+     */
+    private void initStrictMode(){
+        if (DEV_MODE){
+            StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+                    .detectCustomSlowCalls()//自定义耗时操作
+                    .detectDiskReads()//磁盘读取操作
+                    .detectDiskWrites()//磁盘写入操作
+                    .detectNetwork()//网络操作，以上可以用detectAll()来代替
+                    .penaltyDialog()//弹出违规对话框
+                    .penaltyLog()//在Logcat中打印异常信息
+                    .penaltyFlashScreen()
+                    .build());
+            StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+                    .detectActivityLeaks()
+                    .detectLeakedClosableObjects()
+                    .detectLeakedSqlLiteObjects()
+                    .penaltyLog()
+                    .penaltyDeath()
+                    .build());
+        }
+    }
+
+
 
 }
 

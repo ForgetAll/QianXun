@@ -24,6 +24,7 @@ import com.heapot.qianxun.activity.BaseActivity;
 import com.heapot.qianxun.application.CreateActivityCollector;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.util.FileUploadTask;
+import com.heapot.qianxun.util.PreferenceUtil;
 import com.heapot.qianxun.widget.PhotoCarmaWindow;
 import com.orhanobut.logger.Logger;
 
@@ -63,7 +64,7 @@ public class CreateArticleActivity extends BaseActivity implements View.OnClickL
                         if (title.equals("") || content.equals("")){
                             Toast.makeText(CreateArticleActivity.this, "标题/内容不能为空", Toast.LENGTH_SHORT).show();
                         }else {
-                            Intent intent = new Intent(CreateArticleActivity.this,SortList.class);
+                            Intent intent = new Intent(CreateArticleActivity.this,CreateArticleTypeActivity.class);
                             body = "{\"title\":\"" + title + "\",\"content\":\"" + content + "\"";
                             intent.putExtra("article",body);
                             if (images.equals("")) {
@@ -107,6 +108,7 @@ public class CreateArticleActivity extends BaseActivity implements View.OnClickL
                         webView.loadUrl("javascript:imgReady(\""+token+"\",\""+images+"\")");
                         Logger.d("Images:"+images+",Token:"+token);
                     } catch (JSONException e) {
+                        e.printStackTrace();
                     }
                 }
             }
@@ -143,7 +145,8 @@ public class CreateArticleActivity extends BaseActivity implements View.OnClickL
     }
 
     private void initSettings(){
-
+        String nickname = PreferenceUtil.getString("nickname");
+        String url = ConstantsBean.WEB_CREATE_ARTICLE_EDIT+nickname+"&type=article";
         webSettings = webView.getSettings();
         boolean isConnected = NetworkUtils.isAvailable(this);
         if (isConnected) {
@@ -154,8 +157,8 @@ public class CreateArticleActivity extends BaseActivity implements View.OnClickL
         webSettings.setJavaScriptEnabled(true);
         webSettings.setDefaultTextEncodingName("utf-8");
         webView.addJavascriptInterface(this,"android");
-        webView.setWebChromeClient(new WebChromeClient() {});
-        webView.loadUrl(ConstantsBean.WEB_CREATE_ARTICLE_EDIT);
+        webView.setWebChromeClient(new WebChromeClient() { });
+        webView.loadUrl(url);
 
     }
 
@@ -165,8 +168,6 @@ public class CreateArticleActivity extends BaseActivity implements View.OnClickL
      */
     @JavascriptInterface
     public void setHtml(String json){
-        Logger.d("json--->"+json);
-
         Message message = new Message();
         Bundle bundle = new Bundle();
         bundle.putString("content",json);

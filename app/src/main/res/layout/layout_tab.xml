@@ -25,8 +25,8 @@
         android:paddingRight="6dp"
         android:layout_marginLeft="6dp"
         android:layout_marginRight="6dp"
-        android:text="订阅"
-        android:textColor="#ffffff"
+        android:text="@string/main_sub"
+        android:textColor="@color/color_first"
         android:gravity="center"
         android:layout_gravity="center_vertical"
         android:background="@drawable/bg_sub_shape"/>

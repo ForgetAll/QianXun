@@ -1,4 +1,15 @@
 apply plugin: 'com.android.application'
+//apply plugin: 'bugly'
+//
+//bugly{
+//
+//    appId = '900057726'
+//
+//    appKey = 'x2FjG05nq3VCHT1j'
+//
+//
+//
+//}
 
 android {
     compileSdkVersion 23
@@ -7,7 +18,7 @@ android {
     defaultConfig {
         applicationId "com.heapot.qianxun"
         minSdkVersion 15
-        targetSdkVersion 23
+        targetSdkVersion 22
         versionCode 1
         versionName "1.0"
     }
@@ -48,4 +59,14 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.4.1'
     compile 'com.zhy:okhttputils:2.6.2'
     compile project(':IMKit')
+    /*广告展示*/
+    compile 'com.bigkoo:convenientbanner:2.0.5'
+    /*Bugly*/
+    compile 'com.tencent.bugly:crashreport:latest.release'
+    /*监测内存泄露*/
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+
+
 }

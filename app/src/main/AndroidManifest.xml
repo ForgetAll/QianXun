@@ -10,6 +10,11 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <uses-permission android:name="android.permission.READ_LOGS"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+
     <!--Dangerous Permission-->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
@@ -23,7 +28,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <!--启动引导页-->
-        <activity android:name=".activity.SplashActivity">
+        <activity android:name=".activity.welcome.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -38,24 +43,24 @@
         <!--通知界面-->
         <activity android:name=".activity.NotificationActivity"></activity>
         <!--个人主页-->
-        <activity android:name=".activity.PersonalActivity"></activity>
+        <activity android:name=".activity.personal.PersonalActivity"></activity>
         <!--个人信息设置页面-->
-        <activity android:name=".activity.PersonalInforActivity"></activity>
+        <activity android:name=".activity.personal.PersonalInforActivity"></activity>
         <!--修改名字签名界面-->
-        <activity android:name=".activity.PersonInfoAlterActivity"></activity>
+        <activity android:name=".activity.personal.PersonInfoAlterActivity"></activity>
         <!--搜索界面-->
         <activity android:name=".activity.SearchActivity"></activity>
         <!--创建文章、简历页面-->
         <activity android:name=".activity.create.CreateActivity"></activity>
         <!--Login-->
-        <activity android:name=".activity.LoginActivity"
+        <activity android:name=".activity.login.LoginActivity"
             ></activity>
         <!--设置界面-->
         <activity android:name=".activity.system.SystemSettingActivity"></activity>
         <!--帮助界面-->
         <activity android:name=".activity.system.SystemHelpActivity"></activity>
         <!--注册界面-->
-        <activity android:name=".activity.RegisterActivity"
+        <activity android:name=".activity.login.RegisterActivity"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden"></activity>
         <!--基类-->
         <activity android:name=".activity.BaseActivity"></activity>
@@ -72,10 +77,9 @@
         <!--自动更新服务-->
         <service android:name=".service.UpdateService"></service>
         <!--文章详情-->
-        <activity android:name=".activity.ArticleActivity"
+        <activity android:name=".activity.detail.ArticleActivity"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden"></activity>
         <!--管理员登陆页面-->
-        <activity android:name=".activity.AdminLoginActivity"></activity>
         <!--关于我们-->
         <activity android:name=".activity.system.SystemAboutUs"></activity>
         <!--用户使用帮助-->
@@ -83,22 +87,35 @@
         <!--修改密码-->
         <activity android:name=".activity.system.SystemChangePassword"></activity>
         <!--找回密码-->
-        <activity android:name=".activity.FindPassActivity"></activity>
+        <activity android:name=".activity.login.FindPassActivity"></activity>
         <!--文章分类-->
         <activity android:name=".activity.create.SortList"></activity>
         <!--创建工作描述-->
-       <activity android:name=".activity.create.CreateJobDescribe"
-           android:windowSoftInputMode="adjustResize|stateAlwaysHidden" ></activity>
+        <activity android:name=".activity.create.CreateJobDescribe"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" ></activity>
         <!--更多公司选择-->
         <activity android:name=".activity.create.CreateJobMoreList"></activity>
         <!--工作详情-->
-        <activity android:name=".activity.JobActivity"></activity>
+        <activity android:name=".activity.detail.JobActivity"></activity>
         <!--工作类型-->
         <activity android:name=".activity.create.CreateJobTypeActivity"></activity>
         <!---->
         <activity android:name=".activity.create.CreateJobEditActivity"></activity>
+        <!--培训详情-->
+        <activity android:name=".activity.detail.CourseActivity"></activity>
+        <!--文章类型-->
+        <activity android:name=".activity.create.CreateArticleTypeActivity"></activity>
         <!--聊天Activity-->
         <!--会话列表-->
+
+        <!--引导界面-->
+        <activity android:name=".activity.welcome.GuideActivity"></activity>
+        <!--学校列表-->
+        <activity android:name=".activity.SchoolListActivity"></activity>
+        <!--出生年-->
+        <activity android:name=".activity.BirthActivity"></activity>
+        <!--编辑学校信息-->
+        <activity android:name=".activity.MyEducation"></activity>
         <activity
             android:name=".activity.chat.ConversationListActivity"
             android:screenOrientation="portrait"

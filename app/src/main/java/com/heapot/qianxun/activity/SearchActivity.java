@@ -29,12 +29,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.blankj.utilcode.utils.NetworkUtils;
 import com.heapot.qianxun.R;
+import com.heapot.qianxun.activity.detail.ArticleActivity;
 import com.heapot.qianxun.adapter.SearchArticleAdapter;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.bean.SearchBean;
 import com.heapot.qianxun.helper.RecordSQLiteOpenHelper;
-import com.heapot.qianxun.popupwindow.SearchListView;
+import com.heapot.qianxun.widget.SearchListView;
 import com.heapot.qianxun.util.JsonUtil;
 
 import org.json.JSONException;
@@ -72,8 +73,8 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     private void findView() {
         et_search = (EditText) findViewById(R.id.et_search);
         tv_tip = (TextView) findViewById(R.id.tv_tip);
-        listView = (com.heapot.qianxun.popupwindow.SearchListView) findViewById(R.id.listView);
-        lv_search = (com.heapot.qianxun.popupwindow.SearchListView) findViewById(R.id.lv_search);
+        listView = (SearchListView) findViewById(R.id.listView);
+        lv_search = (SearchListView) findViewById(R.id.lv_search);
         setListViewHeightBasedOnChildren(lv_search);
         tv_clear = (TextView) findViewById(R.id.tv_clear);
         mBack = (ImageView) findViewById(R.id.iv_back);
@@ -121,7 +122,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                 if (isAvailable) {
                     searchArticle(searchStr);
                 } else {
-                    Toast.makeText(activity, "请检查网络连接", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SearchActivity.this, "请检查网络连接", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -138,11 +139,11 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                     tv_tip.setText("搜索结果");
                     tv_clear.setVisibility(View.GONE);
                     mClearSearch.setVisibility(View.VISIBLE);
-                    searchArticle(s.toString().trim());
+                   searchArticle(s.toString().trim());
                 }
                 String temName = et_search.getText().toString();
-                // 根据tempName去模糊查询数据库中有没有数据
-                queryData(temName);
+                //鸡肋功能，耗时操作需开线程 ,根据tempName去模糊查询数据库中有没有数据
+                 //  queryData(temName);
 
             }
         });
@@ -152,8 +153,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                 //把item的字传到输入框
                 TextView textView = (TextView) view.findViewById(android.R.id.text1);
                 String name = textView.getText().toString();
-                et_search.setText(name);
-                searchArticle(name);
+                et_search.setText(name);searchArticle(name);
                 //跳转事件，待解决
                 listView.setVisibility(View.GONE);
                 lv_search.setVisibility(View.VISIBLE);
@@ -165,7 +165,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String articleId = rowsList.get(position).getId();
-                Intent intent = new Intent(activity, ArticleActivity.class);
+                Intent intent = new Intent(SearchActivity.this, ArticleActivity.class);
                 intent.putExtra("id",rowsList.get(position).getId());
                 startActivity(intent);
             }
@@ -236,7 +236,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                         SearchBean searchBean = (SearchBean) JsonUtil.fromJson(String.valueOf(response), SearchBean.class);
                          rowsList =searchBean.getContent().getRows();
                         Log.e("搜索的结果是：", String.valueOf(rowsList.size()));
-                        SearchArticleAdapter articleAdapter = new SearchArticleAdapter(activity, rowsList);
+                        SearchArticleAdapter articleAdapter = new SearchArticleAdapter(SearchActivity.this, rowsList);
                         lv_search.setAdapter(articleAdapter);
                     }
                 } catch (JSONException e) {

@@ -1,7 +1,11 @@
 # HeaPot-QianXun-Android
 
+<<<<<<< HEAD
 @author: [fanKarl](https://github.com/fanKarl) , [meng](https://github.com/xmysg)
 
 效果图：[QianXun(完善中)](https://xd.adobe.com/view/fdf3443b-0f5f-493d-4a25-bdc06274565f/)
 
 ##当前版本是最新稳定版
+=======
+## 当前版本是最新开发版，非稳定版本
+>>>>>>> 1.x

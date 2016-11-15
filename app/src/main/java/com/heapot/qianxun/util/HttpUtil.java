@@ -69,8 +69,8 @@ public class HttpUtil {
             //设置请求头
             conn.setRequestProperty("Connection", "keep-alive");
             conn.setRequestProperty("Cache-Control", "no-cache");
-            Log.e("token",CustomApplication.TOKEN);
-            conn.setRequestProperty(ConstantsBean.KEY_TOKEN, CustomApplication.TOKEN);
+            String token = PreferenceUtil.getString("token");
+            conn.setRequestProperty(ConstantsBean.KEY_TOKEN, token);
             conn.setRequestProperty("Content-Type",
                     "multipart/form-data; boundary=" + boundary);
             //允许输出和输入

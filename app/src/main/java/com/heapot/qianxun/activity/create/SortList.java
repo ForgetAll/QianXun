@@ -15,7 +15,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.heapot.qianxun.R;
-import com.heapot.qianxun.activity.ArticleActivity;
+import com.heapot.qianxun.activity.detail.ArticleActivity;
 import com.heapot.qianxun.activity.BaseActivity;
 import com.heapot.qianxun.adapter.SortAdapter;
 import com.heapot.qianxun.application.CreateActivityCollector;
@@ -49,7 +49,7 @@ public class SortList extends BaseActivity implements View.OnClickListener, Adap
     private String request = "";
     private String imageUrl = "";
     private int n = 0;
-    String pid = CustomApplication.PAGE_ARTICLES_ID;
+    String pid = "";
     private Intent intent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -162,7 +162,7 @@ public class SortList extends BaseActivity implements View.OnClickListener, Adap
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String,String> headers = new HashMap<>();
-                headers.put(ConstantsBean.KEY_TOKEN,CustomApplication.TOKEN);
+                headers.put(ConstantsBean.KEY_TOKEN,getAppToken());
                 return headers;
             }
         };

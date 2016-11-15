@@ -7,7 +7,7 @@ import android.view.animation.Animation;
 import android.widget.TextView;
 
 import com.heapot.qianxun.R;
-import com.heapot.qianxun.activity.LoginActivity;
+import com.heapot.qianxun.activity.login.LoginActivity;
 import com.heapot.qianxun.util.ActivityUtil;
 import com.heapot.qianxun.util.PreferenceUtil;
 

@@ -4,7 +4,7 @@
     <color name="colorPrimaryDark">@android:color/transparent</color>
     <color name="colorAccent">@android:color/holo_blue_light</color>
 
-    <color name="menu_background_color">#363636</color>
+    <color name="menu_background_color">#858585</color>
     <color name="menu_text_color">#F7F7F7</color>
     <color name="text_sel">#20D0A9</color>
     <color name="mid_tran">#50000000</color>

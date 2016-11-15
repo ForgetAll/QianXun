@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:roundImageattr="http://schemas.android.com/apk/res/com.heapot.qianxun"
+    xmlns:roundImageattr="http://schemas.android.com/apk/res-auto"
     android:id="@+id/personal_tool_bar"
     android:orientation="horizontal"
     android:layout_width="match_parent"
@@ -12,33 +12,34 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="112px">
-            <com.heapot.qianxun.widget.RoundImageView
-                android:id="@+id/iv_headUrl"
-                android:layout_width="112px"
-                android:layout_height="112px"
-                android:background="@null"
-                android:clickable="false"
-                android:focusable="false"
-                android:layout_marginRight="12dp"
-                android:scaleType="fitCenter"
-                roundImageattr:corner_radius="3dp"
-                roundImageattr:type="round"
-                android:src="@mipmap/ic_qianxun"  />
+            android:layout_height="56dp">
+            <!--<com.heapot.qianxun.widget.RoundImageView-->
+                <!--android:id="@+id/iv_headUrl"-->
+                <!--android:layout_width="112px"-->
+                <!--android:layout_height="112px"-->
+                <!--android:background="@null"-->
+                <!--android:clickable="false"-->
+                <!--android:focusable="false"-->
+                <!--android:layout_marginRight="12dp"-->
+                <!--android:scaleType="fitCenter"-->
+                <!--roundImageattr:corner_radius="3dp"-->
+                <!--roundImageattr:type="round"-->
+                <!--android:src="@mipmap/ic_qianxun"  />-->
             <ImageView
-                android:visibility="gone"
-                android:layout_width="112px"
-                android:layout_height="112px"
-                android:src="@mipmap/ic_qianxun"
-                android:layout_marginRight="12dp"
-                android:background="@drawable/bg_head_image_shape"/>
+                android:id="@+id/iv_headUrl"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_default_icon"
+                android:layout_marginRight="12dp"/>
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
                 <TextView
                     android:id="@+id/tv_name"
                     android:layout_width="wrap_content"
-                    android:layout_height="62px"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
                     android:text="我是一个APP"
                     android:textColor="@color/color_second"
                     android:textSize="16sp"
@@ -47,7 +48,7 @@
                     android:id="@+id/tv_sign"
                     android:layout_below="@+id/tv_name"
                     android:layout_width="wrap_content"
-                    android:layout_height="50px"
+                    android:layout_height="wrap_content"
                     android:text="这是我的个性签名"
                     android:textColor="@color/color_second"
                     android:textSize="12sp"

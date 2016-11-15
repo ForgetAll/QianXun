@@ -10,10 +10,14 @@ import com.heapot.qianxun.application.CustomApplication;
  *
  */
 public class ConstantsBean {
+
+    //是否进入引导界面
+    public static final String KEY_SPLASH = "isEnter";
+
     //基本路径
-//    public static final String BASE_PATH = "http://qianxun.heapot.com/";
-    public static final String BASE_PATH = "https://qinxi1992.xicp.net/";
-    public static final String BASE_PHP_PATH = "http://tsczrz.com";
+    public static final String BASE_PATH = "http://qianxun.heapot.com/";
+    //    public static final String BASE_PATH = "https://qinxi1992.xicp.net/";
+    public static final String BASE_PHP_PATH = "http://114.215.252.158/";
 
 
     public static final String CONFIG_NAME = "config";
@@ -90,23 +94,29 @@ public class ConstantsBean {
     public static final String QUERY_UER_ORG = "user/org";
     //工作类型的接口
     public static final String CREATE_JOB_TYPE = "https://qinxi1992.xicp.net/catalogs/jobs";
-
+    //用户详情，查询get，修改post
+    public static final String USER_DETAIL =  "/user/detail";
+    //教育信息
+    public static final String USER_EDUCATION =  "/user/education";
+    //文章分类
+    public static final String CREATE_ARTICLE_TYPE = "/catalogs/articles";
 
 
     //创建文章WEbView的URL
-    public static final String WEB_CREATE_ARTICLE_EDIT = "http://sijiache.heapot.com/Tabs/editer/artical/?f?device=android&author="+ CustomApplication.NICK_NAME+"&type=article";
+    public static final String WEB_CREATE_ARTICLE_EDIT = "http://sijiache.heapot.com/Tabs/editer/artical/?f?device=android&author=";
     //创建招聘URL
     public static final String WEB_CREATE_JOB_EDIT = "http://sijiache.heapot.com/Tabs/editer/artical/?f?device=android&type=job";
 
     //以下聊天相关
     public static final String IM_TOKEN = "user/rongCloudToken";
     public static final String IM_CHECK_FRIEND = "friends/check?friendId";//={friendId}//验证是否是好友
-    public static final String IM_GET_FRIEND_LIST = "/friends";//获取好友列表
+    public static final String IM_GET_FRIEND_LIST = "friends";//获取好友列表
     public static final String IM_GET_FRIENDS_REQUEST_LIST = "friends/req";//获取好友请求列表
     public static final String IM_POST_ADD_FRIENDS_REQUEST = "friends/req";//发送好友请求
     public static final String IM_POST_ADMIT_ADD_FRIEND = "friends/req/";//{userId}同意好友请求
     //根据id去查用户信息
     public static final String IM_USER_INFO = "user/id/";
+
 
 
 
@@ -130,34 +140,16 @@ public class ConstantsBean {
     public static final String nickName = "nickname";
     public static final String showname = "showname";
     public static String INFO = "info";
+    public static final int EDUCATION_NUMBER = 0;
     //签名目前未定
     public static final String userAutograph = "description";
 
-    public static final String PAGE_SCIENCE = "PAGE_SCIENCE";
-    public static final String PAGE_RECRUIT = "PAGE_RECRUIT";
-    public static final String PAGE_TRAIN = "PAGE_TRAIN";
 
     //本地存储文件名
-    public static final String TAG_FILE_NAME = "Subscription";//存储所有标签的文件名
-    public static final String SUB_FILE_NAME = "Subscribed";//存储所有标签的文件名
+    public static final String TAG_FILE_NAME = "TAG_FILE_NAME";//存储所有标签的文件名
     public static final String MY_USER_INFO = "userInfo";//本地个人信息文件名
     public static final String USER_ORG_LIST = "UserOrg";//用户所属公司列表
     public static final String USER_ORG_INFO = "OrgInfo";//用户所属公司详情
-
-    //所有标签文件名
-    public static final String ARTICLES_TAGS = "ARTICLES_TAGS";//存储所有文章标签
-    public static final String JOBS_TAGS = "JOBS_TAGS";//存储所有招聘标签
-    public static final String TRAIN_TAGS = "TRAIN_TAGS";//存储所有培训标签
-    //已订阅标签文件名
-    public static final String USER_ARTICLES_TAG = "USER_ARTICLES_TAG";//已订阅文章标签
-    public static final String USER_JOBS_TAG = "USER_JOBS_TAG";//已订阅招聘标签
-    public static final String USER_TRAINS_TAG = "USER_TRAINS_TAG";//已订阅培训标签
-
-
-    //请求动态权限
-    public static final int PERMISSION_CODE = 100;
-    public static final String PERMISSION_NAME = "PERMISSION_CAMERA_AND_STORAGE";
-
 
     //本地存储好友列表
     public static final String IM_FRIEND = "IM_FRIEND";

@@ -73,10 +73,10 @@
                     android:layout_height="1dp"
                     android:background="#EEEEEE"></View>
 
-                <com.heapot.qianxun.popupwindow.SearchListView
+                <com.heapot.qianxun.widget.SearchListView
                     android:id="@+id/listView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"></com.heapot.qianxun.popupwindow.SearchListView>
+                    android:layout_height="wrap_content"></com.heapot.qianxun.widget.SearchListView>
 
 
             </LinearLayout>

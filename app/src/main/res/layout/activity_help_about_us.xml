@@ -30,20 +30,20 @@
             android:textColor="@android:color/white"
             android:textSize="20sp" />
     </RelativeLayout>
-<ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <TextView
-        android:id="@+id/tv_about"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="2dp"
-        android:background="@android:color/white"
-        android:padding="10dp"
-        android:text="人生，重在选择，贵在执着，赢在坚持。人生的境遇，并没有绝对的好坏之别，福兮祸所依，祸兮福所伏。自性的清明、智慧，才是一切意念的本源。把自己还给自己，你就是真正的自己"
-        android:textColor="@android:drawable/screen_background_dark_transparent"
-        android:textSize="18sp" />
-</ScrollView>
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_about"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="2dp"
+            android:background="@android:color/white"
+            android:padding="10dp"
+            android:text="@string/help_about"
+            android:textColor="@android:drawable/screen_background_dark_transparent"
+            android:textSize="18sp" />
+    </ScrollView>
 
 
 

@@ -18,7 +18,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.bumptech.glide.Glide;
 import com.heapot.qianxun.R;
-import com.heapot.qianxun.activity.ArticleActivity;
+import com.heapot.qianxun.activity.detail.ArticleActivity;
 import com.heapot.qianxun.adapter.PersonalArticleAdapter;
 import com.heapot.qianxun.adapter.PersonalArticleRecyclerViewAdapter;
 import com.heapot.qianxun.adapter.PersonalTabAdapter;
@@ -163,7 +163,8 @@ public class PersonalPageFragment extends Fragment {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<>();
-                headers.put(ConstantsBean.KEY_TOKEN, CustomApplication.TOKEN);
+                String token = PreferenceUtil.getString("token");
+                headers.put(ConstantsBean.KEY_TOKEN, token);
                 return headers;
             }
         };
