@@ -189,8 +189,11 @@ public class ArticleFragment extends Fragment
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 101 && resultCode == 101){
-            loadTagsUtils.getTags(1);
+        if (resultCode == 101){
+            boolean isRefresh = data.getBooleanExtra("result",false);
+            if (isRefresh) {
+                loadTagsUtils.getTags(1);
+            }
         }
     }
 

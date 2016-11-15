@@ -190,56 +190,70 @@ public class Subscription extends BaseActivity implements View.OnClickListener,T
     @Override
     public void onClick(View v) {
         intent.putExtra("result", isRefresh);
-        switch (v.getId()){
-            case R.id.btn_close_subscription:
-                switch (resultCode){
-                    case 101:
-                        setResult(101, intent);
-                        break;
-                    case 102:
-                        setResult(102, intent);
-                        break;
-                    case 103:
-                        setResult(103, intent);
-                        break;
-                    default:
-                        break;
-                }
-                this.finish();
-                break;
+        if (v.getId() == R.id.btn_close_subscription){
+            switch (resultCode){
+                case 101:
+                    setResult(101, intent);
+                    break;
+                case 102:
+                    setResult(102, intent);
+                    break;
+                case 103:
+                    setResult(103, intent);
+                    break;
+                default:
+                    break;
+            }
+            this.finish();
         }
 
     }
 
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        intent.putExtra("result", isRefresh);
+        switch (resultCode){
+            case 101:
+                setResult(101, intent);
+                break;
+            case 102:
+                setResult(102, intent);
+                break;
+            case 103:
+                setResult(103, intent);
+                break;
+            default:
+                break;
+        }
+        this.finish();
+    }
 
     @Override
     public void onSubResponse(String id,int position,int flag) {
-
-            tagsList.get(position).setSubscribeStatus(1);
-            //SubList,添加
-            SubBean subBean = new SubBean();
-            subBean.setId(tagsList.get(position).getId());
-            subBean.setPid(tagsList.get(position).getPid().toString());
-            subBean.setName(tagsList.get(position).getName());
-            subList.add(subBean);
-            //还需要更新list，找出相同id的数据在list的下标
-            int count = 0;
-            for (int i = 0; i < list.size(); i++) {
-                if (list.get(i).getId().equals(id)) {
-                    count = i;
-                }
+        tagsList.get(position).setSubscribeStatus(1);
+        //SubList,添加
+        SubBean subBean = new SubBean();
+        subBean.setId(tagsList.get(position).getId());
+        subBean.setPid(tagsList.get(position).getPid().toString());
+        subBean.setName(tagsList.get(position).getName());
+        subList.add(subBean);
+        //还需要更新list，找出相同id的数据在list的下标
+        int count = 0;
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getId().equals(id)) {
+                count = i;
             }
-            list.get(count).setSubscribeStatus(1);//修改指定地方的状态
+        }
+        list.get(count).setSubscribeStatus(1);//修改指定地方的状态
 
-            //加载数据源并更新数据
-            sub.setAdapter(subAdapter);
-            subAdapter.notifyDataSetChanged();
-            tags.setAdapter(tagsAdapter);
-            tagsAdapter.notifyDataSetChanged();
-            //重新进行本地数据存储
-            SerializableUtils.setSerializable(Subscription.this, ConstantsBean.TAG_FILE_NAME, list);
-
+        //加载数据源并更新数据
+        sub.setAdapter(subAdapter);
+        subAdapter.notifyDataSetChanged();
+        tags.setAdapter(tagsAdapter);
+        tagsAdapter.notifyDataSetChanged();
+        //重新进行本地数据存储
+        SerializableUtils.setSerializable(Subscription.this, ConstantsBean.TAG_FILE_NAME, list);
 
         isRefresh = true;
 

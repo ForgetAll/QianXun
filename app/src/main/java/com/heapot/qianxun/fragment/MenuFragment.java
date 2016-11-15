@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,18 +38,11 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
     private LinearLayout mHeader;
     private View mMenuView;
     private Activity mActivity;
+    private LinearLayout mMenu;
     //本地广播尝试
     private IntentFilter intentFilter;
     private RefreshPersonalReceiver refreshReceiver;
     private LocalBroadcastManager localBroadcastManager;
-
-    public final String PAGE_SCIENCE = "PAGE_ARTICLE";
-    public final String PAGE_RECRUIT = "PAGE_RECRUIT";
-    public final String PAGE_TRAIN = "PAGE_TRAIN";
-
-
-
-//    private List<MyUserBean.ContentBean> mList = new ArrayList<>();
 
     @Nullable
     @Override
@@ -71,6 +65,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         mSetting = (TextView) mMenuView.findViewById(R.id.txt_menu_settings);
         mHelp = (TextView) mMenuView.findViewById(R.id.txt_menu_help);
         mHeader = (LinearLayout) mMenuView.findViewById(R.id.ll_menu_header);
+        mMenu = (LinearLayout) mMenuView.findViewById(R.id.ll_main_menu);
         mActivity = getActivity();
     }
 
@@ -82,6 +77,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         mSetting.setOnClickListener(this);
         mHeader.setOnClickListener(this);
         mHelp.setOnClickListener(this);
+        mMenu.setOnClickListener(this);
         initData();
     }
 
@@ -158,6 +154,9 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
             case R.id.ll_menu_header:
                 Intent intent = new Intent(getContext(), PersonalActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.ll_main_menu:
+
                 break;
             default:
                 break;

@@ -182,8 +182,11 @@ public class TrainFragment extends Fragment implements View.OnClickListener, Loa
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 103 && resultCode == 103){
-            loadTagsUtils.getTags(1);
+        if (resultCode == 103){
+            boolean isRefresh = data.getBooleanExtra("result",false);
+            if (isRefresh) {
+                loadTagsUtils.getTags(1);
+            }
         }
     }
 

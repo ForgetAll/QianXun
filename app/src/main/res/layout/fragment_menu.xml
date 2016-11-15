@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_main_menu"
     android:orientation="vertical"
     android:layout_width="300dp"
     android:layout_height="match_parent"
@@ -12,18 +13,6 @@
         android:orientation="vertical"
         android:background="@drawable/ic_default_background"
         android:padding="10dp">
-        <!--<com.heapot.qianxun.widget.RoundImageView-->
-            <!--android:id="@+id/iv_menu_image"-->
-            <!--android:layout_width="@dimen/menu_image"-->
-            <!--android:layout_height="@dimen/menu_image"-->
-            <!--android:background="@null"-->
-            <!--android:clickable="false"-->
-            <!--android:focusable="false"-->
-            <!--android:layout_margin="15dp"-->
-            <!--android:scaleType="fitCenter"-->
-            <!--roundImageattr:corner_radius="3dp"-->
-            <!--roundImageattr:type="round"-->
-            <!--/>-->
         <ImageView
             android:id="@+id/iv_menu_image"
             android:layout_width="60dp"
