@@ -16,6 +16,7 @@ import com.heapot.qianxun.adapter.ArticleListAdapter;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.bean.MainListBean;
 import com.heapot.qianxun.util.network.LoadTagsList;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +33,7 @@ public class ArticleListFragment extends Fragment
 
     private static final String CURRENT_PAGE_ID = "CURRENT_PAGE_ID";
 
-    private static final int PAGE_SIZE = 8;
+    private static final int PAGE_SIZE = 6;
 
     private int mPage;
 
@@ -146,12 +147,13 @@ public class ArticleListFragment extends Fragment
     }
 
     private void initData(int flag){
-        if (flag == 0 || flag == 2 || mCurrentIndex > mMaxIndex){
-            mCurrentIndex = 1;
-        }
-
         if (flag == 1){
+
             mCurrentIndex ++;
+
+        } else{
+
+            mCurrentIndex = 1;
         }
 
         String url = ConstantsBean.GET_LIST_WITH_TAG+"catalogId=" +mPageId+"&page="+ mCurrentIndex +"&pagesize="+PAGE_SIZE;
@@ -162,6 +164,7 @@ public class ArticleListFragment extends Fragment
     @Override
     public void onSuccessResponse(List<MainListBean.ContentBean> list, int totalIndex, int flag) {
         mMaxIndex = totalIndex;
+        Logger.d("MaxIndex"+mMaxIndex+",CurrentIndex"+mCurrentIndex);
         if (list!= null){
             loadData(flag,list);
         }
@@ -185,11 +188,14 @@ public class ArticleListFragment extends Fragment
      */
     private void loadData(int flag,List<MainListBean.ContentBean> list){
 
+        if (mAdapter == null) {
+            mAdapter = new ArticleListAdapter(getActivity(), mList);
+            mRecyclerView.setAdapter(mAdapter);
+            mAdapter.setOnArticleListClickListener(this);
+        }
+
         if (flag == 0){
             mList.clear();
-        }
-        if (flag == 1){
-            isLoadMore = false;
         }
 
         if (flag ==2){
@@ -201,32 +207,49 @@ public class ArticleListFragment extends Fragment
         if (mCurrentIndex > mMaxIndex){
 
             if (flag == 0 ){
-
                 if (mAdapter == null) {
                     mAdapter = new ArticleListAdapter(getActivity(), mList);
                     mRecyclerView.setAdapter(mAdapter);
                 }
             }
 
-            if (flag == 1) {
-
+            if (flag == 1){
+                isLoadMore = true;
+                Toast.makeText(getActivity(), "没有更多数据了", Toast.LENGTH_SHORT).show();
             }
 
             if (flag ==2){
                 //加载完成，不提示消息
             }
 
-        }else {
+        }else if (mCurrentIndex == mMaxIndex){
+
             mList.addAll(list);
+
             if (flag == 0){
 
-                if (mAdapter == null) {
-                    mAdapter = new ArticleListAdapter(getActivity(), mList);
-                    mRecyclerView.setAdapter(mAdapter);
-                    mAdapter.setOnArticleListClickListener(this);
-                }
+            }
+
+            if (flag == 1){
+                isLoadMore = true;
+                mAdapter.setData(mList);
+            }
+
+            if (flag == 2){
+                mAdapter.setData(mList);
+            }
+
+        }else {
+            mList.addAll(list);
+
+            if (flag == 0){
 
             }
+
+            if (flag == 1){
+                isLoadMore = false;
+            }
+
 
             if (flag == 1 || flag == 2){
                 mAdapter.setData(mList);

@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.bean.MainListBean;
 import com.heapot.qianxun.util.CommonUtil;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;

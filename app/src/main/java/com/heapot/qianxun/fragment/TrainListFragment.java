@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.heapot.qianxun.R;
-import com.heapot.qianxun.adapter.JobListAdapter;
 import com.heapot.qianxun.adapter.TrainListAdapter;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.bean.MainListBean;
