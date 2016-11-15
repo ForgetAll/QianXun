@@ -1,5 +1,6 @@
 package com.heapot.qianxun.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.heapot.qianxun.R;
+import com.heapot.qianxun.activity.detail.JobActivity;
 import com.heapot.qianxun.adapter.JobListAdapter;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.bean.MainListBean;
@@ -139,11 +141,12 @@ public class JobListFragment extends Fragment implements LoadTagsList.onLoadTags
     }
 
     private void initData(int flag){
-        if (flag == 0 || flag == 2 || mCurrentIndex > mMaxIndex){
-            mCurrentIndex =1;
-        }
         if (flag == 1){
             mCurrentIndex ++;
+
+        } else{
+
+            mCurrentIndex = 1;
         }
         String url = ConstantsBean.GET_LIST_WITH_TAG+"catalogId=" +mPageId+"&page="+ mCurrentIndex +"&pagesize="+PAGE_SIZE;
         loadTagsList.getTagsList(url,flag);
@@ -169,15 +172,17 @@ public class JobListFragment extends Fragment implements LoadTagsList.onLoadTags
 
     private void loadData(int flag,List<MainListBean.ContentBean> list){
 
+        if (mAdapter == null) {
+            mAdapter = new JobListAdapter(getActivity(), mList);
+            mRecyclerView.setAdapter(mAdapter);
+            mAdapter.setOnJobListItemClickListener(this);
+        }
+
         if (flag == 0){
             mList.clear();
         }
 
-        if (flag == 1){
-            isLoadMore = false;
-        }
-
-        if (flag == 2){
+        if (flag ==2){
             mList.clear();
             mRefresh.setRefreshing(false);
             isRefresh = false;
@@ -185,28 +190,52 @@ public class JobListFragment extends Fragment implements LoadTagsList.onLoadTags
 
         if (mCurrentIndex > mMaxIndex){
 
-            if (flag == 0){
-                if (mAdapter == null){
-                    mAdapter = new JobListAdapter(getActivity(),mList);
+            if (flag == 0 ){
+                if (mAdapter == null) {
+                    mAdapter = new JobListAdapter(getActivity(), mList);
                     mRecyclerView.setAdapter(mAdapter);
                 }
             }
 
-            if (flag ==1 || flag ==2){
+            if (flag == 1){
+                isLoadMore = true;
+                Toast.makeText(getActivity(), "没有更多数据了", Toast.LENGTH_SHORT).show();
+            }
+
+            if (flag ==2){
+                //加载完成，不提示消息
+            }
+
+        }else if (mCurrentIndex == mMaxIndex){
+
+            mList.addAll(list);
+
+            if (flag == 0){
 
             }
+
+            if (flag == 1){
+                isLoadMore = true;
+                mAdapter.setData(mList);
+            }
+
+            if (flag == 2){
+                mAdapter.setData(mList);
+            }
+
         }else {
             mList.addAll(list);
 
             if (flag == 0){
-                if (mAdapter == null){
-                    mAdapter = new JobListAdapter(getActivity(),mList);
-                    mRecyclerView.setAdapter(mAdapter);
-                    mAdapter.setOnJobListItemClickListener(this);
-                }
+
             }
 
-            if (flag == 1 || flag ==2){
+            if (flag == 1){
+                isLoadMore = false;
+            }
+
+
+            if (flag == 1 || flag == 2){
                 mAdapter.setData(mList);
             }
         }
@@ -215,8 +244,11 @@ public class JobListFragment extends Fragment implements LoadTagsList.onLoadTags
     }
 
     @Override
-    public void onItemClick(View view, int postion) {
-        Toast.makeText(getActivity(), "点击了", Toast.LENGTH_SHORT).show();
+    public void onItemClick(View view, int position) {
+        Intent intent = new Intent();
+        intent.setClass(getActivity(), JobActivity.class);
+        intent.putExtra("id",mList.get(position).getId());
+        startActivity(intent);
     }
 
     /**

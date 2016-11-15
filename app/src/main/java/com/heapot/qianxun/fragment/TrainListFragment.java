@@ -1,5 +1,6 @@
 package com.heapot.qianxun.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.heapot.qianxun.R;
+import com.heapot.qianxun.activity.detail.CourseActivity;
 import com.heapot.qianxun.adapter.TrainListAdapter;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.bean.MainListBean;
@@ -142,11 +144,12 @@ public class TrainListFragment extends Fragment implements LoadTagsList.onLoadTa
     }
 
     private void initData(int flag){
-        if (flag == 0 || flag == 2 || mCurrentIndex > mMaxIndex){
-            mCurrentIndex =1;
-        }
         if (flag == 1){
             mCurrentIndex ++;
+
+        } else{
+
+            mCurrentIndex = 1;
         }
         String url = ConstantsBean.GET_LIST_WITH_TAG+"catalogId=" +mPageId+"&page="+ mCurrentIndex +"&pagesize="+PAGE_SIZE;
         loadTagsList.getTagsList(url,flag);
@@ -172,15 +175,17 @@ public class TrainListFragment extends Fragment implements LoadTagsList.onLoadTa
 
     private void loadData(int flag,List<MainListBean.ContentBean> list){
 
+        if (mAdapter == null) {
+            mAdapter = new TrainListAdapter(getActivity(), mList);
+            mRecyclerView.setAdapter(mAdapter);
+            mAdapter.setOnTrainListItemClickListener(this);
+        }
+
         if (flag == 0){
             mList.clear();
         }
 
-        if (flag == 1){
-            isLoadMore = false;
-        }
-
-        if (flag == 2){
+        if (flag ==2){
             mList.clear();
             mRefresh.setRefreshing(false);
             isRefresh = false;
@@ -188,38 +193,64 @@ public class TrainListFragment extends Fragment implements LoadTagsList.onLoadTa
 
         if (mCurrentIndex > mMaxIndex){
 
-            if (flag == 0){
-                if (mAdapter == null){
-                    mAdapter = new TrainListAdapter(getActivity(),mList);
+            if (flag == 0 ){
+                if (mAdapter == null) {
+                    mAdapter = new TrainListAdapter(getActivity(), mList);
                     mRecyclerView.setAdapter(mAdapter);
                 }
             }
 
-            if (flag ==1 || flag ==2){
+            if (flag == 1){
+                isLoadMore = true;
+                Toast.makeText(getActivity(), "没有更多数据了", Toast.LENGTH_SHORT).show();
+            }
+
+            if (flag ==2){
+                //加载完成，不提示消息
+            }
+
+        }else if (mCurrentIndex == mMaxIndex){
+
+            mList.addAll(list);
+
+            if (flag == 0){
 
             }
+
+            if (flag == 1){
+                isLoadMore = true;
+                mAdapter.setData(mList);
+            }
+
+            if (flag == 2){
+                mAdapter.setData(mList);
+            }
+
         }else {
             mList.addAll(list);
 
             if (flag == 0){
-                if (mAdapter == null){
-                    mAdapter = new TrainListAdapter(getActivity(),mList);
-                    mRecyclerView.setAdapter(mAdapter);
-                    mAdapter.setOnTrainListItemClickListener(this);
-                }
+
             }
 
-            if (flag == 1 || flag ==2){
+            if (flag == 1){
+                isLoadMore = false;
+            }
+
+
+            if (flag == 1 || flag == 2){
                 mAdapter.setData(mList);
             }
         }
-
 
     }
 
     @Override
     public void onItemClick(View view, int position) {
-        Toast.makeText(getActivity(), "点击了", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent();
+        intent.setClass(getActivity(), CourseActivity.class);
+        intent.putExtra("id",mList.get(position).getId());
+        startActivity(intent);
     }
 
     /**

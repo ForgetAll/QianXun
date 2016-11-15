@@ -78,9 +78,6 @@ public class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.
 
         public ArticleListViewHolder(View itemView) {
             super(itemView);
-//            mTitle = (TextView) itemView.findViewById(R.id.txt_main_list_title);
-//            mTime = (TextView) itemView.findViewById(R.id.txt_main_list_time);
-//            imageView = (ImageView) itemView.findViewById(R.id.iv_main_list_image);
             mTitle = (TextView) itemView.findViewById(R.id.txt_item_article_title);
             mTime = (TextView) itemView.findViewById(R.id.txt_item_article_subtitle);
             imageView = (ImageView) itemView.findViewById(R.id.txt_item_article_icon);

@@ -1,5 +1,6 @@
 package com.heapot.qianxun.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.heapot.qianxun.R;
+import com.heapot.qianxun.activity.detail.ArticleActivity;
 import com.heapot.qianxun.adapter.ArticleListAdapter;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.bean.MainListBean;
@@ -148,7 +150,6 @@ public class ArticleListFragment extends Fragment
 
     private void initData(int flag){
         if (flag == 1){
-
             mCurrentIndex ++;
 
         } else{
@@ -261,7 +262,12 @@ public class ArticleListFragment extends Fragment
 
     @Override
     public void onItemClick(View view, int position) {
-        Toast.makeText(getActivity(), "点击了", Toast.LENGTH_SHORT).show();
+
+        Intent intent = new Intent();
+        intent.setClass(getActivity(), ArticleActivity.class);
+        intent.putExtra("id",mList.get(position).getId());
+        startActivity(intent);
+
     }
 
     /**
