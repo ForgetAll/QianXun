@@ -25,6 +25,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.blankj.utilcode.utils.NetworkUtils;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.activity.BaseActivity;
+import com.heapot.qianxun.activity.chat.ConversationActivity;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.util.PreferenceUtil;
@@ -37,7 +38,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import io.rong.imkit.RongIM;
+import io.rong.imlib.IRongCallback;
+import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.UserInfo;
+import io.rong.message.TextMessage;
 
 /**
  * Created by Karl on 2016/9/24.
@@ -115,6 +120,7 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
                             //用户开始聊天后默认加好友
                             Logger.d("开始聊天");
                             RongIM.getInstance().startPrivateChat(ArticleActivity.this, id, title);
+//                            sendFirstMessage(msg);
                         }
                     }
 
@@ -324,6 +330,30 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
             }
         };
         CustomApplication.getRequestQueue().add(jsonObjectRequest);
+
+    }
+
+    private void sendFirstMessage(String mTargetId,String msg){
+        TextMessage myTextMessage = TextMessage.obtain(msg);
+        io.rong.imlib.model.Message myMessage =
+                io.rong.imlib.model.Message.obtain(mTargetId, Conversation.ConversationType.PRIVATE,myTextMessage);
+
+        RongIM.getInstance().sendMessage(myMessage, null, null, new IRongCallback.ISendMessageCallback() {
+            @Override
+            public void onAttached(io.rong.imlib.model.Message message) {
+
+            }
+
+            @Override
+            public void onSuccess(io.rong.imlib.model.Message message) {
+
+            }
+
+            @Override
+            public void onError(io.rong.imlib.model.Message message, RongIMClient.ErrorCode errorCode) {
+
+            }
+        });
 
     }
 
