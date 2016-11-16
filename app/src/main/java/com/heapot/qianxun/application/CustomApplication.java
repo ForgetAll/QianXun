@@ -28,7 +28,7 @@ public class CustomApplication extends Application {
     public void onCreate() {
         super.onCreate();
         //监测内存泄露
-        LeakCanary.install(this);
+//        LeakCanary.install(this);
 
         //初始化Bugly
         CrashReport.initCrashReport(getApplicationContext(),"900057726",false);

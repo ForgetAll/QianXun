@@ -198,8 +198,8 @@ public class JobListFragment extends Fragment implements LoadTagsList.onLoadTags
                 Toast.makeText(getActivity(), "没有更多数据了", Toast.LENGTH_SHORT).show();
 
             }else if (flag ==2){
-                //加载完成，不提示消息
-            }
+                mRefresh.setRefreshing(false);
+                isRefresh = false;            }
 
         }else if (mCurrentIndex == mMaxIndex){
 
