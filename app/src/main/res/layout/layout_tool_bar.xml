@@ -8,6 +8,7 @@
     android:layout_marginBottom="25dp"
     android:layout_marginTop="25dp"
     android:orientation="horizontal"
+    android:background="#000"
     app:layout_collapseMode="pin">
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,7 +26,9 @@
             android:shadowRadius="13"
             android:text="主标题"
             android:textColor="@color/color_first"
-            android:textSize="@dimen/text_size_first" />
+            android:textSize="@dimen/text_size_first"
+            android:drawableLeft="@drawable/ic_open_menu"
+            android:drawablePadding="6dp"/>
 
         <ImageView
             android:id="@+id/iv_search"
