@@ -39,7 +39,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by 李大总管 on 2016/10/2.
+ * Created by 15998 on 2016/10/2.
  */
 public class PersonalPageFragment extends Fragment {
     public static final String PAGE = "PAGE";
@@ -99,7 +99,6 @@ public class PersonalPageFragment extends Fragment {
         recycler_view.setHasFixedSize(true);
         recycler_view.setLayoutManager(linearLayoutManager);
         loadData();
-        Log.e("添加之后的list", String.valueOf(list.size()));
 
     }
 
@@ -125,7 +124,6 @@ public class PersonalPageFragment extends Fragment {
                         personalArticleRecyclerViewAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
                             @Override
                             public void onItemClick(View view, int position) {
-                                Logger.d("跳转到文章详情，id是"+articleList.get(position).getId());
                                 Intent intent = new Intent(getActivity(), ArticleActivity.class);
                                 intent.putExtra("id",articleList.get(position).getId());
                                 startActivity(intent);
@@ -147,8 +145,6 @@ public class PersonalPageFragment extends Fragment {
                             }
                         });
 
-                        Log.e("list",articleList.toString());
-                        Log.e("我发表的文章：", String.valueOf(articleList.size()));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

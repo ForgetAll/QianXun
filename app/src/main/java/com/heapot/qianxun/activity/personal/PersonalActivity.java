@@ -33,6 +33,7 @@ import java.util.List;
 
 /**
  * Created by Karl on 2016/8/29.
+ * desc:
  */
 public class PersonalActivity extends BaseActivity implements View.OnClickListener, ViewPager.OnPageChangeListener {
     private ViewPager mViewPager;
@@ -123,8 +124,6 @@ public class PersonalActivity extends BaseActivity implements View.OnClickListen
         }
 
         //Glide.with(activity).load("http://odxpoei6h.bkt.clouddn.com/qianxun57f1fb7f9a56e.jpeg").into(mHeadUrl);
-        Logger.d(mSign);
-        Logger.d(mHeadUrl);
 
         for (int i = 0; i < 1; i++) {
             mList.add("文章");

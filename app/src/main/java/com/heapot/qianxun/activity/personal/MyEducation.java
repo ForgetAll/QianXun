@@ -1,4 +1,4 @@
-package com.heapot.qianxun.activity;
+package com.heapot.qianxun.activity.personal;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,7 +15,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.heapot.qianxun.R;
-import com.heapot.qianxun.activity.personal.PersonInfoAlterActivity;
+import com.heapot.qianxun.activity.BaseActivity;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.AddEducationSchool;
 import com.heapot.qianxun.bean.ConstantsBean;
