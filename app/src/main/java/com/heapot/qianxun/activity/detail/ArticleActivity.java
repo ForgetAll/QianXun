@@ -113,14 +113,15 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
                     String title = msg.getData().getString("title");
                     String image = msg.getData().getString("icon");
                     String userId = PreferenceUtil.getString("id");
-                    Logger.d("用户id是------->"+userId+"，头像id是---------->"+id);
+                    String response = msg.getData().getString("response");
+                    String forChat = parseResponse(response);
                     if (!userId.equals(id)) {
                         RongIM.getInstance().refreshUserInfoCache(new UserInfo(id, title, Uri.parse(image)));
                         if (RongIM.getInstance() != null) {
                             //用户开始聊天后默认加好友
                             Logger.d("开始聊天");
                             RongIM.getInstance().startPrivateChat(ArticleActivity.this, id, title);
-//                            sendFirstMessage(msg);
+                            sendFirstMessage(userId,forChat);
                         }
                     }
 
@@ -221,12 +222,13 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
         handler.sendMessage(message);
     }
     @JavascriptInterface
-    public void toChat(String id,String title,String icon){
+    public void toChat(String id,String title,String icon,String response){
         Message message = new Message();
         Bundle bundle = new Bundle();
         bundle.putString("id",id);
         bundle.putString("title",title);
         bundle.putString("icon",icon);
+        bundle.putString("response",response);
         message.setData(bundle);
         message.what = MSG_TO_CHAT;
         handler.sendMessage(message);
@@ -246,7 +248,7 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
     protected void onDestroy() {
         super.onDestroy();
         webView.clearCache(true);
-        webView.destroy();
+//        webView.destroy();
     }
 
     @Override
@@ -330,6 +332,24 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
             }
         };
         CustomApplication.getRequestQueue().add(jsonObjectRequest);
+
+    }
+
+    private String parseResponse(String response){
+        String forChat = "";
+        try {
+            JSONObject str = new JSONObject(response);
+            if (str.getInt("whatFor") == 0){
+                forChat = str.getString("fromWhere");
+
+                return forChat;
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return forChat;
 
     }
 
