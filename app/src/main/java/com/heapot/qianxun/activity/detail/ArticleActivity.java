@@ -25,9 +25,10 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.blankj.utilcode.utils.NetworkUtils;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.activity.BaseActivity;
-import com.heapot.qianxun.activity.chat.ConversationActivity;
 import com.heapot.qianxun.application.CustomApplication;
+import com.heapot.qianxun.bean.CommitBean;
 import com.heapot.qianxun.bean.ConstantsBean;
+import com.heapot.qianxun.util.JsonUtil;
 import com.heapot.qianxun.util.PreferenceUtil;
 import com.orhanobut.logger.Logger;
 
@@ -142,7 +143,7 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
 
     private void initView() {
         webView = (WebView) findViewById(R.id.wv_articles);
-        input_comment = (EditText) findViewById(R.id.edt_article_input);
+        input_comment = (EditText) findViewById(R.id.edt_content_input);
         quote_txt = (TextView) findViewById(R.id.txt_articles_quote);
         input_layout = (LinearLayout) findViewById(R.id.ll_input);
         sendMess = (TextView) findViewById(R.id.txt_send_mess);
@@ -248,12 +249,12 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
     protected void onDestroy() {
         super.onDestroy();
         webView.clearCache(true);
-//        webView.destroy();
+
     }
 
     @Override
     public void onClick(View v) {
-        //postComment(data)
+
         switch (v.getId()) {
             case R.id.txt_send_mess:
                 String content = input_comment.getText().toString();
@@ -271,7 +272,6 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
                 break;
             case R.id.iv_btn_back:
                 webView.clearCache(true);
-                webView.destroy();
                 finish();
                 break;
         }
@@ -302,13 +302,15 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
                             String status = response.getString("status");
                             if (status.equals("success")){
                                 Toast.makeText(ArticleActivity.this, "发送成功", Toast.LENGTH_SHORT).show();
+                                CommitBean commitBean = (CommitBean) JsonUtil.fromJson(String.valueOf(response),CommitBean.class);
+                                String commitId = commitBean.getContent().getId();
                                 //发送成功
                                 input_comment.setText("");//清空数据
                                 quote_txt.setText("");
                                 refId = "";
                                 quote_layout.setVisibility(View.GONE);
                                 //刷新评论
-                                webView.loadUrl("javascript:fillComment()");
+                                webView.loadUrl("javascript:fillComment(\""+commitId+"\")");
                             }else {
                                 Toast.makeText(ArticleActivity.this, response.getString("message"), Toast.LENGTH_SHORT).show();
                             }

@@ -104,12 +104,12 @@
         "source": "D:\\code\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable\\rc_ic_phone.xml"
     },
     {
-        "merged": "D:\\code\\QianXun\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\rc_cs_corner_single_check_style.xml",
-        "source": "D:\\code\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable\\rc_cs_corner_single_check_style.xml"
-    },
-    {
         "merged": "D:\\code\\QianXun\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\rc_ic_no_selector.xml",
         "source": "D:\\code\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable\\rc_ic_no_selector.xml"
+    },
+    {
+        "merged": "D:\\code\\QianXun\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\rc_cs_corner_single_check_style.xml",
+        "source": "D:\\code\\QianXun\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable\\rc_cs_corner_single_check_style.xml"
     },
     {
         "merged": "D:\\code\\QianXun\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\rc_btn_public_service_unfollow_selector.xml",
