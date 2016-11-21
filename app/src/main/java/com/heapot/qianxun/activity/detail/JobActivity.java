@@ -12,15 +12,30 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.blankj.utilcode.utils.NetworkUtils;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.activity.BaseActivity;
+import com.heapot.qianxun.application.CustomApplication;
+import com.heapot.qianxun.bean.ConstantsBean;
+import com.heapot.qianxun.bean.Resume;
+import com.heapot.qianxun.util.JsonUtil;
 import com.heapot.qianxun.util.PreferenceUtil;
+import com.heapot.qianxun.util.network.LoadResume;
 import com.orhanobut.logger.Logger;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import io.rong.imkit.RongIM;
 import io.rong.imlib.IRongCallback;
@@ -34,11 +49,12 @@ import io.rong.message.TextMessage;
  *
  */
 
-public class JobActivity extends BaseActivity {
+public class JobActivity extends BaseActivity{
     private TextView mToolBarTitle,mSave;
     private ImageView mBack;
     private WebView webView;
     private WebSettings webSettings;
+
 
     private Handler handler = new Handler(){
         @Override
@@ -49,16 +65,16 @@ public class JobActivity extends BaseActivity {
                 String image = msg.getData().getString("icon");
                 String userId = PreferenceUtil.getString("id");
                 String response = msg.getData().getString("response");
-                Logger.json(response);
-                String forChat = parseResponse(response);
-                Logger.d(forChat);
+//                Logger.json(response);
+
+//                Logger.d(forChat);
                 if (!userId.equals(id)){
                     RongIM.getInstance().refreshUserInfoCache(new UserInfo(id,title, Uri.parse(image)));
                     if (RongIM.getInstance() != null){
+//                        RongIM.getInstance().startPrivateChat(JobActivity.this, id, title);
                         //用户开始聊天后默认加好友
-//                            ChatInfoUtils.onRequestAddFriend(JobActivity.this,id,title);
-                        RongIM.getInstance().startPrivateChat(JobActivity.this,id,title);
-                        sendFirstMessage(id,forChat);
+                        getResume(id,title,response);
+
                     }
                 }
 
@@ -134,12 +150,15 @@ public class JobActivity extends BaseActivity {
 
     }
 
-    private String parseResponse(String response){
-        String forChat = "1234";
+    private String parseResponse(String response,String resume){
+        String forChat = "";
         try {
             JSONObject str = new JSONObject(response);
             if (str.getInt("whatFor") == 1){
                 forChat = str.getString("fromWhere");
+                if (!resume.equals("")){
+                    forChat = forChat + ",以下是我的简历内容："+resume;
+                }
 
                 return forChat;
             }
@@ -175,4 +194,55 @@ public class JobActivity extends BaseActivity {
         });
 
     }
+
+    private void getResume(final String id,final String title,final String desc){
+        String url = ConstantsBean.BASE_PATH + ConstantsBean.RESUME_INFO;
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        RongIM.getInstance().startPrivateChat(JobActivity.this, id, title);
+                        try {
+                            String status = response.getString("status");
+                            if (status.equals("success")){
+                                Resume resume = (Resume) JsonUtil.fromJson(String.valueOf(response),Resume.class);
+                                Logger.d(resume.getContent().getTotal());
+                                int total = resume.getContent().getTotal();
+                                if (total > 0){
+                                    Logger.d(resume.getContent().getRows().get(0).getResume());
+                                    String forChat = parseResponse(desc,resume.getContent().getRows().get(0).getResume());
+                                    sendFirstMessage(id, forChat);
+                                }else {
+                                    String forChat = parseResponse(desc,"");
+                                    sendFirstMessage(id, forChat);
+                                }
+                            }
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                    }
+                }
+        ){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                String token = PreferenceUtil.getString("token");
+                Map<String,String> headers = new HashMap<>();
+                headers.put("x-auth-token",token);
+
+                return headers;
+
+            }
+        };
+
+        CustomApplication.getRequestQueue().add(jsonObjectRequest);
+    }
+
 }

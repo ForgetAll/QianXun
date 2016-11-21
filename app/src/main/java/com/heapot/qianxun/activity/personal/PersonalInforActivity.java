@@ -78,7 +78,10 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
                         String path = content.getString("url");
                         Log.e("上传头像返回的数据", path);
                         // Glide.with(activity).load(path).error(R.mipmap.imagetest).into(mHead);
-                        CommonUtil.loadImage(mHeadUrl, path, R.mipmap.imagetest);
+//                        CommonUtil.loadImage(mHeadUrl, path, R.mipmap.imagetest);
+                        if (path != null && !path.equals("")) {
+                            CommonUtil.loadImage(mHeadUrl, path, R.drawable.ic_default_icon);
+                        }
                         userBean.setIcon(path);
                         personalStatus = 1;
                         PreferenceUtil.putString(ConstantsBean.userImage, path);
@@ -461,7 +464,6 @@ public class PersonalInforActivity extends BaseActivity implements View.OnClickL
                     PreferenceUtil.putString(ConstantsBean.nickName, nick);
                     personalStatus = 1;
                     String body4 = "{\"nickname\":\"" + nick + "\"}";
-                    Log.e("修改后的名字", body4);
                     updateUserInfo(body4);
                     break;
                 //修改签名

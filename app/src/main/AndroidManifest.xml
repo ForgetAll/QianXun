@@ -105,8 +105,6 @@
         <activity android:name=".activity.detail.CourseActivity"></activity>
         <!--文章类型-->
         <activity android:name=".activity.create.CreateArticleTypeActivity"></activity>
-        <!--聊天Activity-->
-        <!--会话列表-->
 
         <!--引导界面-->
         <activity android:name=".activity.welcome.GuideActivity"></activity>
@@ -116,6 +114,9 @@
         <activity android:name=".activity.personal.BirthActivity"></activity>
         <!--编辑学校信息-->
         <activity android:name=".activity.personal.MyEducation"></activity>
+        <!--简历页面-->
+        <activity android:name=".activity.personal.PersonalResumeActivity"/>
+        <!--聊天相关-->
         <activity
             android:name=".activity.chat.ConversationListActivity"
             android:screenOrientation="portrait"
