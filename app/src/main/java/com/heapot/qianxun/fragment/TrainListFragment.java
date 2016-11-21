@@ -200,6 +200,8 @@ public class TrainListFragment extends Fragment implements LoadTagsList.onLoadTa
                 Toast.makeText(getActivity(), "没有更多数据了", Toast.LENGTH_SHORT).show();
 
             }else if (flag ==2){
+                mRefresh.setRefreshing(false);
+                isRefresh = false;
             }
 
         }else if (mCurrentIndex == mMaxIndex){

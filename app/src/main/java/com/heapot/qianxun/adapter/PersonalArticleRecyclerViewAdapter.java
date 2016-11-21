@@ -53,7 +53,7 @@ public class PersonalArticleRecyclerViewAdapter extends RecyclerView.Adapter<Per
         } else {
             holder.imageView.setVisibility(View.GONE);
         }*/
-        Glide.with(context).load(image).error(R.mipmap.ic_zhanweitu).into( holder.imageView);
+        Glide.with(context).load(image).error(R.drawable.ic_default_item_background).into( holder.imageView);
     }
 
     @Override

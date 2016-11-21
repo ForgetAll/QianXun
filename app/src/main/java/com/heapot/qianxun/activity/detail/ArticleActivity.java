@@ -26,7 +26,9 @@ import com.blankj.utilcode.utils.NetworkUtils;
 import com.heapot.qianxun.R;
 import com.heapot.qianxun.activity.BaseActivity;
 import com.heapot.qianxun.application.CustomApplication;
+import com.heapot.qianxun.bean.CommitBean;
 import com.heapot.qianxun.bean.ConstantsBean;
+import com.heapot.qianxun.util.JsonUtil;
 import com.heapot.qianxun.util.PreferenceUtil;
 import com.orhanobut.logger.Logger;
 
@@ -37,7 +39,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import io.rong.imkit.RongIM;
+import io.rong.imlib.IRongCallback;
+import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.UserInfo;
+import io.rong.message.TextMessage;
 
 /**
  * Created by Karl on 2016/9/24.
@@ -108,13 +114,15 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
                     String title = msg.getData().getString("title");
                     String image = msg.getData().getString("icon");
                     String userId = PreferenceUtil.getString("id");
-                    Logger.d("用户id是------->"+userId+"，头像id是---------->"+id);
+                    String response = msg.getData().getString("response");
+                    String forChat = parseResponse(response);
                     if (!userId.equals(id)) {
                         RongIM.getInstance().refreshUserInfoCache(new UserInfo(id, title, Uri.parse(image)));
                         if (RongIM.getInstance() != null) {
                             //用户开始聊天后默认加好友
                             Logger.d("开始聊天");
                             RongIM.getInstance().startPrivateChat(ArticleActivity.this, id, title);
+                            sendFirstMessage(userId,forChat);
                         }
                     }
 
@@ -135,7 +143,7 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
 
     private void initView() {
         webView = (WebView) findViewById(R.id.wv_articles);
-        input_comment = (EditText) findViewById(R.id.edt_article_input);
+        input_comment = (EditText) findViewById(R.id.edt_content_input);
         quote_txt = (TextView) findViewById(R.id.txt_articles_quote);
         input_layout = (LinearLayout) findViewById(R.id.ll_input);
         sendMess = (TextView) findViewById(R.id.txt_send_mess);
@@ -215,12 +223,13 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
         handler.sendMessage(message);
     }
     @JavascriptInterface
-    public void toChat(String id,String title,String icon){
+    public void toChat(String id,String title,String icon,String response){
         Message message = new Message();
         Bundle bundle = new Bundle();
         bundle.putString("id",id);
         bundle.putString("title",title);
         bundle.putString("icon",icon);
+        bundle.putString("response",response);
         message.setData(bundle);
         message.what = MSG_TO_CHAT;
         handler.sendMessage(message);
@@ -240,12 +249,12 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
     protected void onDestroy() {
         super.onDestroy();
         webView.clearCache(true);
-        webView.destroy();
+
     }
 
     @Override
     public void onClick(View v) {
-        //postComment(data)
+
         switch (v.getId()) {
             case R.id.txt_send_mess:
                 String content = input_comment.getText().toString();
@@ -263,7 +272,6 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
                 break;
             case R.id.iv_btn_back:
                 webView.clearCache(true);
-                webView.destroy();
                 finish();
                 break;
         }
@@ -294,13 +302,15 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
                             String status = response.getString("status");
                             if (status.equals("success")){
                                 Toast.makeText(ArticleActivity.this, "发送成功", Toast.LENGTH_SHORT).show();
+                                CommitBean commitBean = (CommitBean) JsonUtil.fromJson(String.valueOf(response),CommitBean.class);
+                                String commitId = commitBean.getContent().getId();
                                 //发送成功
                                 input_comment.setText("");//清空数据
                                 quote_txt.setText("");
                                 refId = "";
                                 quote_layout.setVisibility(View.GONE);
                                 //刷新评论
-                                webView.loadUrl("javascript:fillComment()");
+                                webView.loadUrl("javascript:fillComment(\""+commitId+"\")");
                             }else {
                                 Toast.makeText(ArticleActivity.this, response.getString("message"), Toast.LENGTH_SHORT).show();
                             }
@@ -324,6 +334,48 @@ public class ArticleActivity extends BaseActivity implements View.OnClickListene
             }
         };
         CustomApplication.getRequestQueue().add(jsonObjectRequest);
+
+    }
+
+    private String parseResponse(String response){
+        String forChat = "";
+        try {
+            JSONObject str = new JSONObject(response);
+            if (str.getInt("whatFor") == 0){
+                forChat = str.getString("fromWhere");
+
+                return forChat;
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return forChat;
+
+    }
+
+    private void sendFirstMessage(String mTargetId,String msg){
+        TextMessage myTextMessage = TextMessage.obtain(msg);
+        io.rong.imlib.model.Message myMessage =
+                io.rong.imlib.model.Message.obtain(mTargetId, Conversation.ConversationType.PRIVATE,myTextMessage);
+
+        RongIM.getInstance().sendMessage(myMessage, null, null, new IRongCallback.ISendMessageCallback() {
+            @Override
+            public void onAttached(io.rong.imlib.model.Message message) {
+
+            }
+
+            @Override
+            public void onSuccess(io.rong.imlib.model.Message message) {
+
+            }
+
+            @Override
+            public void onError(io.rong.imlib.model.Message message, RongIMClient.ErrorCode errorCode) {
+
+            }
+        });
 
     }
 

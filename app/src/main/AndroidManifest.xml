@@ -41,7 +41,7 @@
         <!--订阅提交页面-->
         <activity android:name=".activity.Subscription"></activity>
         <!--通知界面-->
-        <activity android:name=".activity.NotificationActivity"></activity>
+        <activity android:name=".activity.personal.NotificationActivity"></activity>
         <!--个人主页-->
         <activity android:name=".activity.personal.PersonalActivity"></activity>
         <!--个人信息设置页面-->
@@ -105,17 +105,18 @@
         <activity android:name=".activity.detail.CourseActivity"></activity>
         <!--文章类型-->
         <activity android:name=".activity.create.CreateArticleTypeActivity"></activity>
-        <!--聊天Activity-->
-        <!--会话列表-->
 
         <!--引导界面-->
         <activity android:name=".activity.welcome.GuideActivity"></activity>
         <!--学校列表-->
-        <activity android:name=".activity.SchoolListActivity"></activity>
+        <activity android:name=".activity.personal.SchoolListActivity"></activity>
         <!--出生年-->
-        <activity android:name=".activity.BirthActivity"></activity>
+        <activity android:name=".activity.personal.BirthActivity"></activity>
         <!--编辑学校信息-->
-        <activity android:name=".activity.MyEducation"></activity>
+        <activity android:name=".activity.personal.MyEducation"></activity>
+        <!--简历页面-->
+        <activity android:name=".activity.personal.PersonalResumeActivity"/>
+        <!--聊天相关-->
         <activity
             android:name=".activity.chat.ConversationListActivity"
             android:screenOrientation="portrait"

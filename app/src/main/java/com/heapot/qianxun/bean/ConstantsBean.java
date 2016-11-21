@@ -117,6 +117,12 @@ public class ConstantsBean {
     //根据id去查用户信息
     public static final String IM_USER_INFO = "user/id/";
 
+    //简历,获取简历列表GET，创建简历POST，修改个人简历PUT
+    public static final String RESUME_INFO = "user/resume";
+
+    //查看个人简历内容详情
+    public static final String RESUME_UPDATE = "user/resume/";
+
 
 
 

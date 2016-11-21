@@ -25,7 +25,9 @@
             android:shadowRadius="13"
             android:text="主标题"
             android:textColor="@color/color_first"
-            android:textSize="@dimen/text_size_first" />
+            android:textSize="@dimen/text_size_first"
+            android:drawableLeft="@drawable/ic_open_menu"
+            android:drawablePadding="6dp"/>
 
         <ImageView
             android:id="@+id/iv_search"

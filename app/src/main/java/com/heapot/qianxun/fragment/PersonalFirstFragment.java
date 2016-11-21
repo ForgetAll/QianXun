@@ -21,7 +21,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.heapot.qianxun.R;
-import com.heapot.qianxun.activity.MyEducation;
+import com.heapot.qianxun.activity.personal.MyEducation;
+import com.heapot.qianxun.activity.personal.PersonalResumeActivity;
 import com.heapot.qianxun.application.CustomApplication;
 import com.heapot.qianxun.bean.ConstantsBean;
 import com.heapot.qianxun.bean.MyEducationBean;
@@ -45,7 +46,7 @@ public class PersonalFirstFragment extends Fragment {
     private int requestCode;
     private String schoolName;
     //List<MyEducationBean.ContentBean> list = new ArrayList<>();
-    private RelativeLayout rl_school, rl_profession, rl_startYear;
+    private RelativeLayout rl_school, rl_profession, rl_startYear,rl_resume;
     //本地广播尝试
     private IntentFilter intentFilter;
     private RefreshEducationReceiver refreshReceiver;
@@ -58,14 +59,27 @@ public class PersonalFirstFragment extends Fragment {
         rl_school = (RelativeLayout) mView.findViewById(R.id.rl_school);
         rl_profession = (RelativeLayout) mView.findViewById(R.id.rl_profession);
         rl_startYear = (RelativeLayout) mView.findViewById(R.id.rl_startYear);
+        rl_resume = (RelativeLayout) mView.findViewById(R.id.rl_resume);
         mNumber = (TextView) mView.findViewById(R.id.tv_phoneNumber);
         tv_school = (TextView) mView.findViewById(R.id.tv_school);
         tv_profession = (TextView) mView.findViewById(R.id.tv_profession);
         tv_startYear = (TextView) mView.findViewById(R.id.tv_startYear);
         mNumber.setText(PreferenceUtil.getString("phone"));
         loadData();
-
+        initEvent();
         return mView;
+    }
+
+
+    private void initEvent(){
+        rl_resume.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toResume = new Intent();
+                toResume.setClass(getContext(), PersonalResumeActivity.class);
+                startActivity(toResume);
+            }
+        });
     }
 
     private void loadData() {
@@ -75,8 +89,6 @@ public class PersonalFirstFragment extends Fragment {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Logger.json(String.valueOf(response));
-                        Log.e("所有的Json数据：", response.toString());
                         try {
                             String status = response.getString("status");
                             if (status.equals("success")) {
@@ -166,6 +178,7 @@ public class PersonalFirstFragment extends Fragment {
                 startActivity(startyear);
             }
         });
+
     }
 
 

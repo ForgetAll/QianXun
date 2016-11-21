@@ -81,7 +81,6 @@ public class TrainFragment extends Fragment implements View.OnClickListener, Loa
 
     private void initEvent(){
         mToolBar.setTitle("");
-//        ((MainActivity)mActivity).setSupportActionBar(mToolBar);
         //添加监听事件
         mSearch.setOnClickListener(this);
         mStar.setOnClickListener(this);

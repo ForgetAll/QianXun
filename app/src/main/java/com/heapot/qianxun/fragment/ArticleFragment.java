@@ -141,7 +141,6 @@ public class ArticleFragment extends Fragment
 
     @Override
     public void onLoadAllSuccess(List<TagsBean.ContentBean> list, int flag) {
-//        Toast.makeText(mActivity, "加载数据了！", Toast.LENGTH_SHORT).show();
         if (list!=null){
             loadData(list,flag);
         }
